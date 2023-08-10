@@ -1,12 +1,14 @@
 [project]
-name = "npc_session"
+name = "npc_lims"
 version = "0.1.7"
-description = "Interfaces for working with behavior and epyhys sessions from the Mindscope Neuropixels team, in the cloud."
+description = "Tools for fetch and updating paths, metadata and state for Mindscope Neuropixels sessions, in the cloud."
 authors = [
+    { name = "Arjun Sridhar", email = "arjun.sridhar@alleninstitute.org" },
     { name = "Ben Hardcastle", email = "ben.hardcastle@alleninstitute.org" },
 ]
 dependencies = [
     "typing-extensions>=4.7.1",
+    "npc_session>=0.1.0",
 ]
 requires-python = ">=3.9"
 readme = "README.md"
@@ -24,8 +26,8 @@ classifiers = [
 text = "MIT"
 
 [project.urls]
-Repository = "https://github.com/AllenInstitute/npc_session"
-Issues = "https://github.com/AllenInstitute/npc_session/issues"
+Repository = "https://github.com/AllenInstitute/npc_lims"
+Issues = "https://github.com/AllenInstitute/npc_lims/issues"
 
 [project.optional-dependencies]
 dev = [
@@ -50,7 +52,7 @@ where = [
 ]
 
 [tool.setuptools.package-data]
-npc_session = [
+npc_lims = [
     "py.typed",
 ]
 

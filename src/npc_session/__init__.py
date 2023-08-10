@@ -1,4 +1,4 @@
-from npc_session.records import (
+from npc_lims.records import (
     DateRecord,
     DatetimeRecord,
     ProjectRecord,

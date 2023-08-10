@@ -1,30 +1,14 @@
 # npc_lims
 
-**n**euro**p**ixels **c**loud **session**
+**n**euro**p**ixels **c**loud **lims**
 	
-Interfaces for working with behavior and epyhys sessions from the
-Mindscope Neuropixels team, in the cloud.
+Tools for fetch and updating paths, metadata and state for Mindscope Neuropixels sessions, in the cloud.   
 
 [![Python
-Versions](https://img.shields.io/pypi/pyversions/npc_session.svg)](https://pypi.python.org/pypi/npc-session/)
+Versions](https://img.shields.io/pypi/pyversions/npc_lims.svg)](https://pypi.python.org/pypi/npc-lims/)
 ## quickstart
 
 ```bash
-pip install npc_session
+pip install npc_lims
 ```
 
-Parse a normalized IDs from a path or string:
-```python
->>> from npc_session import SessionRecord;
-
->>> s = SessionRecord('//allen/programs/mindscope/workgroups/templeton/TTOC/2022-07-26_14-09-36_366122')
->>> s
-'366122_2022-07-26'
->>> s.subject
-366122
->>> s.date
-'2022-07-26'
->>> s.date.year
-2022
-
-```

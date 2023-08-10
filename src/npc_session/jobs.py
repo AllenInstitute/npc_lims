@@ -11,7 +11,7 @@ from typing import Mapping, Protocol, TypeVar, Union
 
 from typing_extensions import TypeAlias
 
-import npc_session
+import npc_lims
 
 JobArgs: TypeAlias = Union[str, int, float, None]
 """Types of value that can be stored - mainly for compatibility with redis/sqlite3 types."""
@@ -33,12 +33,12 @@ class Job(Protocol):
     """Base class for jobs. The only required attribute is `session`, to
     match a job with a session. All other fields can be set to None."""
 
-    def __init__(self, session: npc_session.SessionRecord, **kwargs: JobArgs) -> None:
+    def __init__(self, session: npc_lims.SessionRecord, **kwargs: JobArgs) -> None:
         """Create a new job."""
 
     @property
     @abc.abstractmethod
-    def session(self) -> str | npc_session.SessionRecord:
+    def session(self) -> str | npc_lims.SessionRecord:
         """Session folder name, from which we can make an `np_session.Session` instance.
 
         - each job must have a Session
@@ -97,19 +97,19 @@ class JobQueue(Protocol):
     """
 
     @abc.abstractmethod
-    def __setitem__(self, key: npc_session.SessionRecord, value: Job) -> None:
+    def __setitem__(self, key: npc_lims.SessionRecord, value: Job) -> None:
         """Add a job to the queue."""
 
     @abc.abstractmethod
-    def __getitem__(self, key: npc_session.SessionRecord) -> Job:
+    def __getitem__(self, key: npc_lims.SessionRecord) -> Job:
         """Get a job from the queue."""
 
     @abc.abstractmethod
-    def __delitem__(self, key: npc_session.SessionRecord) -> None:
+    def __delitem__(self, key: npc_lims.SessionRecord) -> None:
         """Remove a job from the queue."""
 
     @abc.abstractmethod
-    def __contains__(self, key: npc_session.SessionRecord) -> bool:
+    def __contains__(self, key: npc_lims.SessionRecord) -> bool:
         """Whether the session is in the queue."""
 
     @abc.abstractmethod
@@ -127,5 +127,5 @@ class JobQueue(Protocol):
         """
 
     @abc.abstractmethod
-    def update(self, key: npc_session.SessionRecord, **kwargs: JobArgs) -> None:
+    def update(self, key: npc_lims.SessionRecord, **kwargs: JobArgs) -> None:
         """Update the fields on an existing entry."""
