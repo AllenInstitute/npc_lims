@@ -1,11 +1,12 @@
 from __future__ import annotations
-import dataclasses
 
+import dataclasses
 import functools
 import operator
 import os
 import re
-from typing import Any, Iterator, Literal
+from collections.abc import Iterator
+from typing import Any, Literal
 
 import npc_session
 import npc_session.parsing as parsing
@@ -16,7 +17,9 @@ from typing_extensions import TypeAlias
 CODE_OCEAN_API_TOKEN = os.getenv("CODE_OCEAN_API_TOKEN")
 CODE_OCEAN_DOMAIN = os.getenv("CODE_OCEAN_DOMAIN")
 
-DR_DATA_REPO = upath.UPath("s3://aind-scratch-data/ben.hardcastle/DynamicRoutingTask/Data")
+DR_DATA_REPO = upath.UPath(
+    "s3://aind-scratch-data/ben.hardcastle/DynamicRoutingTask/Data"
+)
 
 DataAsset: TypeAlias = dict[
     Literal[
@@ -67,6 +70,7 @@ def get_session_data_assets(
         )
     )
 
+
 def get_sessions_with_data_assets(
     subject: str | int,
 ) -> tuple[npc_session.SessionRecord, ...]:
@@ -82,7 +86,7 @@ def get_sessions_with_data_assets(
 def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath:
     """Reconstruct path to raw data in bucket (e.g. on s3) using data-asset
     info from Code Ocean.
-    
+
     >>> get_raw_data_root('668759_20230711')
     S3Path('s3://aind-ephys-data/ecephys_668759_2023-07-11_13-07-32')
     """
@@ -115,7 +119,7 @@ def get_raw_data_paths_from_s3(
 ) -> tuple[upath.UPath, ...]:
     """All top-level files and folders from the `ephys` & `behavior`
     subdirectories in a session's raw data folder on s3.
-    
+
     >>> files = get_raw_data_paths_from_s3 ('668759_20230711')
     >>> assert len(files) > 0
     """
@@ -134,17 +138,18 @@ def get_raw_data_paths_from_s3(
 class StimFile:
     path: upath.UPath
     session: npc_session.SessionRecord
-    name = property(lambda self: self.path.stem.split('_')[0])
+    name = property(lambda self: self.path.stem.split("_")[0])
     date = property(lambda self: self.session.date)
     time = property(lambda self: parsing.extract_isoformat_time(self.path.stem))
-    
+
+
 @functools.cache
 def get_hdf5_stim_files_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> tuple[StimFile, ...]:
     """All the stim files for a session, from the synced
     `DynamicRoutingTask/Data` folder on s3.
-    
+
     >>> files = get_hdf5_stim_files_from_s3('668759_20230711')
     >>> assert len(files) > 0
     >>> files[0].name, files[0].time
@@ -155,9 +160,12 @@ def get_hdf5_stim_files_from_s3(
     if not root.exists():
         if not DR_DATA_REPO.exists():
             raise FileNotFoundError(f"{DR_DATA_REPO = } does not exist")
-        raise FileNotFoundError(f"Subject {session.subject} may have been run by NSB: hdf5 files are in lims2")
+        raise FileNotFoundError(
+            f"Subject {session.subject} may have been run by NSB: hdf5 files are in lims2"
+        )
     file_glob = f"*_{session.subject}_{session.date.replace('-', '')}_??????.hdf5"
     return tuple(StimFile(path, session) for path in root.glob(file_glob))
+
 
 if __name__ == "__main__":
     import doctest

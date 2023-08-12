@@ -7,7 +7,8 @@ import collections.abc
 import contextlib
 import logging
 import os
-from typing import ClassVar, Iterator, Union
+from collections.abc import Iterator
+from typing import ClassVar, Union
 
 import redis
 from typing_extensions import TypeAlias
