@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import doctest
 import logging
+import os
 import pathlib
 from collections.abc import MutableMapping
 from typing import ClassVar, Iterator, Union
@@ -56,10 +57,7 @@ class State(MutableMapping):
 
     @classmethod
     def connect(cls) -> None:
-        key_path = pathlib.Path(
-            '//allen/scratch/aibstemp/arjun.sridhar/db_key.json'
-        )
-        cred = firebase_admin.credentials.Certificate(key_path)
+        cred = firebase_admin.credentials.Certificate(os.environ['FIREBASE_TOKEN'])
         cls.app = firebase_admin.initialize_app(cred)
         cls.db = firestore.client().collection('session_state')
         # cls.ref = cls.db.reference('/session_state') # root user, can create users and add them also if needed
