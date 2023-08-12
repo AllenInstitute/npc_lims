@@ -1,6 +1,6 @@
 [project]
 name = "npc_lims"
-version = "0.1.7"
+version = "0.1.8"
 description = "Tools for fetch and updating paths, metadata and state for Mindscope Neuropixels sessions, in the cloud."
 authors = [
     { name = "Arjun Sridhar", email = "arjun.sridhar@alleninstitute.org" },
@@ -10,7 +10,6 @@ dependencies = [
     "typing-extensions>=4.7.1",
     "npc_session>=0.1.0",
     "redis>=4.6.0",
-    # "pydbhub @ git+https://github.com/bjhardcastle/pydbhub.git@live",
     "python-dateutil>=2.8.2",
     "universal-pathlib>=0.1.1",
     "aind-codeocean-api>=0.2.4",
@@ -46,23 +45,6 @@ dev = [
     "black>=23.7.0",
 ]
 
-[build-system]
-requires = [
-    "setuptools>=61",
-    "wheel",
-]
-build-backend = "setuptools.build_meta"
-
-[tool.setuptools.packages.find]
-where = [
-    "src",
-]
-
-[tool.setuptools.package-data]
-npc_lims = [
-    "py.typed",
-]
-
 [tool.pdm.scripts]
 ruff = "ruff check src --fix-only"
 black = "black src"
@@ -90,6 +72,16 @@ composite = [
     "prebuild",
     "bumpver",
     "pdm publish",
+]
+
+[tool.setuptools.packages.find]
+where = [
+    "src",
+]
+
+[tool.setuptools.package-data]
+npc_lims = [
+    "py.typed",
 ]
 
 [tool.ruff]
@@ -165,3 +157,10 @@ testpaths = [
     "src",
     "tests",
 ]
+
+[build-system]
+requires = [
+    "setuptools>=61",
+    "wheel",
+]
+build-backend = "setuptools.build_meta"

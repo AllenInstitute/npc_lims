@@ -62,26 +62,23 @@ class State(collections.abc.MutableMapping):
     @classmethod
     def connect(cls) -> None:
         cls.db = redis.Redis(
-            host='redis-11357.c1.us-west-2-2.ec2.cloud.redislabs.com',
+            host="redis-11357.c1.us-west-2-2.ec2.cloud.redislabs.com",
             port=11357,
-            password=os.environ['REDIS_DEFAULT_USER_PASSWORD'],
+            password=os.environ["REDIS_DEFAULT_USER_PASSWORD"],
         )
         if cls.db.ping():
-            logger.debug('Connected to Redis database: %s', cls.db)
+            logger.debug("Connected to Redis database: %s", cls.db)
         else:
-            logger.error('Failed to connect to Redis database')
+            logger.error("Failed to connect to Redis database")
 
     @property
     def data(self) -> dict[str, AcceptedType]:
-        return {
-            k.decode(): decode(v)
-            for k, v in self.db.hgetall(self.name).items()
-        }
+        return {k.decode(): decode(v) for k, v in self.db.hgetall(self.name).items()}
 
     def __getitem__(self, key: str) -> AcceptedType:
         _ = decode(self.db.hget(self.name, key))
         if _ is None:
-            raise KeyError(f'{key!r} not found in Redis db entry {self!r}')
+            raise KeyError(f"{key!r} not found in Redis db entry {self!r}")
         return _
 
     def __setitem__(self, key: str, value: AcceptedType) -> None:
@@ -103,7 +100,7 @@ def encode(value: AcceptedType) -> RedisType:
         return str(value)
     if isinstance(value, (int, str, float)):
         return value
-    raise TypeError(f'Cannot store {value!r} in Redis')
+    raise TypeError(f"Cannot store {value!r} in Redis")
 
 
 def decode(value: bytes | None) -> AcceptedType:
