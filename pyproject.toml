@@ -10,7 +10,6 @@ dependencies = [
     "typing-extensions>=4.7.1",
     "npc_session>=0.1.0",
     "redis>=4.6.0",
-    "firebase-admin>=6.2.0",
     # "pydbhub @ git+https://github.com/bjhardcastle/pydbhub.git@live",
     "python-dateutil>=2.8.2",
     "universal-pathlib>=0.1.1",
