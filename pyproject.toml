@@ -107,14 +107,14 @@ src = [
     "src",
     "tests",
 ]
-target-version = "py38"
+target-version = "py39"
 
 [tool.ruff.flake8-tidy-imports]
 ban-relative-imports = "all"
 
 [tool.black]
 target-version = [
-    "py38",
+    "py39",
 ]
 
 [tool.coverage.paths]
