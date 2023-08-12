@@ -65,7 +65,8 @@ def get_session_data_assets(
         asset
         for asset in assets
         if re.match(
-            f"ecephys_{session.subject}_{session.date}_{npc_session.PARSE_TIME}", asset["name"]
+            f"ecephys_{session.subject}_{session.date}_{npc_session.PARSE_TIME}",
+            asset["name"],
         )
     )
 
