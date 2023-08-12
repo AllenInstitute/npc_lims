@@ -48,7 +48,7 @@ jobs:
         CODE_OCEAN_API_KEY: ${{ secrets.CODE_OCEAN_API_KEY }}
         CODE_OCEAN_DOMAIN: ${{ secrets.CODE_OCEAN_DOMAIN }}
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        REDIS_TOKEN: ${{ secrets.REDIS_TOKEN }}
+        REDIS_DEFAULT_USER_PASSWORD: ${{ secrets.REDIS_DEFAULT_USER_PASSWORD }}
       run: |
         pdm prebuild
         
