@@ -13,6 +13,8 @@ dependencies = [
     "firebase-admin>=6.2.0",
     # "pydbhub @ git+https://github.com/bjhardcastle/pydbhub.git@live",
     "python-dateutil>=2.8.2",
+    "universal-pathlib>=0.1.1",
+    "aind-codeocean-api>=0.2.4",
 ]
 requires-python = ">=3.9"
 readme = "README.md"
