@@ -64,7 +64,7 @@ class State(collections.abc.MutableMapping):
         cls.db = redis.Redis(
             host='redis-11357.c1.us-west-2-2.ec2.cloud.redislabs.com',
             port=11357,
-            password=os.environ['REDIS_PASSWORD'],
+            password=os.environ['REDIS_TOKEN'],
         )
         if cls.db.ping():
             logger.debug('Connected to Redis database: %s', cls.db)
