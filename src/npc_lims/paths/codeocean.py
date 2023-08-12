@@ -9,7 +9,6 @@ from collections.abc import Iterator
 from typing import Any, Literal
 
 import npc_session
-import npc_session.parsing as parsing
 import upath
 from aind_codeocean_api import codeocean  # type: ignore
 from typing_extensions import TypeAlias
@@ -66,7 +65,7 @@ def get_session_data_assets(
         asset
         for asset in assets
         if re.match(
-            f"ecephys_{session.subject}_{session.date}_{parsing._TIME}", asset["name"]
+            f"ecephys_{session.subject}_{session.date}_{npc_session.TIME}", asset["name"]
         )
     )
 
@@ -140,7 +139,7 @@ class StimFile:
     session: npc_session.SessionRecord
     name = property(lambda self: self.path.stem.split("_")[0])
     date = property(lambda self: self.session.date)
-    time = property(lambda self: parsing.extract_isoformat_time(self.path.stem))
+    time = property(lambda self: npc_session.extract_isoformat_time(self.path.stem))
 
 
 @functools.cache
