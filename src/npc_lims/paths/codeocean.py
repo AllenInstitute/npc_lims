@@ -5,12 +5,11 @@ from typing import Any, Literal, Iterator
 import upath
 import npc_session
 import npc_session.parsing as parsing
-from aind_codeocean_api import codeocean
+from aind_codeocean_api import codeocean  # type: ignore
 import functools
 import operator
 from typing_extensions import TypeAlias
 
-RAW_DATA_BUCKET = upath.UPath('s3://aind-ephys-data')
 CODE_OCEAN_API_TOKEN = os.getenv('CODE_OCEAN_API_TOKEN')
 CODE_OCEAN_DOMAIN = os.getenv('CODE_OCEAN_DOMAIN')
 

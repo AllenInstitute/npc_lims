@@ -15,7 +15,7 @@ from typing_extensions import TypeAlias
 logger = logging.getLogger(__name__)
 
 # AcceptedType will be coerced to RedisType before being stored in Redis
-RedisType = Union[str, int, float]
+RedisType: TypeAlias = Union[str, int, float]
 """Can be stored in Redis directly, or returned from Redis."""
 
 AcceptedType: TypeAlias = Union[RedisType, bool, None]
@@ -99,9 +99,11 @@ class State(collections.abc.MutableMapping):
 
 def encode(value: AcceptedType) -> RedisType:
     """Redis can't store bools: convert to something compatible before entering."""
-    if value in (True, False, None):
+    if isinstance(value, bool) or value is None:
         return str(value)
-    return value
+    if isinstance(value, (int, str, float)):
+        return value
+    raise TypeError(f'Cannot store {value!r} in Redis')
 
 
 def decode(value: bytes | None) -> AcceptedType:
