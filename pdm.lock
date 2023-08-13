@@ -850,15 +850,15 @@ files = [
 
 [[package]]
 name = "npc-session"
-version = "0.1.13"
+version = "0.1.14"
 requires_python = ">=3.9"
 summary = "Interfaces for working with behavior and epyhys sessions from the Mindscope Neuropixels team, in the cloud."
 dependencies = [
     "typing-extensions>=4.7.1",
 ]
 files = [
-    {file = "npc_session-0.1.13-py3-none-any.whl", hash = "sha256:a669c9634aa4ff0697b394bd2d7701c762936b035bcfb6657f434a19f450e491"},
-    {file = "npc_session-0.1.13.tar.gz", hash = "sha256:fcc174ce197433492c9c66dd0fd816257a707c19256089dde4110442a41f7178"},
+    {file = "npc_session-0.1.14-py3-none-any.whl", hash = "sha256:53de6613ef8534d28ef5cc36cd7b7d25b5ce3762d91feadc79702393a22efc68"},
+    {file = "npc_session-0.1.14.tar.gz", hash = "sha256:6f035be113a280f5db651090cdddf5928aaa4d61f3d765f398929b5f156e368e"},
 ]
 
 [[package]]
