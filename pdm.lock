@@ -6,7 +6,7 @@ groups = ["default", "dev"]
 cross_platform = true
 static_urls = false
 lock_version = "4.3"
-content_hash = "sha256:12b89d67ced1a73b111cd20b15ca6937da46d0c38fbe9179a107898e248631c2"
+content_hash = "sha256:54ae9f9d17ef8c428d915a92cdfe6b18d2cd4af81ec9561262984643d51ed8ca"
 
 [[package]]
 name = "aind-codeocean-api"
@@ -992,6 +992,21 @@ files = [
     {file = "pydantic-1.10.12-cp39-cp39-win_amd64.whl", hash = "sha256:fdbdd1d630195689f325c9ef1a12900524dceb503b00a987663ff4f58669b93d"},
     {file = "pydantic-1.10.12-py3-none-any.whl", hash = "sha256:b749a43aa51e32839c9d71dc67eb1e4221bb04af1033a32e3923d46f9effa942"},
     {file = "pydantic-1.10.12.tar.gz", hash = "sha256:0fe8a415cea8f340e7a9af9c54fc71a649b43e8ca3cc732986116b3cb135d303"},
+]
+
+[[package]]
+name = "pydbhub-bjh"
+version = "0.0.4"
+requires_python = ">=3.7"
+summary = "pydbhub"
+dependencies = [
+    "python-dateutil",
+    "requests",
+    "rich",
+]
+files = [
+    {file = "pydbhub_bjh-0.0.4-py3-none-any.whl", hash = "sha256:344ec773161900425616537f33bc7e526ce6f20f842741da810542779f593e75"},
+    {file = "pydbhub_bjh-0.0.4.tar.gz", hash = "sha256:3bc9981670e311dea3d9ac22e74f55ed4ed04d996ca168fb2219df7ecead8ff0"},
 ]
 
 [[package]]
