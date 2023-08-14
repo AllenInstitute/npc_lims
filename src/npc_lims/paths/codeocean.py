@@ -127,6 +127,8 @@ def get_raw_data_paths_from_s3(
     >>> assert len(files) > 0
     """
     raw_data_root = get_raw_data_root(session)
+    if not raw_data_root:
+        return ()
     directories: Iterator = (
         directory for directory in raw_data_root.iterdir() if directory.is_dir()
     )
