@@ -15,6 +15,7 @@ DR_DATA_REPO = upath.UPath(
 )
 NWB_REPO = upath.UPath("s3://aind-scratch-data/ben.hardcastle/nwb/nwb")
 
+
 @functools.cache
 def get_raw_data_paths_from_s3(
     session: str | npc_session.SessionRecord,
@@ -70,6 +71,7 @@ def get_hdf5_stim_files_from_s3(
     file_glob = f"*_{session.subject}_{session.date.replace('-', '')}_??????.hdf5"
     return tuple(StimFile(path, session) for path in root.glob(file_glob))
 
+
 @functools.cache
 def get_nwb_file_from_s3(
     session: str | npc_session.SessionRecord,
@@ -83,8 +85,9 @@ def get_nwb_file_from_s3(
     glob = f"*_{session.replace('-', '')}.nwb"
     result = next(root.glob(glob), None)
     if not result:
-        print(f'No NWB file found at {root}/{glob}')
+        print(f"No NWB file found at {root}/{glob}")
     return result
+
 
 if __name__ == "__main__":
     import doctest
