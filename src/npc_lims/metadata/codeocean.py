@@ -87,24 +87,33 @@ def get_session_result_data_assets(
 
 
 @functools.cache
-def get_session_sorted_data_asset(session: str | npc_session.SessionRecord) -> tuple[DataAsset, ...]:
+def get_session_sorted_data_asset(
+    session: str | npc_session.SessionRecord,
+) -> tuple[DataAsset, ...]:
     """
     >>> sorted_data_assets = get_session_sorted_data_asset('668759_20230711')
     >>> assert len(sorted_data_assets) > 0
     """
     session_result_data_assets = get_session_data_assets(session)
-    sorted_data_assets = tuple(data_asset for data_asset in session_result_data_assets if is_sorted_data_asset(data_asset) 
-                               and data_asset['files'] > 2)
-    
+    sorted_data_assets = tuple(
+        data_asset
+        for data_asset in session_result_data_assets
+        if is_sorted_data_asset(data_asset) and data_asset["files"] > 2
+    )
+
     if not sorted_data_assets:
         raise ValueError(f"{session} has either not been sorted yet or failed")
 
     if len(sorted_data_assets) > 1:
-        warnings.warn(f'There is more than one sorted data asset for session {session}. Defaulting to most recent result')
-        created_timestamps = [data_asset['created'] for data_asset in sorted_data_assets]
+        warnings.warn(
+            f"There is more than one sorted data asset for session {session}. Defaulting to most recent result"
+        )
+        created_timestamps = [
+            data_asset["created"] for data_asset in sorted_data_assets
+        ]
         most_recent_index = created_timestamps.index(max(created_timestamps))
-        return tuple([sorted_data_assets[most_recent_index]])
-    
+        return (sorted_data_assets[most_recent_index],)
+
     return sorted_data_assets
 
 
