@@ -1,6 +1,6 @@
 [project]
 name = "npc_lims"
-version = "0.1.13"
+version = "0.1.14"
 description = "Tools to fetch and update paths, metadata and state for Mindscope Neuropixels sessions, in the cloud."
 authors = [
     { name = "Arjun Sridhar", email = "arjun.sridhar@alleninstitute.org" },
@@ -37,6 +37,9 @@ text = "MIT"
 Repository = "https://github.com/AllenInstitute/npc_lims"
 Issues = "https://github.com/AllenInstitute/npc_lims/issues"
 
+[project.scripts]
+update_session_status = "npc_lims.scripts.update_session_status:main"
+
 [tool.pdm.dev-dependencies]
 dev = [
     "pytest>=7.4.0",
@@ -46,9 +49,6 @@ dev = [
     "pytest-cov>=4.1.0",
     "black>=23.7.0",
 ]
-
-[project.scripts]
-update_session_status = "npc_lims.scripts.update_session_status:main"
 
 [tool.pdm.scripts]
 ruff = "ruff check src --fix-only"
