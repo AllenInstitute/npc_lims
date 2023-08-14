@@ -40,6 +40,7 @@ codeocean_client = aind_codeocean_api.CodeOceanClient(
     domain=CODE_OCEAN_DOMAIN, token=CODE_OCEAN_API_TOKEN
 )
 
+
 @functools.cache
 def get_subject_data_assets(subject: str | int) -> tuple[DataAsset, ...]:
     """
@@ -79,7 +80,7 @@ def get_sessions_with_data_assets(
     """
     assets = get_subject_data_assets(subject)
     return tuple({npc_session.SessionRecord(asset["name"]) for asset in assets})
-    
+
 
 def get_data_asset(asset: str | uuid.UUID | DataAsset) -> DataAsset:
     """Converts an asset uuid to dict of info from CodeOcean API."""
@@ -90,18 +91,36 @@ def get_data_asset(asset: str | uuid.UUID | DataAsset) -> DataAsset:
     assert isinstance(asset, Mapping), f"Unexpected {type(asset) = }, {asset = }"
     return asset
 
+
 def is_raw_data_asset(asset: str | DataAsset) -> bool:
     """
     >>> is_raw_data_asset('83636983-f80d-42d6-a075-09b60c6abd5e')
     True
+    >>> is_raw_data_asset('173e2fdc-0ca3-4a4e-9886-b74207a91a9a')
+    False
     """
     asset = get_data_asset(asset)
+    if is_sorted_data_asset(asset):
+        return False
     return (
         asset.get("custom_metadata", {}).get("data level") == "raw data"
         or "raw" in asset.get("tags", [])
     )
 
-  
+
+def is_sorted_data_asset(asset: str | DataAsset) -> bool:
+    """
+    >>> is_sorted_data_asset('173e2fdc-0ca3-4a4e-9886-b74207a91a9a')
+    True
+    >>> is_sorted_data_asset('83636983-f80d-42d6-a075-09b60c6abd5e')
+    False
+    """
+    asset = get_data_asset(asset)
+    if "ecephys" not in asset["name"]:
+        return False
+    return "sorted" in asset["name"]
+
+
 @functools.cache
 def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath | None:
     """Reconstruct path to raw data in bucket (e.g. on s3) using data-asset
@@ -112,9 +131,7 @@ def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath |
     """
     session = npc_session.SessionRecord(session)
     raw_assets = tuple(
-        asset
-        for asset in get_session_data_assets(session)
-        if is_raw_data_asset(asset)
+        asset for asset in get_session_data_assets(session) if is_raw_data_asset(asset)
     )
     if not raw_assets:
         return None
