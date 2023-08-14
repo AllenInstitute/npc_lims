@@ -4,6 +4,7 @@ import functools
 import os
 import re
 import uuid
+import warnings
 from collections.abc import Mapping
 from typing import Any, Literal
 
@@ -77,14 +78,23 @@ def get_session_result_data_assets(session: str | npc_session.SessionRecord) -> 
 
     return result_data_assets
 
+@functools.cache
 def get_session_sorted_data_assets(session: str | npc_session.SessionRecord) -> tuple[DataAsset, ...]:
     """
     >>> sorted_data_assets = get_session_sorted_data_assets('668759_20230711')
     >>> assert len(sorted_data_assets) > 0
     """
     session_result_data_assets = get_session_data_assets(session)
-    sorted_data_assets = tuple(data_asset for data_asset in session_result_data_assets if is_sorted_data_asset(data_asset))
-
+    sorted_data_assets = tuple(data_asset for data_asset in session_result_data_assets if is_sorted_data_asset(data_asset) 
+                               and data_asset['files'] > 2)
+    
+    if not sorted_data_assets:
+        raise ValueError(f'{session} has either not been sorted yet or failed')
+    
+    if len(sorted_data_assets) > 1:
+        warnings.warn(f'There is more than one sorted data asset for session {session}. Defaulting to most recent result')
+        return tuple([sorted_data_assets[0]])
+    
     return sorted_data_assets
 
 @functools.cache

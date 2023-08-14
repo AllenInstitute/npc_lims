@@ -15,7 +15,7 @@ DR_DATA_REPO = upath.UPath(
 )
 
 CODE_OCEAN_DATA_BUCKET = upath.UPath(
-    'PATH TO BUCKET'
+    's3://codeocean-s3datasetsbucket-1u41qdg42ur9'
 )
 
 @functools.cache
@@ -47,14 +47,9 @@ def get_sorted_data_paths_from_s3(session:str | npc_session.SessionRecord):
     >>> sorted_data_s3_paths = get_sorted_data_paths_from_s3('668759_20230711')
     >>> assert len(sorted_data_s3_paths) > 0
     """
-    sorted_data_assets = codeocean.get_session_sorted_data_assets(session)
+    sorted_data_asset = codeocean.get_session_sorted_data_assets(session)[0]
     # session sorted more than once, only grab assets that have more than build log and output (ones that did not fail)
-    sorted_data_s3_paths = tuple((CODE_OCEAN_DATA_BUCKET / data_asset['id']).iterdir() for data_asset 
-                       in sorted_data_assets if len(tuple((CODE_OCEAN_DATA_BUCKET / data_asset['id']).iterdir())) > 2)
-    
-    if not sorted_data_s3_paths:
-        raise ValueError(f'{session} has either not been sorted yet or failed')
-    
+    sorted_data_s3_paths = tuple((CODE_OCEAN_DATA_BUCKET / sorted_data_asset['id']).iterdir())    
     return sorted_data_s3_paths
 
 @dataclasses.dataclass
