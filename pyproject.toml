@@ -47,6 +47,9 @@ dev = [
     "black>=23.7.0",
 ]
 
+[project.scripts]
+update_session_status = "npc_lims.scripts.update_session_status:main"
+
 [tool.pdm.scripts]
 ruff = "ruff check src --fix-only"
 black = "black src"

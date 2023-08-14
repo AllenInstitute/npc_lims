@@ -10,7 +10,7 @@ from typing import Any, Literal
 
 import npc_session
 import upath
-from aind_codeocean_api import codeocean  # type: ignore
+from aind_codeocean_api import codeocean as aind_codeocean_api  # type: ignore
 from typing_extensions import TypeAlias
 
 CODE_OCEAN_API_TOKEN = os.getenv("CODE_OCEAN_API_TOKEN")
@@ -45,7 +45,7 @@ def get_subject_data_assets(subject: str | int) -> tuple[DataAsset, ...]:
     >>> assets = get_subject_data_assets(668759)
     >>> assert len(assets) > 0
     """
-    codeocean_client = codeocean.CodeOceanClient(
+    codeocean_client = aind_codeocean_api.CodeOceanClient(
         domain=CODE_OCEAN_DOMAIN, token=CODE_OCEAN_API_TOKEN
     )
     response = codeocean_client.search_data_assets(
@@ -71,6 +71,7 @@ def get_session_data_assets(
     )
 
 
+@functools.cache
 def get_sessions_with_data_assets(
     subject: str | int,
 ) -> tuple[npc_session.SessionRecord, ...]:
@@ -83,7 +84,7 @@ def get_sessions_with_data_assets(
 
 
 @functools.cache
-def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath:
+def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath | None:
     """Reconstruct path to raw data in bucket (e.g. on s3) using data-asset
     info from Code Ocean.
 
@@ -94,11 +95,13 @@ def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath:
     raw_assets = tuple(
         asset
         for asset in get_session_data_assets(session)
-        if asset["custom_metadata"].get("data level") == "raw data"
+        if asset.get("custom_metadata", {}).get("data level") == "raw data"
     )
-    if len(raw_assets) < session.idx:
+    if not raw_assets:
+        return None
+    if 0 < len(raw_assets) < session.idx + 1:  # 0-indexed
         raise ValueError(
-            f"Number of paths raw sessions on s3 {len(raw_assets)} is less than  {session.idx = }"
+            f"Number of raw assets for {session = } is less than expected for the idx specified: {len(raw_assets) = }, {session.idx = }"
         )
 
     raw_asset = raw_assets[session.idx]
