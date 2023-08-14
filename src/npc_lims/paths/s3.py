@@ -14,6 +14,9 @@ DR_DATA_REPO = upath.UPath(
     "s3://aind-scratch-data/ben.hardcastle/DynamicRoutingTask/Data"
 )
 
+CODE_OCEAN_DATA_BUCKET = upath.UPath(
+    'PATH TO BUCKET'
+)
 
 @functools.cache
 def get_raw_data_paths_from_s3(
@@ -37,6 +40,22 @@ def get_raw_data_paths_from_s3(
 
     return functools.reduce(operator.add, first_level_files_directories)
 
+@functools.cache
+def get_sorted_data_paths_from_s3(session:str | npc_session.SessionRecord):
+    """
+    Gets the top level files/folders for the sorted data 
+    >>> sorted_data_s3_paths = get_sorted_data_paths_from_s3('668759_20230711')
+    >>> assert len(sorted_data_s3_paths) > 0
+    """
+    sorted_data_assets = codeocean.get_session_sorted_data_assets(session)
+    # session sorted more than once, only grab assets that have more than build log and output (ones that did not fail)
+    sorted_data_s3_paths = tuple((CODE_OCEAN_DATA_BUCKET / data_asset['id']).iterdir() for data_asset 
+                       in sorted_data_assets if len(tuple((CODE_OCEAN_DATA_BUCKET / data_asset['id']).iterdir())) > 2)
+    
+    if not sorted_data_s3_paths:
+        raise ValueError(f'{session} has either not been sorted yet or failed')
+    
+    return sorted_data_s3_paths
 
 @dataclasses.dataclass
 class StimFile:

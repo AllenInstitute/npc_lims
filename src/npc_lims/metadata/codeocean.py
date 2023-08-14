@@ -67,6 +67,25 @@ def get_session_data_assets(
         )
     )
 
+def get_session_result_data_assets(session: str | npc_session.SessionRecord) -> tuple[DataAsset, ...]:
+    """
+    >>> result_data_assets = get_session_result_data_assets('668759_20230711')
+    >>> assert len(result_data_assets) > 0
+    """
+    session_data_assets = get_session_data_assets(session)
+    result_data_assets = tuple(data_asset for data_asset in session_data_assets if data_asset['type'] == 'result')
+
+    return result_data_assets
+
+def get_session_sorted_data_assets(session: str | npc_session.SessionRecord) -> tuple[DataAsset, ...]:
+    """
+    >>> sorted_data_assets = get_session_sorted_data_assets('668759_20230711')
+    >>> assert len(sorted_data_assets) > 0
+    """
+    session_result_data_assets = get_session_data_assets(session)
+    sorted_data_assets = tuple(data_asset for data_asset in session_result_data_assets if is_sorted_data_asset(data_asset))
+
+    return sorted_data_assets
 
 @functools.cache
 def get_sessions_with_data_assets(
@@ -117,7 +136,6 @@ def is_sorted_data_asset(asset: str | DataAsset) -> bool:
         return False
     return "sorted" in asset["name"]
 
-
 @functools.cache
 def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath | None:
     """Reconstruct path to raw data in bucket (e.g. on s3) using data-asset
@@ -159,8 +177,10 @@ def get_path_from_data_asset(asset: DataAsset) -> upath.UPath:
 
 
 if __name__ == "__main__":
+    get_session_sorted_data_assets('668759_20230713')
     import doctest
 
     doctest.testmod(
         optionflags=(doctest.IGNORE_EXCEPTION_DETAIL | doctest.NORMALIZE_WHITESPACE)
     )
+
