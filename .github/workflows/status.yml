@@ -33,5 +33,7 @@ jobs:
         pip install -e .
     
     - name: Update session status
+      env:
+        DBHUB_API_KEY: ${{ secrets.DBHUB_API_KEY }}
       run: |
         update_session_status
