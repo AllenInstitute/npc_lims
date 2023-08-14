@@ -1,0 +1,34 @@
+name: Update session status
+
+on: 
+  schedule:
+    # every 12 hours
+    - cron: '0 */12 * * *'
+  push:
+    branches: [ "main" ]
+
+jobs:
+  package:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        python-version: ["3.9"]
+    permissions: write-all
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+        
+    - name: Install package
+      run: |
+        pip install -e .
+    
+    - name: Update session status
+      run: |
+        source update_session_status
