@@ -3,16 +3,10 @@ from __future__ import annotations
 import dataclasses
 import functools
 import operator
-import os
-import re
 from collections.abc import Iterator
-from typing import Any, Literal, Mapping
-import uuid
 
 import npc_session
 import upath
-from aind_codeocean_api import codeocean as aind_codeocean_api  # type: ignore
-from typing_extensions import TypeAlias
 
 import npc_lims.metadata.codeocean as codeocean
 

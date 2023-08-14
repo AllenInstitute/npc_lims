@@ -1,13 +1,11 @@
 from __future__ import annotations
 
-import dataclasses
 import functools
-import operator
 import os
 import re
-from collections.abc import Iterator
-from typing import Any, Literal, Mapping
 import uuid
+from collections.abc import Mapping
+from typing import Any, Literal
 
 import npc_session
 import upath
@@ -102,10 +100,9 @@ def is_raw_data_asset(asset: str | DataAsset) -> bool:
     asset = get_data_asset(asset)
     if is_sorted_data_asset(asset):
         return False
-    return (
-        asset.get("custom_metadata", {}).get("data level") == "raw data"
-        or "raw" in asset.get("tags", [])
-    )
+    return asset.get("custom_metadata", {}).get(
+        "data level"
+    ) == "raw data" or "raw" in asset.get("tags", [])
 
 
 def is_sorted_data_asset(asset: str | DataAsset) -> bool:

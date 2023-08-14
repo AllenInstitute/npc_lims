@@ -542,12 +542,12 @@ files = [
 
 [[package]]
 name = "exceptiongroup"
-version = "1.1.2"
+version = "1.1.3"
 requires_python = ">=3.7"
 summary = "Backport of PEP 654 (exception groups)"
 files = [
-    {file = "exceptiongroup-1.1.2-py3-none-any.whl", hash = "sha256:e346e69d186172ca7cf029c8c1d16235aa0e04035e5750b4b95039e65204328f"},
-    {file = "exceptiongroup-1.1.2.tar.gz", hash = "sha256:12c3e887d6485d16943a309616de20ae5582633e0a2eda17f4e10fd61c1e8af5"},
+    {file = "exceptiongroup-1.1.3-py3-none-any.whl", hash = "sha256:343280667a4585d195ca1cf9cef84a4e178c4b6cf2274caef9859782b567d5e3"},
+    {file = "exceptiongroup-1.1.3.tar.gz", hash = "sha256:097acd85d473d75af5bb98e41b61ff7fe35efe6675e4f9370ec6ec5126d160e9"},
 ]
 
 [[package]]
@@ -996,7 +996,7 @@ files = [
 
 [[package]]
 name = "pydbhub-bjh"
-version = "0.0.6"
+version = "0.0.7"
 requires_python = ">=3.7"
 summary = "pydbhub"
 dependencies = [
@@ -1005,8 +1005,8 @@ dependencies = [
     "rich",
 ]
 files = [
-    {file = "pydbhub_bjh-0.0.6-py3-none-any.whl", hash = "sha256:93d15616e8b9e462cb82d717604ac8d80d50634a4fb70f349abeb52d40aaed93"},
-    {file = "pydbhub_bjh-0.0.6.tar.gz", hash = "sha256:c60a66f7edadb5aecf73a1d11a788d4aed858b4cd5d491279dff2fb1ec90959b"},
+    {file = "pydbhub_bjh-0.0.7-py3-none-any.whl", hash = "sha256:0f45ab280f447cdc5263a1eafbb0843d380f64904603cd9e5f8cecc712aec8db"},
+    {file = "pydbhub_bjh-0.0.7.tar.gz", hash = "sha256:226eda4e1c59a3c679148306a91fdeb3c5cebdd393a65f792199106830ce47bf"},
 ]
 
 [[package]]
