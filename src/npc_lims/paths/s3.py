@@ -42,19 +42,14 @@ def get_raw_data_paths_from_s3(
 
 
 @functools.cache
-def get_sorted_data_paths_from_s3(session: str | npc_session.SessionRecord):
+def get_sorted_data_paths_from_s3(session:str | npc_session.SessionRecord) -> tuple[upath.UPath, ...]:
     """
     Gets the top level files/folders for the sorted data
     >>> sorted_data_s3_paths = get_sorted_data_paths_from_s3('668759_20230711')
     >>> assert len(sorted_data_s3_paths) > 0
     """
-    sorted_data_asset = codeocean.get_session_sorted_data_assets(session)[0]
-    # session sorted more than once, only grab assets that have more than build log and output (ones that did not fail)
-    sorted_data_s3_paths = tuple(
-        (CODE_OCEAN_DATA_BUCKET / sorted_data_asset["id"]).iterdir()
-    )
-    return sorted_data_s3_paths
-
+    sorted_data_asset = codeocean.get_session_sorted_data_asset(session)[0]
+    return tuple((CODE_OCEAN_DATA_BUCKET / sorted_data_asset['id']).iterdir())    
 
 @dataclasses.dataclass
 class StimFile:
