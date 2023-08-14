@@ -1,1 +1,1 @@
-from npc_lims.paths.codeocean import *
+from npc_lims.paths.s3 import *

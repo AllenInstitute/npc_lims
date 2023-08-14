@@ -7,7 +7,7 @@ import npc_session  # type: ignore
 import yaml
 from typing_extensions import TypeAlias
 
-import npc_lims.paths.codeocean as codeocean
+import npc_lims.metadata.codeocean as codeocean
 
 _LOCAL_FILE = pathlib.Path(__file__).parent.parent / "tracked_sessions.yaml"
 

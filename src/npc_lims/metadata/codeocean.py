@@ -6,19 +6,16 @@ import operator
 import os
 import re
 from collections.abc import Iterator
-from typing import Any, Literal
+from typing import Any, Literal, Mapping
+import uuid
 
 import npc_session
 import upath
 from aind_codeocean_api import codeocean as aind_codeocean_api  # type: ignore
 from typing_extensions import TypeAlias
 
-CODE_OCEAN_API_TOKEN = os.getenv("CODE_OCEAN_API_TOKEN")
-CODE_OCEAN_DOMAIN = os.getenv("CODE_OCEAN_DOMAIN")
-
-DR_DATA_REPO = upath.UPath(
-    "s3://aind-scratch-data/ben.hardcastle/DynamicRoutingTask/Data"
-)
+CODE_OCEAN_API_TOKEN = os.getenv("CODE_OCEAN_API_TOKEN", "")
+CODE_OCEAN_DOMAIN = os.getenv("CODE_OCEAN_DOMAIN", "")
 
 DataAsset: TypeAlias = dict[
     Literal[
@@ -37,7 +34,11 @@ DataAsset: TypeAlias = dict[
     ],
     Any,
 ]
+"""Result from CodeOcean API when querying data assets."""
 
+codeocean_client = aind_codeocean_api.CodeOceanClient(
+    domain=CODE_OCEAN_DOMAIN, token=CODE_OCEAN_API_TOKEN
+)
 
 @functools.cache
 def get_subject_data_assets(subject: str | int) -> tuple[DataAsset, ...]:
@@ -45,9 +46,6 @@ def get_subject_data_assets(subject: str | int) -> tuple[DataAsset, ...]:
     >>> assets = get_subject_data_assets(668759)
     >>> assert len(assets) > 0
     """
-    codeocean_client = aind_codeocean_api.CodeOceanClient(
-        domain=CODE_OCEAN_DOMAIN, token=CODE_OCEAN_API_TOKEN
-    )
     response = codeocean_client.search_data_assets(
         query=f"subject id: {npc_session.SubjectRecord(subject)}"
     )
@@ -81,8 +79,29 @@ def get_sessions_with_data_assets(
     """
     assets = get_subject_data_assets(subject)
     return tuple({npc_session.SessionRecord(asset["name"]) for asset in assets})
+    
 
+def get_data_asset(asset: str | uuid.UUID | DataAsset) -> DataAsset:
+    """Converts an asset uuid to dict of info from CodeOcean API."""
+    if not isinstance(asset, Mapping):
+        response = codeocean_client.get_data_asset(str(asset))
+        response.raise_for_status()
+        asset = response.json()
+    assert isinstance(asset, Mapping), f"Unexpected {type(asset) = }, {asset = }"
+    return asset
 
+def is_raw_data_asset(asset: str | DataAsset) -> bool:
+    """
+    >>> is_raw_data_asset('83636983-f80d-42d6-a075-09b60c6abd5e')
+    True
+    """
+    asset = get_data_asset(asset)
+    return (
+        asset.get("custom_metadata", {}).get("data level") == "raw data"
+        or "raw" in asset.get("tags", [])
+    )
+
+  
 @functools.cache
 def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath | None:
     """Reconstruct path to raw data in bucket (e.g. on s3) using data-asset
@@ -95,7 +114,7 @@ def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath |
     raw_assets = tuple(
         asset
         for asset in get_session_data_assets(session)
-        if asset.get("custom_metadata", {}).get("data level") == "raw data"
+        if is_raw_data_asset(asset)
     )
     if not raw_assets:
         return None
@@ -103,9 +122,18 @@ def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath |
         raise ValueError(
             f"Number of raw assets for {session = } is less than expected for the idx specified: {len(raw_assets) = }, {session.idx = }"
         )
-
     raw_asset = raw_assets[session.idx]
-    bucket_info = raw_asset["sourceBucket"]
+    return get_path_from_data_asset(raw_asset)
+
+
+def get_path_from_data_asset(asset: DataAsset) -> upath.UPath:
+    """Reconstruct path to raw data in bucket (e.g. on s3) using data asset
+    uuid or dict of info from Code Ocean API."""
+    if "sourceBucket" not in asset:
+        raise ValueError(
+            f"Asset {asset['id']} has no `sourceBucket` info - not sure how to create UPath:\n{asset!r}"
+        )
+    bucket_info = asset["sourceBucket"]
     roots = {"aws": "s3", "gcs": "gs"}
     if bucket_info["origin"] not in roots:
         raise RuntimeError(
@@ -114,62 +142,6 @@ def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath |
     return upath.UPath(
         f"{roots[bucket_info['origin']]}://{bucket_info['bucket']}/{bucket_info['prefix']}"
     )
-
-
-@functools.cache
-def get_raw_data_paths_from_s3(
-    session: str | npc_session.SessionRecord,
-) -> tuple[upath.UPath, ...]:
-    """All top-level files and folders from the `ephys` & `behavior`
-    subdirectories in a session's raw data folder on s3.
-
-    >>> files = get_raw_data_paths_from_s3 ('668759_20230711')
-    >>> assert len(files) > 0
-    """
-    raw_data_root = get_raw_data_root(session)
-    if not raw_data_root:
-        return ()
-    directories: Iterator = (
-        directory for directory in raw_data_root.iterdir() if directory.is_dir()
-    )
-    first_level_files_directories: Iterator = (
-        tuple(directory.iterdir()) for directory in directories
-    )
-
-    return functools.reduce(operator.add, first_level_files_directories)
-
-
-@dataclasses.dataclass
-class StimFile:
-    path: upath.UPath
-    session: npc_session.SessionRecord
-    name = property(lambda self: self.path.stem.split("_")[0])
-    date = property(lambda self: self.session.date)
-    time = property(lambda self: npc_session.extract_isoformat_time(self.path.stem))
-
-
-@functools.cache
-def get_hdf5_stim_files_from_s3(
-    session: str | npc_session.SessionRecord,
-) -> tuple[StimFile, ...]:
-    """All the stim files for a session, from the synced
-    `DynamicRoutingTask/Data` folder on s3.
-
-    >>> files = get_hdf5_stim_files_from_s3('668759_20230711')
-    >>> assert len(files) > 0
-    >>> files[0].name, files[0].time
-    ('DynamicRouting1', '13:25:00')
-    """
-    session = npc_session.SessionRecord(session)
-    root = DR_DATA_REPO / str(session.subject)
-    if not root.exists():
-        if not DR_DATA_REPO.exists():
-            raise FileNotFoundError(f"{DR_DATA_REPO = } does not exist")
-        raise FileNotFoundError(
-            f"Subject {session.subject} may have been run by NSB: hdf5 files are in lims2"
-        )
-    file_glob = f"*_{session.subject}_{session.date.replace('-', '')}_??????.hdf5"
-    return tuple(StimFile(path, session) for path in root.glob(file_glob))
 
 
 if __name__ == "__main__":
