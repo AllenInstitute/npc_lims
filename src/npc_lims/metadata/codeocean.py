@@ -68,34 +68,50 @@ def get_session_data_assets(
         )
     )
 
-def get_session_result_data_assets(session: str | npc_session.SessionRecord) -> tuple[DataAsset, ...]:
+
+def get_session_result_data_assets(
+    session: str | npc_session.SessionRecord,
+) -> tuple[DataAsset, ...]:
     """
     >>> result_data_assets = get_session_result_data_assets('668759_20230711')
     >>> assert len(result_data_assets) > 0
     """
     session_data_assets = get_session_data_assets(session)
-    result_data_assets = tuple(data_asset for data_asset in session_data_assets if data_asset['type'] == 'result')
+    result_data_assets = tuple(
+        data_asset
+        for data_asset in session_data_assets
+        if data_asset["type"] == "result"
+    )
 
     return result_data_assets
 
+
 @functools.cache
-def get_session_sorted_data_assets(session: str | npc_session.SessionRecord) -> tuple[DataAsset, ...]:
+def get_session_sorted_data_assets(
+    session: str | npc_session.SessionRecord,
+) -> tuple[DataAsset, ...]:
     """
     >>> sorted_data_assets = get_session_sorted_data_assets('668759_20230711')
     >>> assert len(sorted_data_assets) > 0
     """
     session_result_data_assets = get_session_data_assets(session)
-    sorted_data_assets = tuple(data_asset for data_asset in session_result_data_assets if is_sorted_data_asset(data_asset) 
-                               and data_asset['files'] > 2)
-    
+    sorted_data_assets = tuple(
+        data_asset
+        for data_asset in session_result_data_assets
+        if is_sorted_data_asset(data_asset) and data_asset["files"] > 2
+    )
+
     if not sorted_data_assets:
-        raise ValueError(f'{session} has either not been sorted yet or failed')
-    
+        raise ValueError(f"{session} has either not been sorted yet or failed")
+
     if len(sorted_data_assets) > 1:
-        warnings.warn(f'There is more than one sorted data asset for session {session}. Defaulting to most recent result')
-        return tuple([sorted_data_assets[0]])
-    
+        warnings.warn(
+            f"There is more than one sorted data asset for session {session}. Defaulting to most recent result"
+        )
+        return (sorted_data_assets[0],)
+
     return sorted_data_assets
+
 
 @functools.cache
 def get_sessions_with_data_assets(
@@ -146,6 +162,7 @@ def is_sorted_data_asset(asset: str | DataAsset) -> bool:
         return False
     return "sorted" in asset["name"]
 
+
 @functools.cache
 def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath | None:
     """Reconstruct path to raw data in bucket (e.g. on s3) using data-asset
@@ -187,10 +204,9 @@ def get_path_from_data_asset(asset: DataAsset) -> upath.UPath:
 
 
 if __name__ == "__main__":
-    get_session_sorted_data_assets('668759_20230713')
+    get_session_sorted_data_assets("668759_20230713")
     import doctest
 
     doctest.testmod(
         optionflags=(doctest.IGNORE_EXCEPTION_DETAIL | doctest.NORMALIZE_WHITESPACE)
     )
-
