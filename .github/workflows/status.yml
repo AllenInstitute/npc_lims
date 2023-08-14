@@ -35,5 +35,11 @@ jobs:
     - name: Update session status
       env:
         DBHUB_API_KEY: ${{ secrets.DBHUB_API_KEY }}
+        AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        CODE_OCEAN_API_TOKEN: ${{ secrets.CODE_OCEAN_API_TOKEN }}
+        CODE_OCEAN_DOMAIN: ${{ secrets.CODE_OCEAN_DOMAIN }}
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        REDIS_DEFAULT_USER_PASSWORD: ${{ secrets.REDIS_DEFAULT_USER_PASSWORD }}
       run: |
         update_session_status
