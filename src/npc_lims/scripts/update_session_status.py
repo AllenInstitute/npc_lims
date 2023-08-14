@@ -43,7 +43,10 @@ def main() -> None:
             f"Error inserting values into `status` table ob dbhub: {response[1].get('error', 'Unknown error')}"
         )
     else:
-        print("Successfully updated `status` table on dbhub: https://dbhub.io/svc_neuropix/jobs.db")
-        
+        print(
+            "Successfully updated `status` table on dbhub: https://dbhub.io/svc_neuropix/jobs.db"
+        )
+
+
 if __name__ == "__main__":
     main()
