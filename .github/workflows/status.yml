@@ -34,4 +34,4 @@ jobs:
     
     - name: Update session status
       run: |
-        source update_session_status
+        update_session_status
