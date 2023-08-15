@@ -61,7 +61,8 @@ class StimFile:
     name = property(lambda self: self.path.stem.split("_")[0])
     date = property(lambda self: self.session.date)
     time = property(lambda self: npc_session.extract_isoformat_time(self.path.stem))
-    size = functools.cached_property(lambda self: self.path.stat()['size'])
+    size = functools.cached_property(lambda self: self.path.stat()["size"])
+
 
 @functools.cache
 def get_hdf5_stim_files_from_s3(
@@ -69,7 +70,7 @@ def get_hdf5_stim_files_from_s3(
 ) -> tuple[StimFile, ...]:
     """All the stim files for a session, from the synced
     `DynamicRoutingTask/Data` folder on s3.
-    
+
     - filters out files that are obviously wrong
 
     >>> files = get_hdf5_stim_files_from_s3('668759_20230711')
@@ -87,10 +88,10 @@ def get_hdf5_stim_files_from_s3(
         )
     file_glob = f"*_{session.subject}_{session.date.replace('-', '')}_??????.hdf5"
     files = [StimFile(path, session) for path in root.glob(file_glob)]
-    
+
     # no empty files:
     files = [f for f in files if f.size > 0]
-    
+
     # single behavior task:
     behavior_tasks = tuple(f for f in files if "DynamicRouting" in f.name)
     if len(behavior_tasks) > 1:
@@ -100,7 +101,8 @@ def get_hdf5_stim_files_from_s3(
                 files.remove(f)
 
     return tuple(files)
-        
+
+
 @functools.cache
 def get_nwb_file_from_s3(
     session: str | npc_session.SessionRecord,
