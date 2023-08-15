@@ -91,8 +91,8 @@ def get_session_sorted_data_asset(
     session: str | npc_session.SessionRecord,
 ) -> DataAsset:
     """
-    >>> sorted_data_assets = get_session_sorted_data_asset('668759_20230711')
-    >>> assert len(sorted_data_assets) == 1
+    >>> sorted_data_asset = get_session_sorted_data_asset('668759_20230711')
+    >>> assert isinstance(sorted_data_asset, dict)
     """
     session_result_data_assets = get_session_data_assets(session)
     sorted_data_assets = tuple(
