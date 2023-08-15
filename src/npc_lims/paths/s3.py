@@ -50,7 +50,7 @@ def get_sorted_data_paths_from_s3(
     >>> sorted_data_s3_paths = get_sorted_data_paths_from_s3('668759_20230711')
     >>> assert len(sorted_data_s3_paths) > 0
     """
-    sorted_data_asset = codeocean.get_session_sorted_data_asset(session)[0]
+    sorted_data_asset = codeocean.get_session_sorted_data_asset(session)
     return tuple((CODE_OCEAN_DATA_BUCKET / sorted_data_asset["id"]).iterdir())
 
 

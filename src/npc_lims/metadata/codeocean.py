@@ -89,10 +89,10 @@ def get_session_result_data_assets(
 @functools.cache
 def get_session_sorted_data_asset(
     session: str | npc_session.SessionRecord,
-) -> tuple[DataAsset, ...]:
+) -> DataAsset:
     """
     >>> sorted_data_assets = get_session_sorted_data_asset('668759_20230711')
-    >>> assert len(sorted_data_assets) > 0
+    >>> assert len(sorted_data_assets) == 1
     """
     session_result_data_assets = get_session_data_assets(session)
     sorted_data_assets = tuple(
@@ -112,9 +112,9 @@ def get_session_sorted_data_asset(
             data_asset["created"] for data_asset in sorted_data_assets
         ]
         most_recent_index = created_timestamps.index(max(created_timestamps))
-        return (sorted_data_assets[most_recent_index],)
+        return sorted_data_assets[most_recent_index]
 
-    return sorted_data_assets
+    return sorted_data_assets[0]
 
 
 @functools.cache
