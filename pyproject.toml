@@ -87,6 +87,7 @@ where = [
 [tool.setuptools.package-data]
 npc_lims = [
     "py.typed",
+    "tracked_sessions.*",
 ]
 
 [tool.ruff]
