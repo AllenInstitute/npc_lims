@@ -50,7 +50,8 @@ ephys:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-12_10-50-07_668759
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-13_09-35-31_668759
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-18_10-05-51_670181
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-19_10-00-22_670181
+    # - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-19_10-00-22_670181
+    # ^ no behavior task hdf5
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-20_12-21-41_670181 
     # ^ task only, mapping recording is in `stopped_early` subfolder
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-25_09-47-29_670180
