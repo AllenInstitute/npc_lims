@@ -81,7 +81,7 @@ def get_hdf5_stim_files_from_s3(
         if not DR_DATA_REPO.exists():
             raise FileNotFoundError(f"{DR_DATA_REPO = } does not exist")
         raise FileNotFoundError(
-            f"Subject {session.subject} may have been run by NSB: hdf5 files are in lims2"
+            f"Subject {session.subject} hdf5s not on s3: may have been run by NSB, in which case they are on lims2"
         )
     file_glob = f"*_{session.subject}_{session.date.replace('-', '')}_??????.hdf5"
     return tuple(StimFile(path, session) for path in root.glob(file_glob))
