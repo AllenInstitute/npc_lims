@@ -122,7 +122,7 @@ class TestDB(SqliteDBHub):
     >>> db.create()
     >>> db.insert("test", {'id': 1, 'name': 'one'}, {'id': 2, 'name': 'two'})
     >>> db.query("SELECT * FROM test;")
-    [{'id': 1, 'name': 'one'}, {'id': 2, 'name': 'two'}]
+    ({'id': 1, 'name': 'one'}, {'id': 2, 'name': 'two'})
     >>> _ = db.execute("DROP TABLE test;")
     """
     db_name = "test.db"
