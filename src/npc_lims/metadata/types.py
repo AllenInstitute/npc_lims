@@ -31,3 +31,6 @@ class RecordDB(Protocol):
         subject: str | npc_session.SubjectRecord | None = None,
     ) -> tuple[SupportsFromDB, ...]:
         ...
+
+    def delete_records(self, *rows: SupportsToDB) -> None:
+        ...

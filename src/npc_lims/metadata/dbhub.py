@@ -138,7 +138,14 @@ class SqliteDBHub:
             instances.append(cls.from_db(row))
         return tuple(instances)
 
-
+    def delete_records(self, *rows: types.SupportsToDB) -> None:
+        table = rows[0].table
+        statement = f"DELETE FROM {table} WHERE "
+        for row in rows:
+            statement += f"\n\t({', '.join(f'{k} = {repr(v)}' for k, v in row.to_db().items())}) OR"
+        statement = statement[:-3] + ";"
+        self.execute(statement)
+        
 class TestDB(SqliteDBHub):
     """Test database on dbhub.io.
 
