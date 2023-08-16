@@ -1,13 +1,11 @@
 from __future__ import annotations
 
 import dataclasses
-import datetime
-from typing import Iterable, Optional
 
 import npc_session
-import pydantic
 
 import npc_lims.metadata.dbhub as dbhub
+
 
 @dataclasses.dataclass
 class Epoch:
@@ -15,22 +13,23 @@ class Epoch:
     start_time: str | npc_session.TimeRecord
     stop_time: str | npc_session.TimeRecord
     tags: list[str]
-    notes: Optional[str] = None
+    notes: str | None = None
 
     def to_db(self) -> dict[str, str]:
         row = self.__dict__
-        row['tags'] = str(self.tags)
+        row["tags"] = str(self.tags)
         return row
 
     @classmethod
     def from_db(cls, row: dict[str, str]) -> Epoch:
-        row.pop('epoch_id', None)
+        row.pop("epoch_id", None)
         # basic check before eval
-        if row['tags'][0] != '[' or row['tags'][-1] != ']':
+        if row["tags"][0] != "[" or row["tags"][-1] != "]":
             raise RuntimeError(f"Trying to load epoch with malformed tags: {row=}")
-        row['tags'] = eval(row['tags'])
-        return Epoch(**row) # type: ignore
-        
+        row["tags"] = eval(row["tags"])
+        return Epoch(**row)  # type: ignore
+
+
 def add_epochs_to_db(*epochs: Epoch) -> None:
     """
     >>> epoch = Epoch('626791_2022-08-15', '11:23:36', '12:23:54', ['DynamicRouting1'])
@@ -38,7 +37,10 @@ def add_epochs_to_db(*epochs: Epoch) -> None:
     """
     dbhub.NWBSqliteDBHub().insert("epochs", *(epoch.to_db() for epoch in epochs))
 
-def get_epochs_from_db(session: Optional[str | npc_session.SessionRecord] = None) -> tuple[Epoch, ...]:
+
+def get_epochs_from_db(
+    session: str | npc_session.SessionRecord | None = None,
+) -> tuple[Epoch, ...]:
     """
     >>> all = get_epochs_from_db()
     >>> assert all
@@ -46,7 +48,7 @@ def get_epochs_from_db(session: Optional[str | npc_session.SessionRecord] = None
     >>> epochs[0].tags
     ['DynamicRouting1']
     """
-    
+
     if session:
         query = f"SELECT * FROM epochs WHERE session_id = '{session}'"
     else:
@@ -56,9 +58,7 @@ def get_epochs_from_db(session: Optional[str | npc_session.SessionRecord] = None
         return ()
     epochs = []
     for row in rows:
-        epochs.append(
-            Epoch.from_db(row)
-        )
+        epochs.append(Epoch.from_db(row))
     return tuple(epochs)
 
 
