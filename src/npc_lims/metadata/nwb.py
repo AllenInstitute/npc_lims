@@ -1,14 +1,32 @@
 from __future__ import annotations
 
 import dataclasses
+from typing import ClassVar, Protocol
 
+from typing_extensions import Self
 import npc_session
 
 import npc_lims.metadata.dbhub as dbhub
 
+class SupportsToDB(Protocol):
+    
+    table: ClassVar[str]
+    
+    def to_db(self) -> dict[str, str | int | float | None]:
+        ...
+
+class SupportsFromDB(Protocol):
+    
+    table: ClassVar[str]
+        
+    @classmethod
+    def from_db(cls, row: dict[str, str | int | float | None]) -> Self:
+        ...
 
 @dataclasses.dataclass
 class Epoch:
+    table: ClassVar = "epochs"
+    
     session_id: str | npc_session.SessionRecord
     start_time: str | npc_session.TimeRecord
     stop_time: str | npc_session.TimeRecord
@@ -17,6 +35,7 @@ class Epoch:
 
     def to_db(self) -> dict[str, str]:
         row = self.__dict__
+        row.pop("table", None) # not actually needed for dataclass ClassVar
         row["tags"] = str(self.tags)
         return row
 
@@ -30,36 +49,38 @@ class Epoch:
         return Epoch(**row)  # type: ignore
 
 
-def add_epochs_to_db(*epochs: Epoch) -> None:
+def add_to_db(*rows: SupportsToDB) -> None:
     """
     >>> epoch = Epoch('626791_2022-08-15', '11:23:36', '12:23:54', ['DynamicRouting1'])
-    >>> add_epochs_to_db(epoch)
+    >>> add_to_db(epoch)
     """
-    dbhub.NWBSqliteDBHub().insert("epochs", *(epoch.to_db() for epoch in epochs))
+    table = rows[0].table
+    dbhub.NWBSqliteDBHub().insert(table, *(row.to_db() for row in rows))
 
 
-def get_epochs_from_db(
+def get_from_db(
+    cls: SupportsFromDB,
     session: str | npc_session.SessionRecord | None = None,
-) -> tuple[Epoch, ...]:
+) -> tuple[SupportsFromDB, ...]:
     """
-    >>> all = get_epochs_from_db()
+    >>> all = get_from_db(Epoch)
     >>> assert all
-    >>> epochs = get_epochs_from_db('626791_2022-08-15')
+    >>> epochs = get_from_db(Epoch, '626791_2022-08-15')
     >>> epochs[0].tags
     ['DynamicRouting1']
     """
-
+    table = cls.table
     if session:
-        query = f"SELECT * FROM epochs WHERE session_id = '{session}'"
+        query = f"SELECT * FROM {table!r} WHERE session_id = {session!r}"
     else:
-        query = "SELECT * FROM epochs"
+        query = f"SELECT * FROM {table!r}"
     rows = dbhub.NWBSqliteDBHub().query(query)
     if not rows:
         return ()
-    epochs = []
+    instances = []
     for row in rows:
-        epochs.append(Epoch.from_db(row))
-    return tuple(epochs)
+        instances.append(cls.from_db(row))
+    return tuple(instances)
 
 
 if __name__ == "__main__":
