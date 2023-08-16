@@ -11,7 +11,7 @@ import tempfile
 from collections.abc import Iterable
 from typing import Any, ClassVar
 
-import pydbhub.dbhub as dbhub
+import pydbhub.dbhub as pydbhub
 import upath
 
 API_KEY = os.getenv("DBHUB_API_KEY")
@@ -37,8 +37,8 @@ class SqliteDBHub:
         return str(self.schema_string_or_path)
 
     @functools.cached_property
-    def connection(self) -> dbhub.Dbhub:
-        return dbhub.Dbhub(API_KEY, db_name=self.db_name, db_owner=self.db_owner)
+    def connection(self) -> pydbhub.Dbhub:
+        return pydbhub.Dbhub(API_KEY, db_name=self.db_name, db_owner=self.db_owner)
 
     @property
     def url(self) -> str:
@@ -74,7 +74,7 @@ class SqliteDBHub:
         db = sqlite3.connect(temp)
         db.executescript(self.schema)
         db.commit()
-        info = dbhub.UploadInformation(
+        info = pydbhub.UploadInformation(
             live=True,
             public=True,
         )
