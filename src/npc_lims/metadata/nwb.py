@@ -12,14 +12,14 @@ import npc_lims.metadata.types as types
 @dataclasses.dataclass
 class Epoch:
     """
+    >>> from npc_lims import NWBSqliteDBHub as DB
+    
     >>> epoch = Epoch('626791_2022-08-15', '11:23:36', '12:23:54', ['DynamicRouting1'])
-    >>> db = dbhub.NWBSqliteDBHub()
+    >>> DB().add_records(epoch)
     
-    >>> db.add_records(epoch)
-    
-    >>> all_epochs = db.get_records(Epoch)
+    >>> all_epochs = DB().get_records(Epoch)
     >>> assert epoch in all_epochs, f"{epoch=} not in {all_epochs=}"
-    >>> session_epochs = db.get_records(Epoch, '626791_2022-08-15')
+    >>> session_epochs = DB().get_records(Epoch, '626791_2022-08-15')
     >>> session_epochs[0].tags
     ['DynamicRouting1']
     """
