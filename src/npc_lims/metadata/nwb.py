@@ -1,13 +1,11 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import ClassVar, Literal, Optional
+from typing import ClassVar, Literal
 
-from typing_extensions import Self
 import npc_session
+from typing_extensions import Self
 
-import npc_lims.metadata.dbhub as dbhub
-import npc_lims.metadata.types as types
 
 @dataclasses.dataclass
 class Subject:
@@ -17,24 +15,25 @@ class Subject:
     ...     DB().add_records(Subject(session.subject))
     >>> all_subjects = DB().get_records(Subject)
     """
+
     table: ClassVar[str] = "subjects"
-    
+
     subject_id: int | npc_session.SubjectRecord
-    sex: Optional[Literal['M', 'F', 'U']] = None
-    date_of_birth: Optional[str | npc_session.DateRecord] = None
-    genotype: Optional[str] = None
-    description: Optional[str] = None
-    strain: Optional[str] = None
-    notes: Optional[str] = None
-    
+    sex: Literal["M", "F", "U"] | None = None
+    date_of_birth: str | npc_session.DateRecord | None = None
+    genotype: str | None = None
+    description: str | None = None
+    strain: str | None = None
+    notes: str | None = None
+
     def to_db(self) -> dict[str, str | int | float | None]:
         return self.__dict__.copy()
 
     @classmethod
     def from_db(cls, row: dict[str, str | int | float | None]) -> Self:
         return cls(**row)  # type: ignore
-    
-    
+
+
 @dataclasses.dataclass
 class Session:
     """
@@ -43,26 +42,27 @@ class Session:
     ...     DB().add_records(Session(session.session, session.subject))
     >>> all_sessions = DB().get_records(Session)
     """
+
     table: ClassVar[str] = "sessions"
-    
+
     session_id: str | npc_session.SessionRecord
     subject_id: int | npc_session.SubjectRecord
-    session_start_time: Optional[str | npc_session.TimeRecord] = None
-    stimulus_notes: Optional[str] = None
-    experimenter: Optional[str] = None
-    experiment_description: Optional[str] = None
-    epoch_tags: Optional[str] = None
-    source_script: Optional[str] = None
-    identifier: Optional[str] = None
-    notes: Optional[str] = None
-    
+    session_start_time: str | npc_session.TimeRecord | None = None
+    stimulus_notes: str | None = None
+    experimenter: str | None = None
+    experiment_description: str | None = None
+    epoch_tags: str | None = None
+    source_script: str | None = None
+    identifier: str | None = None
+    notes: str | None = None
+
     def to_db(self) -> dict[str, str | int | float | None]:
         return self.__dict__.copy()
 
     @classmethod
     def from_db(cls, row: dict[str, str | int | float | None]) -> Self:
         return cls(**row)  # type: ignore
-    
+
 
 @dataclasses.dataclass
 class Epoch:
