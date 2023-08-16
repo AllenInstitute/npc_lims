@@ -6,7 +6,7 @@ groups = ["default", "dev"]
 cross_platform = true
 static_urls = false
 lock_version = "4.3"
-content_hash = "sha256:40b3f329f2deffa336d656e1bb0b8e9d740911d7548c1fa24d36059756073d1b"
+content_hash = "sha256:383f75d7276c3aac00724d1e4aa151c1692410dcc27e7a81ba4ccd25fca1d589"
 
 [[package]]
 name = "aind-codeocean-api"
@@ -996,7 +996,7 @@ files = [
 
 [[package]]
 name = "pydbhub-bjh"
-version = "0.0.7"
+version = "0.0.8"
 requires_python = ">=3.7"
 summary = "pydbhub"
 dependencies = [
@@ -1005,8 +1005,8 @@ dependencies = [
     "rich",
 ]
 files = [
-    {file = "pydbhub_bjh-0.0.7-py3-none-any.whl", hash = "sha256:0f45ab280f447cdc5263a1eafbb0843d380f64904603cd9e5f8cecc712aec8db"},
-    {file = "pydbhub_bjh-0.0.7.tar.gz", hash = "sha256:226eda4e1c59a3c679148306a91fdeb3c5cebdd393a65f792199106830ce47bf"},
+    {file = "pydbhub_bjh-0.0.8-py3-none-any.whl", hash = "sha256:a1e44ae0fb451b3d3a338bf0baff33c77505228ad48c98e0f4c70e32fa91c27e"},
+    {file = "pydbhub_bjh-0.0.8.tar.gz", hash = "sha256:6b91a69c36ed24f2df9a54695155ecb5c39f12feab9b46383414fd5099477c7e"},
 ]
 
 [[package]]
@@ -1132,15 +1132,15 @@ files = [
 
 [[package]]
 name = "redis"
-version = "4.6.0"
+version = "5.0.0"
 requires_python = ">=3.7"
 summary = "Python client for Redis database and key-value store"
 dependencies = [
     "async-timeout>=4.0.2; python_full_version <= \"3.11.2\"",
 ]
 files = [
-    {file = "redis-4.6.0-py3-none-any.whl", hash = "sha256:e2b03db868160ee4591de3cb90d40ebb50a90dd302138775937f6a42b7ed183c"},
-    {file = "redis-4.6.0.tar.gz", hash = "sha256:585dc516b9eb042a619ef0a39c3d7d55fe81bdb4df09a52c9cdde0d07bf1aa7d"},
+    {file = "redis-5.0.0-py3-none-any.whl", hash = "sha256:06570d0b2d84d46c21defc550afbaada381af82f5b83e5b3777600e05d8e2ed0"},
+    {file = "redis-5.0.0.tar.gz", hash = "sha256:5cea6c0d335c9a7332a460ed8729ceabb4d0c489c7285b0a86dbbf8a017bd120"},
 ]
 
 [[package]]
@@ -1237,15 +1237,15 @@ files = [
 
 [[package]]
 name = "s3transfer"
-version = "0.6.1"
+version = "0.6.2"
 requires_python = ">= 3.7"
 summary = "An Amazon S3 Transfer Manager"
 dependencies = [
     "botocore<2.0a.0,>=1.12.36",
 ]
 files = [
-    {file = "s3transfer-0.6.1-py3-none-any.whl", hash = "sha256:3c0da2d074bf35d6870ef157158641178a4204a6e689e82546083e31e0311346"},
-    {file = "s3transfer-0.6.1.tar.gz", hash = "sha256:640bb492711f4c0c0905e1f62b6aaeb771881935ad27884852411f8e9cacbca9"},
+    {file = "s3transfer-0.6.2-py3-none-any.whl", hash = "sha256:b014be3a8a2aab98cfe1abc7229cc5a9a0cf05eb9c1f2b86b230fd8df3f78084"},
+    {file = "s3transfer-0.6.2.tar.gz", hash = "sha256:cab66d3380cca3e70939ef2255d01cd8aece6a4907a9528740f668c4b0611861"},
 ]
 
 [[package]]
