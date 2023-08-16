@@ -145,7 +145,8 @@ class SqliteDBHub:
             statement += f"\n\t({', '.join(f'{k} = {repr(v)}' for k, v in row.to_db().items())}) OR"
         statement = statement[:-3] + ";"
         self.execute(statement)
-        
+
+
 class TestDB(SqliteDBHub):
     """Test database on dbhub.io.
 
