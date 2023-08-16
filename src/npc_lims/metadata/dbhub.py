@@ -141,8 +141,9 @@ class SqliteDBHub:
     def delete_records(self, *rows: types.SupportsToDB) -> None:
         table = rows[0].table
         statement = f"DELETE FROM {table} WHERE "
+        null = "NULL"
         for row in rows:
-            statement += f"\n\t({', '.join(f'{k} = {repr(v)}' for k, v in row.to_db().items())}) OR"
+            statement += f"\n\t({', '.join(f'{k} = {repr(v) if v is not None else null}' for k, v in row.to_db().items())}) OR"
         statement = statement[:-3] + ";"
         self.execute(statement)
 
