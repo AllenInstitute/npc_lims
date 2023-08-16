@@ -9,7 +9,8 @@ import pathlib
 import sqlite3
 import tempfile
 from collections.abc import Iterable
-from typing import Any, ClassVar, Type
+from typing import Any, ClassVar
+
 import npc_session
 import pydbhub.dbhub as pydbhub
 import upath
@@ -19,6 +20,7 @@ import npc_lims.metadata.types as types
 API_KEY = os.getenv("DBHUB_API_KEY")
 
 DEFAULT_BACKUP_PATH = upath.UPath("s3://aind-scratch-data/ben.hardcastle/db-backups")
+
 
 class SqliteDBHub:
     """Base class for sqlite database on dbhub.io."""
@@ -113,12 +115,11 @@ class SqliteDBHub:
         self.insert(table, *(row.to_db() for row in rows))
 
     def get_records(
-        self, 
-        cls: Type[types.SupportsFromDB],
+        self,
+        cls: type[types.SupportsFromDB],
         session: str | npc_session.SessionRecord | None = None,
         subject: int | npc_session.SubjectRecord | None = None,
-        ) -> tuple[types.SupportsFromDB, ...]:
-        
+    ) -> tuple[types.SupportsFromDB, ...]:
         table = cls.table
         query = f"SELECT * FROM {table!r}"
         extra = []
@@ -126,9 +127,9 @@ class SqliteDBHub:
             extra += [f"session_id = {session!r}"]
         if subject:
             extra += [f"subject_id = {subject!r}"]
-        if extra: 
+        if extra:
             query += f" WHERE ({' AND '.join(extra)})"
-        
+
         rows = self.query(query)
         if not rows:
             return ()

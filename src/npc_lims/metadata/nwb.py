@@ -1,28 +1,26 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import ClassVar, Type
+from typing import ClassVar
 
 import npc_session
-
-import npc_lims.metadata.dbhub as dbhub
-import npc_lims.metadata.types as types
 
 
 @dataclasses.dataclass
 class Epoch:
     """
     >>> from npc_lims import NWBSqliteDBHub as DB
-    
+
     >>> epoch = Epoch('626791_2022-08-15', '11:23:36', '12:23:54', ['DynamicRouting1'])
     >>> DB().add_records(epoch)
-    
+
     >>> all_epochs = DB().get_records(Epoch)
     >>> assert epoch in all_epochs, f"{epoch=} not in {all_epochs=}"
     >>> session_epochs = DB().get_records(Epoch, '626791_2022-08-15')
     >>> session_epochs[0].tags
     ['DynamicRouting1']
     """
+
     table: ClassVar = "epochs"
 
     session_id: str | npc_session.SessionRecord
