@@ -3,30 +3,31 @@ from __future__ import annotations
 import dataclasses
 from typing import ClassVar, Protocol
 
-from typing_extensions import Self
 import npc_session
+from typing_extensions import Self
 
 import npc_lims.metadata.dbhub as dbhub
 
+
 class SupportsToDB(Protocol):
-    
     table: ClassVar[str]
-    
+
     def to_db(self) -> dict[str, str | int | float | None]:
         ...
 
+
 class SupportsFromDB(Protocol):
-    
     table: ClassVar[str]
-        
+
     @classmethod
     def from_db(cls, row: dict[str, str | int | float | None]) -> Self:
         ...
 
+
 @dataclasses.dataclass
 class Epoch:
     table: ClassVar = "epochs"
-    
+
     session_id: str | npc_session.SessionRecord
     start_time: str | npc_session.TimeRecord
     stop_time: str | npc_session.TimeRecord
@@ -35,7 +36,7 @@ class Epoch:
 
     def to_db(self) -> dict[str, str]:
         row = self.__dict__
-        row.pop("table", None) # not actually needed for dataclass ClassVar
+        row.pop("table", None)  # not actually needed for dataclass ClassVar
         row["tags"] = str(self.tags)
         return row
 
