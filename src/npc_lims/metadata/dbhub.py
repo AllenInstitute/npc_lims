@@ -9,15 +9,16 @@ import pathlib
 import sqlite3
 import tempfile
 from collections.abc import Iterable
-from typing import Any, ClassVar
-
+from typing import Any, ClassVar, Type
+import npc_session
 import pydbhub.dbhub as pydbhub
 import upath
+
+import npc_lims.metadata.types as types
 
 API_KEY = os.getenv("DBHUB_API_KEY")
 
 DEFAULT_BACKUP_PATH = upath.UPath("s3://aind-scratch-data/ben.hardcastle/db-backups")
-
 
 class SqliteDBHub:
     """Base class for sqlite database on dbhub.io."""
@@ -103,9 +104,38 @@ class SqliteDBHub:
         statement = f"INSERT INTO {table} ({', '.join(rows[0].keys())}) VALUES "
         for row in rows:
             statement += f"\n\t({', '.join(repr(_) if _ is not None else 'NULL' for _ in row.values())}),"
-        statement = statement[:-1] + "ON CONFLICT DO NOTHING;"
+        statement = statement[:-1] + " ON CONFLICT DO NOTHING;"
 
         self.execute(statement)
+
+    def add_records(self, *rows: types.SupportsToDB) -> None:
+        table = rows[0].table
+        self.insert(table, *(row.to_db() for row in rows))
+
+    def get_records(
+        self, 
+        cls: Type[types.SupportsFromDB],
+        session: str | npc_session.SessionRecord | None = None,
+        subject: int | npc_session.SubjectRecord | None = None,
+        ) -> tuple[types.SupportsFromDB, ...]:
+        
+        table = cls.table
+        query = f"SELECT * FROM {table!r}"
+        extra = []
+        if session:
+            extra += [f"session_id = {session!r}"]
+        if subject:
+            extra += [f"subject_id = {subject!r}"]
+        if extra: 
+            query += f" WHERE ({' AND '.join(extra)})"
+        
+        rows = self.query(query)
+        if not rows:
+            return ()
+        instances = []
+        for row in rows:
+            instances.append(cls.from_db(row))
+        return tuple(instances)
 
 
 class TestDB(SqliteDBHub):

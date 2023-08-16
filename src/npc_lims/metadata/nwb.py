@@ -1,31 +1,28 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import ClassVar, Protocol
+from typing import ClassVar, Type
 
 import npc_session
-from typing_extensions import Self
 
 import npc_lims.metadata.dbhub as dbhub
-
-
-class SupportsToDB(Protocol):
-    table: ClassVar[str]
-
-    def to_db(self) -> dict[str, str | int | float | None]:
-        ...
-
-
-class SupportsFromDB(Protocol):
-    table: ClassVar[str]
-
-    @classmethod
-    def from_db(cls, row: dict[str, str | int | float | None]) -> Self:
-        ...
+import npc_lims.metadata.types as types
 
 
 @dataclasses.dataclass
 class Epoch:
+    """
+    >>> epoch = Epoch('626791_2022-08-15', '11:23:36', '12:23:54', ['DynamicRouting1'])
+    >>> db = dbhub.NWBSqliteDBHub()
+    
+    >>> db.add_records(epoch)
+    
+    >>> all_epochs = db.get_records(Epoch)
+    >>> assert epoch in all_epochs, f"{epoch=} not in {all_epochs=}"
+    >>> session_epochs = db.get_records(Epoch, '626791_2022-08-15')
+    >>> session_epochs[0].tags
+    ['DynamicRouting1']
+    """
     table: ClassVar = "epochs"
 
     session_id: str | npc_session.SessionRecord
@@ -35,7 +32,7 @@ class Epoch:
     notes: str | None = None
 
     def to_db(self) -> dict[str, str]:
-        row = self.__dict__
+        row = self.__dict__.copy()
         row.pop("table", None)  # not actually needed for dataclass ClassVar
         row["tags"] = str(self.tags)
         return row
@@ -48,40 +45,6 @@ class Epoch:
             raise RuntimeError(f"Trying to load epoch with malformed tags: {row=}")
         row["tags"] = eval(row["tags"])
         return Epoch(**row)  # type: ignore
-
-
-def add_to_db(*rows: SupportsToDB) -> None:
-    """
-    >>> epoch = Epoch('626791_2022-08-15', '11:23:36', '12:23:54', ['DynamicRouting1'])
-    >>> add_to_db(epoch)
-    """
-    table = rows[0].table
-    dbhub.NWBSqliteDBHub().insert(table, *(row.to_db() for row in rows))
-
-
-def get_from_db(
-    cls: SupportsFromDB,
-    session: str | npc_session.SessionRecord | None = None,
-) -> tuple[SupportsFromDB, ...]:
-    """
-    >>> all = get_from_db(Epoch)
-    >>> assert all
-    >>> epochs = get_from_db(Epoch, '626791_2022-08-15')
-    >>> epochs[0].tags
-    ['DynamicRouting1']
-    """
-    table = cls.table
-    if session:
-        query = f"SELECT * FROM {table!r} WHERE session_id = {session!r}"
-    else:
-        query = f"SELECT * FROM {table!r}"
-    rows = dbhub.NWBSqliteDBHub().query(query)
-    if not rows:
-        return ()
-    instances = []
-    for row in rows:
-        instances.append(cls.from_db(row))
-    return tuple(instances)
 
 
 if __name__ == "__main__":
