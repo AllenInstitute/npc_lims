@@ -10,7 +10,8 @@ import pathlib
 import functools
 import sqlite3
 import tempfile
-from typing import Any, ClassVar
+from typing import Any, ClassVar, Iterable
+import typing
 
 import pydbhub.dbhub as dbhub
 import upath
@@ -58,6 +59,7 @@ class SqliteDBHub:
         response = self.connection.Databases(live=True) # raises if API key is invalid
         if response[1] and isinstance(response[1], dict):
             raise AssertionError(response[1].get("error", "Unknown error"))
+        assert response[0] is not None
         if self.db_name not in response[0]:
             raise LookupError(f"Database {self.db_name} not found on dbhub.io (only checking live databases for {self.db_owner})")
     
@@ -84,11 +86,14 @@ class SqliteDBHub:
     def create(self) -> None:
         self.execute(self.schema)
     
-    def query(self, query: str) -> list[dict[str, Any]] | None:
+    def query(self, query: str) -> tuple[dict[str, Any], ...] | None: # type: ignore
         response = self.connection.Query(query)
         if response[1] and isinstance(response[1], dict):
             raise LookupError(response[1].get("error", "Unknown error"))
-        return self.connection.Query(query)[0]
+        if not response[0]:
+            return None
+        typing.cast(Iterable[dict[str, Any]], response[0])  # noqa: F821
+        return tuple(self.connection.Query(query)[0])
 
     def execute(self, query: str) -> None:
         response = self.connection.Execute(query)
