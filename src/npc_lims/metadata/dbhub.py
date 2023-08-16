@@ -102,8 +102,8 @@ class SqliteDBHub:
             raise ValueError("All rows must have the same keys (column names)")
         statement = f"INSERT INTO {table} ({', '.join(rows[0].keys())}) VALUES "
         for row in rows:
-            statement += f"\n\t({', '.join(repr(_) for _ in row.values())}),"
-        statement = statement[:-1] + ";"
+            statement += f"\n\t({', '.join(repr(_) if _ is not None else 'NULL' for _ in row.values())}),"
+        statement = statement[:-1] + "ON CONFLICT DO NOTHING;"
 
         self.execute(statement)
 
