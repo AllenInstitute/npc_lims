@@ -85,6 +85,7 @@ CREATE TABLE IF NOT EXISTS
     stop_time TIME,
     notes TEXT,
     FOREIGN KEY (session_id) REFERENCES sessions (session_id)
+    UNIQUE (session_id, start_time, stop_time)
   );
 
 CREATE TABLE IF NOT EXISTS
