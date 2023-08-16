@@ -1,6 +1,6 @@
 [project]
 name = "npc_lims"
-version = "0.1.29"
+version = "0.1.30"
 description = "Tools to fetch and update paths, metadata and state for Mindscope Neuropixels sessions, in the cloud."
 authors = [
     { name = "Arjun Sridhar", email = "arjun.sridhar@alleninstitute.org" },
@@ -9,7 +9,7 @@ authors = [
 dependencies = [
     "typing-extensions>=4.7.1",
     "npc_session>=0.1.0",
-    "redis>=4.1.4", # lower bound for compatibility with np_session
+    "redis>=4.1.4",
     "universal-pathlib>=0.1.1",
     "aind-codeocean-api>=0.2.4",
     "s3fs>=2023.6.0",
