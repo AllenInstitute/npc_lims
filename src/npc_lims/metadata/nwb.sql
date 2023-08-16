@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS
     start_time TIME,
     stop_time TIME,
     notes TEXT,
-    FOREIGN KEY (session_id) REFERENCES sessions (session_id)
+    FOREIGN KEY (session_id) REFERENCES sessions (session_id),
     UNIQUE (session_id, start_time, stop_time)
   );
 
@@ -201,11 +201,7 @@ CREATE TABLE IF NOT EXISTS
     -- FOREIGN KEY (session_id) REFERENCES sessions (session_id),
     FOREIGN KEY (sorter_id) REFERENCES sorters (sorter_id),
     -- FOREIGN KEY (electrode_group) REFERENCES electrode_groups (electrode_group),
-    FOREIGN KEY (
-      session_id,
-      electrode_group,
-      peak_channel_index
-    ) REFERENCES electrodes (session_id, 'group', channel_index),
+    FOREIGN KEY (session_id, electrode_group, peak_channel_index) REFERENCES electrodes (session_id, 'group', channel_index),
     FOREIGN KEY (location) REFERENCES ccf_regions (ccf_region_id),
     FOREIGN KEY (sorted_group_id) REFERENCES sorted_groups (sorted_group_id),
     UNIQUE (sorted_group_id, unit_id)
