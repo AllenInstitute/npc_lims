@@ -86,14 +86,14 @@ class SqliteDBHub:
     def create(self) -> None:
         self.execute(self.schema)
     
-    def query(self, query: str) -> tuple[dict[str, Any], ...] | None: # type: ignore
+    def query(self, query: str) -> tuple[dict[str, Any], ...] | None:
         response = self.connection.Query(query)
         if response[1] and isinstance(response[1], dict):
             raise LookupError(response[1].get("error", "Unknown error"))
         if not response[0]:
             return None
-        typing.cast(Iterable[dict[str, Any]], response[0])  # noqa: F821
-        return tuple(self.connection.Query(query)[0])
+        results: Iterable[dict[str, Any]] = response[0] # type: ignore
+        return tuple(results)
 
     def execute(self, query: str) -> None:
         response = self.connection.Execute(query)
