@@ -51,16 +51,21 @@ class Session:
     stimulus_notes: str | None = None
     experimenter: str | None = None
     experiment_description: str | None = None
-    epoch_tags: str | None = None
+    epoch_tags: list[str] | None = dataclasses.field(default_factory=list)
     source_script: str | None = None
     identifier: str | None = None
     notes: str | None = None
 
     def to_db(self) -> dict[str, str | int | float | None]:
-        return self.__dict__.copy()
-
+        row = self.__dict__.copy()
+        row["epoch_tags"] = str(self.epoch_tags)
+        return row
+    
     @classmethod
     def from_db(cls, row: dict[str, str | int | float | None]) -> Self:
+        if row["epoch_tags"][0] != "[" or row["epoch_tags"][-1] != "]":
+            raise RuntimeError(f"Trying to load epoch with malformed epoch_tags: {row=}")
+        row["epoch_tags"] = eval(row["epoch_tags"])
         return cls(**row)  # type: ignore
 
 
