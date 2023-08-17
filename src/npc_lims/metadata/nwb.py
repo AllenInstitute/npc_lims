@@ -108,7 +108,7 @@ class File(Record):
 
 
 @dataclasses.dataclass
-class Data_Assets(Record):
+class DataAsset(Record):
     table: ClassVar = "data_assets"
     data_asset_id: str
     session_id: str
@@ -116,40 +116,47 @@ class Data_Assets(Record):
 
 
 @dataclasses.dataclass
-class CCF_Regions(Record):
+class CCFRegion(Record):
     table: ClassVar = "ccf_regions"
     ccf_region_id: str
 
 
 @dataclasses.dataclass
-class Devices(Record):
+class Device(Record):
+    """A probe serial number, used across sessions"""
     table: ClassVar = "devices"
 
     device_id: int
-    description: str | None = None
-    manufacturer: str | None = None
+    """Serial number of the device"""
+    description: str | None = 'Neuropixels 1.0'
+    manufacturer: str | None = 'IMEC'
 
 
 @dataclasses.dataclass
 class ElectrodeGroup(Record):
+    """All the channels used on one probe, in one session"""
     table: ClassVar = "electrode_groups"
 
     session_id: str | npc_session.SessionRecord
     device: int
+    """Serial number of the device"""
     name: str | None = None
     description: str | None = None
     location: str | None = None
 
 
 @dataclasses.dataclass
-class Electrodes(Record):
+class Electrode(Record):
+    """A single channel on a probe"""
     table: ClassVar = "electrodes"
 
     session_id: str | npc_session.SessionRecord
-    group: str
-    location: str
+    group: Literal['probeA', 'probeB', 'probeC', 'probeD', 'probeE', 'probeF']
+    location: str | None = None
+    """CCF location acronym/abbreviation"""
     channel_index: int | None = None
     id: int | None = None
+    """Channel number on the probe"""
     x: float | None = None
     y: float | None = None
     z: float | None = None
