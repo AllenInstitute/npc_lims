@@ -106,29 +106,33 @@ class File(Record):
     data_asset_id: str | None = None
     notes: str | None = None
 
+
 @dataclasses.dataclass
 class Data_Assets(Record):
-    table: ClassVar = 'data_assets'
+    table: ClassVar = "data_assets"
     data_asset_id: str
     session_id: str
     description: str
 
+
 @dataclasses.dataclass
 class CCF_Regions(Record):
-    table: ClassVar = 'ccf_regions'
+    table: ClassVar = "ccf_regions"
     ccf_region_id: str
+
 
 @dataclasses.dataclass
 class Devices(Record):
-    table: ClassVar = 'devices'
+    table: ClassVar = "devices"
 
     device_id: int
     description: str | None = None
     manufacturer: str | None = None
 
+
 @dataclasses.dataclass
 class ElectrodeGroup(Record):
-    table: ClassVar = 'electrode_groups'
+    table: ClassVar = "electrode_groups"
 
     session_id: str | npc_session.SessionRecord
     device: int
@@ -136,9 +140,10 @@ class ElectrodeGroup(Record):
     description: str | None = None
     location: str | None = None
 
+
 @dataclasses.dataclass
 class Electrodes(Record):
-    table: ClassVar = 'electrodes'
+    table: ClassVar = "electrodes"
 
     session_id: str | npc_session.SessionRecord
     group: str
@@ -149,8 +154,9 @@ class Electrodes(Record):
     y: float | None = None
     z: float | None = None
     imp: float | None = None
-    filtering : str | None = None
+    filtering: str | None = None
     reference: str | None = None
+
 
 # TODO files, folders
 

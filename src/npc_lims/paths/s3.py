@@ -53,20 +53,28 @@ def get_sorted_data_paths_from_s3(
     sorted_data_asset = codeocean.get_session_sorted_data_asset(session)
     return tuple((CODE_OCEAN_DATA_BUCKET / sorted_data_asset["id"]).iterdir())
 
+
 @functools.cache
-def get_settings_xml_path_from_s3(session: str | npc_session.SessionRecord) -> upath.UPath | None:
+def get_settings_xml_path_from_s3(
+    session: str | npc_session.SessionRecord,
+) -> upath.UPath | None:
     """
     >>> settings_xml_path = get_settings_xml_path_from_s3('670180-2023-07-26')
     >>> assert settings_xml_path.exists()
     """
     raw_data_paths_s3 = get_raw_data_paths_from_s3(session)
 
-    if not raw_data_paths_s3: # not uploaded to codeocean yet
+    if not raw_data_paths_s3:  # not uploaded to codeocean yet
         return None
-    
-    directories = (raw_path for raw_path in raw_data_paths_s3 if raw_path.is_dir() and '.zarr' not in raw_path.suffix)
-    settings_xml_paths_s3 = tuple(raw_path / 'settings.xml' for raw_path in directories)
+
+    directories = (
+        raw_path
+        for raw_path in raw_data_paths_s3
+        if raw_path.is_dir() and ".zarr" not in raw_path.suffix
+    )
+    settings_xml_paths_s3 = tuple(raw_path / "settings.xml" for raw_path in directories)
     return settings_xml_paths_s3[0]
+
 
 @dataclasses.dataclass
 class StimFile:
@@ -136,6 +144,7 @@ def get_nwb_file_from_s3(
 
 if __name__ == "__main__":
     import doctest
+
     doctest.testmod(
         optionflags=(doctest.IGNORE_EXCEPTION_DETAIL | doctest.NORMALIZE_WHITESPACE)
     )
