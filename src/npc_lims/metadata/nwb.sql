@@ -369,3 +369,11 @@ CREATE INDEX idx_sessions_subject_id ON sessions (subject_id);
 --     electrode_groups AS groups
 -- ON
 --     electrodes.electrode_group_id = groups.electrode_group_id;
+
+---------
+-- epoch duration in minutes
+-- SELECT session_id, tags, round((strftime('%s', stop_time) - strftime('%s', start_time)) / 60.0, 2) AS 'duration (min)'  FROM epochs;
+
+----------
+-- subject age in days
+--SELECT sessions.session_start_time, ROUND(JULIANDAY(sessions.session_start_time) - JULIANDAY(subjects.date_of_birth), 0) AS age_in_days FROM sessions, subjects WHERE sessions.subject_id = subjects.subject_id
