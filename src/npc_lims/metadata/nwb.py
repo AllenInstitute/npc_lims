@@ -22,8 +22,10 @@ class Subject:
     sex: Literal["M", "F", "U"] | None = None
     date_of_birth: str | npc_session.DateRecord | None = None
     genotype: str | None = None
+    """e.g., Sst-IRES-Cre/wt;Ai148(TIT2L-GC6f-ICL-tTA2)/wt"""
     description: str | None = None
     strain: str | None = None
+    """e.g., C57BL/6J"""
     notes: str | None = None
 
     def to_db(self) -> dict[str, str | int | float | None]:
@@ -51,7 +53,7 @@ class Session:
     stimulus_notes: str | None = None
     experimenter: str | None = None
     experiment_description: str | None = None
-    epoch_tags: list[str] | None = dataclasses.field(default_factory=list)
+    epoch_tags: list[str] = dataclasses.field(default_factory=list)
     source_script: str | None = None
     identifier: str | None = None
     notes: str | None = None
@@ -63,9 +65,9 @@ class Session:
     
     @classmethod
     def from_db(cls, row: dict[str, str | int | float | None]) -> Self:
-        if row["epoch_tags"][0] != "[" or row["epoch_tags"][-1] != "]":
+        if str(row["epoch_tags"])[0] != "[" or str(row["epoch_tags"])[-1] != "]":
             raise RuntimeError(f"Trying to load epoch with malformed epoch_tags: {row=}")
-        row["epoch_tags"] = eval(row["epoch_tags"])
+        row["epoch_tags"] = eval(str(row["epoch_tags"]))
         return cls(**row)  # type: ignore
 
 
@@ -100,13 +102,13 @@ class Epoch:
 
     @classmethod
     def from_db(cls, row: dict[str, str]) -> Self:
-        row.pop("epoch_id", None)
         # basic check before eval
-        if row["tags"][0] != "[" or row["tags"][-1] != "]":
+        if str(row["tags"])[0] != "[" or str(row["tags"])[-1] != "]":
             raise RuntimeError(f"Trying to load epoch with malformed tags: {row=}")
-        row["tags"] = eval(row["tags"])
+        row["tags"] = eval(str(row["tags"]))
         return cls(**row)  # type: ignore
 
+# TODO files, folders   
 
 if __name__ == "__main__":
     import doctest
