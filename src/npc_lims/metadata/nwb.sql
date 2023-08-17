@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS
   data_assets (
     data_asset_id VARCHAR(36) PRIMARY KEY, -- uuid4
     session_id VARCHAR(30),
+    name TEXT,
     description TEXT -- e.g. 'raw ephys data'
   );
 

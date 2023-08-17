@@ -100,7 +100,7 @@ class File(Record):
     name: str
     suffix: str
     size: int
-    timestamp: str | npc_session.TimeRecord
+    timestamp: str | npc_session.DatetimeRecord
     s3_path: str | None = None
     allen_path: str | None = None
     data_asset_id: str | None = None
@@ -108,11 +108,26 @@ class File(Record):
 
 
 @dataclasses.dataclass
+class Folder(Record):
+    table: ClassVar = "folders"
+
+    session_id: str | npc_session.SessionRecord
+    name: str
+    timestamp: str | npc_session.DatetimeRecord
+    s3_path: str | None = None
+    allen_path: str | None = None
+    data_asset_id: str | None = None
+    notes: str | None = None
+    
+    
+@dataclasses.dataclass
 class DataAsset(Record):
     table: ClassVar = "data_assets"
     data_asset_id: str
     session_id: str
-    description: str
+    name: str
+    notes: str | None
+    """e.g. raw ephys data"""
 
 
 @dataclasses.dataclass
@@ -138,11 +153,12 @@ class ElectrodeGroup(Record):
     table: ClassVar = "electrode_groups"
 
     session_id: str | npc_session.SessionRecord
-    device: int
+    device: int 
     """Serial number of the device"""
-    name: str | None = None
+    name: Literal['probeA', 'probeB', 'probeC', 'probeD', 'probeE', 'probeF']
     description: str | None = None
     location: str | None = None
+    """Implant name + location, e.g. 2002 B2"""
 
 
 @dataclasses.dataclass
@@ -164,8 +180,6 @@ class Electrode(Record):
     filtering: str | None = None
     reference: str | None = None
 
-
-# TODO files, folders
 
 if __name__ == "__main__":
     import doctest
