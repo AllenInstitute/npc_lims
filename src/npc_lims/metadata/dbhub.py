@@ -110,23 +110,20 @@ class SqliteDBHub:
 
         self.execute(statement)
 
-    def add_records(self, *rows: types.SupportsToDB) -> None:
+    def add_records(self, *rows: types.SupportsToDB, **kwargs: str | int | float | None) -> None:
         table = rows[0].table
         self.insert(table, *(row.to_db() for row in rows))
 
     def get_records(
         self,
         cls: type[types.SupportsFromDB],
-        session: str | npc_session.SessionRecord | None = None,
-        subject: int | npc_session.SubjectRecord | None = None,
+        **kwargs: str | int | float | None,
     ) -> tuple[types.SupportsFromDB, ...]:
         table = cls.table
         query = f"SELECT * FROM {table!r}"
         extra = []
-        if session:
-            extra += [f"session_id = {session!r}"]
-        if subject:
-            extra += [f"subject_id = {subject!r}"]
+        for k, v in kwargs.items():
+            extra += [f"{k} = {repr(v)}"] if v is not None else [f"{k} IS NULL"]
         if extra:
             query += f" WHERE ({' AND '.join(extra)})"
 
@@ -138,7 +135,7 @@ class SqliteDBHub:
             instances.append(cls.from_db(row))
         return tuple(instances)
 
-    def delete_records(self, *rows: types.SupportsToDB) -> None:
+    def delete_records(self, *rows: types.SupportsToDB, **kwargs: str | int | float | None) -> None:
         table = rows[0].table
         statement = f"DELETE FROM {table} WHERE EXISTS (SELECT * FROM {table} WHERE "
         for row in rows:
