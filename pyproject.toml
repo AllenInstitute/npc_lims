@@ -85,11 +85,7 @@ where = [
 ]
 
 [tool.setuptools.package-data]
-npc_lims = [
-    "py.typed",
-    "tracked_sessions.*",
-    "*.sql",
-]
+"*" = ["py.typed", "*.sql", "tracked_sessions.*"]
 
 [tool.ruff]
 fix = true
