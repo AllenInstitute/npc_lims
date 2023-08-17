@@ -1001,7 +1001,7 @@ files = [
 
 [[package]]
 name = "pydbhub-bjh"
-version = "0.0.8"
+version = "0.0.9"
 requires_python = ">=3.7"
 summary = "pydbhub"
 dependencies = [
@@ -1010,8 +1010,8 @@ dependencies = [
     "rich",
 ]
 files = [
-    {file = "pydbhub_bjh-0.0.8-py3-none-any.whl", hash = "sha256:a1e44ae0fb451b3d3a338bf0baff33c77505228ad48c98e0f4c70e32fa91c27e"},
-    {file = "pydbhub_bjh-0.0.8.tar.gz", hash = "sha256:6b91a69c36ed24f2df9a54695155ecb5c39f12feab9b46383414fd5099477c7e"},
+    {file = "pydbhub_bjh-0.0.9-py3-none-any.whl", hash = "sha256:bbc8b6bc80705e0e8f9a7f5de865a4e430a61efb23ad0d4760c979320e9d49a8"},
+    {file = "pydbhub_bjh-0.0.9.tar.gz", hash = "sha256:f045fa140d7db8c270f446a79ae57b7f4d4ab1c11a4dc9e72f72425328c404fa"},
 ]
 
 [[package]]
