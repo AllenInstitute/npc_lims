@@ -56,6 +56,10 @@ jobs:
     - name: Bump project version
       run: |
         pdm bumpver
+                
+    - name: Publish
+      run: |
+        pdm publish
         
     - name: Commit changes
       uses: EndBug/add-and-commit@v9
@@ -67,8 +71,5 @@ jobs:
       run: |
         pdm tag
         git push --tags
-        
-    - name: Publish
-      run: |
-        pdm publish
+
 
