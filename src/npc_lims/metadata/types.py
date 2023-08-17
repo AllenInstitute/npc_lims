@@ -1,9 +1,8 @@
 from __future__ import annotations
 
 from collections.abc import Iterable
-from typing import Any, ClassVar, Protocol
+from typing import ClassVar, Protocol
 
-import npc_session
 from typing_extensions import Self
 
 
@@ -23,7 +22,9 @@ class SupportsFromDB(Protocol):
 
 
 class RecordDB(Protocol):
-    def add_records(self, records: Iterable[SupportsToDB], **kwargs: str | int | float | None) -> None:
+    def add_records(
+        self, records: Iterable[SupportsToDB], **kwargs: str | int | float | None
+    ) -> None:
         ...
 
     def get_records(
@@ -33,5 +34,7 @@ class RecordDB(Protocol):
     ) -> tuple[SupportsFromDB, ...]:
         ...
 
-    def delete_records(self, *rows: SupportsToDB, **kwargs: str | int | float | None) -> None:
+    def delete_records(
+        self, *rows: SupportsToDB, **kwargs: str | int | float | None
+    ) -> None:
         ...

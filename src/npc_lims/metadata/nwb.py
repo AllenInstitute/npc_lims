@@ -6,9 +6,9 @@ from typing import ClassVar, Literal
 import npc_session
 from typing_extensions import Self
 
+
 @dataclasses.dataclass
 class Record:
-    
     def to_db(self) -> dict[str, str | int | float | None]:
         row = self.__dict__.copy()
         row.pop("table", None)  # not actually needed for dataclass ClassVar
@@ -22,10 +22,11 @@ class Record:
         for k, v in row.items():
             if not isinstance(v, str):
                 continue
-            if all(ends in '()[]{{}}' for ends in (v[0], v[-1])):
+            if all(ends in "()[]{{}}" for ends in (v[0], v[-1])):
                 row[k] = eval(v)
         return cls(**row)  # type: ignore
-    
+
+
 @dataclasses.dataclass
 class Subject(Record):
     """
@@ -93,7 +94,6 @@ class Epoch(Record):
 
 @dataclasses.dataclass
 class File(Record):
-    
     table: ClassVar = "files"
 
     session_id: str | npc_session.SessionRecord
@@ -106,7 +106,7 @@ class File(Record):
     data_asset_id: str | None = None
     notes: str | None = None
 
-    
+
 # TODO files, folders
 
 if __name__ == "__main__":

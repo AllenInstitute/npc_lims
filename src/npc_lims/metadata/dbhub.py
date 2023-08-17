@@ -11,7 +11,6 @@ import tempfile
 from collections.abc import Iterable
 from typing import Any, ClassVar
 
-import npc_session
 import pydbhub.dbhub as pydbhub
 import upath
 
@@ -110,7 +109,9 @@ class SqliteDBHub:
 
         self.execute(statement)
 
-    def add_records(self, *rows: types.SupportsToDB, **kwargs: str | int | float | None) -> None:
+    def add_records(
+        self, *rows: types.SupportsToDB, **kwargs: str | int | float | None
+    ) -> None:
         table = rows[0].table
         self.insert(table, *(row.to_db() for row in rows))
 
@@ -135,7 +136,9 @@ class SqliteDBHub:
             instances.append(cls.from_db(row))
         return tuple(instances)
 
-    def delete_records(self, *rows: types.SupportsToDB, **kwargs: str | int | float | None) -> None:
+    def delete_records(
+        self, *rows: types.SupportsToDB, **kwargs: str | int | float | None
+    ) -> None:
         table = rows[0].table
         statement = f"DELETE FROM {table} WHERE EXISTS (SELECT * FROM {table} WHERE "
         for row in rows:
