@@ -12,9 +12,9 @@ class Record:
     def to_db(self) -> dict[str, str | int | float | None]:
         row = self.__dict__.copy()
         row.pop("table", None)  # not actually needed for dataclass ClassVar
-        for k in row:
-            if not isinstance(row[k], (str, int, float, type(None))):
-                row[k] = str(row[k])
+        for k, v in row.items():
+            if not isinstance(v, (str, int, float, type(None))):
+                row[k] = str(v)
         return row
 
     @classmethod
