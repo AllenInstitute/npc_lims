@@ -46,7 +46,6 @@ CREATE TABLE IF NOT EXISTS
 
 CREATE TABLE IF NOT EXISTS
   files (
-    file_id INTEGER PRIMARY KEY,
     session_id VARCHAR(30),
     name TEXT,
     suffix TEXT,
@@ -63,7 +62,6 @@ CREATE TABLE IF NOT EXISTS
 
 CREATE TABLE IF NOT EXISTS
   folders (
-    folder_id INTEGER PRIMARY KEY,
     session_id VARCHAR(30),
     name TEXT,
     timestamp DATETIME,
@@ -78,7 +76,6 @@ CREATE TABLE IF NOT EXISTS
 
 CREATE TABLE IF NOT EXISTS
   epochs (
-    epoch_id INTEGER PRIMARY KEY,
     session_id VARCHAR(30),
     tags JSON,
     start_time TIME,
