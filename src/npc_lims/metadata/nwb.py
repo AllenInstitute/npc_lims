@@ -62,11 +62,13 @@ class Session:
         row = self.__dict__.copy()
         row["epoch_tags"] = str(self.epoch_tags)
         return row
-    
+
     @classmethod
     def from_db(cls, row: dict[str, str | int | float | None]) -> Self:
         if str(row["epoch_tags"])[0] != "[" or str(row["epoch_tags"])[-1] != "]":
-            raise RuntimeError(f"Trying to load epoch with malformed epoch_tags: {row=}")
+            raise RuntimeError(
+                f"Trying to load epoch with malformed epoch_tags: {row=}"
+            )
         row["epoch_tags"] = eval(str(row["epoch_tags"]))
         return cls(**row)  # type: ignore
 
@@ -108,7 +110,8 @@ class Epoch:
         row["tags"] = eval(str(row["tags"]))
         return cls(**row)  # type: ignore
 
-# TODO files, folders   
+
+# TODO files, folders
 
 if __name__ == "__main__":
     import doctest

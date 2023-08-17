@@ -4,9 +4,9 @@ from collections.abc import MutableSequence
 from typing import Literal, NamedTuple
 
 import npc_session  # type: ignore
+import upath
 import yaml
 from typing_extensions import TypeAlias
-import upath
 
 import npc_lims.metadata.codeocean as codeocean
 
@@ -28,7 +28,7 @@ class SessionInfo(NamedTuple):
     is_sync: bool
     """The session has sync data, implying more than a behavior-box."""
     allen_path: upath.UPath
-    
+
     @property
     def is_uploaded(self) -> bool:
         """The session's raw data has been uploaded to S3 and can be found in
