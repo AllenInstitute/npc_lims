@@ -6,6 +6,7 @@ from typing import Literal, NamedTuple
 import npc_session  # type: ignore
 import yaml
 from typing_extensions import TypeAlias
+import upath
 
 import npc_lims.metadata.codeocean as codeocean
 
@@ -26,7 +27,8 @@ class SessionInfo(NamedTuple):
     is_ephys: bool
     is_sync: bool
     """The session has sync data, implying more than a behavior-box."""
-
+    allen_path: upath.UPath
+    
     @property
     def is_uploaded(self) -> bool:
         """The session's raw data has been uploaded to S3 and can be found in
@@ -97,6 +99,7 @@ def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInf
                         project=npc_session.ProjectRecord(project_name),
                         is_ephys=ephys,
                         is_sync=sync,
+                        allen_path=upath.UPath(session_id),
                     )
                 )
     return tuple(sessions)
