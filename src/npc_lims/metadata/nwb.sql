@@ -228,7 +228,6 @@ CREATE TABLE IF NOT EXISTS
 
 CREATE TABLE IF NOT EXISTS
   _trials_template (
-    trial_id INTEGER PRIMARY KEY,
     session_id VARCHAR(30),
     trial_index INTEGER,
     start_time DATETIME,
@@ -239,7 +238,6 @@ CREATE TABLE IF NOT EXISTS
 
 CREATE TABLE IF NOT EXISTS
   trials_dynamicrouting_task (
-    trial_id INTEGER PRIMARY KEY,
     session_id VARCHAR(30),
     trial_index INTEGER,
     start_time TIME,
@@ -305,8 +303,7 @@ CREATE TABLE IF NOT EXISTS
   );
 
 CREATE TABLE IF NOT EXISTS
-  vis_mapping_trials (
-    trial_id INTEGER PRIMARY KEY,
+  trials_vis_mapping (
     session_id VARCHAR(30),
     trial_index INTEGER,
     stim_id INTEGER, -- FOREIGN KEY
@@ -324,8 +321,7 @@ CREATE TABLE IF NOT EXISTS
   );
 
 CREATE TABLE IF NOT EXISTS
-  aud_mapping_trials (
-    trial_id INTEGER PRIMARY KEY,
+  trials_aud_mapping (
     session_id VARCHAR(30),
     trial_index INTEGER,
     stim_id INTEGER, -- FOREIGN KEY
@@ -340,11 +336,10 @@ CREATE TABLE IF NOT EXISTS
   );
 
 CREATE TABLE IF NOT EXISTS
-  optotagging_trials (
-    trial_id INTEGER PRIMARY KEY,
+  trials_optotagging (
     session_id VARCHAR(30),
     trial_index INTEGER,
-    stim_id TEXT,
+    stim_id INTEGER,
     start_time TIME,
     stop_time TIME,
     -- location_name TEXT,
