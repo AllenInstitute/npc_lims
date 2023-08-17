@@ -44,8 +44,10 @@ ephys:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-12-06_12-35-35_644547
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-01-17_11-39-17_646318
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-01-18_10-44-55_646318
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-02-13_08-29-45_649943
+    # - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-02-13_08-29-45_649943
+    #   ^ doesn't exist
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-02-27_08-14-30_649944
+    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-02-28_09-33-43_649944
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-05-15_09-50-06_662983
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-05-16_10-25-25_662983
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-11_10-07-43_668759
