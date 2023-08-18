@@ -16,7 +16,7 @@ from typing_extensions import TypeAlias
 CODE_OCEAN_API_TOKEN = os.getenv("CODE_OCEAN_API_TOKEN", "")
 CODE_OCEAN_DOMAIN = os.getenv("CODE_OCEAN_DOMAIN", "")
 
-DataAsset: TypeAlias = dict[
+DataAssetAPI: TypeAlias = dict[
     Literal[
         "created",
         "custom_metadata",
@@ -41,7 +41,7 @@ codeocean_client = aind_codeocean_api.CodeOceanClient(
 
 
 @functools.cache
-def get_subject_data_assets(subject: str | int) -> tuple[DataAsset, ...]:
+def get_subject_data_assets(subject: str | int) -> tuple[DataAssetAPI, ...]:
     """
     >>> assets = get_subject_data_assets(668759)
     >>> assert len(assets) > 0
@@ -56,7 +56,7 @@ def get_subject_data_assets(subject: str | int) -> tuple[DataAsset, ...]:
 @functools.cache
 def get_session_data_assets(
     session: str | npc_session.SessionRecord,
-) -> tuple[DataAsset, ...]:
+) -> tuple[DataAssetAPI, ...]:
     session = npc_session.SessionRecord(session)
     assets = get_subject_data_assets(session.subject)
     return tuple(
@@ -71,7 +71,7 @@ def get_session_data_assets(
 
 def get_session_result_data_assets(
     session: str | npc_session.SessionRecord,
-) -> tuple[DataAsset, ...]:
+) -> tuple[DataAssetAPI, ...]:
     """
     >>> result_data_assets = get_session_result_data_assets('668759_20230711')
     >>> assert len(result_data_assets) > 0
@@ -87,8 +87,8 @@ def get_session_result_data_assets(
 
 
 def get_single_data_asset(
-    session: str | npc_session.SessionRecord, data_assets: Sequence[DataAsset]
-) -> DataAsset | None:
+    session: str | npc_session.SessionRecord, data_assets: Sequence[DataAssetAPI]
+) -> DataAssetAPI | None:
     if not data_assets:
         return None
 
@@ -130,7 +130,7 @@ def get_single_data_asset(
 @functools.cache
 def get_session_sorted_data_asset(
     session: str | npc_session.SessionRecord,
-) -> DataAsset | None:
+) -> DataAssetAPI | None:
     """
     >>> sorted_data_asset = get_session_sorted_data_asset('668759_20230711')
     >>> assert isinstance(sorted_data_asset, dict)
@@ -156,7 +156,7 @@ def get_sessions_with_data_assets(
     return tuple({npc_session.SessionRecord(asset["name"]) for asset in assets})
 
 
-def get_data_asset(asset: str | uuid.UUID | DataAsset) -> DataAsset:
+def get_data_asset(asset: str | uuid.UUID | DataAssetAPI) -> DataAssetAPI:
     """Converts an asset uuid to dict of info from CodeOcean API."""
     if not isinstance(asset, Mapping):
         response = codeocean_client.get_data_asset(str(asset))
@@ -166,7 +166,7 @@ def get_data_asset(asset: str | uuid.UUID | DataAsset) -> DataAsset:
     return asset
 
 
-def is_raw_data_asset(asset: str | DataAsset) -> bool:
+def is_raw_data_asset(asset: str | DataAssetAPI) -> bool:
     """
     >>> is_raw_data_asset('83636983-f80d-42d6-a075-09b60c6abd5e')
     True
@@ -181,7 +181,7 @@ def is_raw_data_asset(asset: str | DataAsset) -> bool:
     ) == "raw data" or "raw" in asset.get("tags", [])
 
 
-def is_sorted_data_asset(asset: str | DataAsset) -> bool:
+def is_sorted_data_asset(asset: str | DataAssetAPI) -> bool:
     """
     >>> is_sorted_data_asset('173e2fdc-0ca3-4a4e-9886-b74207a91a9a')
     True
@@ -196,7 +196,7 @@ def is_sorted_data_asset(asset: str | DataAsset) -> bool:
 
 def get_session_raw_data_asset(
     session: str | npc_session.SessionRecord,
-) -> DataAsset | None:
+) -> DataAssetAPI | None:
     """
     >>> get_session_raw_data_asset('668759_20230711')["id"]
     '83636983-f80d-42d6-a075-09b60c6abd5e'
@@ -226,7 +226,7 @@ def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath |
     return get_path_from_data_asset(raw_asset)
 
 
-def get_path_from_data_asset(asset: DataAsset) -> upath.UPath:
+def get_path_from_data_asset(asset: DataAssetAPI) -> upath.UPath:
     """Reconstruct path to raw data in bucket (e.g. on s3) using data asset
     uuid or dict of info from Code Ocean API."""
     if "sourceBucket" not in asset:
