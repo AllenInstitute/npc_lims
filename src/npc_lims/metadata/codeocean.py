@@ -5,8 +5,8 @@ import os
 import re
 import uuid
 import warnings
-from collections.abc import Mapping
-from typing import Any, Collection, Iterable, Literal, Sequence
+from collections.abc import Mapping, Sequence
+from typing import Any, Literal
 
 import npc_session
 import upath
@@ -85,19 +85,33 @@ def get_session_result_data_assets(
 
     return result_data_assets
 
-def get_single_data_asset(session: npc_session.SessionRecord, data_assets: Sequence[DataAsset]) -> DataAsset | None:
+
+def get_single_data_asset(
+    session: str | npc_session.SessionRecord, data_assets: Sequence[DataAsset]
+) -> DataAsset | None:
     if not data_assets:
         return None
 
     if len(data_assets) == 1:
         return data_assets[0]
 
-    asset_names = tuple(asset['name'] for asset in data_assets)
-    session_times = sorted(set(time for time in map(npc_session.extract_isoformat_time, asset_names) if time is not None))
-    sessions_times_to_assets = {
-        session_time: tuple(asset for asset in data_assets if npc_session.extract_isoformat_time(asset['name']) == session_time)
-        for session_time in session_times
+    session = npc_session.SessionRecord(session)
+    asset_names = tuple(asset["name"] for asset in data_assets)
+    session_times = sorted(
+        {
+            time
+            for time in map(npc_session.extract_isoformat_time, asset_names)
+            if time is not None
         }
+    )
+    sessions_times_to_assets = {
+        session_time: tuple(
+            asset
+            for asset in data_assets
+            if npc_session.extract_isoformat_time(asset["name"]) == session_time
+        )
+        for session_time in session_times
+    }
     if 0 < len(session_times) < session.idx + 1:  # 0-indexed
         raise ValueError(
             f"Number of assets is less than expected for the session idx specified:\n{data_assets = }\n{session = }"
@@ -107,17 +121,16 @@ def get_single_data_asset(session: npc_session.SessionRecord, data_assets: Seque
         warnings.warn(
             f"There is more than one asset for {session = }. Defaulting to most recent: {asset_names}"
         )
-        created_timestamps = [
-            data_asset["created"] for data_asset in data_assets
-        ]
+        created_timestamps = [data_asset["created"] for data_asset in data_assets]
         most_recent_index = created_timestamps.index(max(created_timestamps))
         return data_assets[most_recent_index]
     return data_assets[0]
 
+
 @functools.cache
 def get_session_sorted_data_asset(
     session: str | npc_session.SessionRecord,
-) -> DataAsset:
+) -> DataAsset | None:
     """
     >>> sorted_data_asset = get_session_sorted_data_asset('668759_20230711')
     >>> assert isinstance(sorted_data_asset, dict)
@@ -129,7 +142,6 @@ def get_session_sorted_data_asset(
         if is_sorted_data_asset(data_asset) and data_asset["files"] > 2
     )
     return get_single_data_asset(session, sorted_data_assets)
-
 
 
 @functools.cache
@@ -181,7 +193,10 @@ def is_sorted_data_asset(asset: str | DataAsset) -> bool:
         return False
     return "sorted" in asset["name"]
 
-def get_session_raw_data_asset(session: str | npc_session.SessionRecord) -> DataAsset | None:
+
+def get_session_raw_data_asset(
+    session: str | npc_session.SessionRecord,
+) -> DataAsset | None:
     """
     >>> get_session_raw_data_asset('668759_20230711')["id"]
     '83636983-f80d-42d6-a075-09b60c6abd5e'
@@ -191,6 +206,7 @@ def get_session_raw_data_asset(session: str | npc_session.SessionRecord) -> Data
         asset for asset in get_session_data_assets(session) if is_raw_data_asset(asset)
     )
     return get_single_data_asset(session, raw_assets)
+
 
 @functools.cache
 def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath | None:

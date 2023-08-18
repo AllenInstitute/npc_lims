@@ -118,8 +118,8 @@ class Folder(Record):
     allen_path: str | None = None
     data_asset_id: str | None = None
     notes: str | None = None
-    
-    
+
+
 @dataclasses.dataclass
 class DataAsset(Record):
     table: ClassVar = "data_assets"
@@ -139,23 +139,25 @@ class CCFRegion(Record):
 @dataclasses.dataclass
 class Device(Record):
     """A probe serial number, used across sessions"""
+
     table: ClassVar = "devices"
 
     device_id: int
     """Serial number of the device"""
-    description: str | None = 'Neuropixels 1.0'
-    manufacturer: str | None = 'IMEC'
+    description: str | None = "Neuropixels 1.0"
+    manufacturer: str | None = "IMEC"
 
 
 @dataclasses.dataclass
 class ElectrodeGroup(Record):
     """All the channels used on one probe, in one session"""
+
     table: ClassVar = "electrode_groups"
 
     session_id: str | npc_session.SessionRecord
-    device: int 
+    device: int
     """Serial number of the device"""
-    name: Literal['probeA', 'probeB', 'probeC', 'probeD', 'probeE', 'probeF']
+    name: Literal["probeA", "probeB", "probeC", "probeD", "probeE", "probeF"]
     description: str | None = None
     location: str | None = None
     """Implant name + location, e.g. 2002 B2"""
@@ -164,10 +166,11 @@ class ElectrodeGroup(Record):
 @dataclasses.dataclass
 class Electrode(Record):
     """A single channel on a probe"""
+
     table: ClassVar = "electrodes"
 
     session_id: str | npc_session.SessionRecord
-    group: Literal['probeA', 'probeB', 'probeC', 'probeD', 'probeE', 'probeF']
+    group: Literal["probeA", "probeB", "probeC", "probeD", "probeE", "probeF"]
     location: str | None = None
     """CCF location acronym/abbreviation"""
     channel_index: int | None = None
