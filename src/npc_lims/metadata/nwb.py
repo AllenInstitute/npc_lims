@@ -24,7 +24,7 @@ class Record:
                 continue
             if all(ends in "()[]{{}}" for ends in (v[0], v[-1])):
                 row[k] = eval(v)
-        return cls(**row)  # type: ignore
+        return cls(**row)
 
 
 @dataclasses.dataclass

@@ -91,7 +91,7 @@ class SqliteDBHub:
             raise LookupError(response[1].get("error", "Unknown error"))
         if not response[0]:
             return None
-        results: Iterable[dict[str, Any]] = response[0]  # type: ignore
+        results: Iterable[dict[str, Any]] = response[0]
         return tuple(results)
 
     def execute(self, query: str) -> None:

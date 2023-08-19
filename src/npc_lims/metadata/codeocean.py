@@ -10,7 +10,7 @@ from typing import Any, Literal
 
 import npc_session
 import upath
-from aind_codeocean_api import codeocean as aind_codeocean_api  # type: ignore
+from aind_codeocean_api import codeocean as aind_codeocean_api
 from typing_extensions import TypeAlias
 
 CODE_OCEAN_API_TOKEN = os.getenv("CODE_OCEAN_API_TOKEN", "")
