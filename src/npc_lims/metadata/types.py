@@ -6,13 +6,13 @@ from typing import ClassVar, Protocol
 from typing_extensions import Self
 
 
-class SupportsToDB(Protocol):
+class SupportsDB(Protocol):
     table: ClassVar[str]
 
-    def to_db(self) -> dict[str, str | int | float | None]:
+    @property
+    def db(self) -> dict[str, str | int | float | None]:
         ...
-
-
+        
 class SupportsFromDB(Protocol):
     table: ClassVar[str]
 
@@ -20,10 +20,9 @@ class SupportsFromDB(Protocol):
     def from_db(cls, row: dict[str, str | int | float | None]) -> Self:
         ...
 
-
 class RecordDB(Protocol):
     def add_records(
-        self, records: Iterable[SupportsToDB], **kwargs: str | int | float | None
+        self, records: Iterable[SupportsDB], **kwargs: str | int | float | None
     ) -> None:
         ...
 
@@ -35,6 +34,16 @@ class RecordDB(Protocol):
         ...
 
     def delete_records(
-        self, *rows: SupportsToDB, **kwargs: str | int | float | None
+        self, *rows: SupportsDB, **kwargs: str | int | float | None
     ) -> None:
+        ...
+
+class SupportsNWB(Protocol):
+    @property
+    def nwb(self) -> dict[str, str | int | float | None]:
+        ...
+
+class SupportsToNWB(Protocol):
+
+    def to_nwb(self, nwb) -> None:
         ...
