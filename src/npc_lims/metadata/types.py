@@ -12,13 +12,15 @@ class SupportsDB(Protocol):
     @property
     def db(self) -> dict[str, str | int | float | None]:
         ...
-        
+
+
 class SupportsFromDB(Protocol):
     table: ClassVar[str]
 
     @classmethod
     def from_db(cls, row: dict[str, str | int | float | None]) -> Self:
         ...
+
 
 class RecordDB(Protocol):
     def add_records(
@@ -38,12 +40,13 @@ class RecordDB(Protocol):
     ) -> None:
         ...
 
+
 class SupportsNWB(Protocol):
     @property
     def nwb(self) -> dict[str, str | int | float | None]:
         ...
 
-class SupportsToNWB(Protocol):
 
+class SupportsToNWB(Protocol):
     def to_nwb(self, nwb) -> None:
         ...

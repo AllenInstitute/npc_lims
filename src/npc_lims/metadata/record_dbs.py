@@ -21,12 +21,15 @@ DBHUB_API_KEY = os.getenv("DBHUB_API_KEY")
 
 DEFAULT_BACKUP_PATH = upath.UPath("s3://aind-scratch-data/ben.hardcastle/db-backups")
 
+
 class SqliteRecordDB:
     """Base class for sqlite database storing records."""
 
     db_name: ClassVar[str]
 
-    schema_string_or_path: ClassVar[str | upath.UPath] = upath.UPath(__file__).parent / "nwb.sql"
+    schema_string_or_path: ClassVar[str | upath.UPath] = (
+        upath.UPath(__file__).parent / "nwb.sql"
+    )
     """Schema as a string, or path to .sql file containing schema."""
 
     backup_path: ClassVar[upath.UPath] = DEFAULT_BACKUP_PATH
@@ -35,17 +38,21 @@ class SqliteRecordDB:
         pass
 
     @abc.abstractmethod
-    def create(self) -> None: ...
+    def create(self) -> None:
+        ...
 
     @abc.abstractmethod
-    def query(self, query: str) -> tuple[dict[str, Any], ...] | None: ...
+    def query(self, query: str) -> tuple[dict[str, Any], ...] | None:
+        ...
 
     @abc.abstractmethod
-    def execute(self, query: str) -> None: ...
+    def execute(self, query: str) -> None:
+        ...
 
     @property
     @abc.abstractmethod
-    def serialized(self) -> bytes: ...
+    def serialized(self) -> bytes:
+        ...
 
     @functools.cached_property
     def schema(self) -> str:
@@ -114,9 +121,11 @@ class SqliteLocalDB(SqliteRecordDB):
 
     def __init__(self, *args, **kwargs) -> None:
         self.connection = sqlite3.connect(self.path)
+
         def dict_factory(cursor, row):
             fields = [column[0] for column in cursor.description]
             return dict(zip(fields, row))
+
         self.connection.row_factory = dict_factory
         self.cursor = self.connection.cursor()
 
@@ -138,6 +147,7 @@ class SqliteLocalDB(SqliteRecordDB):
     def close(self) -> None:
         self.connection.close()
 
+
 class SqliteDBHub(SqliteRecordDB):
     """Base class for sqlite database on dbhub.io."""
 
@@ -147,7 +157,9 @@ class SqliteDBHub(SqliteRecordDB):
 
     @functools.cached_property
     def connection(self) -> pydbhub.Dbhub:
-        return pydbhub.Dbhub(DBHUB_API_KEY, db_name=self.db_name, db_owner=self.db_owner)
+        return pydbhub.Dbhub(
+            DBHUB_API_KEY, db_name=self.db_name, db_owner=self.db_owner
+        )
 
     @property
     def url(self) -> str:
@@ -172,7 +184,7 @@ class SqliteDBHub(SqliteRecordDB):
 
     @property
     def serialized(self) -> bytes:
-        return bytes(self.connection.Download()[0]) # type: ignore[arg-type]
+        return bytes(self.connection.Download()[0])  # type: ignore[arg-type]
 
     def upload(self) -> None:
         """Create from schema and upload as a live database to dbhub.io."""
@@ -220,6 +232,8 @@ class TestDBHub(SqliteDBHub):
     schema_string_or_path = (
         "CREATE TABLE IF NOT EXISTS test (id INTEGER PRIMARY KEY, name TEXT);"
     )
+
+
 class TestLocalDB(SqliteLocalDB):
     """Test database on local file.
 
@@ -233,6 +247,7 @@ class TestLocalDB(SqliteLocalDB):
     >>> db.close()
     >>> db.path.unlink()
     """
+
     db_name = "test.sqlite"
     path = upath.UPath(__file__).parent / db_name
     schema_string_or_path = (

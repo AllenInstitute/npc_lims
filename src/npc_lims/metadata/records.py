@@ -9,7 +9,6 @@ from typing_extensions import Self
 
 @dataclasses.dataclass
 class Record:
-    
     @property
     def db(self) -> dict[str, str | int | float | None]:
         row = self.__dict__.copy()
@@ -29,17 +28,20 @@ class Record:
         return cls(**row)
 
 
-
 @dataclasses.dataclass
 class RecordWithNWB(Record):
-    
-    nwb_excl: ClassVar[tuple[str, ...]] = ("session_id", "subject_id", "nwb_excl", "table")
+    nwb_excl: ClassVar[tuple[str, ...]] = (
+        "session_id",
+        "subject_id",
+        "nwb_excl",
+        "table",
+    )
 
     @property
     def nwb(self) -> dict[str, str | int | float | None]:
-        return {k: v for k,v in self.db.items() if k not in self.nwb_excl}
+        return {k: v for k, v in self.db.items() if k not in self.nwb_excl}
 
-    
+
 @dataclasses.dataclass
 class Subject(RecordWithNWB):
     """
@@ -48,7 +50,7 @@ class Subject(RecordWithNWB):
     """
 
     table: ClassVar[str] = "subjects"
-    
+
     subject_id: int | npc_session.SubjectRecord
     sex: Literal["M", "F", "U"] | None = None
     date_of_birth: str | npc_session.DateRecord | None = None
@@ -59,12 +61,14 @@ class Subject(RecordWithNWB):
     """e.g., C57BL/6J"""
     notes: str | None = None
 
+
 @dataclasses.dataclass
 class Session(RecordWithNWB):
     """
     >>> from npc_lims import tracked, NWBSqliteDBHub as DB
     >>> all_sessions = DB().get_records(Session)
     """
+
     table: ClassVar[str] = "sessions"
 
     session_id: str | npc_session.SessionRecord
