@@ -122,7 +122,7 @@ class SqliteLocalDB(SqliteRecordDB):
 
     @property
     @abc.abstractmethod
-    def path(self) -> upath.UPath:
+    def path(self) -> pathlib.Path | upath.UPath:
         raise NotImplementedError
 
     def create(self) -> None:
@@ -234,7 +234,7 @@ class TestLocalDB(SqliteLocalDB):
     >>> db.path.unlink()
     """
     db_name = "test.sqlite"
-    path = pathlib.Path(__file__).parent / db_name
+    path = upath.UPath(__file__).parent / db_name
     schema_string_or_path = (
         "CREATE TABLE IF NOT EXISTS test (id INTEGER PRIMARY KEY, name TEXT);"
     )
