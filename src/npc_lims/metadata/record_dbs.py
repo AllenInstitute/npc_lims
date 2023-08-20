@@ -59,7 +59,7 @@ class SqliteRecordDB:
         timestamp = datetime.datetime.now().isoformat()
         self.backup_path.mkdir(parents=True, exist_ok=True)
         backup_file = self.backup_path / f"{self.db_name}.{timestamp}"
-        backup_file.write_bytes(self.serialized)  # type: ignore
+        backup_file.write_bytes(self.serialized)
 
     def insert(self, table: str, *rows: dict[str, Any]) -> None:
         if not all(v.keys() == rows[0].keys() for v in rows):
@@ -172,7 +172,7 @@ class SqliteDBHub(SqliteRecordDB):
 
     @property
     def serialized(self) -> bytes:
-        return bytes(self.connection.Download()[0]) # type: ignore
+        return bytes(self.connection.Download()[0]) # type: ignore[arg-type]
 
     def upload(self) -> None:
         """Create from schema and upload as a live database to dbhub.io."""
@@ -184,7 +184,7 @@ class SqliteDBHub(SqliteRecordDB):
             live=True,
             public=True,
         )
-        self.connection.Upload(db_name=self.db_name, info=info, db_bytes=pathlib.Path(temp).read_bytes())  # type: ignore
+        self.connection.Upload(db_name=self.db_name, info=info, db_bytes=pathlib.Path(temp).read_bytes())  # type: ignore[arg-type]
 
     def create(self) -> None:
         self.execute(self.schema)
