@@ -4,6 +4,7 @@ import dataclasses
 import functools
 import operator
 from collections.abc import Iterator
+import warnings
 
 import npc_session
 import upath
@@ -143,6 +144,23 @@ def get_nwb_file_from_s3(
         print(f"No NWB file found at {root}/{glob}")
     return result
 
+@functools.cache
+def get_units_file_from_s3(session: str | npc_session.SessionRecord) -> upath.UPath | None:
+    '''
+    >>> get_units_file_from_s3('668759_20230711')
+    S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/2ce940b3-04c2-4a1f-8d29-58b0e713fa19/ecephys_668759_2023-07-11_13-07-32_units/units.csv')
+    '''
+    units_data_assets = codeocean.get_units_data_assets(session)
+    units_data_asset = codeocean.get_single_data_asset(session, units_data_assets) 
+
+    if not units_data_asset:
+        warnings.warn(f'No units found for session {session}', stacklevel=2)
+        return None
+
+    units_top_level = (CODE_OCEAN_DATA_BUCKET / units_data_asset['id']).iterdir()
+    units_directory = next(unit_path for unit_path in units_top_level if unit_path.is_dir())
+
+    return tuple(units_directory.iterdir())[0]
 
 if __name__ == "__main__":
     import doctest

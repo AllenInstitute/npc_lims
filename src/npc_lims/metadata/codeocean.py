@@ -46,7 +46,7 @@ def get_subject_data_assets(subject: str | int) -> tuple[DataAssetAPI, ...]:
     >>> assets = get_subject_data_assets(668759)
     >>> assert len(assets) > 0
     """
-    response = codeocean_client.search_data_assets(
+    response = codeocean_client.search_all_data_assets(
         query=f"subject id: {npc_session.SubjectRecord(subject)}"
     )
     response.raise_for_status()
@@ -243,6 +243,59 @@ def get_path_from_data_asset(asset: DataAssetAPI) -> upath.UPath:
         f"{roots[bucket_info['origin']]}://{bucket_info['bucket']}/{bucket_info['prefix']}"
     )
 
+def run_capsule_and_get_results(capsule_id: str, data_assets:tuple[DataAssetAPI, ...]) -> tuple[dict[str, str | int], ...]:
+    response = codeocean_client.run_capsule(capsule_id, [{'id': data_asset['id'], 'mount': data_asset['name']}
+                                                      for data_asset in data_assets])
+    
+    response.raise_for_status()
+    
+    while True:
+        response = codeocean_client.get_capsule_computations(capsule_id)
+        response.raise_for_status()
+        capsule_runs = response.json()
+        states = [run['state'] for run in capsule_runs]
+
+        if all(state == 'completed' for state in states):
+            break
+
+    capsule_runs_has_results = tuple(run for run in capsule_runs if run['has_results'])
+    return capsule_runs_has_results
+
+def register_session_data_asset(session_id: str | npc_session.SessionRecord, 
+                                capsule_run_results: tuple[dict[str, str | int], ...]) -> None:
+    
+    session = npc_session.SessionRecord(session_id)
+    computation_id = None
+    data_asset_name = ''
+
+    for result in capsule_run_results:
+        response = codeocean_client.get_list_result_items(result['id'])
+        response.raise_for_status()
+        result_items = response.json()['items']
+        folder_result = tuple(item for item in result_items if item['type'] == 'folder')[0]
+
+        if re.match(
+            f"ecephys_{session.subject}_{session.date}_{npc_session.PARSE_TIME}",
+            folder_result["name"],
+        ):
+            data_asset_name = folder_result['name']
+            computation_id = result['id']
+            break
+    
+    response = codeocean_client.register_result_as_data_asset(computation_id, data_asset_name, tags=[str(session.subject.id), 'results'])
+    response.raise_for_status()
+
+@functools.cache
+def get_units_data_assets(session_id: str | npc_session.SessionRecord) -> tuple[DataAssetAPI, ...]:
+    '''
+    >>> session_units_data_assets = get_units_data_assets('668759_20230711')
+    >>> assert len(session_units_data_assets) > 0
+    '''
+    session = npc_session.SessionRecord(session_id)
+    session_data_assets = get_session_data_assets(session)
+    session_units_data_assets = tuple(data_asset for data_asset in session_data_assets if 'units' in data_asset['name'])
+
+    return session_units_data_assets
 
 if __name__ == "__main__":
     import doctest

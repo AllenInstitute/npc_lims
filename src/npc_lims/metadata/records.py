@@ -198,6 +198,60 @@ class Electrode(RecordWithNWB):
     filtering: str | None = None
     reference: str | None = None
 
+@dataclasses.dataclass
+class Units(RecordWithNWB):
+    table: ClassVar = 'units'
+
+    unit_id: str
+    sorted_group_id: int
+    session_id: str | npc_session.SessionRecord
+    sorter_id: int
+    peak_channel_index: int
+    location: str
+    electrode_group: str
+    spike_times: list[float] | None = None
+    waveform_mean: list[float] | None = None
+    waveform_sd: list[float] | None = None
+    peak_to_valley: float | None = None
+    d_prime: float | None = None
+    l_ratio: float | None = None
+    peak_trough_ratio: float | None = None
+    half_width: float | None = None
+    sliding_rp_violation: float | None = None
+    num_spikes: int | None = None
+    repolarization_slope: float | None = None
+    device_name: str | None = None
+    isi_violations_ratio: float | None = None
+    rp_violations: float | None = None
+    ks_unit_id: int | None = None
+    rp_contamination: float | None = None
+    drift_mad: float | None = None
+    drift_ptp: float | None = None
+    amplitude_cutoff: float | None = None
+    isolation_distance: float | None = None
+    amplitude: float | None = None
+    default_qc: str | None = None
+    snr: float | None = None
+    drift_std: float | None = None
+    firing_rate: float | None = None
+    presence_ratio: float | None = None
+    recovery_slope: float | None = None
+    cluster_id: int | None = None
+    nn_hit_rate: float | None = None
+    nn_miss_rate: float | None = None
+    silhouette_score: float | None = None
+    max_drift: float | None = None
+    cumulative_drift: float | None = None
+    peak_channel: int | None = None
+    duration: float | None = None
+    halfwidth: float | None = None
+    PT_ratio: float | None = None
+    spread: int | None = None
+    velocity_above: float | None = None
+    velocity_below: float | None = None
+    quality: str | None = None
+
+    
 
 if __name__ == "__main__":
     import doctest
