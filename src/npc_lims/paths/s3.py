@@ -146,12 +146,7 @@ def get_nwb_file_from_s3(
 
 @functools.cache
 def get_units_file_from_s3(session: str | npc_session.SessionRecord) -> upath.UPath | None:
-    '''
-    >>> get_units_file_from_s3('668759_20230711')
-    S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/2ce940b3-04c2-4a1f-8d29-58b0e713fa19/ecephys_668759_2023-07-11_13-07-32_units/units.csv')
-    '''
-    units_data_assets = codeocean.get_units_data_assets(session)
-    units_data_asset = codeocean.get_single_data_asset(session, units_data_assets) 
+    units_data_asset = codeocean.get_session_units_with_peak_channels_data_asset(session)
 
     if not units_data_asset:
         warnings.warn(f'No units found for session {session}', stacklevel=2)

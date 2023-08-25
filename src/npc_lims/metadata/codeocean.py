@@ -286,16 +286,25 @@ def register_session_data_asset(session_id: str | npc_session.SessionRecord,
     response.raise_for_status()
 
 @functools.cache
-def get_units_data_assets(session_id: str | npc_session.SessionRecord) -> tuple[DataAssetAPI, ...]:
-    '''
-    >>> session_units_data_assets = get_units_data_assets('668759_20230711')
-    >>> assert len(session_units_data_assets) > 0
-    '''
+def get_session_units_data_asset(session_id: str | npc_session.SessionRecord) -> DataAssetAPI | None:
     session = npc_session.SessionRecord(session_id)
     session_data_assets = get_session_data_assets(session)
-    session_units_data_assets = tuple(data_asset for data_asset in session_data_assets if 'units' in data_asset['name'])
+    session_units_data_assets = tuple(data_asset for data_asset in session_data_assets if 'units' in data_asset['name'] 
+                                      and 'peak' not in data_asset['name'])
+    session_units_data_asset = get_single_data_asset(session, session_units_data_assets)
 
-    return session_units_data_assets
+    return session_units_data_asset
+
+@functools.cache
+def get_session_units_with_peak_channels_data_asset(session_id: str | npc_session.SessionRecord) -> DataAssetAPI | None:
+    session = npc_session.SessionRecord(session_id)
+    session_data_assets = get_session_data_assets(session)
+    session_units_peak_channel_data_assets = tuple(data_asset for data_asset in session_data_assets 
+                                                    if 'units_with_peak_channels' in data_asset['name'])
+    
+    session_units_peak_channel_data_asset = get_single_data_asset(session, session_units_peak_channel_data_assets)
+
+    return session_units_peak_channel_data_asset
 
 if __name__ == "__main__":
     import doctest
