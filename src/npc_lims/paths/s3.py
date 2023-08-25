@@ -3,8 +3,8 @@ from __future__ import annotations
 import dataclasses
 import functools
 import operator
-from collections.abc import Iterator
 import warnings
+from collections.abc import Iterator
 
 import npc_session
 import upath
@@ -144,18 +144,26 @@ def get_nwb_file_from_s3(
         print(f"No NWB file found at {root}/{glob}")
     return result
 
+
 @functools.cache
-def get_units_file_from_s3(session: str | npc_session.SessionRecord) -> upath.UPath | None:
-    units_data_asset = codeocean.get_session_units_with_peak_channels_data_asset(session)
+def get_units_file_from_s3(
+    session: str | npc_session.SessionRecord,
+) -> upath.UPath | None:
+    units_data_asset = codeocean.get_session_units_with_peak_channels_data_asset(
+        session
+    )
 
     if not units_data_asset:
-        warnings.warn(f'No units found for session {session}', stacklevel=2)
+        warnings.warn(f"No units found for session {session}", stacklevel=2)
         return None
 
-    units_top_level = (CODE_OCEAN_DATA_BUCKET / units_data_asset['id']).iterdir()
-    units_directory = next(unit_path for unit_path in units_top_level if unit_path.is_dir())
+    units_top_level = (CODE_OCEAN_DATA_BUCKET / units_data_asset["id"]).iterdir()
+    units_directory = next(
+        unit_path for unit_path in units_top_level if unit_path.is_dir()
+    )
 
     return tuple(units_directory.iterdir())[0]
+
 
 if __name__ == "__main__":
     import doctest

@@ -198,9 +198,10 @@ class Electrode(RecordWithNWB):
     filtering: str | None = None
     reference: str | None = None
 
+
 @dataclasses.dataclass
 class Units(RecordWithNWB):
-    table: ClassVar = 'units'
+    table: ClassVar = "units"
 
     unit_id: str
     sorted_group_id: int
@@ -251,7 +252,6 @@ class Units(RecordWithNWB):
     velocity_below: float | None = None
     quality: str | None = None
 
-    
 
 if __name__ == "__main__":
     import doctest
