@@ -299,6 +299,7 @@ def register_session_data_asset(
     )
     response.raise_for_status()
 
+
 @functools.cache
 def get_session_units_data_asset(
     session_id: str | npc_session.SessionRecord,
