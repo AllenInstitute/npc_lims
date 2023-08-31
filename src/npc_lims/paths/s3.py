@@ -148,7 +148,7 @@ def get_nwb_file_from_s3(
 @functools.cache
 def get_units_file_from_s3(
     session: str | npc_session.SessionRecord,
-) -> upath.UPath | None:
+) -> tuple[upath.UPath, ...] | None:
     units_data_asset = codeocean.get_session_units_with_peak_channels_data_asset(
         session
     )
@@ -162,7 +162,7 @@ def get_units_file_from_s3(
         unit_path for unit_path in units_top_level if unit_path.is_dir()
     )
 
-    return tuple(units_directory.iterdir())[0]
+    return tuple(units_directory.iterdir())
 
 
 if __name__ == "__main__":
