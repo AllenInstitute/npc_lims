@@ -891,7 +891,7 @@ files = [
 
 [[package]]
 name = "pdm"
-version = "2.8.2"
+version = "2.9.0"
 requires_python = ">=3.7"
 summary = "A modern Python package and dependency manager supporting the latest PEP standards"
 dependencies = [
@@ -911,12 +911,13 @@ dependencies = [
     "shellingham>=1.3.2",
     "tomli>=1.1.0; python_version < \"3.11\"",
     "tomlkit<1,>=0.11.1",
+    "truststore; python_version >= \"3.10\"",
     "unearth>=0.10.0",
     "virtualenv>=20",
 ]
 files = [
-    {file = "pdm-2.8.2-py3-none-any.whl", hash = "sha256:b1de3411d26cc7525741c7f0a84a00e6834f63105c19da13df9a61c229ba45d9"},
-    {file = "pdm-2.8.2.tar.gz", hash = "sha256:b948d00bf620682b0ac4c80d228cb305a2b0150e497ee6931da30e3cc305bfdc"},
+    {file = "pdm-2.9.0-py3-none-any.whl", hash = "sha256:b2c74f2b1685817ee5a3e8b259cf24a11c30ff2e53e31a3a06216157b5651a5f"},
+    {file = "pdm-2.9.0.tar.gz", hash = "sha256:7962656a31e29a126d5f23906528b75e1b14b72952ab8250057a40726ae47d01"},
 ]
 
 [[package]]
@@ -1313,6 +1314,16 @@ summary = "Style preserving TOML library"
 files = [
     {file = "tomlkit-0.12.1-py3-none-any.whl", hash = "sha256:712cbd236609acc6a3e2e97253dfc52d4c2082982a88f61b640ecf0817eab899"},
     {file = "tomlkit-0.12.1.tar.gz", hash = "sha256:38e1ff8edb991273ec9f6181244a6a391ac30e9f5098e7535640ea6be97a7c86"},
+]
+
+[[package]]
+name = "truststore"
+version = "0.7.0"
+requires_python = ">= 3.10"
+summary = "Verify certificates using native system trust stores"
+files = [
+    {file = "truststore-0.7.0-py3-none-any.whl", hash = "sha256:a4b410a365cafec4c2b386b30df53d89a6a4466cc229c7026e41c2d847f94fe9"},
+    {file = "truststore-0.7.0.tar.gz", hash = "sha256:72e784507a624375434381e4bad3eff8614bc8c845a7f5ae16a25a2624d0683f"},
 ]
 
 [[package]]
