@@ -5,7 +5,6 @@ import os
 import re
 import uuid
 import warnings
-import requests
 from collections.abc import Mapping, Sequence
 from typing import Any, Literal
 
@@ -274,7 +273,7 @@ def run_capsule_and_get_results(
 def register_session_data_asset(
     session_id: str | npc_session.SessionRecord,
     capsule_run_results: tuple[dict[str, str | int], ...],
-) -> requests.models.Response:
+) -> None:
     session = npc_session.SessionRecord(session_id)
     computation_id = None
     data_asset_name = ""
@@ -299,7 +298,6 @@ def register_session_data_asset(
         computation_id, data_asset_name, tags=[str(session.subject.id), "results"]
     )
     response.raise_for_status()
-    return response
 
 @functools.cache
 def get_session_units_data_asset(
