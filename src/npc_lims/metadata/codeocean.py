@@ -127,7 +127,6 @@ def get_single_data_asset(
     return data_assets[0]
 
 
-@functools.cache
 def get_session_sorted_data_asset(
     session: str | npc_session.SessionRecord,
 ) -> DataAssetAPI:
