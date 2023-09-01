@@ -88,9 +88,9 @@ def get_session_result_data_assets(
 
 def get_single_data_asset(
     session: str | npc_session.SessionRecord, data_assets: Sequence[DataAssetAPI]
-) -> DataAssetAPI | None:
+) -> DataAssetAPI:
     if not data_assets:
-        return None
+        raise FileNotFoundError(f'No data assets found for session {session}')
 
     if len(data_assets) == 1:
         return data_assets[0]
@@ -130,7 +130,7 @@ def get_single_data_asset(
 @functools.cache
 def get_session_sorted_data_asset(
     session: str | npc_session.SessionRecord,
-) -> DataAssetAPI | None:
+) -> DataAssetAPI:
     """
     >>> sorted_data_asset = get_session_sorted_data_asset('668759_20230711')
     >>> assert isinstance(sorted_data_asset, dict)
@@ -141,6 +141,10 @@ def get_session_sorted_data_asset(
         for data_asset in session_result_data_assets
         if is_sorted_data_asset(data_asset) and data_asset["files"] > 2
     )
+
+    if not sorted_data_assets:
+        raise FileNotFoundError(f'Session {session} has no sorted data assets')
+    
     return get_single_data_asset(session, sorted_data_assets)
 
 
@@ -196,7 +200,7 @@ def is_sorted_data_asset(asset: str | DataAssetAPI) -> bool:
 
 def get_session_raw_data_asset(
     session: str | npc_session.SessionRecord,
-) -> DataAssetAPI | None:
+) -> DataAssetAPI:
     """
     >>> get_session_raw_data_asset('668759_20230711')["id"]
     '83636983-f80d-42d6-a075-09b60c6abd5e'
@@ -205,6 +209,10 @@ def get_session_raw_data_asset(
     raw_assets = tuple(
         asset for asset in get_session_data_assets(session) if is_raw_data_asset(asset)
     )
+
+    if not raw_assets:
+        raise FileNotFoundError(f'Session {session} has no raw data assets')
+    
     return get_single_data_asset(session, raw_assets)
 
 
@@ -303,7 +311,11 @@ def register_session_data_asset(
 @functools.cache
 def get_session_units_data_asset(
     session_id: str | npc_session.SessionRecord,
-) -> DataAssetAPI | None:
+) -> DataAssetAPI:
+    """
+    >>> units_data_asset = get_session_units_data_asset('668759_20230711')
+    >>> assert units_data_asset is not None
+    """
     session = npc_session.SessionRecord(session_id)
     session_data_assets = get_session_data_assets(session)
     session_units_data_assets = tuple(
@@ -317,22 +329,73 @@ def get_session_units_data_asset(
 
 
 @functools.cache
-def get_session_units_with_peak_channels_data_asset(
+def get_session_units_spikes_with_peak_channels_data_asset(
     session_id: str | npc_session.SessionRecord,
-) -> DataAssetAPI | None:
+) -> DataAssetAPI:
+    """
+    >>> units_peak_channel_data_asset = get_session_units_spikes_with_peak_channels_data_asset('668759_20230711')
+    >>> assert units_peak_channel_data_asset is not None
+    """
     session = npc_session.SessionRecord(session_id)
     session_data_assets = get_session_data_assets(session)
-    session_units_peak_channel_data_assets = tuple(
+    session_units_spikes_peak_channel_data_assets = tuple(
         data_asset
         for data_asset in session_data_assets
         if "units_with_peak_channels" in data_asset["name"]
     )
 
-    session_units_peak_channel_data_asset = get_single_data_asset(
-        session, session_units_peak_channel_data_assets
+    session_units_spikes_peak_channel_data_asset = get_single_data_asset(
+        session, session_units_spikes_peak_channel_data_assets
     )
 
-    return session_units_peak_channel_data_asset
+    return session_units_spikes_peak_channel_data_asset
+
+def run_codeocean_nwb_units_capsule_and_register_data_asset(session_id: str, raw_data_asset: DataAssetAPI, 
+                                                            sorted_data_asset: DataAssetAPI) -> None:
+    capsule_results_units = run_capsule_and_get_results('980c5218-abef-41d8-99ed-24798d42313b',
+     (raw_data_asset, sorted_data_asset))
+    
+    register_session_data_asset(session_id, capsule_results_units)
+    units_asset = get_session_units_data_asset(session_id)
+    while True: # wait for data asset to be registered
+        if units_asset['state'] == 'ready':
+            break
+        
+        units_asset = get_session_units_data_asset(session_id)
+
+def run_codeocean_units_spikes_peak_channel_capsule_and_register_data_asset(session_id: str, raw_data_asset: DataAssetAPI,
+                                                                     sorted_data_asset: DataAssetAPI) -> DataAssetAPI:
+    units_no_peak_channel_asset = get_session_units_data_asset(session_id)
+    if units_no_peak_channel_asset is None:
+        raise ValueError(
+            f"Session {session_id} has no peak_channel data asset."
+        )  
+
+    capsule_result_units_peak_channels = run_capsule_and_get_results(
+        "d1a5c3a8-8fb2-4cb0-8e9e-96e6e1d03ff1",
+        (raw_data_asset, sorted_data_asset, units_no_peak_channel_asset),
+    )
+    register_session_data_asset(session_id, capsule_result_units_peak_channels)
+    units_peak_channel_asset = get_session_units_spikes_with_peak_channels_data_asset(session_id)
+
+    while True: # wait for data asset to be registered
+        if units_peak_channel_asset['state'] == 'ready':
+            break
+        
+    return units_peak_channel_asset
+
+def update_permissions_for_data_asset(data_asset: DataAssetAPI) -> None:
+   response = codeocean_client.update_permissions(data_asset_id=data_asset['id'], everyone='viewer')
+   response.raise_for_status()
+
+def run_capsules_for_units_spikes_kilosort_codeocean(session_id: str) -> None:
+    raw_data_asset = get_session_raw_data_asset(session_id)
+    sorted_data_asset = get_session_sorted_data_asset(session_id)
+
+    run_codeocean_nwb_units_capsule_and_register_data_asset(session_id, raw_data_asset, sorted_data_asset)
+    units_with_peak_channels_asset = run_codeocean_units_spikes_peak_channel_capsule_and_register_data_asset(session_id, 
+                                                                                                      raw_data_asset, sorted_data_asset)
+    update_permissions_for_data_asset(units_with_peak_channels_asset)
 
 
 if __name__ == "__main__":

@@ -144,26 +144,49 @@ def get_nwb_file_from_s3(
         print(f"No NWB file found at {root}/{glob}")
     return result
 
-
 @functools.cache
-def get_units_file_from_s3(
-    session: str | npc_session.SessionRecord,
-) -> tuple[upath.UPath, ...] | None:
-    units_data_asset = codeocean.get_session_units_with_peak_channels_data_asset(
+def get_units_spikes_codeocean_kilosort_top_level_files(session: str | npc_session.SessionRecord) -> tuple[upath.UPath, ...]:
+    """
+    >>> get_units_spikes_codeocean_kilosort_top_level_files('662892_20230821')
+    (S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4f16d158-8b29-4c77-a8f5-f6576b8b8675/ecephys_662892_2023-08-21_12-43-45_units_with_peak_channels/mean_waveforms.npy'), S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4f16d158-8b29-4c77-a8f5-f6576b8b8675/ecephys_662892_2023-08-21_12-43-45_units_with_peak_channels/sd_waveforms.npy'), S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4f16d158-8b29-4c77-a8f5-f6576b8b8675/ecephys_662892_2023-08-21_12-43-45_units_with_peak_channels/spike_times.npy'), S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4f16d158-8b29-4c77-a8f5-f6576b8b8675/ecephys_662892_2023-08-21_12-43-45_units_with_peak_channels/units.csv'))
+    """
+    units_spikes_data_asset = codeocean.get_session_units_spikes_with_peak_channels_data_asset(
         session
     )
 
-    if not units_data_asset:
-        warnings.warn(f"No units found for session {session}", stacklevel=2)
-        return None
+    if not units_spikes_data_asset:
+        raise FileNotFoundError(f"No units found for session {session}")
 
-    units_top_level = (CODE_OCEAN_DATA_BUCKET / units_data_asset["id"]).iterdir()
+    units_top_level = (CODE_OCEAN_DATA_BUCKET / units_spikes_data_asset["id"]).iterdir()
     units_directory = next(
         unit_path for unit_path in units_top_level if unit_path.is_dir()
     )
 
     return tuple(units_directory.iterdir())
+    
+@functools.cache
+def get_units_codeoean_kilosort_path_from_s3(
+    session: str | npc_session.SessionRecord,
+) -> upath.UPath:
+    """
+    >>> get_units_codeoean_kilosort_path_from_s3('662892_20230821')
+    S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4f16d158-8b29-4c77-a8f5-f6576b8b8675/ecephys_662892_2023-08-21_12-43-45_units_with_peak_channels/units.csv')
+    """
+    files = get_units_spikes_codeocean_kilosort_top_level_files(session)
+    units_path = next(path for path in files if "csv" in str(path))
 
+    return units_path
+
+@functools.cache
+def get_spike_times_codeocean_kilosort_path_from_s3(session: str | npc_session.SessionRecord) -> upath.UPath:
+    """
+    >>> get_spike_times_codeocean_kilosort_path_from_s3('662892_20230821')
+    S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/4f16d158-8b29-4c77-a8f5-f6576b8b8675/ecephys_662892_2023-08-21_12-43-45_units_with_peak_channels/spike_times.npy')
+    """
+    files = get_units_spikes_codeocean_kilosort_top_level_files(session)
+    spike_times_path = next(path for path in files if "spike" in str(path))
+
+    return spike_times_path
 
 if __name__ == "__main__":
     import doctest
