@@ -37,7 +37,10 @@ class SessionInfo(NamedTuple):
         >>> any(session.is_uploaded for session in get_session_info())
         True
         """
-        return bool(codeocean.get_raw_data_root(self.session))
+        try:
+            return bool(codeocean.get_raw_data_root(self.session))
+        except FileNotFoundError:
+            return False
 
     @property
     def is_sorted(self) -> bool:
@@ -47,11 +50,14 @@ class SessionInfo(NamedTuple):
         >>> any(session.is_sorted for session in get_session_info())
         True
         """
-        return any(
-            asset
-            for asset in codeocean.get_session_data_assets(self.session)
-            if "sorted" in asset["name"]
-        )
+        try:
+            return any(
+                asset
+                for asset in codeocean.get_session_data_assets(self.session)
+                if "sorted" in asset["name"]
+            )
+        except FileNotFoundError:
+            return False
 
 
 def get_session_info() -> tuple[SessionInfo, ...]:
