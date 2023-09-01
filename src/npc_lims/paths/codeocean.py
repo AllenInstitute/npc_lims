@@ -12,6 +12,7 @@ import npc_session
 import upath
 from aind_codeocean_api import codeocean
 from typing_extensions import TypeAlias
+import npc_lims.metadata.codeocean as metadata
 
 CODE_OCEAN_API_TOKEN = os.getenv("CODE_OCEAN_API_TOKEN")
 CODE_OCEAN_DOMAIN = os.getenv("CODE_OCEAN_DOMAIN")
@@ -87,7 +88,7 @@ def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath:
     """Reconstruct path to raw data in bucket (e.g. on s3) using data-asset
     info from Code Ocean.
 
-    >>> get_raw_data_root('668759_20230711')
+    >>> metadata.get_raw_data_root('668759_20230711')
     S3Path('s3://aind-ephys-data/ecephys_668759_2023-07-11_13-07-32')
     """
     session = npc_session.SessionRecord(session)
@@ -123,7 +124,7 @@ def get_raw_data_paths_from_s3(
     >>> files = get_raw_data_paths_from_s3 ('668759_20230711')
     >>> assert len(files) > 0
     """
-    raw_data_root = get_raw_data_root(session)
+    raw_data_root = metadata.get_raw_data_root(session)
     directories: Iterator = (
         directory for directory in raw_data_root.iterdir() if directory.is_dir()
     )

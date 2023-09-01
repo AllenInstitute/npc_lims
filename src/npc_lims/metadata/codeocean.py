@@ -86,10 +86,10 @@ def get_session_result_data_assets(
     return result_data_assets
 
 def get_single_data_asset(
-    session: str | npc_session.SessionRecord, data_assets: Sequence[DataAssetAPI]
+    session: str | npc_session.SessionRecord, data_assets: Sequence[DataAssetAPI], data_asset_type: str
 ) -> DataAssetAPI:
     if not data_assets:
-        raise FileNotFoundError(f'No data assets found for session {session}')
+        raise FileNotFoundError(f'No {data_asset_type} data assets found for session {session}')
 
     if len(data_assets) == 1:
         return data_assets[0]
@@ -143,7 +143,7 @@ def get_session_sorted_data_asset(
     if not sorted_data_assets:
         raise FileNotFoundError(f'Session {session} has no sorted data assets')
     
-    return get_single_data_asset(session, sorted_data_assets)
+    return get_single_data_asset(session, sorted_data_assets, 'sorted')
 
 
 @functools.cache
@@ -211,11 +211,11 @@ def get_session_raw_data_asset(
     if not raw_assets:
         raise FileNotFoundError(f'Session {session} has no raw data assets')
     
-    return get_single_data_asset(session, raw_assets)
+    return get_single_data_asset(session, raw_assets, 'raw')
 
 
 @functools.cache
-def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath | None:
+def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath:
     """Reconstruct path to raw data in bucket (e.g. on s3) using data-asset
     info from Code Ocean.
 
@@ -226,9 +226,8 @@ def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath |
     raw_assets = tuple(
         asset for asset in get_session_data_assets(session) if is_raw_data_asset(asset)
     )
-    raw_asset = get_single_data_asset(session, raw_assets)
-    if not raw_asset:
-        return None
+    raw_asset = get_single_data_asset(session, raw_assets, 'raw')
+
     return get_path_from_data_asset(raw_asset)
 
 
@@ -321,7 +320,7 @@ def get_session_units_data_asset(
         for data_asset in session_data_assets
         if "units" in data_asset["name"] and "peak" not in data_asset["name"]
     )
-    session_units_data_asset = get_single_data_asset(session, session_units_data_assets)
+    session_units_data_asset = get_single_data_asset(session, session_units_data_assets, 'units')
 
     return session_units_data_asset
 
@@ -343,7 +342,7 @@ def get_session_units_spikes_with_peak_channels_data_asset(
     )
 
     session_units_spikes_peak_channel_data_asset = get_single_data_asset(
-        session, session_units_spikes_peak_channel_data_assets
+        session, session_units_spikes_peak_channel_data_assets, 'units'
     )
 
     return session_units_spikes_peak_channel_data_asset
@@ -363,11 +362,7 @@ def run_codeocean_nwb_units_capsule_and_register_data_asset(session_id: str, raw
 
 def run_codeocean_units_spikes_peak_channel_capsule_and_register_data_asset(session_id: str, raw_data_asset: DataAssetAPI,
                                                                      sorted_data_asset: DataAssetAPI) -> DataAssetAPI:
-    units_no_peak_channel_asset = get_session_units_data_asset(session_id)
-    if units_no_peak_channel_asset is None:
-        raise ValueError(
-            f"Session {session_id} has no peak_channel data asset."
-        )  
+    units_no_peak_channel_asset = get_session_units_data_asset(session_id) 
 
     capsule_result_units_peak_channels = run_capsule_and_get_results(
         "d1a5c3a8-8fb2-4cb0-8e9e-96e6e1d03ff1",
