@@ -12,6 +12,7 @@ import npc_session
 import upath
 from aind_codeocean_api import codeocean
 from typing_extensions import TypeAlias
+
 import npc_lims.metadata.codeocean as metadata
 
 CODE_OCEAN_API_TOKEN = os.getenv("CODE_OCEAN_API_TOKEN")
