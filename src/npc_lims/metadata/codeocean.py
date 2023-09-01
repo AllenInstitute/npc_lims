@@ -89,7 +89,7 @@ def get_session_result_data_assets(
 def get_single_data_asset(
     session: str | npc_session.SessionRecord, data_assets: Sequence[DataAssetAPI]
 ) -> DataAssetAPI:
-    if not data_assets:
+    if len(data_assets) == 0:
         raise FileNotFoundError(f'No data assets found for session {session}')
 
     if len(data_assets) == 1:
