@@ -376,13 +376,15 @@ def run_codeocean_units_spikes_peak_channel_capsule_and_register_data_asset(sess
         (raw_data_asset, sorted_data_asset, units_no_peak_channel_asset),
     )
     register_session_data_asset(session_id, capsule_result_units_peak_channels)
-    units_peak_channel_asset = get_session_units_spikes_with_peak_channels_data_asset(session_id)
+    units_spikes_peak_channel_asset = get_session_units_spikes_with_peak_channels_data_asset(session_id)
 
     while True: # wait for data asset to be registered
-        if units_peak_channel_asset['state'] == 'ready':
+        if units_spikes_peak_channel_asset['state'] == 'ready':
             break
-        
-    return units_peak_channel_asset
+
+        units_spikes_peak_channel_asset = get_session_units_spikes_with_peak_channels_data_asset(session_id)
+
+    return units_spikes_peak_channel_asset
 
 def update_permissions_for_data_asset(data_asset: DataAssetAPI) -> None:
    response = codeocean_client.update_permissions(data_asset_id=data_asset['id'], everyone='viewer')
