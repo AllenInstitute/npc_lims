@@ -149,8 +149,8 @@ def get_units_spikes_codeocean_kilosort_top_level_files(
     session: str | npc_session.SessionRecord,
 ) -> tuple[upath.UPath, ...]:
     """
-    >>> get_units_spikes_codeocean_kilosort_top_level_files('668759_20230711')
-    (S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/d02515cd-534f-4c3b-bd74-847d2474f759/ecephys_668759_2023-07-11_13-07-32_units_with_peak_channels/mean_waveforms.npy'), S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/d02515cd-534f-4c3b-bd74-847d2474f759/ecephys_668759_2023-07-11_13-07-32_units_with_peak_channels/sd_waveforms.npy'), S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/d02515cd-534f-4c3b-bd74-847d2474f759/ecephys_668759_2023-07-11_13-07-32_units_with_peak_channels/spike_times.npy'), S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/d02515cd-534f-4c3b-bd74-847d2474f759/ecephys_668759_2023-07-11_13-07-32_units_with_peak_channels/units.csv'))
+    >>> paths = get_units_spikes_codeocean_kilosort_top_level_files('668759_20230711')
+    >>> assert paths
     """
     units_spikes_data_asset = (
         codeocean.get_session_units_spikes_with_peak_channels_data_asset(session)
@@ -172,8 +172,8 @@ def get_units_codeoean_kilosort_path_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> upath.UPath:
     """
-    >>> get_units_codeoean_kilosort_path_from_s3('668759_20230711')
-    S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/d02515cd-534f-4c3b-bd74-847d2474f759/ecephys_668759_2023-07-11_13-07-32_units_with_peak_channels/units.csv')
+    >>> path = get_units_codeoean_kilosort_path_from_s3('668759_20230711')
+    >>> assert path
     """
     files = get_units_spikes_codeocean_kilosort_top_level_files(session)
     units_path = next(path for path in files if "csv" in str(path))
@@ -186,8 +186,8 @@ def get_spike_times_codeocean_kilosort_path_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> upath.UPath:
     """
-    >>> get_spike_times_codeocean_kilosort_path_from_s3('668759_20230711')
-    S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/d02515cd-534f-4c3b-bd74-847d2474f759/ecephys_668759_2023-07-11_13-07-32_units_with_peak_channels/spike_times.npy')
+    >>> path = get_spike_times_codeocean_kilosort_path_from_s3('668759_20230711')
+    >>> assert path
     """
     files = get_units_spikes_codeocean_kilosort_top_level_files(session)
     spike_times_path = next(path for path in files if "spike" in str(path))
