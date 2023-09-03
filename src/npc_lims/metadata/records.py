@@ -46,11 +46,12 @@ class Subject(RecordWithNWB):
     >>> from npc_lims import tracked, NWBSqliteDBHub as DB
     >>> all_subjects = DB().get_records(Subject)
     """
+
     nwb_excl: ClassVar[tuple[str, ...]] = (
         *RecordWithNWB.nwb_excl,
         "age",
     )
-    
+
     table: ClassVar[str] = "subjects"
 
     subject_id: int | npc_session.SubjectRecord
