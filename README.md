@@ -1,6 +1,6 @@
 # npc_lims
 
-**n**euro**p**ixels **c**loud **lims**
+**n**euro**p**ixels **c**loud **l**ab **i**nformation **m**anagement **s**ystem
 	
 Tools to fetch and update paths, metadata and state for Mindscope Neuropixels sessions, in the cloud.   
 
