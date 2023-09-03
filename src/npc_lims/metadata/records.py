@@ -9,7 +9,6 @@ from typing_extensions import Self
 
 @dataclasses.dataclass
 class Record:
-    
     @property
     def db(self) -> dict[str, str | int | float | None]:
         row = self.__dict__.copy()
@@ -68,6 +67,7 @@ class Session(RecordWithNWB):
     >>> from npc_lims import tracked, NWBSqliteDBHub as DB
     >>> all_sessions = DB().get_records(Session)
     """
+
     nwb_excl: ClassVar[tuple[str, ...]] = (
         "session_id",
         "table",
