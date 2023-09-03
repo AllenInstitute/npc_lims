@@ -47,7 +47,11 @@ class Subject(RecordWithNWB):
     >>> from npc_lims import tracked, NWBSqliteDBHub as DB
     >>> all_subjects = DB().get_records(Subject)
     """
-
+    nwb_excl: ClassVar[tuple[str, ...]] = (
+        *RecordWithNWB.nwb_excl,
+        "age",
+    )
+    
     table: ClassVar[str] = "subjects"
 
     subject_id: int | npc_session.SubjectRecord
@@ -60,6 +64,7 @@ class Subject(RecordWithNWB):
     """e.g., C57BL/6J"""
     notes: str | None = None
     species: ClassVar[str] = "Mus musculus"
+    age: str | None = None
 
 
 @dataclasses.dataclass
@@ -69,9 +74,8 @@ class Session(RecordWithNWB):
     >>> all_sessions = DB().get_records(Session)
     """
     nwb_excl: ClassVar[tuple[str, ...]] = (
+        *RecordWithNWB.nwb_excl,
         "session_id",
-        "table",
-        "nwb_excl",
     )
 
     table: ClassVar[str] = "sessions"
