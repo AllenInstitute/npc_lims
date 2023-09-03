@@ -14,7 +14,7 @@ class Record:
         "nwb_excl",
         "table",
     )
-    
+
     @property
     def db(self) -> dict[str, str | int | float | None]:
         row = self.__dict__.copy()
@@ -55,16 +55,18 @@ class RecordWithNWB(Record):
                 nwb[k] = str(v)
         return nwb
 
+
 @dataclasses.dataclass
 class Subject(RecordWithNWB):
     """
     >>> from npc_lims import tracked, NWBSqliteDBHub as DB
     >>> all_subjects = DB().get_records(Subject)
     """
+
     db_excl: ClassVar[tuple[str, ...]] = (
         *RecordWithNWB.db_excl,
-        "age", # depends on session
-        "species", # fixed
+        "age",  # depends on session
+        "species",  # fixed
     )
 
     table: ClassVar[str] = "subjects"
