@@ -9,11 +9,19 @@ from typing_extensions import Self
 
 @dataclasses.dataclass
 class Record:
+    db_excl: ClassVar[tuple[str, ...]] = (
+        "db_excl",
+        "nwb_excl",
+        "table",
+    )
+    
     @property
     def db(self) -> dict[str, str | int | float | None]:
         row = self.__dict__.copy()
-        row.pop("table", None)  # not actually needed for dataclass ClassVar
         for k, v in row.items():
+            if k in self.db_excl:
+                del row[k]
+                continue
             if not isinstance(v, (str, int, float, type(None))):
                 row[k] = str(v)
         return row
@@ -31,14 +39,21 @@ class Record:
 @dataclasses.dataclass
 class RecordWithNWB(Record):
     nwb_excl: ClassVar[tuple[str, ...]] = (
+        "db_excl",
         "nwb_excl",
         "table",
     )
 
     @property
     def nwb(self) -> dict[str, str | int | float | None]:
-        return {k: v for k, v in self.db.items() if k not in self.nwb_excl}
-
+        nwb = self.__dict__.copy()
+        for k, v in nwb.items():
+            if k in self.nwb_excl:
+                del nwb[k]
+                continue
+            if not isinstance(v, (str, int, float, type(None))):
+                nwb[k] = str(v)
+        return nwb
 
 @dataclasses.dataclass
 class Subject(RecordWithNWB):
@@ -46,10 +61,10 @@ class Subject(RecordWithNWB):
     >>> from npc_lims import tracked, NWBSqliteDBHub as DB
     >>> all_subjects = DB().get_records(Subject)
     """
-
-    nwb_excl: ClassVar[tuple[str, ...]] = (
-        *RecordWithNWB.nwb_excl,
-        "age",
+    db_excl: ClassVar[tuple[str, ...]] = (
+        *RecordWithNWB.db_excl,
+        "age", # depends on session
+        "species", # fixed
     )
 
     table: ClassVar[str] = "subjects"
@@ -63,7 +78,7 @@ class Subject(RecordWithNWB):
     strain: str | None = None
     """e.g., C57BL/6J"""
     notes: str | None = None
-    species: ClassVar[str] = "Mus musculus"
+    species: str = "Mus musculus"
     age: str | None = None
 
 
