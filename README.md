@@ -4,8 +4,14 @@
 	
 Tools to fetch and update paths, metadata and state for Mindscope Neuropixels sessions, in the cloud.   
 
-[![Python
-Versions](https://img.shields.io/pypi/pyversions/npc_lims.svg)](https://pypi.python.org/pypi/npc-lims/)
+[![PyPI](https://img.shields.io/pypi/v/npc-lims.svg?label=PyPI&color=blue)](https://pypi.org/project/npc-lims/)
+[![Python version](https://img.shields.io/pypi/pyversions/npc-lims)](https://pypi.org/project/npc-lims/)
+
+[![Coverage](https://img.shields.io/codecov/c/github/alleninstitute/npc_lims?logo=codecov)](https://app.codecov.io/github/AllenInstitute/npc_lims)
+[![CI/CD](https://img.shields.io/github/actions/workflow/status/alleninstitute/npc_lims/publish.yml?label=CI/CD&logo=github)](https://github.com/alleninstitute/npc_lims/actions/workflows/publish.yml)
+[![GitHub
+issues](https://img.shields.io/github/issues/alleninstitute/npc_lims?logo=github)](https://github.com/alleninstitute/npc_lims/issues)
+
 ## quickstart
 
 ```bash
