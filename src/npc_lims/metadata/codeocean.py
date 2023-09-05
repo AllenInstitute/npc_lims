@@ -379,13 +379,16 @@ def run_codeocean_units_spikes_peak_channel_capsule_and_register_data_asset(
             num_tries += 1
 
     if num_tries == 20:
-        raise ValueError('Could not get result from aind codeocean kilosort capsule. Check codeocean')
-    
+        raise ValueError(
+            "Could not get result from aind codeocean kilosort capsule. Check codeocean"
+        )
+
     capsule_result_units_peak_channels = run_capsule_and_get_results(
         "d1a5c3a8-8fb2-4cb0-8e9e-96e6e1d03ff1",
         (raw_data_asset, sorted_data_asset, units_no_peak_channel_asset),
     )
     register_session_data_asset(session_id, capsule_result_units_peak_channels)
+
 
 def update_permissions_for_data_asset(data_asset: DataAssetAPI) -> None:
     response = codeocean_client.update_permissions(
@@ -402,7 +405,7 @@ def run_capsules_for_units_spikes_kilosort_codeocean(session_id: str) -> None:
         session_id, raw_data_asset, sorted_data_asset
     )
     run_codeocean_units_spikes_peak_channel_capsule_and_register_data_asset(
-       session_id, raw_data_asset, sorted_data_asset
+        session_id, raw_data_asset, sorted_data_asset
     )
 
     num_tries = 0
@@ -410,15 +413,20 @@ def run_capsules_for_units_spikes_kilosort_codeocean(session_id: str) -> None:
         if num_tries == 20:
             break
         try:
-            units_spike_peak_channel_asset = get_session_units_spikes_with_peak_channels_data_asset(session_id)
+            units_spike_peak_channel_asset = (
+                get_session_units_spikes_with_peak_channels_data_asset(session_id)
+            )
             break
         except (FileNotFoundError, ValueError):
             num_tries += 1
 
     if num_tries == 20:
-        raise ValueError('Could not get result from spike alignment capsule. Check codeocean')
+        raise ValueError(
+            "Could not get result from spike alignment capsule. Check codeocean"
+        )
 
     update_permissions_for_data_asset(units_spike_peak_channel_asset)
+
 
 if __name__ == "__main__":
     import doctest
