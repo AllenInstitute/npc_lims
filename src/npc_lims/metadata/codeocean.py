@@ -92,7 +92,7 @@ def get_single_data_asset(
     data_asset_type: str,
 ) -> DataAssetAPI:
     if not data_assets:
-        raise FileNotFoundError(
+        raise ValueError(
             f"No {data_asset_type} data assets found for session {session}"
         )
 
@@ -146,7 +146,7 @@ def get_session_sorted_data_asset(
     )
 
     if not sorted_data_assets:
-        raise FileNotFoundError(f"Session {session} has no sorted data assets")
+        raise ValueError(f"Session {session} has no sorted data assets")
 
     return get_single_data_asset(session, sorted_data_assets, "sorted")
 
@@ -214,7 +214,7 @@ def get_session_raw_data_asset(
     )
 
     if not raw_assets:
-        raise FileNotFoundError(f"Session {session} has no raw data assets")
+        raise ValueError(f"Session {session} has no raw data assets")
 
     return get_single_data_asset(session, raw_assets, "raw")
 
@@ -370,7 +370,7 @@ def run_codeocean_units_spikes_peak_channel_capsule_and_register_data_asset(
 ) -> None:
     num_tries = 0
     while True:
-        if num_tries == 20:
+        if num_tries == 100:
             break
         try:
             units_no_peak_channel_asset = get_session_units_data_asset(session_id)
@@ -378,11 +378,9 @@ def run_codeocean_units_spikes_peak_channel_capsule_and_register_data_asset(
         except (FileNotFoundError, ValueError):
             num_tries += 1
 
-    if num_tries == 20:
-        raise ValueError(
-            "Could not get result from aind codeocean kilosort capsule. Check codeocean"
-        )
-
+    if num_tries == 100:
+        raise ValueError('Could not get result from aind codeocean kilosort units capsule. Check codeocean')
+    
     capsule_result_units_peak_channels = run_capsule_and_get_results(
         "d1a5c3a8-8fb2-4cb0-8e9e-96e6e1d03ff1",
         (raw_data_asset, sorted_data_asset, units_no_peak_channel_asset),
@@ -401,16 +399,16 @@ def run_capsules_for_units_spikes_kilosort_codeocean(session_id: str) -> None:
     raw_data_asset = get_session_raw_data_asset(session_id)
     sorted_data_asset = get_session_sorted_data_asset(session_id)
 
-    run_codeocean_nwb_units_capsule_and_register_data_asset(
-        session_id, raw_data_asset, sorted_data_asset
-    )
+    #run_codeocean_nwb_units_capsule_and_register_data_asset(
+     #  session_id, raw_data_asset, sorted_data_asset
+    #)
     run_codeocean_units_spikes_peak_channel_capsule_and_register_data_asset(
         session_id, raw_data_asset, sorted_data_asset
     )
 
     num_tries = 0
     while True:
-        if num_tries == 20:
+        if num_tries == 100:
             break
         try:
             units_spike_peak_channel_asset = (
@@ -420,10 +418,8 @@ def run_capsules_for_units_spikes_kilosort_codeocean(session_id: str) -> None:
         except (FileNotFoundError, ValueError):
             num_tries += 1
 
-    if num_tries == 20:
-        raise ValueError(
-            "Could not get result from spike alignment capsule. Check codeocean"
-        )
+    if num_tries == 100:
+        raise ValueError('Could not get result from spike alignment capsule. Check codeocean')
 
     update_permissions_for_data_asset(units_spike_peak_channel_asset)
 
