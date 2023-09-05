@@ -379,8 +379,10 @@ def run_codeocean_units_spikes_peak_channel_capsule_and_register_data_asset(
             num_tries += 1
 
     if num_tries == 100:
-        raise ValueError('Could not get result from aind codeocean kilosort units capsule. Check codeocean')
-    
+        raise ValueError(
+            "Could not get result from aind codeocean kilosort units capsule. Check codeocean"
+        )
+
     capsule_result_units_peak_channels = run_capsule_and_get_results(
         "d1a5c3a8-8fb2-4cb0-8e9e-96e6e1d03ff1",
         (raw_data_asset, sorted_data_asset, units_no_peak_channel_asset),
@@ -399,9 +401,9 @@ def run_capsules_for_units_spikes_kilosort_codeocean(session_id: str) -> None:
     raw_data_asset = get_session_raw_data_asset(session_id)
     sorted_data_asset = get_session_sorted_data_asset(session_id)
 
-    #run_codeocean_nwb_units_capsule_and_register_data_asset(
-     #  session_id, raw_data_asset, sorted_data_asset
-    #)
+    # run_codeocean_nwb_units_capsule_and_register_data_asset(
+    #  session_id, raw_data_asset, sorted_data_asset
+    # )
     run_codeocean_units_spikes_peak_channel_capsule_and_register_data_asset(
         session_id, raw_data_asset, sorted_data_asset
     )
@@ -419,7 +421,9 @@ def run_capsules_for_units_spikes_kilosort_codeocean(session_id: str) -> None:
             num_tries += 1
 
     if num_tries == 100:
-        raise ValueError('Could not get result from spike alignment capsule. Check codeocean')
+        raise ValueError(
+            "Could not get result from spike alignment capsule. Check codeocean"
+        )
 
     update_permissions_for_data_asset(units_spike_peak_channel_asset)
 
