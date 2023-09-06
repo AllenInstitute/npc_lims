@@ -40,17 +40,19 @@ DataAsset: TypeAlias = dict[
     Any,
 ]
 
-
+@functools.cache
+def get_codeocean_client() -> codeocean.CodeOceanClient:
+    return codeocean.CodeOceanClient(
+        domain=os.environ["CODE_OCEAN_DOMAIN"], token=os.environ["CODE_OCEAN_API_TOKEN"]
+    )
+    
 @functools.cache
 def get_subject_data_assets(subject: str | int) -> tuple[DataAsset, ...]:
     """
     >>> assets = get_subject_data_assets(668759)
     >>> assert len(assets) > 0
     """
-    codeocean_client = codeocean.CodeOceanClient(
-        domain=CODE_OCEAN_DOMAIN, token=CODE_OCEAN_API_TOKEN
-    )
-    response = codeocean_client.search_data_assets(
+    response = get_codeocean_client().search_data_assets(
         query=f"subject id: {npc_session.SubjectRecord(subject)}"
     )
     response.raise_for_status()
