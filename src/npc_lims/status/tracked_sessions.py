@@ -39,7 +39,7 @@ class SessionInfo(NamedTuple):
         """
         try:
             return bool(codeocean.get_raw_data_root(self.session))
-        except FileNotFoundError:
+        except (FileNotFoundError, ValueError):
             return False
 
     @property
@@ -56,7 +56,7 @@ class SessionInfo(NamedTuple):
                 for asset in codeocean.get_session_data_assets(self.session)
                 if "sorted" in asset["name"]
             )
-        except FileNotFoundError:
+        except (FileNotFoundError, ValueError):
             return False
 
 
