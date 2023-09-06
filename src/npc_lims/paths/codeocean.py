@@ -22,23 +22,6 @@ DR_DATA_REPO = upath.UPath(
     "s3://aind-scratch-data/ben.hardcastle/DynamicRoutingTask/Data"
 )
 
-DataAsset: TypeAlias = dict[
-    Literal[
-        "created",
-        "custom_metadata",
-        "description",
-        "files",
-        "id",
-        "last_used",
-        "name",
-        "size",
-        "sourceBucket",
-        "state",
-        "tags",
-        "type",
-    ],
-    Any,
-]
 
 
 @functools.cache
@@ -49,7 +32,7 @@ def get_codeocean_client() -> codeocean.CodeOceanClient:
 
 
 @functools.cache
-def get_subject_data_assets(subject: str | int) -> tuple[DataAsset, ...]:
+def get_subject_data_assets(subject: str | int) -> tuple[metadata.DataAssetAPI, ...]:
     """
     >>> assets = get_subject_data_assets(668759)
     >>> assert len(assets) > 0
@@ -64,7 +47,7 @@ def get_subject_data_assets(subject: str | int) -> tuple[DataAsset, ...]:
 @functools.cache
 def get_session_data_assets(
     session: str | npc_session.SessionRecord,
-) -> tuple[DataAsset, ...]:
+) -> tuple[metadata.DataAssetAPI, ...]:
     session = npc_session.SessionRecord(session)
     assets = get_subject_data_assets(session.subject)
     return tuple(
