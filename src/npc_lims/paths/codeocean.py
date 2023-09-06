@@ -40,12 +40,14 @@ DataAsset: TypeAlias = dict[
     Any,
 ]
 
+
 @functools.cache
 def get_codeocean_client() -> codeocean.CodeOceanClient:
     return codeocean.CodeOceanClient(
         domain=os.environ["CODE_OCEAN_DOMAIN"], token=os.environ["CODE_OCEAN_API_TOKEN"]
     )
-    
+
+
 @functools.cache
 def get_subject_data_assets(subject: str | int) -> tuple[DataAsset, ...]:
     """
