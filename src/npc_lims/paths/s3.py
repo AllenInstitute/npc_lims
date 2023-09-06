@@ -17,6 +17,12 @@ NWB_REPO = upath.UPath("s3://aind-scratch-data/ben.hardcastle/nwb/nwb")
 
 CODE_OCEAN_DATA_BUCKET = upath.UPath("s3://codeocean-s3datasetsbucket-1u41qdg42ur9")
 
+def get_data_asset_s3_path(asset: codeocean.DataAssetAPI) -> upath.UPath:
+    """Path on s3 that contains actual data for CodeOcean data asset.
+    
+    Assumes that the data asset has data on s3, which may not be true, and we can't tell from asset info.
+    """
+    return CODE_OCEAN_DATA_BUCKET / asset["id"]
 
 @functools.cache
 def get_raw_data_paths_from_s3(
@@ -51,9 +57,7 @@ def get_sorted_data_paths_from_s3(
     >>> assert len(sorted_data_s3_paths) > 0
     """
     sorted_data_asset = codeocean.get_session_sorted_data_asset(session)
-    if not sorted_data_asset:
-        return ()
-    return tuple((CODE_OCEAN_DATA_BUCKET / sorted_data_asset["id"]).iterdir())
+    return tuple(get_data_asset_s3_path(sorted_data_asset).iterdir())
 
 
 @functools.cache
@@ -156,12 +160,8 @@ def get_units_spikes_codeocean_kilosort_top_level_files(
         codeocean.get_session_units_spikes_with_peak_channels_data_asset(session)
     )
 
-    if not units_spikes_data_asset:
-        raise FileNotFoundError(f"No units found for session {session}")
-
-    units_top_level = (CODE_OCEAN_DATA_BUCKET / units_spikes_data_asset["id"]).iterdir()
     units_directory = next(
-        unit_path for unit_path in units_top_level if unit_path.is_dir()
+        unit_path for unit_path in get_data_asset_s3_path(units_spikes_data_asset).iterdir() if unit_path.is_dir()
     )
 
     return tuple(units_directory.iterdir())
