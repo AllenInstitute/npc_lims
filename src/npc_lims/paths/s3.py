@@ -17,12 +17,14 @@ NWB_REPO = upath.UPath("s3://aind-scratch-data/ben.hardcastle/nwb/nwb")
 
 CODE_OCEAN_DATA_BUCKET = upath.UPath("s3://codeocean-s3datasetsbucket-1u41qdg42ur9")
 
+
 def get_data_asset_s3_path(asset: codeocean.DataAssetAPI) -> upath.UPath:
     """Path on s3 that contains actual data for CodeOcean data asset.
-    
+
     Assumes that the data asset has data on s3, which may not be true, and we can't tell from asset info.
     """
     return CODE_OCEAN_DATA_BUCKET / asset["id"]
+
 
 @functools.cache
 def get_raw_data_paths_from_s3(
@@ -161,7 +163,9 @@ def get_units_spikes_codeocean_kilosort_top_level_files(
     )
 
     units_directory = next(
-        unit_path for unit_path in get_data_asset_s3_path(units_spikes_data_asset).iterdir() if unit_path.is_dir()
+        unit_path
+        for unit_path in get_data_asset_s3_path(units_spikes_data_asset).iterdir()
+        if unit_path.is_dir()
     )
 
     return tuple(units_directory.iterdir())

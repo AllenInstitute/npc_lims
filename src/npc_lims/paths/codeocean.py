@@ -6,12 +6,10 @@ import operator
 import os
 import re
 from collections.abc import Iterator
-from typing import Any, Literal
 
 import npc_session
 import upath
 from aind_codeocean_api import codeocean
-from typing_extensions import TypeAlias
 
 import npc_lims.metadata.codeocean as metadata
 
@@ -21,7 +19,6 @@ CODE_OCEAN_DOMAIN = os.getenv("CODE_OCEAN_DOMAIN")
 DR_DATA_REPO = upath.UPath(
     "s3://aind-scratch-data/ben.hardcastle/DynamicRoutingTask/Data"
 )
-
 
 
 @functools.cache
