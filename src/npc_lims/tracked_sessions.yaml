@@ -26,6 +26,7 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_660023_20230808
     # ^ first DR ephys in a while - is this still 'DRpilot'? 
     # ^ first session with 'surface_channels' after main recording, middle probe bank
+    # 103 extra vsyncs for DynamicRouting1 (c.f. num frameIntervals + 1)
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_660023_20230809
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230814
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230815
