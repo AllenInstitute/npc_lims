@@ -395,8 +395,8 @@ def run_capsules_for_units_spikes_kilosort_codeocean(session_id: str) -> None:
     sorted_data_asset = get_session_sorted_data_asset(session_id)
 
     run_codeocean_nwb_units_capsule_and_register_data_asset(
-      session_id, raw_data_asset, sorted_data_asset
-     )
+        session_id, raw_data_asset, sorted_data_asset
+    )
     run_codeocean_units_spikes_peak_channel_capsule_and_register_data_asset(
         session_id, raw_data_asset, sorted_data_asset
     )
@@ -411,7 +411,6 @@ def run_capsules_for_units_spikes_kilosort_codeocean(session_id: str) -> None:
         except (FileNotFoundError, ValueError):
             num_tries += 1
 
-    
     update_permissions_for_data_asset(units_spike_peak_channel_asset)
 
 

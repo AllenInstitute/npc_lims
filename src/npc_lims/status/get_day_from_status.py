@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import os
-import pydbhub.dbhub as dbhub
+
 import npc_session
+import pydbhub.dbhub as dbhub
 
 DB_NAME = "jobs.db"
 DB_OWNER = "svc_neuropix"
 API_KEY = os.getenv("DBHUB_API_KEY")
+
 
 def get_day(session: str | npc_session.SessionRecord) -> int:
     """
@@ -14,16 +16,16 @@ def get_day(session: str | npc_session.SessionRecord) -> int:
     2
     """
     session = npc_session.SessionRecord(session)
-    
+
     connection = dbhub.Dbhub(API_KEY, db_name=DB_NAME, db_owner=DB_OWNER)
     statement = (
         f"""SELECT date FROM STATUS WHERE subject_id = {str(session.subject.id)}"""
     )
     response = connection.Query(statement)[0]
     if response is not None:
-        dates = sorted([date['date'] for date in response])
+        dates = sorted([date["date"] for date in response])
     else:
-        raise ValueError(f'{session.id} not in Status table for jobs database')
+        raise ValueError(f"{session.id} not in Status table for jobs database")
 
     day = tuple(
         dates.index(date) + 1
@@ -33,7 +35,8 @@ def get_day(session: str | npc_session.SessionRecord) -> int:
 
     return day
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     import doctest
 
     import dotenv
