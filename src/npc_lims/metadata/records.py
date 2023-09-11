@@ -51,7 +51,7 @@ class RecordWithNWB(Record):
             if k in self.nwb_excl:
                 del nwb[k]
                 continue
-            if not isinstance(v, (str, int, float, type(None))):
+            if not isinstance(v, (str, int, float, type(None), list)):
                 nwb[k] = str(v)
         return nwb
 
