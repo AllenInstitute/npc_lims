@@ -124,9 +124,8 @@ class Epoch(RecordWithNWB):
     >>> session_epochs[0].tags
     ['DynamicRouting1']
     """
-    nwb_excl: ClassVar[tuple[str, ...]] = (
-        "session_id",
-    )
+
+    nwb_excl: ClassVar[tuple[str, ...]] = ("session_id",)
 
     table: ClassVar = "epochs"
 
@@ -197,12 +196,10 @@ class Device(RecordWithNWB):
 class ElectrodeGroup(RecordWithNWB):
     """All the channels used on one probe, in one session"""
 
-    nwb_excl: ClassVar[tuple[str, ...]] = (
-        "session_id",
-    )
-    
+    nwb_excl: ClassVar[tuple[str, ...]] = ("session_id",)
+
     table: ClassVar = "electrode_groups"
-    
+
     session_id: str | npc_session.SessionRecord
     device: int
     """Serial number of the device"""
@@ -216,10 +213,8 @@ class ElectrodeGroup(RecordWithNWB):
 class Electrode(RecordWithNWB):
     """A single channel on a probe"""
 
-    nwb_excl: ClassVar[tuple[str, ...]] = (
-        "session_id",
-    )
-    
+    nwb_excl: ClassVar[tuple[str, ...]] = ("session_id",)
+
     table: ClassVar = "electrodes"
 
     session_id: str | npc_session.SessionRecord
@@ -239,11 +234,8 @@ class Electrode(RecordWithNWB):
 
 @dataclasses.dataclass
 class Units(RecordWithNWB):
+    nwb_excl: ClassVar[tuple[str, ...]] = ("session_id",)
 
-    nwb_excl: ClassVar[tuple[str, ...]] = (
-        "session_id",
-    )
-    
     table: ClassVar = "units"
 
     unit_id: str
