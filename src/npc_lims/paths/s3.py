@@ -45,7 +45,7 @@ def get_raw_data_paths_from_s3(
     )
 
     paths = functools.reduce(operator.add, first_level_files_directories)
-    
+
     if not paths:
         raise FileNotFoundError(
             f"Raw data paths empty for {session} on s3. Looks like an upload was started, but no files have been transferred."
@@ -82,6 +82,7 @@ def get_settings_xml_path_from_s3(
         if raw_path.is_dir() and ".zarr" not in raw_path.suffix
     )
     return tuple(raw_path / "settings.xml" for raw_path in directories)[0]
+
 
 @dataclasses.dataclass
 class StimFile:

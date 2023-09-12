@@ -9,6 +9,7 @@ from typing_extensions import Self
 NWBType = Union[str, int, float, None, list]
 DBType = Union[str, int, float, None]
 
+
 @dataclasses.dataclass
 class Record:
     db_excl: ClassVar[tuple[str, ...]] = (
@@ -127,9 +128,8 @@ class Epoch(RecordWithNWB):
     >>> session_epochs[0].tags
     ['DynamicRouting1']
     """
-    nwb_excl: ClassVar[tuple[str, ...]] = (
-        "session_id",
-    )
+
+    nwb_excl: ClassVar[tuple[str, ...]] = ("session_id",)
 
     table: ClassVar = "epochs"
 
@@ -138,15 +138,16 @@ class Epoch(RecordWithNWB):
     stop_time: float
     tags: list[str]
     notes: str | None = None
-    
+
     @property
     def nwb(self) -> dict[str, NWBType]:
         nwb = super().nwb
-        nwb['notes'] = '' if nwb['notes'] is None else nwb['notes']
-        nwb['start_time'] = float(str(nwb['start_time']))
-        nwb['stop_time'] = float(str(nwb['stop_time']))
+        nwb["notes"] = "" if nwb["notes"] is None else nwb["notes"]
+        nwb["start_time"] = float(str(nwb["start_time"]))
+        nwb["stop_time"] = float(str(nwb["stop_time"]))
         return nwb
-    
+
+
 @dataclasses.dataclass
 class File(Record):
     table: ClassVar = "files"
@@ -207,12 +208,10 @@ class Device(RecordWithNWB):
 class ElectrodeGroup(RecordWithNWB):
     """All the channels used on one probe, in one session"""
 
-    nwb_excl: ClassVar[tuple[str, ...]] = (
-        "session_id",
-    )
-    
+    nwb_excl: ClassVar[tuple[str, ...]] = ("session_id",)
+
     table: ClassVar = "electrode_groups"
-    
+
     session_id: str | npc_session.SessionRecord
     device: int
     """Serial number of the device"""
@@ -226,10 +225,8 @@ class ElectrodeGroup(RecordWithNWB):
 class Electrode(RecordWithNWB):
     """A single channel on a probe"""
 
-    nwb_excl: ClassVar[tuple[str, ...]] = (
-        "session_id",
-    )
-    
+    nwb_excl: ClassVar[tuple[str, ...]] = ("session_id",)
+
     table: ClassVar = "electrodes"
 
     session_id: str | npc_session.SessionRecord
@@ -249,11 +246,8 @@ class Electrode(RecordWithNWB):
 
 @dataclasses.dataclass
 class Units(RecordWithNWB):
+    nwb_excl: ClassVar[tuple[str, ...]] = ("session_id",)
 
-    nwb_excl: ClassVar[tuple[str, ...]] = (
-        "session_id",
-    )
-    
     table: ClassVar = "units"
 
     unit_id: str
