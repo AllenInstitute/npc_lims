@@ -37,16 +37,20 @@ def get_raw_data_paths_from_s3(
     >>> assert len(files) > 0
     """
     raw_data_root = codeocean.get_raw_data_root(session)
-    if not raw_data_root:
-        return ()
-    directories: Iterator = (
+    directories: Iterator[upath.UPath] = (
         directory for directory in raw_data_root.iterdir() if directory.is_dir()
     )
     first_level_files_directories: Iterator = (
         tuple(directory.iterdir()) for directory in directories
     )
 
-    return functools.reduce(operator.add, first_level_files_directories)
+    paths = functools.reduce(operator.add, first_level_files_directories)
+    
+    if not paths:
+        raise FileNotFoundError(
+            f"Raw data paths empty for {session} on s3. Looks like an upload was started, but no files have been transferred."
+        )
+    return paths
 
 
 @functools.cache
@@ -65,24 +69,19 @@ def get_sorted_data_paths_from_s3(
 @functools.cache
 def get_settings_xml_path_from_s3(
     session: str | npc_session.SessionRecord,
-) -> upath.UPath | None:
+) -> upath.UPath:
     """
     >>> settings_xml_path = get_settings_xml_path_from_s3('670180-2023-07-26')
     >>> assert settings_xml_path.exists()
     """
     raw_data_paths_s3 = get_raw_data_paths_from_s3(session)
 
-    if not raw_data_paths_s3:  # not uploaded to codeocean yet
-        return None
-
     directories = (
         raw_path
         for raw_path in raw_data_paths_s3
         if raw_path.is_dir() and ".zarr" not in raw_path.suffix
     )
-    settings_xml_paths_s3 = tuple(raw_path / "settings.xml" for raw_path in directories)
-    return settings_xml_paths_s3[0]
-
+    return tuple(raw_path / "settings.xml" for raw_path in directories)[0]
 
 @dataclasses.dataclass
 class StimFile:
@@ -136,7 +135,7 @@ def get_hdf5_stim_files_from_s3(
 @functools.cache
 def get_nwb_file_from_s3(
     session: str | npc_session.SessionRecord,
-) -> upath.UPath | None:
+) -> upath.UPath:
     """
     >>> get_nwb_file_from_s3('636766_20230125')
     S3Path('s3://aind-scratch-data/ben.hardcastle/nwb/nwb/DRpilot_636766_20230125.nwb')
@@ -146,7 +145,7 @@ def get_nwb_file_from_s3(
     glob = f"*_{session.replace('-', '')}.nwb"
     result = next(root.glob(glob), None)
     if not result:
-        print(f"No NWB file found at {root}/{glob}")
+        raise FileNotFoundError(f"No NWB file found at {root}/{glob}")
     return result
 
 
