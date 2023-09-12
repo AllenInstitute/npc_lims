@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import ClassVar, Literal
+from typing import ClassVar, Literal, Union
 
 import npc_session
 from typing_extensions import Self
 
+NWBType = Union[str, int, float, None, list]
+DBType = Union[str, int, float, None]
 
 @dataclasses.dataclass
 class Record:
@@ -16,7 +18,7 @@ class Record:
     )
 
     @property
-    def db(self) -> dict[str, str | int | float | None]:
+    def db(self) -> dict[str, DBType]:
         row = self.__dict__.copy()
         for k, v in row.items():
             if k in self.db_excl:
@@ -45,15 +47,15 @@ class RecordWithNWB(Record):
     )
 
     @property
-    def nwb(self) -> dict[str, str | int | float | None]:
+    def nwb(self) -> dict[str, NWBType]:
         nwb = {}
         for k, v in self.__dict__.items():
             if k in self.nwb_excl:
                 continue
-            if not isinstance(v, (str, int, float, type(None), list)):
-                nwb[k] = str(v)
-            else:
+            if isinstance(v, (str, int, float, type(None), list)):
                 nwb[k] = v
+            else:
+                nwb[k] = str(v)
         return nwb
 
 
@@ -101,7 +103,7 @@ class Session(RecordWithNWB):
 
     session_id: str | npc_session.SessionRecord
     subject_id: int | npc_session.SubjectRecord
-    session_start_time: str | npc_session.TimeRecord | None = None
+    session_start_time: str | npc_session.DatetimeRecord | None = None
     stimulus_notes: str | None = None
     experimenter: str | None = None
     experiment_description: str | None = None
@@ -132,17 +134,17 @@ class Epoch(RecordWithNWB):
     table: ClassVar = "epochs"
 
     session_id: str | npc_session.SessionRecord
-    start_time: str | npc_session.TimeRecord
-    stop_time: str | npc_session.TimeRecord
+    start_time: float
+    stop_time: float
     tags: list[str]
     notes: str | None = None
     
     @property
-    def nwb(self) -> dict[str, str | int | float | None]:
+    def nwb(self) -> dict[str, NWBType]:
         nwb = super().nwb
         nwb['notes'] = '' if nwb['notes'] is None else nwb['notes']
-        nwb['start_time'] = float(nwb['start_time'])
-        nwb['stop_time'] = float(nwb['stop_time'])
+        nwb['start_time'] = float(str(nwb['start_time']))
+        nwb['stop_time'] = float(str(nwb['stop_time']))
         return nwb
     
 @dataclasses.dataclass
