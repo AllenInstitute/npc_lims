@@ -83,6 +83,19 @@ def get_settings_xml_path_from_s3(
     )
     return tuple(raw_path / "settings.xml" for raw_path in directories)[0]
 
+@functools.cache
+def get_h5_sync_from_s3(session: str | npc_session.SessionRecord) -> upath.UPath:
+    """
+    >>> get_h5_sync_from_s3('662892_20230821')
+    S3Path('s3://aind-ephys-data/ecephys_662892_2023-08-21_12-43-45/behavior/20230821T124345.h5')
+    """
+    raw_data_paths_s3 = get_raw_data_paths_from_s3(session)
+    sync_path = tuple(path for path in raw_data_paths_s3 if '.h5' in path.suffix)
+
+    if not sync_path:
+        raise FileNotFoundError(f'{session} has no sync')
+    
+    return sync_path[0]
 
 @functools.cache
 def get_spike_sorted_paths_from_s3(
