@@ -3,7 +3,7 @@ from __future__ import annotations
 import dataclasses
 import functools
 import operator
-from collections.abc import Iterator
+from collections.abc import Iterator, Generator
 
 import npc_session
 import upath
@@ -83,6 +83,38 @@ def get_settings_xml_path_from_s3(
     )
     return tuple(raw_path / "settings.xml" for raw_path in directories)[0]
 
+@functools.cache
+def get_spike_sorted_paths_from_s3(session: str | npc_session.SessionRecord) -> tuple[upath.UPath, ...]:
+    """
+    >>> spike_sorted_paths = get_spike_sorted_paths_from_s3('662892_20230821')
+    >>> assert spike_sorted_paths[0].exists()
+    """
+    sorted_data_paths = get_sorted_data_paths_from_s3(session)
+    return tuple(next(path for path in sorted_data_paths if 'spike' in str(path)).iterdir())
+
+@functools.cache
+def get_spike_sorting_device_path_from_s3(session: str | npc_session.SessionRecord, device_name: str) -> upath.UPath:
+    """
+    >>> get_spike_sorting_device_path_from_s3('662892_20230821', 'ProbeA')
+    S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/d527db85-39b7-4c4f-a465-9ca499b0ca47/spikesorted/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/sorting_cached.npz')
+    """
+    spike_sorted_paths = get_spike_sorted_paths_from_s3(session)
+    spike_probe_paths = next(path for path in spike_sorted_paths if device_name in str(path)).iterdir()
+    sorting_cached_path = next(path for path in spike_probe_paths if 'sorting_cached' in str(path))
+
+    return sorting_cached_path
+
+@functools.cache
+def get_recording_dirs_experiment_path_from_s3(session: str | npc_session.SessionRecord) -> tuple[upath.UPath, ...]:
+    """
+    >>> recording_dirs = get_recording_dirs_experiment_path_from_s3('662892_20230821')
+    >>> assert len(recording_dirs) > 0
+    """
+    raw_data_paths = get_raw_data_paths_from_s3(session)
+    recording_dirs = (path for path in raw_data_paths if 'Record Node' in str(path) and 'zarr' not in str(path))
+    recording_dirs_experiment = tuple(next(path.glob('*/recording*')) for path in recording_dirs)
+
+    return recording_dirs_experiment
 
 @dataclasses.dataclass
 class StimFile:
@@ -149,7 +181,6 @@ def get_nwb_file_from_s3(
         raise FileNotFoundError(f"No NWB file found at {root}/{glob}")
     return result
 
-
 @functools.cache
 def get_units_spikes_codeocean_kilosort_top_level_files(
     session: str | npc_session.SessionRecord,
@@ -198,6 +229,23 @@ def get_spike_times_codeocean_kilosort_path_from_s3(
 
     return spike_times_path
 
+@functools.cache
+def get_mean_waveform_codeocean_kilosort_path_from_s3(session: str | npc_session.SessionRecord) -> upath.UPath:
+    """
+    >>> path = get_spike_times_codeocean_kilosort_path_from_s3('668759_20230711')
+    >>> assert path
+    """
+    files = get_units_spikes_codeocean_kilosort_top_level_files(session)
+    mean_waveforms_path = next(path for path in files if "mean" in str(path))
+
+    return mean_waveforms_path
+
+@functools.cache
+def get_sd_waveform_codeocean_kilosort_path_from_s3(session: str | npc_session.SessionRecord) -> upath.UPath:
+    files = get_units_spikes_codeocean_kilosort_top_level_files(session)
+    sd_waveforms_path = next(path for path in files if "sd" in str(path))
+
+    return sd_waveforms_path
 
 if __name__ == "__main__":
     import doctest
