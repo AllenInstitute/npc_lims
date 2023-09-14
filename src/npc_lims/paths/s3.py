@@ -152,6 +152,52 @@ def get_recording_dirs_experiment_path_from_s3(
 
     return recording_dirs_experiment
 
+@functools.cache
+def get_quality_metrics_paths_from_s3(session: str | npc_session.SessionRecord) -> tuple[upath.UPath, ...]:
+    """
+    >>> quality_metrics_paths = get_quality_metrics_paths_from_s3('662892_2023-08-21')
+    >>> assert len(quality_metrics_paths) > 0
+    """
+    sorted_paths = get_sorted_data_paths_from_s3(session)
+    postprocessed_files = next(path for path in sorted_paths if 'postprocessed' in str(path)).iterdir()
+    quality_metrics_paths = tuple(next(path.glob('quality_metrics/metrics.csv')) for path in postprocessed_files)
+    
+    return quality_metrics_paths
+
+@functools.cache
+def get_template_metrics_paths_from_s3(session: str | npc_session.SessionRecord) -> tuple[upath.UPath, ...]:
+    """
+    >>> template_metrics_paths = get_template_metrics_paths_from_s3('662892_2023-08-21')
+    >>> assert len(template_metrics_paths) > 0
+    """
+    sorted_paths = get_sorted_data_paths_from_s3(session)
+    postprocessed_files = next(path for path in sorted_paths if 'postprocessed' in str(path)).iterdir()
+    template_metrics_paths = tuple(next(path.glob('template_metrics/metrics.csv')) for path in postprocessed_files)
+    
+    return template_metrics_paths
+
+@functools.cache
+def get_unit_locations_paths_from_s3(session: str | npc_session.SessionRecord) -> tuple[upath.UPath, ...]:
+    """
+    >>> unit_locations_paths = get_unit_locations_paths_from_s3('662892_2023-08-21')
+    >>> assert len(unit_locations_paths) > 0
+    """
+    sorted_paths = get_sorted_data_paths_from_s3(session)
+    postprocessed_files = next(path for path in sorted_paths if 'postprocessed' in str(path)).iterdir()
+    unit_locations_paths = tuple(next(path.glob('unit_locations/unit_locations.npy')) for path in postprocessed_files)
+
+    return unit_locations_paths
+
+@functools.cache
+def get_sorted_precurated_paths_from_s3(session: str | npc_session.SessionRecord) -> tuple[upath.UPath, ...]:
+    """
+    >>> sorted_precurated_paths = get_sorted_precurated_paths_from_s3('662892_2023-08-21')
+    >>> assert len(sorted_precurated_paths) > 0
+    """
+    sorted_paths = get_sorted_data_paths_from_s3(session)
+    sorted_precurated_dirs = tuple(next(path for path in sorted_paths if 'sorting_precurated' in str(path)).iterdir())
+
+    return sorted_precurated_dirs
 
 @dataclasses.dataclass
 class StimFile:
