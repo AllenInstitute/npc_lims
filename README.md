@@ -20,11 +20,12 @@ pip install npc_lims
 
 Get some minimal info on all the tracked sessions available to work with:
 ```python
+>>> from dataclasses import fields
 >>> from npc_lims import tracked as tracked_sessions;
 
 # each record in the sequence has info about one session:
->>> tracked_sessions[0]._fields
-('session', 'subject', 'date', 'idx', 'project', 'is_ephys', 'is_sync', 'allen_path')
+>>> fields(tracked_sessions[0])
+('id', 'subject', 'date', 'idx', 'project', 'is_ephys', 'is_sync', 'allen_path')
 >>> tracked_sessions[0].is_ephys
 True
 >>> all(s.date.year >= 2022 for s in tracked_sessions)
