@@ -64,10 +64,6 @@ class SessionInfo:
             )
         except (FileNotFoundError, ValueError):
             return False
-    @property
-    def session(self) -> npc_session.SessionRecord:
-        """Alias for backwards compatibility."""
-        return self.id
 
 def get_session_info() -> tuple[SessionInfo, ...]:
     """Quickly get a sequence of all tracked sessions.
