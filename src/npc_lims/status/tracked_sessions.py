@@ -44,7 +44,7 @@ class SessionInfo:
         True
         """
         try:
-            return bool(codeocean.get_raw_data_root(self.session))
+            return bool(codeocean.get_raw_data_root(self.id))
         except (FileNotFoundError, ValueError):
             return False
 
@@ -59,7 +59,7 @@ class SessionInfo:
         try:
             return any(
                 asset
-                for asset in codeocean.get_session_data_assets(self.session)
+                for asset in codeocean.get_session_data_assets(self.id)
                 if "sorted" in asset["name"]
             )
         except (FileNotFoundError, ValueError):
