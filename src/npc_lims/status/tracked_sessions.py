@@ -1,5 +1,6 @@
 import json
 import pathlib
+import dataclasses
 from collections.abc import MutableSequence
 from typing import Literal, NamedTuple
 
@@ -16,9 +17,14 @@ FileContents: TypeAlias = dict[
     Literal["ephys", "behavior_with_sync", "behavior"], dict[str, str]
 ]
 
-
-class SessionInfo(NamedTuple):
-    session: npc_session.SessionRecord
+@dataclasses.dataclass(frozen=True, eq=True)
+class SessionInfo:
+    """Minimal session metadata obtained quickly from a database.
+    
+    Currently using:
+    https://github.com/AllenInstitute/npc_lims/blob/main/src/npc_lims/tracked_sessions.yaml
+    """
+    id: npc_session.SessionRecord
     subject: npc_session.SubjectRecord
     date: npc_session.DateRecord
     """YY-MM-DD"""
@@ -58,7 +64,10 @@ class SessionInfo(NamedTuple):
             )
         except (FileNotFoundError, ValueError):
             return False
-
+    @property
+    def session(self) -> npc_session.SessionRecord:
+        """Alias for backwards compatibility."""
+        return self.id
 
 def get_session_info() -> tuple[SessionInfo, ...]:
     """Quickly get a sequence of all tracked sessions.
