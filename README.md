@@ -20,12 +20,11 @@ pip install npc_lims
 
 Get some minimal info on all the tracked sessions available to work with:
 ```python
->>> from dataclasses import fields
 >>> from npc_lims import tracked as tracked_sessions;
 
 # each record in the sequence has info about one session:
->>> fields(tracked_sessions[0])
-('id', 'subject', 'date', 'idx', 'project', 'is_ephys', 'is_sync', 'allen_path')
+>>> tracked_sessions[0]             # doctest: +SKIP
+SessionInfo(id='626791_2022-08-15', subject=626791, date='2022-08-15', idx=0, project='DRPilotSession', is_ephys=True, is_sync=True, allen_path=PosixUPath('//allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_626791_20220815'))
 >>> tracked_sessions[0].is_ephys
 True
 >>> all(s.date.year >= 2022 for s in tracked_sessions)
