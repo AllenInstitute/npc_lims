@@ -1,8 +1,8 @@
+import dataclasses
 import json
 import pathlib
-import dataclasses
 from collections.abc import MutableSequence
-from typing import Literal, NamedTuple
+from typing import Literal
 
 import npc_session
 import upath
@@ -17,13 +17,15 @@ FileContents: TypeAlias = dict[
     Literal["ephys", "behavior_with_sync", "behavior"], dict[str, str]
 ]
 
+
 @dataclasses.dataclass(frozen=True, eq=True)
 class SessionInfo:
     """Minimal session metadata obtained quickly from a database.
-    
+
     Currently using:
     https://github.com/AllenInstitute/npc_lims/blob/main/src/npc_lims/tracked_sessions.yaml
     """
+
     id: npc_session.SessionRecord
     subject: npc_session.SubjectRecord
     date: npc_session.DateRecord
@@ -64,6 +66,7 @@ class SessionInfo:
             )
         except (FileNotFoundError, ValueError):
             return False
+
 
 def get_session_info() -> tuple[SessionInfo, ...]:
     """Quickly get a sequence of all tracked sessions.
