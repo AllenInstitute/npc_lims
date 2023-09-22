@@ -190,16 +190,22 @@ def get_template_metrics_paths_from_s3(
 
     return template_metrics_paths
 
+
 @functools.cache
-def get_spikesorted_cache_paths_from_s3(session: str | npc_session.SessionRecord) -> tuple[upath.UPath, ...]:
+def get_spikesorted_cache_paths_from_s3(
+    session: str | npc_session.SessionRecord,
+) -> tuple[upath.UPath, ...]:
     """
     >>> spike_sorted_cache_paths = get_spikesorted_cache_paths_from_s3('662892_20230821')
     >>> assert len(spike_sorted_cache_paths) > 0
     """
     spike_sorted_paths = get_spike_sorted_paths_from_s3(session)
-    spike_sorted_cache_files = tuple(next(path.glob('sorting_cached.npz')) for path in spike_sorted_paths)
-    
+    spike_sorted_cache_files = tuple(
+        next(path.glob("sorting_cached.npz")) for path in spike_sorted_paths
+    )
+
     return spike_sorted_cache_files
+
 
 @functools.cache
 def get_unit_locations_paths_from_s3(
