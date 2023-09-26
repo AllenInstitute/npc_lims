@@ -13,6 +13,8 @@ import upath
 from aind_codeocean_api import codeocean as aind_codeocean_api
 from typing_extensions import TypeAlias
 
+import npc_lims.exceptions as exceptions
+
 DataAssetAPI: TypeAlias = dict[
     Literal[
         "created",
@@ -36,10 +38,10 @@ DataAssetAPI: TypeAlias = dict[
 def get_codeocean_client() -> aind_codeocean_api.CodeOceanClient:
     token = os.getenv(
         "CODE_OCEAN_API_TOKEN",
-        next((k for k in os.environ if k.lower().startswith('cop_')), None),
+        next((v for v in os.environ.values() if v.lower().startswith('cop_')), None),
     )
     if token is None:
-        raise KeyError("`CODE_OCEAN_API_TOKEN` not found in environment variables")
+        raise exceptions.MissingCredentials("`CODE_OCEAN_API_TOKEN` not found in environment variables")
     return aind_codeocean_api.CodeOceanClient(
         domain=os.getenv("CODE_OCEAN_DOMAIN", "https://codeocean.allenneuraldynamics.org"),
         token=token,

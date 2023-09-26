@@ -15,6 +15,7 @@ from typing import Any, ClassVar
 import pydbhub.dbhub as pydbhub
 import upath
 
+import npc_lims.exceptions as exceptions
 import npc_lims.metadata.types as types
 
 DBHUB_API_KEY = os.getenv("DBHUB_API_KEY")
@@ -157,6 +158,10 @@ class SqliteDBHub(SqliteRecordDB):
 
     @functools.cached_property
     def connection(self) -> pydbhub.Dbhub:
+        if not DBHUB_API_KEY:
+            raise exceptions.MissingCredentials(
+                "DBHUB_API_KEY environment variable must be set to use SqliteDBHub"
+            )
         return pydbhub.Dbhub(
             DBHUB_API_KEY, db_name=self.db_name, db_owner=self.db_owner
         )
