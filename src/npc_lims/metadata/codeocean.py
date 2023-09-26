@@ -13,9 +13,6 @@ import upath
 from aind_codeocean_api import codeocean as aind_codeocean_api
 from typing_extensions import TypeAlias
 
-CODE_OCEAN_API_TOKEN = os.getenv("CODE_OCEAN_API_TOKEN", "")
-CODE_OCEAN_DOMAIN = os.getenv("CODE_OCEAN_DOMAIN", "")
-
 DataAssetAPI: TypeAlias = dict[
     Literal[
         "created",
@@ -35,18 +32,26 @@ DataAssetAPI: TypeAlias = dict[
 ]
 """Result from CodeOcean API when querying data assets."""
 
-codeocean_client = aind_codeocean_api.CodeOceanClient(
-    domain=CODE_OCEAN_DOMAIN, token=CODE_OCEAN_API_TOKEN
-)
-
-
+@functools.cache
+def get_codeocean_client() -> aind_codeocean_api.CodeOceanClient:
+    token = os.getenv(
+        "CODE_OCEAN_API_TOKEN",
+        next((k for k in os.environ if k.lower().startswith('cop_')), None),
+    )
+    if token is None:
+        raise KeyError("`CODE_OCEAN_API_TOKEN` not found in environment variables")
+    return aind_codeocean_api.CodeOceanClient(
+        domain=os.getenv("CODE_OCEAN_DOMAIN", "https://codeocean.allenneuraldynamics.org"),
+        token=token,
+    )
+    
 @functools.cache
 def get_subject_data_assets(subject: str | int) -> tuple[DataAssetAPI, ...]:
     """
     >>> assets = get_subject_data_assets(668759)
     >>> assert len(assets) > 0
     """
-    response = codeocean_client.search_all_data_assets(
+    response = get_codeocean_client().search_all_data_assets(
         query=f"subject id: {npc_session.SubjectRecord(subject)}"
     )
     response.raise_for_status()
@@ -166,7 +171,7 @@ def get_sessions_with_data_assets(
 def get_data_asset(asset: str | uuid.UUID | DataAssetAPI) -> DataAssetAPI:
     """Converts an asset uuid to dict of info from CodeOcean API."""
     if not isinstance(asset, Mapping):
-        response = codeocean_client.get_data_asset(str(asset))
+        response = get_codeocean_client().get_data_asset(str(asset))
         response.raise_for_status()
         asset = response.json()
     assert isinstance(asset, Mapping), f"Unexpected {type(asset) = }, {asset = }"
@@ -257,7 +262,7 @@ def get_path_from_data_asset(asset: DataAssetAPI) -> upath.UPath:
 def run_capsule_and_get_results(
     capsule_id: str, data_assets: tuple[DataAssetAPI, ...]
 ) -> tuple[dict[str, str | int], ...]:
-    response = codeocean_client.run_capsule(
+    response = get_codeocean_client().run_capsule(
         capsule_id,
         [
             {"id": data_asset["id"], "mount": data_asset["name"]}
@@ -268,7 +273,7 @@ def run_capsule_and_get_results(
     response.raise_for_status()
 
     while True:
-        response = codeocean_client.get_capsule_computations(capsule_id)
+        response = get_codeocean_client().get_capsule_computations(capsule_id)
         response.raise_for_status()
         capsule_runs = response.json()
         states = [run["state"] for run in capsule_runs]
@@ -289,7 +294,7 @@ def register_session_data_asset(
     data_asset_name = ""
 
     for result in capsule_run_results:
-        response = codeocean_client.get_list_result_items(result["id"])
+        response = get_codeocean_client().get_list_result_items(result["id"])
         response.raise_for_status()
         result_items = response.json()["items"]
         folder_result = tuple(
@@ -304,7 +309,7 @@ def register_session_data_asset(
             computation_id = result["id"]
             break
 
-    response = codeocean_client.register_result_as_data_asset(
+    response = get_codeocean_client().register_result_as_data_asset(
         computation_id, data_asset_name, tags=[str(session.subject.id), "results"]
     )
     response.raise_for_status()
@@ -384,7 +389,7 @@ def run_codeocean_units_spikes_peak_channel_capsule_and_register_data_asset(
 
 
 def update_permissions_for_data_asset(data_asset: DataAssetAPI) -> None:
-    response = codeocean_client.update_permissions(
+    response = get_codeocean_client().update_permissions(
         data_asset_id=data_asset["id"], everyone="viewer"
     )
     response.raise_for_status()

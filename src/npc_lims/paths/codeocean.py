@@ -9,24 +9,13 @@ from collections.abc import Iterator
 
 import npc_session
 import upath
-from aind_codeocean_api import codeocean
 
 import npc_lims.metadata.codeocean as metadata
 
-CODE_OCEAN_API_TOKEN = os.getenv("CODE_OCEAN_API_TOKEN")
-CODE_OCEAN_DOMAIN = os.getenv("CODE_OCEAN_DOMAIN")
 
 DR_DATA_REPO = upath.UPath(
     "s3://aind-scratch-data/ben.hardcastle/DynamicRoutingTask/Data"
 )
-
-
-@functools.cache
-def get_codeocean_client() -> codeocean.CodeOceanClient:
-    return codeocean.CodeOceanClient(
-        domain=os.environ["CODE_OCEAN_DOMAIN"], token=os.environ["CODE_OCEAN_API_TOKEN"]
-    )
-
 
 @functools.cache
 def get_subject_data_assets(subject: str | int) -> tuple[metadata.DataAssetAPI, ...]:
@@ -34,7 +23,7 @@ def get_subject_data_assets(subject: str | int) -> tuple[metadata.DataAssetAPI, 
     >>> assets = get_subject_data_assets(668759)
     >>> assert len(assets) > 0
     """
-    response = get_codeocean_client().search_data_assets(
+    response = metadata.get_codeocean_client().search_data_assets(
         query=f"subject id: {npc_session.SubjectRecord(subject)}"
     )
     response.raise_for_status()
