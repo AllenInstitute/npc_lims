@@ -1,3 +1,3 @@
 class MissingCredentials(KeyError):
-    """Raised when a required credential is missing from the environment."""
+    """Raised when a required credential is not found in environment variables."""
     pass
