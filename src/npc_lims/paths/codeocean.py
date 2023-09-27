@@ -3,7 +3,6 @@ from __future__ import annotations
 import dataclasses
 import functools
 import operator
-import os
 import re
 from collections.abc import Iterator
 
@@ -12,10 +11,10 @@ import upath
 
 import npc_lims.metadata.codeocean as metadata
 
-
 DR_DATA_REPO = upath.UPath(
     "s3://aind-scratch-data/ben.hardcastle/DynamicRoutingTask/Data"
 )
+
 
 @functools.cache
 def get_subject_data_assets(subject: str | int) -> tuple[metadata.DataAssetAPI, ...]:
