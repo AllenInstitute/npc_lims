@@ -131,7 +131,7 @@ def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInf
             
             def _get_day_from_sessions(record: npc_session.SessionRecord) -> int:
                 subject_days = sorted(
-                    s.date for s in all_session_records if s.subject == record.subject
+                    str(s.date) for s in all_session_records if s.subject == record.subject
                 )
                 return subject_days.index(str(record.date)) + 1
             
