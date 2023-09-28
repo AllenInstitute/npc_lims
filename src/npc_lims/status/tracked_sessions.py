@@ -1,7 +1,7 @@
 import dataclasses
 import json
-from collections.abc import MutableSequence
-from typing import Literal, Mapping
+from collections.abc import Mapping, MutableSequence
+from typing import Literal
 
 import npc_session
 import upath
@@ -10,7 +10,9 @@ from typing_extensions import TypeAlias
 
 import npc_lims.metadata.codeocean as codeocean
 
-_TRACKED_SESSIONS_FILE = upath.UPath('https://raw.githubusercontent.com/AllenInstitute/npc_lims/main/tracked_sessions.yaml')
+_TRACKED_SESSIONS_FILE = upath.UPath(
+    "https://raw.githubusercontent.com/AllenInstitute/npc_lims/main/tracked_sessions.yaml"
+)
 
 FileContents: TypeAlias = dict[
     Literal["ephys", "behavior_with_sync", "behavior"], dict[str, str]
@@ -35,18 +37,18 @@ class SessionInfo:
     allen_path: upath.UPath
     session_kwargs: dict[str, str] = dataclasses.field(default_factory=dict)
     notes: str = dataclasses.field(default="")
-    
+
     @property
     def idx(self) -> int:
         """Recording index, starting from 0 for each subject on each day/
         Currently one session per day, so index isn't specified - implicitly equal to 0.
         """
         return self.id.idx
-    
+
     @property
     def subject(self) -> npc_session.SubjectRecord:
         return self.id.subject
-    
+
     @property
     def date(self) -> npc_session.DateRecord:
         """YY-MM-DD"""
@@ -101,7 +103,7 @@ def get_session_info() -> tuple[SessionInfo, ...]:
 def _get_session_info_from_local_file() -> tuple[SessionInfo, ...]:
     """Load yaml and parse sessions.
     - currently assumes all sessions include behavior data
-    
+
     >>> assert len(_get_session_info_from_local_file()) > 0
     """
     f = _session_info_from_file_contents
@@ -109,7 +111,9 @@ def _get_session_info_from_local_file() -> tuple[SessionInfo, ...]:
         return f(json.loads(_TRACKED_SESSIONS_FILE.read_text()))
     if _TRACKED_SESSIONS_FILE.suffix == ".yaml":
         return f(yaml.load(_TRACKED_SESSIONS_FILE.read_bytes(), Loader=yaml.FullLoader))
-    raise ValueError(f"Add loader for {_TRACKED_SESSIONS_FILE.suffix}")  # pragma: no cover
+    raise ValueError(
+        f"Add loader for {_TRACKED_SESSIONS_FILE.suffix}"
+    )  # pragma: no cover
 
 
 def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInfo, ...]:
@@ -124,17 +128,21 @@ def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInf
                 continue
             all_session_records = tuple(
                 npc_session.SessionRecord(
-                    tuple(session_id.keys())[0] if isinstance(session_id, Mapping) else str(session_id)
-                    )
+                    tuple(session_id.keys())[0]
+                    if isinstance(session_id, Mapping)
+                    else str(session_id)
+                )
                 for session_id in session_info
             )
-            
+
             def _get_day_from_sessions(record: npc_session.SessionRecord) -> int:
                 subject_days = sorted(
-                    str(s.date) for s in all_session_records if s.subject == record.subject
+                    str(s.date)
+                    for s in all_session_records
+                    if s.subject == record.subject
                 )
                 return subject_days.index(str(record.date)) + 1
-            
+
             for info in session_info:
                 if isinstance(info, Mapping):
                     assert len(info) == 1
@@ -144,7 +152,7 @@ def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInf
                     allen_path = info
                     session_config = {}
                 record = npc_session.SessionRecord(allen_path)
-                if (idx := session_config.get('idx', None)) is not None:
+                if (idx := session_config.get("idx", None)) is not None:
                     record = record.with_idx(idx)
                 sessions.append(
                     SessionInfo(
