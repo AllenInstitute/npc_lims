@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import contextlib
 import dataclasses
-import functools
 import json
 from collections.abc import Mapping, MutableSequence
 from typing import Literal
@@ -88,6 +87,7 @@ class SessionInfo:
         except (FileNotFoundError, ValueError):
             return False
 
+
 def get_tracked_sessions() -> tuple[SessionInfo, ...]:
     """Quickly get a sequence of all tracked sessions.
 
@@ -102,15 +102,21 @@ def get_tracked_sessions() -> tuple[SessionInfo, ...]:
     """
     return _get_session_info_from_local_file()
 
+
 def get_session_info(session: str | npc_session.SessionRecord) -> SessionInfo:
     """Get the SessionInfo instance for a specific session, if it's in the list of
     tracked sessions.
-    
+
     >>> assert isinstance(get_session_info("DRpilot_667252_20230927"), SessionInfo)
     """
     with contextlib.suppress(StopIteration):
-        return next(s for s in get_tracked_sessions() if s.id == (record := npc_session.SessionRecord(session)))
+        return next(
+            s
+            for s in get_tracked_sessions()
+            if s.id == (record := npc_session.SessionRecord(session))
+        )
     raise ValueError(f"{record} not found in tracked sessions")
+
 
 def _get_session_info_from_local_file() -> tuple[SessionInfo, ...]:
     """Load yaml and parse sessions.
