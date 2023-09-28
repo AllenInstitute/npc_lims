@@ -1,6 +1,5 @@
 import dataclasses
 import json
-import pathlib
 from collections.abc import MutableSequence
 from typing import Literal
 
@@ -11,7 +10,7 @@ from typing_extensions import TypeAlias
 
 import npc_lims.metadata.codeocean as codeocean
 
-_LOCAL_FILE = pathlib.Path(__file__).parent.parent / "tracked_sessions.yaml"
+_TRACKED_SESSIONS_FILE = upath.UPath('https://raw.githubusercontent.com/AllenInstitute/npc_lims/main/tracked_sessions.yaml')
 
 FileContents: TypeAlias = dict[
     Literal["ephys", "behavior_with_sync", "behavior"], dict[str, str]
@@ -23,7 +22,7 @@ class SessionInfo:
     """Minimal session metadata obtained quickly from a database.
 
     Currently using:
-    https://github.com/AllenInstitute/npc_lims/blob/main/src/npc_lims/tracked_sessions.yaml
+    https://raw.githubusercontent.com/AllenInstitute/npc_lims/main/tracked_sessions.yaml
     """
 
     id: npc_session.SessionRecord
