@@ -1,7 +1,7 @@
 import dataclasses
 import json
 from collections.abc import MutableSequence
-from typing import Literal
+from typing import Literal, Mapping
 
 import npc_session
 import upath
@@ -117,20 +117,45 @@ def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInf
     for session_type, projects in contents.items():
         if not projects:
             continue
-        sync = any(tag in session_type for tag in ("sync", "ephys"))
-        ephys = "ephys" in session_type
-        for project_name, session_ids in projects.items():
-            if not session_ids:
+        is_sync = any(tag in session_type for tag in ("sync", "ephys"))
+        is_ephys = "ephys" in session_type
+        for project_name, session_info in projects.items():
+            if not session_info:
                 continue
-            for session_id in session_ids:
-                s = npc_session.SessionRecord(session_id)
+            all_session_records = tuple(
+                npc_session.SessionRecord(
+                    tuple(session_id.keys())[0] if isinstance(session_id, Mapping) else str(session_id)
+                    )
+                for session_id in session_info
+            )
+            
+            def _get_day_from_sessions(record: npc_session.SessionRecord) -> int:
+                subject_days = sorted(
+                    s.date for s in all_session_records if s.subject == record.subject
+                )
+                return subject_days.index(str(record.date)) + 1
+            
+            for info in session_info:
+                if isinstance(info, Mapping):
+                    assert len(info) == 1
+                    allen_path: str = tuple(info.keys())[0]
+                    session_config = tuple(info.values())[0]
+                else:
+                    allen_path = info
+                    session_config = {}
+                record = npc_session.SessionRecord(allen_path)
+                if (idx := session_config.get('idx', None)) is not None:
+                    record = record.with_idx(idx)
                 sessions.append(
                     SessionInfo(
-                        *(s, s.subject, s.date, s.idx),
+                        id=record,
+                        day=session_config.get("day", _get_day_from_sessions(record)),
                         project=npc_session.ProjectRecord(project_name),
-                        is_ephys=ephys,
-                        is_sync=sync,
-                        allen_path=upath.UPath(session_id),
+                        is_ephys=is_ephys,
+                        is_sync=is_sync,
+                        allen_path=upath.UPath(allen_path),
+                        session_kwargs=session_config.get("session_kwargs", {}),
+                        notes=session_config.get("notes", ""),
                     )
                 )
     return tuple(sessions)
