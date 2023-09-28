@@ -6,7 +6,6 @@ from npc_lims.jobs import *
 from npc_lims.metadata import *
 from npc_lims.paths import *
 from npc_lims.status import *
-from npc_lims.status.get_day_from_status import *
 
 _ = dotenv.load_dotenv(
     dotenv.find_dotenv(usecwd=True)
