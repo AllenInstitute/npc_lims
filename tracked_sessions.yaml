@@ -40,7 +40,9 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230829
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230830
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230831
-
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230925
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230926
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230927
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-07-26_14-09-36_620263
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-07-27_13-57-17_620263
@@ -67,8 +69,8 @@ ephys:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-18_10-05-51_670181
     # - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-19_10-00-22_670181
     # ^ no behavior task hdf5
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-20_12-21-41_670181 
-    # ^ task only, mapping recording is in `stopped_early` subfolder
+    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-20_12-21-41_670181:
+      notes: task only, mapping recording is in `stopped_early` subfolder
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-25_09-47-29_670180
     # ^ recording stops mid-task: main recording incls mapping and some of task.
     # subfolder has rest of task. could be stitched together, add 'unobserved interval'
@@ -76,10 +78,12 @@ ephys:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-26_09-55-57_670180
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-27_09-36-37_670180
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-08-01_09-28-08_670248
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-08-02_09-58-44_670248
-    # ^ no behavior: DynamicRouting1_670248_20230802_120703.hdf5 wasn't written correctly
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-08-03_09-39-59_670248
-    # ^ recording truncated ~5 mins before end
+    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-08-02_09-58-44_670248:
+      session_kwargs:
+        is_task: false
+      notes: no behavior, DynamicRouting1_670248_20230802_120703.hdf5 not written correctly by task script
+    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-08-03_09-39-59_670248:
+      notes: recording truncated ~5 mins before end
 behavior_with_sync: # hab sessions with sync + video, or sync + opto, etc.
   DRPilotSession:
 behavior:
