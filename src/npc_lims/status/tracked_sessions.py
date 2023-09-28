@@ -26,15 +26,31 @@ class SessionInfo:
     """
 
     id: npc_session.SessionRecord
-    subject: npc_session.SubjectRecord
-    date: npc_session.DateRecord
-    """YY-MM-DD"""
-    idx: int
+    day: int
+    """Recording day, starting from 1 for each subject."""
     project: npc_session.ProjectRecord
     is_ephys: bool
     is_sync: bool
     """The session has sync data, implying more than a behavior-box."""
     allen_path: upath.UPath
+    session_kwargs: dict[str, str] = dataclasses.field(init=False, default_factory=dict)
+    notes: str = dataclasses.field(init=False, default="")
+    
+    @property
+    def idx(self) -> int:
+        """Recording index, starting from 0 for each subject on each day/
+        Currently one session per day, so index isn't specified - implicitly equal to 0.
+        """
+        return self.id.idx
+    
+    @property
+    def subject(self) -> npc_session.SubjectRecord:
+        return self.id.subject
+    
+    @property
+    def date(self) -> npc_session.DateRecord:
+        """YY-MM-DD"""
+        return self.id.date
 
     @property
     def is_uploaded(self) -> bool:
