@@ -33,8 +33,8 @@ class SessionInfo:
     is_sync: bool
     """The session has sync data, implying more than a behavior-box."""
     allen_path: upath.UPath
-    session_kwargs: dict[str, str] = dataclasses.field(init=False, default_factory=dict)
-    notes: str = dataclasses.field(init=False, default="")
+    session_kwargs: dict[str, str] = dataclasses.field(default_factory=dict)
+    notes: str = dataclasses.field(default="")
     
     @property
     def idx(self) -> int:
