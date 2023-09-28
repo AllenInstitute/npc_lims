@@ -1,4 +1,5 @@
 import dataclasses
+import functools
 import json
 from collections.abc import Mapping, MutableSequence
 from typing import Literal
@@ -59,7 +60,7 @@ class SessionInfo:
         """The session's raw data has been uploaded to S3 and can be found in
         CodeOcean.
 
-        >>> any(session.is_uploaded for session in get_session_info())
+        >>> any(session.is_uploaded for session in all_session_info())
         True
         """
         try:
@@ -72,7 +73,7 @@ class SessionInfo:
         """The AIND sorting pipeline has yielded a Result asset for this
         session.
 
-        >>> any(session.is_sorted for session in get_session_info())
+        >>> any(session.is_sorted for session in all_session_info())
         True
         """
         try:
@@ -85,11 +86,11 @@ class SessionInfo:
             return False
 
 
-def get_session_info() -> tuple[SessionInfo, ...]:
+def get_all_session_info() -> tuple[SessionInfo, ...]:
     """Quickly get a sequence of all tracked sessions.
 
     Each object in the sequence has info about one session:
-    >>> sessions = get_session_info()
+    >>> sessions = all_session_info()
     >>> sessions[0].__class__.__name__
     'SessionInfo'
     >>> sessions[0].is_ephys
@@ -99,6 +100,13 @@ def get_session_info() -> tuple[SessionInfo, ...]:
     """
     return _get_session_info_from_local_file()
 
+def get_session_info(session: str | npc_session.SessionRecord) -> SessionInfo:
+    """Get the SessionInfo instance for a specific session, if it's in the list of
+    tracked sessions.
+    
+    >>> assert isinstance(get_session_info("DRpilot_667252_20230927"), SessionInfo)
+    """
+    return next(s for s in get_all_session_info() if s.id == npc_session.SessionRecord(session))
 
 def _get_session_info_from_local_file() -> tuple[SessionInfo, ...]:
     """Load yaml and parse sessions.
