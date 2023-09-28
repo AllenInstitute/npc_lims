@@ -63,7 +63,7 @@ class RecordWithNWB(Record):
 @dataclasses.dataclass
 class Subject(RecordWithNWB):
     """
-    >>> from npc_lims import tracked, NWBSqliteDBHub as DB
+    >>> from npc_lims import NWBSqliteDBHub as DB
     >>> all_subjects = DB().get_records(Subject)
     """
 
@@ -91,7 +91,7 @@ class Subject(RecordWithNWB):
 @dataclasses.dataclass
 class Session(RecordWithNWB):
     """
-    >>> from npc_lims import tracked, NWBSqliteDBHub as DB
+    >>> from npc_lims import NWBSqliteDBHub as DB
     >>> all_sessions = DB().get_records(Session)
     """
 

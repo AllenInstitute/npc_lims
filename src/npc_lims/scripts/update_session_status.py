@@ -34,7 +34,7 @@ def main() -> None:
     statement = (
         "INSERT INTO status (date, subject_id, project, is_uploaded, is_sorted) VALUES "
     )
-    for s in sorted(npc_lims.tracked, key=lambda s: s.date, reverse=True):
+    for s in sorted(npc_lims.get_tracked_sessions(), key=lambda s: s.date, reverse=True):
         statement += f"\n\t('{s.date}', '{s.subject}', '{s.project}', {int(s.is_uploaded)}, {int(s.is_sorted)}),"
     statement = statement[:-1] + ";"
     response = connection.Execute(statement)
