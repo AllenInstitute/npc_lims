@@ -61,7 +61,7 @@ class SessionInfo:
         """The session's raw data has been uploaded to S3 and can be found in
         CodeOcean.
 
-        >>> any(session.is_uploaded for session in all_session_info())
+        >>> any(session.is_uploaded for session in get_tracked_sessions())
         True
         """
         try:
@@ -74,7 +74,7 @@ class SessionInfo:
         """The AIND sorting pipeline has yielded a Result asset for this
         session.
 
-        >>> any(session.is_sorted for session in all_session_info())
+        >>> any(session.is_sorted for session in get_tracked_sessions())
         True
         """
         try:
@@ -90,7 +90,7 @@ def get_tracked_sessions() -> tuple[SessionInfo, ...]:
     """Quickly get a sequence of all tracked sessions.
 
     Each object in the sequence has info about one session:
-    >>> sessions = all_session_info()
+    >>> sessions = get_tracked_sessions()
     >>> sessions[0].__class__.__name__
     'SessionInfo'
     >>> sessions[0].is_ephys
