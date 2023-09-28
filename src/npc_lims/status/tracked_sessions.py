@@ -101,13 +101,15 @@ def get_session_info() -> tuple[SessionInfo, ...]:
 def _get_session_info_from_local_file() -> tuple[SessionInfo, ...]:
     """Load yaml and parse sessions.
     - currently assumes all sessions include behavior data
+    
+    >>> assert len(_get_session_info_from_local_file()) > 0
     """
     f = _session_info_from_file_contents
-    if _LOCAL_FILE.suffix == ".json":
-        return f(json.loads(_LOCAL_FILE.read_text()))
-    if _LOCAL_FILE.suffix == ".yaml":
-        return f(yaml.load(_LOCAL_FILE.read_bytes(), yaml.FullLoader))
-    raise ValueError(f"Add loader for {_LOCAL_FILE.suffix}")  # pragma: no cover
+    if _TRACKED_SESSIONS_FILE.suffix == ".json":
+        return f(json.loads(_TRACKED_SESSIONS_FILE.read_text()))
+    if _TRACKED_SESSIONS_FILE.suffix == ".yaml":
+        return f(yaml.load(_TRACKED_SESSIONS_FILE.read_bytes(), Loader=yaml.FullLoader))
+    raise ValueError(f"Add loader for {_TRACKED_SESSIONS_FILE.suffix}")  # pragma: no cover
 
 
 def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInfo, ...]:
