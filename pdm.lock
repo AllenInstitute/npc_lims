@@ -6,7 +6,7 @@ groups = ["default", "dev"]
 cross_platform = true
 static_urls = false
 lock_version = "4.3"
-content_hash = "sha256:e6a32b4018b837dfe2f6902ee590b16eb935849cee8530d89643e494bb3b494c"
+content_hash = "sha256:190438839ca34fdaf72956fc97e16a289e2df6da13287ec65f6628bdc80f958a"
 
 [[package]]
 name = "aind-codeocean-api"
@@ -828,6 +828,19 @@ summary = "Pygments is a syntax highlighting package written in Python."
 files = [
     {file = "Pygments-2.16.1-py3-none-any.whl", hash = "sha256:13fc09fa63bc8d8671a6d247e1eb303c4b343eaee81d861f3404db2935653692"},
     {file = "Pygments-2.16.1.tar.gz", hash = "sha256:1daff0494820c69bc8941e407aa20f577374ee88364ee10a98fdbe0aece96e29"},
+]
+
+[[package]]
+name = "pyopenssl"
+version = "23.2.0"
+requires_python = ">=3.6"
+summary = "Python wrapper module around the OpenSSL library"
+dependencies = [
+    "cryptography!=40.0.0,!=40.0.1,<42,>=38.0.0",
+]
+files = [
+    {file = "pyOpenSSL-23.2.0-py3-none-any.whl", hash = "sha256:24f0dc5227396b3e831f4c7f602b950a5e9833d292c8e4a2e06b709292806ae2"},
+    {file = "pyOpenSSL-23.2.0.tar.gz", hash = "sha256:276f931f55a452e7dea69c7173e984eb2a4407ce413c918aa34b55f82f9b8bac"},
 ]
 
 [[package]]
