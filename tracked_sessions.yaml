@@ -45,7 +45,7 @@ ephys:
           invalid_times:
             - start_time: 4996
               stop_time: -1
-              reason: Auditory stimulus not presented
+              reason: auditory stimulus not presented (amplifier power issue)
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230926
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230927
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230928
