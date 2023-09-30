@@ -122,7 +122,7 @@ def _get_session_info_from_file() -> tuple[SessionInfo, ...]:
     """Load yaml and parse sessions.
     - currently assumes all sessions include behavior data
 
-    >>> assert len(_get_session_info_from_local_file()) > 0
+    >>> assert len(_get_session_info_from_file()) > 0
     """
     f = _session_info_from_file_contents
     if _TRACKED_SESSIONS_FILE.suffix == ".json":
