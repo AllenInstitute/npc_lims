@@ -40,9 +40,15 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230829
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230830
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230831
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230925
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230925:
+      - session_kwargs:
+        invalid_times:
+          - start_time: 4996
+            stop_time: -1
+            reason: Auditory stimulus not presented
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230926
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230927
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230928
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-07-26_14-09-36_620263
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-07-27_13-57-17_620263
