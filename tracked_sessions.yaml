@@ -41,7 +41,7 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230830
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230831
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230925:
-      session_kwargs:
+        session_kwargs:
         invalid_times:
           - start_time: 4996
             stop_time: -1
