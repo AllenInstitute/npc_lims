@@ -100,7 +100,7 @@ def get_tracked_sessions() -> tuple[SessionInfo, ...]:
     >>> any(s for s in sessions if s.date.year < 2021)
     False
     """
-    return _get_session_info_from_local_file()
+    return _get_session_info_from_file()
 
 
 def get_session_info(session: str | npc_session.SessionRecord) -> SessionInfo:
@@ -118,7 +118,7 @@ def get_session_info(session: str | npc_session.SessionRecord) -> SessionInfo:
     raise ValueError(f"{record} not found in tracked sessions")
 
 
-def _get_session_info_from_local_file() -> tuple[SessionInfo, ...]:
+def _get_session_info_from_file() -> tuple[SessionInfo, ...]:
     """Load yaml and parse sessions.
     - currently assumes all sessions include behavior data
 
