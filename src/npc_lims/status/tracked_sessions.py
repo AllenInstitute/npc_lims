@@ -175,7 +175,7 @@ def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInf
                 sessions.append(
                     SessionInfo(
                         id=record,
-                        day=session_config.get("day", _get_day_from_sessions(record)),
+                        day=int(session_config.get("day", _get_day_from_sessions(record))),
                         project=npc_session.ProjectRecord(project_name),
                         is_ephys=is_ephys,
                         is_sync=is_sync,
