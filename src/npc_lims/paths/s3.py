@@ -1,9 +1,8 @@
 from __future__ import annotations
-import contextlib
 
+import contextlib
 import dataclasses
 import functools
-from multiprocessing import context
 import operator
 from collections.abc import Iterator
 
@@ -20,7 +19,7 @@ NWB_REPO = upath.UPath("s3://aind-scratch-data/ben.hardcastle/nwb/nwb")
 CODE_OCEAN_DATA_BUCKET = upath.UPath("s3://codeocean-s3datasetsbucket-1u41qdg42ur9")
 
 
-def get_data_asset_s3_path(asset_id: str |  codeocean.DataAssetAPI) -> upath.UPath:
+def get_data_asset_s3_path(asset_id: str | codeocean.DataAssetAPI) -> upath.UPath:
     """Path on s3 that contains actual data for CodeOcean data asset.
 
     - asset `id` is a UUID
@@ -29,11 +28,11 @@ def get_data_asset_s3_path(asset_id: str |  codeocean.DataAssetAPI) -> upath.UPa
     """
     bucket = CODE_OCEAN_DATA_BUCKET
     with contextlib.suppress(AttributeError, KeyError):
-        bucket = upath.UPath(upath.UPath(f's3://{asset_id["sourceBucket"]}')) # type: ignore[index]
+        bucket = upath.UPath(upath.UPath(f's3://{asset_id["sourceBucket"]}'))  # type: ignore[index]
     with contextlib.suppress(AttributeError, KeyError):
-        return bucket / asset_id.get("id") # type: ignore[union-attr, operator]
+        return bucket / asset_id.get("id")  # type: ignore[union-attr, operator]
     with contextlib.suppress(AttributeError):
-        return bucket / asset_id.id # type: ignore[union-attr]
+        return bucket / asset_id.id  # type: ignore[union-attr]
     return bucket / str(asset_id)
 
 
