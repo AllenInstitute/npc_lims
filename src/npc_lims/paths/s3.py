@@ -31,7 +31,7 @@ def get_data_asset_s3_path(asset_id: str |  codeocean.DataAssetAPI) -> upath.UPa
     with contextlib.suppress(AttributeError, KeyError):
         bucket = upath.UPath(upath.UPath(f's3://{asset_id.get("sourceBucket")}')) # type: ignore[union-attr]
     with contextlib.suppress(AttributeError, KeyError):
-        return bucket / asset_id.get("id") # type: ignore[union-attr]
+        return bucket / asset_id.get("id") # type: ignore[union-attr, operator]
     with contextlib.suppress(AttributeError):
         return bucket / asset_id.id # type: ignore[union-attr]
     return bucket / str(asset_id)
