@@ -315,7 +315,7 @@ def get_nwb_file_from_s3(
     session = npc_session.SessionRecord(session)
     root = NWB_REPO
     glob = f"*_{session.replace('-', '')}.nwb"
-    result = next(root.glob(glob), None)
+    result = next((path for path in root.glob(glob) if session == path.stem), None)
     if not result:
         raise FileNotFoundError(f"No NWB file found at {root}/{glob}")
     return result
