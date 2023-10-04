@@ -1,4 +1,9 @@
-from npc_lims.status.tracked_sessions import SessionInfo, get_session_info, get_session_issues, get_session_kwargs
+from npc_lims.status.tracked_sessions import (
+    SessionInfo,
+    get_session_info,
+    get_session_issues,
+    get_session_kwargs,
+)
 
 __all__ = [
     "SessionInfo",
