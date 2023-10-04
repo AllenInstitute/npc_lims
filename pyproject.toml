@@ -41,6 +41,7 @@ Issues = "https://github.com/AllenInstitute/npc_lims/issues"
 
 [project.scripts]
 update_session_status = "npc_lims.scripts.update_session_status:main"
+regenerate_nwb_files = "npc_lims.scripts.regenerate_nwb_files:main"
 
 [tool.pdm]
 plugins = [
