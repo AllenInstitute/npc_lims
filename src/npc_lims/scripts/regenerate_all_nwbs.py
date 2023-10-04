@@ -1,17 +1,16 @@
-import aind_codeocean_api.codeocean as aind_codeocean_api
 
 import npc_lims.metadata.codeocean as codeocean
 import npc_lims.status
 
- 
-NWB_EXPORT_CAPSULE_ID = '43f661ab-b29b-4a64-bb70-2d59ac58a9af'
+NWB_EXPORT_CAPSULE_ID = "43f661ab-b29b-4a64-bb70-2d59ac58a9af"
 """Uses `npc_sessions` to write nwb. Requires `session_id` as input else it will
 run with default test session."""
+
 
 def main() -> None:
     for session in npc_lims.status.get_tracked_sessions():
         data_assets = []
-        
+
         if session.is_uploaded:
             data_assets.append(
                 {
@@ -19,7 +18,7 @@ def main() -> None:
                     "mount": "raw",
                 }
             )
-            
+
         if session.is_sorted:
             data_assets.append(
                 {
@@ -27,7 +26,7 @@ def main() -> None:
                     "mount": "sorted",
                 }
             )
-            
+
         codeocean.get_codeocean_client().run_capsule(
             capsule_id=NWB_EXPORT_CAPSULE_ID,
             data_assets=data_assets,
