@@ -38,8 +38,8 @@ DataAssetAPI: TypeAlias = dict[
 @functools.cache
 def get_codeocean_client() -> aind_codeocean_api.CodeOceanClient:
     token = os.getenv(
-        "CODE_OCEAN_API_TOKEN",
-        next((v for v in os.environ.values() if v.lower().startswith("cop_")), None),
+        key="CODE_OCEAN_API_TOKEN",
+        default=next((v for v in os.environ.values() if v.lower().startswith("cop_")), None),
     )
     if token is None:
         raise exceptions.MissingCredentials(
@@ -47,7 +47,8 @@ def get_codeocean_client() -> aind_codeocean_api.CodeOceanClient:
         )
     return aind_codeocean_api.CodeOceanClient(
         domain=os.getenv(
-            "CODE_OCEAN_DOMAIN", "https://codeocean.allenneuraldynamics.org"
+            key="CODE_OCEAN_DOMAIN", 
+            default="https://codeocean.allenneuraldynamics.org",
         ),
         token=token,
     )
