@@ -35,7 +35,7 @@ def main() -> None:
         "INSERT INTO status (date, subject_id, project, is_uploaded, is_sorted) VALUES "
     )
     for s in sorted(
-        npc_lims.get_tracked_sessions(), key=lambda s: s.date, reverse=True
+        npc_lims.get_session_info(), key=lambda s: s.date, reverse=True
     ):
         statement += f"\n\t('{s.date}', '{s.subject}', '{s.project}', {int(s.is_uploaded)}, {int(s.is_sorted)}),"
     statement = statement[:-1] + ";"

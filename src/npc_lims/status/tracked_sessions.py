@@ -4,7 +4,8 @@ import contextlib
 import dataclasses
 import json
 from collections.abc import Mapping, MutableSequence
-from typing import Literal
+from typing import Any, Literal
+import typing
 
 import npc_session
 import upath
@@ -40,6 +41,7 @@ class SessionInfo:
     allen_path: upath.UPath
     session_kwargs: dict[str, str] = dataclasses.field(default_factory=dict)
     notes: str = dataclasses.field(default="")
+    issues: list[str] = dataclasses.field(default=list)
 
     @property
     def idx(self) -> int:
@@ -62,7 +64,7 @@ class SessionInfo:
         """The session's raw data has been uploaded to S3 and can be found in
         CodeOcean.
 
-        >>> any(session.is_uploaded for session in get_tracked_sessions())
+        >>> any(session.is_uploaded for session in get_session_info())
         True
         """
         try:
@@ -75,7 +77,7 @@ class SessionInfo:
         """The AIND sorting pipeline has yielded a Result asset for this
         session.
 
-        >>> any(session.is_sorted for session in get_tracked_sessions())
+        >>> any(session.is_sorted for session in get_session_info())
         True
         """
         try:
@@ -87,36 +89,100 @@ class SessionInfo:
         except (FileNotFoundError, ValueError):
             return False
 
+@typing.overload
+def get_session_info() -> tuple[SessionInfo, ...]:
+    ...
 
-def get_tracked_sessions() -> tuple[SessionInfo, ...]:
+@typing.overload
+def get_session_info(session: str | npc_session.SessionRecord) -> SessionInfo:
+    ...
+    
+def get_session_info(session: str | npc_session.SessionRecord | None = None):
     """Quickly get a sequence of all tracked sessions.
 
     Each object in the sequence has info about one session:
-    >>> sessions = get_tracked_sessions()
+    >>> sessions = get_session_info()
     >>> sessions[0].__class__.__name__
     'SessionInfo'
     >>> sessions[0].is_ephys
     True
     >>> any(s for s in sessions if s.date.year < 2021)
     False
+    
+    Pass a session str or SessionRecord to get the info for that session:
+    >>> info = get_session_info("DRpilot_667252_20230927")
+    >>> assert isinstance(info, SessionInfo)
     """
-    return _get_session_info_from_file()
-
-
-def get_session_info(session: str | npc_session.SessionRecord) -> SessionInfo:
-    """Get the SessionInfo instance for a specific session, if it's in the list of
-    tracked sessions.
-
-    >>> assert isinstance(get_session_info("DRpilot_667252_20230927"), SessionInfo)
-    """
+    tracked_sessions = _get_session_info_from_file()
+    if session is None:
+        return tracked_sessions
     with contextlib.suppress(StopIteration):
         return next(
             s
-            for s in get_tracked_sessions()
+            for s in tracked_sessions
             if s.id == (record := npc_session.SessionRecord(session))
         )
     raise ValueError(f"{record} not found in tracked sessions")
+    
+@typing.overload
+def get_session_issues() -> dict[npc_session.SessionRecord, list[str]]:
+    ...
 
+@typing.overload
+def get_session_issues(session: str | npc_session.SessionRecord) -> list[str]:
+    ...
+    
+def get_session_issues(session: str | npc_session.SessionRecord | None = None):
+    """Get a dictionary of all sessions with issues mapped to their issue url.
+    
+    >>> issues = get_session_issues()
+    >>> issues                                                              # doctest: +SKIP
+    {
+        '644867_2023-02-21': ['https://github.com/AllenInstitute/npc_sessions/issues/28'], 
+        '660023_2023-08-08': ['https://github.com/AllenInstitute/npc_sessions/issues/26'], 
+    }
+    
+    >>> single_session_issues = get_session_issues("DRPilot_644867_20230221")                       
+    >>> assert isinstance(single_session_issues, typing.Sequence)
+    >>> single_session_issues                                               # doctest: +SKIP
+    ['https://github.com/AllenInstitute/npc_sessions/issues/28']
+    """
+    if session:
+        return get_session_info(session).issues
+    return {session.id: session.issues for session in get_session_info() if session.issues}
+
+@typing.overload
+def get_session_kwargs() -> dict[npc_session.SessionRecord, dict]:
+    ...
+
+@typing.overload
+def get_session_kwargs(session: str | npc_session.SessionRecord) -> dict[str, Any]:
+    ...
+    
+def get_session_kwargs(session: str | npc_session.SessionRecord | None = None):
+    """Get a dictionary of all sessions mapped to their config kwargs. kwargs will
+    be an empty dict if no kwargs have been specified.
+    
+    >>> kwargs = get_session_kwargs()
+    >>> kwargs                                                          # doctest: +SKIP             
+    {   '670248_2023-08-02': {
+            'is_task': False,
+        },
+        '667252_2023-09-25': {
+            'invalid_times': [
+                {'start_time': 4996, 'stop_time': -1, 'reason': 'auditory stimulus not presented (amplifier power issue)'}
+            ]
+        },
+    }
+    >>> single_session_kwargs = get_session_kwargs("DRpilot_670248_20230802")   
+    >>> assert isinstance(single_session_kwargs, dict)    
+    >>> single_session_kwargs                                           # doctest: +SKIP
+    {'is_task': False}
+    """
+    if session:
+        return get_session_info(session).session_kwargs
+    return {session.id: session.session_kwargs for session in get_session_info()}
+    
 
 def _get_session_info_from_file() -> tuple[SessionInfo, ...]:
     """Load yaml and parse sessions.
@@ -184,6 +250,7 @@ def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInf
                         allen_path=upath.UPath(allen_path),
                         session_kwargs=session_config.get("session_kwargs", {}),
                         notes=session_config.get("notes", ""),
+                        issues=session_config.get("issues", []),
                     )
                 )
     return tuple(sessions)
