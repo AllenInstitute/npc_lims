@@ -34,6 +34,8 @@ ephys:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644867_20230221:
         day: 2
+        issues:
+          - https://github.com/AllenInstitute/npc_sessions/issues/28
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644867_20230222:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644867_20230223:
@@ -48,6 +50,8 @@ ephys:
         day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_660023_20230808:
         day: 1
+        issues:
+          - https://github.com/AllenInstitute/npc_sessions/issues/26
     # ^ first DR ephys in a while - is this still 'DRpilot'? 
     # ^ first session with 'surface_channels' after main recording, middle probe bank
     # 103 extra vsyncs for DynamicRouting1 (c.f. num frameIntervals + 1)
@@ -55,6 +59,8 @@ ephys:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230814:
         day: 1
+        issues:
+          - https://github.com/AllenInstitute/npc_sessions/issues/24
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230815:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230816:
@@ -95,8 +101,14 @@ ephys:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-07-27_13-57-17_620263
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-08-02_15-40-19_620264
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-09-19_13-48-26_628801
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-09-20_13-21-35_628801
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-09-20_14-10-18_628801
+    - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-09-20_13-21-35_628801:
+        session_kwargs:
+          is_video: false
+        issues:
+          - https://github.com/AllenInstitute/npc_sessions/issues/27
+    - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-09-20_14-10-18_628801:
+        session_kwargs:
+          is_video: false
     # ^ two sessions for this mouse - split recording?
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-09-26_12-48-09_636397
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-09-27_11-37-08_636397
@@ -112,7 +124,9 @@ ephys:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-05-16_10-25-25_662983
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-11_10-07-43_668759
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-12_10-50-07_668759
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-13_09-35-31_668759
+    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-13_09-35-31_668759:
+        issues:
+          - https://github.com/AllenInstitute/npc_sessions/issues/25
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-18_10-05-51_670181
     # //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-19_10-00-22_670181
     # ^ no behavior task hdf5
