@@ -13,6 +13,7 @@ import yaml
 from typing_extensions import TypeAlias
 
 import npc_lims.metadata.codeocean as codeocean
+import npc_lims.exceptions as exceptions
 
 _TRACKED_SESSIONS_FILE = upath.UPath(
     "https://raw.githubusercontent.com/AllenInstitute/npc_lims/main/tracked_sessions.yaml"
@@ -125,7 +126,7 @@ def get_session_info(session: str | npc_session.SessionRecord | None = None):
             for s in tracked_sessions
             if s.id == (record := npc_session.SessionRecord(session))
         )
-    raise ValueError(f"{record} not found in tracked sessions")
+    raise exceptions.NoSessionInfo(f"{record} not found in tracked sessions")
 
 
 @typing.overload
@@ -154,7 +155,10 @@ def get_session_issues(session: str | npc_session.SessionRecord | None = None):
     ['https://github.com/AllenInstitute/npc_sessions/issues/28']
     """
     if session:
-        return get_session_info(session).issues
+        try:
+            return get_session_info(session).issues
+        except exceptions.NoSessionInfo:
+            return []
     return {
         session.id: session.issues for session in get_session_info() if session.issues
     }
@@ -191,7 +195,10 @@ def get_session_kwargs(session: str | npc_session.SessionRecord | None = None):
     {'is_task': False}
     """
     if session:
-        return get_session_info(session).session_kwargs
+        try:
+            return get_session_info(session).session_kwargs
+        except exceptions.NoSessionInfo:
+            return {}
     return {session.id: session.session_kwargs for session in get_session_info()}
 
 
