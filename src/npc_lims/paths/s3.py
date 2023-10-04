@@ -104,7 +104,7 @@ def get_h5_sync_from_s3(session: str | npc_session.SessionRecord) -> upath.UPath
     sync_path = tuple(path for path in raw_data_paths_s3 if ".h5" in path.suffix)
 
     if not sync_path:
-        raise FileNotFoundError(f"{session} has no sync")
+        raise FileNotFoundError(f"No sync file found in {raw_data_paths_s3!r}")
 
     return sync_path[0]
 
