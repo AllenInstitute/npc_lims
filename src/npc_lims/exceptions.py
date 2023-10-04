@@ -3,6 +3,7 @@ class MissingCredentials(KeyError):
 
     pass
 
+
 class NoSessionInfo(ValueError):
     """Raised when a session is not found in the tracked-sessions database."""
 

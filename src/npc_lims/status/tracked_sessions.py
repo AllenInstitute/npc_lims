@@ -12,8 +12,8 @@ import upath
 import yaml
 from typing_extensions import TypeAlias
 
-import npc_lims.metadata.codeocean as codeocean
 import npc_lims.exceptions as exceptions
+import npc_lims.metadata.codeocean as codeocean
 
 _TRACKED_SESSIONS_FILE = upath.UPath(
     "https://raw.githubusercontent.com/AllenInstitute/npc_lims/main/tracked_sessions.yaml"
