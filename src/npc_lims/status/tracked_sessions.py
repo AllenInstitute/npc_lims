@@ -41,7 +41,7 @@ class SessionInfo:
     allen_path: upath.UPath
     session_kwargs: dict[str, str] = dataclasses.field(default_factory=dict)
     notes: str = dataclasses.field(default="")
-    issues: list[str] = dataclasses.field(default=list)
+    issues: list[str] = dataclasses.field(default_factory=list)
 
     @property
     def idx(self) -> int:
