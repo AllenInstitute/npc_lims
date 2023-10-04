@@ -8,7 +8,7 @@ run with default test session."""
 
 
 def main() -> None:
-    for session in npc_lims.status.get_tracked_sessions():
+    for session in npc_lims.status.get_session_info():
         data_assets = []
 
         if session.is_uploaded:
