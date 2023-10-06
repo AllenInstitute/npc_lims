@@ -28,7 +28,7 @@ def main() -> None:
             project VARCHAR DEFAULT NULL,
             is_uploaded BOOLEAN DEFAULT NULL,
             is_sorted BOOLEAN DEFAULT NULL,
-            is_annotated BOOLEAN DEFAULT NULL,
+            is_annotated BOOLEAN DEFAULT NULL
         );
         """
     )
