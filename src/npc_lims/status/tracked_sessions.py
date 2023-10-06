@@ -14,6 +14,7 @@ from typing_extensions import TypeAlias
 
 import npc_lims.exceptions as exceptions
 import npc_lims.metadata.codeocean as codeocean
+import npc_lims.paths.s3 as s3
 
 _TRACKED_SESSIONS_FILE = upath.UPath(
     "https://raw.githubusercontent.com/AllenInstitute/npc_lims/main/tracked_sessions.yaml"
@@ -99,7 +100,7 @@ class SessionInfo:
         True
         """
         try:
-            return bool(codeocean.get_raw_data_root(self.id))
+            return bool(s3.get_tissuecyte_annotation_files_from_s3(self.id))
         except (FileNotFoundError, ValueError):
             return False
 
