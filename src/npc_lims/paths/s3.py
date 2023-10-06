@@ -10,11 +10,16 @@ import npc_session
 import upath
 
 import npc_lims.metadata.codeocean as codeocean
+import npc_lims.status.tracked_sessions as tracked_sessions
 
 DR_DATA_REPO = upath.UPath(
     "s3://aind-scratch-data/ben.hardcastle/DynamicRoutingTask/Data"
 )
 NWB_REPO = upath.UPath("s3://aind-scratch-data/ben.hardcastle/nwb/nwb")
+
+TISSUECYTE_REPO = upath.UPath(
+    "s3://aind-scratch-data/arjun.sridhar/tissuecyte_cloud_processed"
+)
 
 CODE_OCEAN_DATA_BUCKET = upath.UPath("s3://codeocean-s3datasetsbucket-1u41qdg42ur9")
 
@@ -254,6 +259,39 @@ def get_sorted_precurated_paths_from_s3(
 
     return sorted_precurated_dirs
 
+
+@functools.cache
+def get_tissuecyte_annotation_files_from_s3(
+    session: str | npc_session.SessionRecord,
+) -> tuple[upath.UPath, ...]:
+    """For each probe inserted, get a csv file containing CCF coordinates for each
+    electrode (channel) on the probe.
+
+    >>> electrode_files = get_tissuecyte_annotation_files_from_s3('626791_2022-08-16')
+    >>> assert len(electrode_files) > 0
+    >>> electrode_files[0].name
+    'Probe_A2_channels_626791_warped_processed.csv'
+    """
+    session = npc_session.SessionRecord(session)
+    day = tracked_sessions.get_session_info(session).day
+    subject_electrode_network_path = TISSUECYTE_REPO / str(session.subject.id)
+
+    if not subject_electrode_network_path.exists():
+        raise FileNotFoundError(
+            f"CCF annotations for {session} have not been uploaded to s3"
+        )
+
+    electrode_files = tuple(
+        subject_electrode_network_path.glob(
+            f"Probe_*{day}_channels_{str(session.subject.id)}_warped_processed.csv"
+        )
+    )
+    if not electrode_files:
+        raise FileNotFoundError(
+            f"{subject_electrode_network_path} exists, but no CCF annotation files found matching {day} and {session.subject.id} - check session day"
+        )
+
+    return electrode_files
 
 @dataclasses.dataclass
 class StimFile:

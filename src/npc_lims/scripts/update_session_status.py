@@ -27,15 +27,16 @@ def main() -> None:
             subject_id VARCHAR(30),
             project VARCHAR DEFAULT NULL,
             is_uploaded BOOLEAN DEFAULT NULL,
-            is_sorted BOOLEAN DEFAULT NULL
+            is_sorted BOOLEAN DEFAULT NULL,
+            is_annotated BOOLEAN DEFAULT NULL,
         );
         """
     )
     statement = (
-        "INSERT INTO status (date, subject_id, project, is_uploaded, is_sorted) VALUES "
+        "INSERT INTO status (date, subject_id, project, is_uploaded, is_sorted, is_annotated) VALUES "
     )
     for s in sorted(npc_lims.get_session_info(), key=lambda s: s.date, reverse=True):
-        statement += f"\n\t('{s.date}', '{s.subject}', '{s.project}', {int(s.is_uploaded)}, {int(s.is_sorted)}),"
+        statement += f"\n\t('{s.date}', '{s.subject}', '{s.project}', {int(s.is_uploaded)}, {int(s.is_sorted)}, {int(s.is_annotated)}),"
     statement = statement[:-1] + ";"
     response = connection.Execute(statement)
     if response[1]:

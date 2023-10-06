@@ -90,6 +90,18 @@ class SessionInfo:
         except (FileNotFoundError, ValueError):
             return False
 
+    @property
+    def is_annotated(self) -> bool:
+        """The subject associated with the sessions has CCF annotation data for
+        probes available on S3.
+
+        >>> any(session.is_annotated for session in get_session_info())
+        True
+        """
+        try:
+            return bool(codeocean.get_raw_data_root(self.id))
+        except (FileNotFoundError, ValueError):
+            return False
 
 @typing.overload
 def get_session_info() -> tuple[SessionInfo, ...]:
