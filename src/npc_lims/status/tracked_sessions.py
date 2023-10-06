@@ -101,7 +101,7 @@ def get_session_info(session: str | npc_session.SessionRecord) -> SessionInfo:
     ...
 
 
-def get_session_info(session: str | npc_session.SessionRecord | None = None):
+def get_session_info(session: str | npc_session.SessionRecord | None = None) -> tuple[SessionInfo, ...] | SessionInfo:
     """Quickly get a sequence of all tracked sessions.
 
     Each object in the sequence has info about one session:
@@ -139,7 +139,7 @@ def get_session_issues(session: str | npc_session.SessionRecord) -> list[str]:
     ...
 
 
-def get_session_issues(session: str | npc_session.SessionRecord | None = None):
+def get_session_issues(session: str | npc_session.SessionRecord | None = None)  -> list[str] | list | dict[npc_session.SessionRecord, list[str]]:
     """Get a dictionary of all sessions with issues mapped to their issue url.
 
     >>> issues = get_session_issues()
@@ -174,7 +174,7 @@ def get_session_kwargs(session: str | npc_session.SessionRecord) -> dict[str, An
     ...
 
 
-def get_session_kwargs(session: str | npc_session.SessionRecord | None = None):
+def get_session_kwargs(session: str | npc_session.SessionRecord | None = None) -> dict[str, str] | dict | dict[npc_session.SessionRecord, dict[str, str]]:
     """Get a dictionary of all sessions mapped to their config kwargs. kwargs will
     be an empty dict if no kwargs have been specified.
 
