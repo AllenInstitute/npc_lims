@@ -293,6 +293,7 @@ def get_tissuecyte_annotation_files_from_s3(
 
     return electrode_files
 
+
 @dataclasses.dataclass
 class StimFile:
     path: upath.UPath

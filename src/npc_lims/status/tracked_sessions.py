@@ -103,6 +103,7 @@ class SessionInfo:
         except (FileNotFoundError, ValueError):
             return False
 
+
 @typing.overload
 def get_session_info() -> tuple[SessionInfo, ...]:
     ...
