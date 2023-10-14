@@ -27,11 +27,11 @@ def get_subject_folders_from_data_repo() -> dict[npc_session.SubjectRecord, upat
 @functools.cache
 def get_subject_folders_from_data_repo(subject: int | str | None = None) -> dict[npc_session.SubjectRecord, upath.UPath] | upath.UPath:
     """
-    >>> all_subjects = get_subject_folder()
+    >>> all_subjects = get_subject_folders_from_data_repo()
     >>> len(all_subjects)                               # doctest: +SKIP
     93
     
-    >>> get_subject_folder(366122).name
+    >>> get_subject_folders_from_data_repo(366122).name
     '366122'
     """
     if subject is not None:
@@ -64,7 +64,7 @@ def get_sessions_from_data_repo(subject: int | str | None = None) -> tuple[npc_s
     """
     
     # get a dict of all subjects mapped to their sessions
-    >>> all_subjects_sessions = get_sessions()
+    >>> all_subjects_sessions = get_sessions_from_data_repo()
     >>> len(all_subjects_sessions)                      # doctest: +SKIP
     93
     
@@ -72,7 +72,7 @@ def get_sessions_from_data_repo(subject: int | str | None = None) -> tuple[npc_s
     45
     
     # get a specific subject's sessions as a sequence
-    >>> get_sessions(366122)[0]
+    >>> get_sessions_from_data_repo(366122)[0]
     '366122_2023-01-30'
     
     """
