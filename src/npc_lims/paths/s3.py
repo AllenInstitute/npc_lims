@@ -328,10 +328,14 @@ def get_hdf5_stim_files_from_s3(
         )
     file_glob = f"*_{session.subject}_{session.date.replace('-', '')}_??????.hdf5"
     files = [StimFile(path, session) for path in root.glob(file_glob)]
-    
+
     test_glob = file_glob.replace(str(session.subject), "test")
-    files += [StimFile(path, session) for path in root.glob(test_glob) if str(session.subject) in path.as_posix()]
-    
+    files += [
+        StimFile(path, session)
+        for path in root.glob(test_glob)
+        if str(session.subject) in path.as_posix()
+    ]
+
     # no empty files:
     files = [f for f in files if f.size > 0]
 
