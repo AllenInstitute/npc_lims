@@ -6,7 +6,7 @@ groups = ["default", "dev"]
 cross_platform = true
 static_urls = false
 lock_version = "4.3"
-content_hash = "sha256:190438839ca34fdaf72956fc97e16a289e2df6da13287ec65f6628bdc80f958a"
+content_hash = "sha256:0b8009d60704beaee389a1f61ce5c58c3cdb07d9671f1e7e4d19f1188b39022f"
 
 [[package]]
 name = "aind-codeocean-api"
@@ -483,6 +483,16 @@ files = [
 ]
 
 [[package]]
+name = "et-xmlfile"
+version = "1.1.0"
+requires_python = ">=3.6"
+summary = "An implementation of lxml.xmlfile for the standard library"
+files = [
+    {file = "et_xmlfile-1.1.0-py3-none-any.whl", hash = "sha256:a2ba85d1d6a74ef63837eed693bcb89c3f752169b0e3e7ae5b16ca5e1b3deada"},
+    {file = "et_xmlfile-1.1.0.tar.gz", hash = "sha256:8eb9e2bc2f8c97e37a2dc85a09ecdcdec9d8a396530a6d5a33b30b9a92da0c5c"},
+]
+
+[[package]]
 name = "exceptiongroup"
 version = "1.1.3"
 requires_python = ">=3.7"
@@ -719,6 +729,19 @@ dependencies = [
 files = [
     {file = "npc_session-0.1.21-py3-none-any.whl", hash = "sha256:acdf96aa61e9a9d0dac7e8dbe818c442b72fa3bb0c59704934536c12a2953211"},
     {file = "npc_session-0.1.21.tar.gz", hash = "sha256:04e3190460947c660061347a109ddae1e516f2105812d86308b86a59ad04c307"},
+]
+
+[[package]]
+name = "openpyxl"
+version = "3.1.2"
+requires_python = ">=3.6"
+summary = "A Python library to read/write Excel 2010 xlsx/xlsm files"
+dependencies = [
+    "et-xmlfile",
+]
+files = [
+    {file = "openpyxl-3.1.2-py2.py3-none-any.whl", hash = "sha256:f91456ead12ab3c6c2e9491cf33ba6d08357d802192379bb482f1033ade496f5"},
+    {file = "openpyxl-3.1.2.tar.gz", hash = "sha256:a6f5977418eff3b2d5500d54d9db50c8277a368436f4e4f8ddb1be3422870184"},
 ]
 
 [[package]]
