@@ -13,10 +13,8 @@ dependencies = [
     "universal-pathlib>=0.1.1",
     "aind-codeocean-api>=0.2.4",
     "s3fs>=2023.6.0",
-    "types-redis>=4.6.0.3",
     "pydbhub-bjh>=0.0.8",
     "pyyaml>=6.0.1",
-    "types-PyYAML>=6.0.12.11",
     "python-dotenv>=1.0.0",
     "pyopenssl>=23.2.0",
     "openpyxl>=3.1.2",
@@ -56,6 +54,8 @@ dev = [
     "mypy>=1.4.1",
     "pytest-cov>=4.1.0",
     "black>=23.7.0",
+    "types-redis>=4.6.0.3",
+    "types-PyYAML>=6.0.12.11",
 ]
 
 [tool.pdm.scripts]
