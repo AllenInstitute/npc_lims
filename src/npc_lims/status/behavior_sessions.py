@@ -29,12 +29,12 @@ def get_subjects_from_training_db(
 ) -> dict[npc_session.SubjectRecord, dict[str, Any]]:
     """
     Dynamic Routing training spreadsheet info.
-    
+
     {subject: ({spreadsheet row}, ... )}
 
     >>> subjects = get_subjects_from_training_db()
     >>> assert len(subjects) > 0
-    >>> subjects[659250]                       # doctest: +SKIP 
+    >>> subjects[659250]                       # doctest: +SKIP
     {'ID': 50, 'mouse_id': '659250', 'alive': 'False', 'genotype': 'PV Cre x Ai32', 'sex': 'male', 'birthdate': '2022-11-21 00:00:00', 'surgery_week': '2023-01-30 00:00:00', 'craniotomy': 'True', 'trainer': 'Sam', 'regimen': '7', 'wheel_fixed': 'False', 'timeouts': 'True', 'next_task_version': 'dead'}
     """
     db = npc_lims.metadata.get_training_db(nsb)
@@ -44,14 +44,16 @@ def get_subjects_from_training_db(
 
     ## using tables other than `all_mice`
     subjects = tuple(
-            npc_session.SubjectRecord(table["name"])
-            for table in db.execute(
-                "SELECT name FROM sqlite_master WHERE type='table'"
-            ).fetchall()
-            if table["name"] not in ("sqlite_sequence", "all_mice")
+        npc_session.SubjectRecord(table["name"])
+        for table in db.execute(
+            "SELECT name FROM sqlite_master WHERE type='table'"
+        ).fetchall()
+        if table["name"] not in ("sqlite_sequence", "all_mice")
     )
     return {
-        subject: db.execute(f"SELECT * FROM all_mice WHERE mouse_id=?", (subject,)).fetchone()
+        subject: db.execute(
+            "SELECT * FROM all_mice WHERE mouse_id=?", (subject,)
+        ).fetchone()
         for subject in subjects
     }
 
