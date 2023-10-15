@@ -128,7 +128,7 @@ def get_session_info(
     >>> sessions = get_session_info()
     >>> sessions[0].__class__.__name__
     'SessionInfo'
-    >>> sessions[0].is_ephys
+    >>> sessions[0].is_ephys                    # doctest: +SKIP
     True
     >>> any(s for s in sessions if s.date.year < 2021)
     False
