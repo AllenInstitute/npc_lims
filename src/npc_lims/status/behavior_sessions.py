@@ -32,27 +32,19 @@ def get_subjects_from_training_db(
 
     {subject: ({spreadsheet row}, ... )}
 
-    >>> subjects = get_subjects_from_training_db()
+    >>> subjects = get_subjects_from_training_db(nsb=True)
     >>> assert len(subjects) > 0
     >>> subjects[659250]                       # doctest: +SKIP
     {'ID': 50, 'mouse_id': '659250', 'alive': 'False', 'genotype': 'PV Cre x Ai32', 'sex': 'male', 'birthdate': '2022-11-21 00:00:00', 'surgery_week': '2023-01-30 00:00:00', 'craniotomy': 'True', 'trainer': 'Sam', 'regimen': '7', 'wheel_fixed': 'False', 'timeouts': 'True', 'next_task_version': 'dead'}
     """
     db = npc_lims.metadata.get_training_db(nsb)
 
-    ## using `all_mice` table
-    # return tuple(set(npc_session.SubjectRecord(result[1]) for result in db.execute("SELECT * FROM all_mice").fetchall()))
+    # use entries in `all_mice` table
+    subjects = tuple(set(npc_session.SubjectRecord(result['mouse_id']) for result in db.execute("SELECT * FROM all_mice").fetchall()))
 
-    ## using tables other than `all_mice`
-    subjects = tuple(
-        npc_session.SubjectRecord(table["name"])
-        for table in db.execute(
-            "SELECT name FROM sqlite_master WHERE type='table'"
-        ).fetchall()
-        if table["name"] not in ("sqlite_sequence", "all_mice")
-    )
     return {
         subject: db.execute(
-            "SELECT * FROM all_mice WHERE mouse_id=?", (subject,)
+            "SELECT * FROM 'all_mice' WHERE mouse_id=?", (subject,)
         ).fetchone()
         for subject in subjects
     }
@@ -81,9 +73,19 @@ def get_sessions_from_training_db(
     >>> sessions[659250][0]                         # doctest: +SKIP
     {'ID': 1, 'start_time': '2023-03-07 12:56:27', 'rig_name': 'B2', 'task_version': 'stage 0 moving', 'hits': '0', 'dprime_same_modality': '', 'dprime_other_modality_go_stim': '', 'pass': '1', 'ignore': '0'}
     """
+    if nsb:
+        raise NotImplementedError("Cannot currently get training info about individual NSB sessions")
     db = npc_lims.metadata.get_training_db(nsb)
+    ## using tables other than `all_mice`
+    subjects = tuple(
+        npc_session.SubjectRecord(table["name"])
+        for table in db.execute(
+            "SELECT name FROM sqlite_master WHERE type='table'"
+        ).fetchall()
+        if table["name"] not in ("sqlite_sequence", "all_mice")
+    )
     sessions: dict[int, tuple[dict[str, Any], ...]] = {}
-    for subject in get_subjects_from_training_db(nsb):
+    for subject in subjects:
         sessions[subject] = tuple(
             row for row in db.execute(f"SELECT * FROM '{subject}'").fetchall()
         )
