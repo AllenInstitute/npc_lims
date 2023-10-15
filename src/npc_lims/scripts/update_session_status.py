@@ -16,7 +16,7 @@ API_KEY = os.getenv("DBHUB_API_KEY")
 def main() -> None:
     # sync sqlite dbs with xlsx sheets on s3
     npc_lims.update_training_dbs()
-    
+
     if not API_KEY:
         print("No API key found. Please set the `DBHUB_API_KEY` environment variable.")
         return

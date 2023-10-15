@@ -2,11 +2,10 @@ from __future__ import annotations
 
 import contextlib
 import dataclasses
-import itertools
 import json
 import typing
-from collections.abc import Mapping, MutableSequence
-from typing import Any, Iterator, Literal
+from collections.abc import Iterator, Mapping, MutableSequence
+from typing import Any, Literal
 
 import npc_session
 import upath
@@ -16,7 +15,7 @@ from typing_extensions import TypeAlias
 import npc_lims.exceptions as exceptions
 import npc_lims.metadata.codeocean as codeocean
 import npc_lims.paths.s3 as s3
-import npc_lims.status.behavior_sessions as behavior_sessions   
+import npc_lims.status.behavior_sessions as behavior_sessions
 
 _TRACKED_SESSIONS_FILE = upath.UPath(
     "https://raw.githubusercontent.com/AllenInstitute/npc_lims/main/tracked_sessions.yaml"
@@ -109,6 +108,7 @@ class SessionInfo:
     def __hash__(self) -> int:
         return hash(self.id)
 
+
 @typing.overload
 def get_session_info() -> tuple[SessionInfo, ...]:
     ...
@@ -140,9 +140,7 @@ def get_session_info(
     tracked_sessions = set(
         _get_session_info_from_file(),
     )
-    tracked_sessions.update(
-        _get_session_info_from_data_repo()
-    )
+    tracked_sessions.update(_get_session_info_from_data_repo())
     if session is None:
         return tuple(sorted(tracked_sessions, key=lambda s: s.id.date, reverse=True))
     with contextlib.suppress(StopIteration):
@@ -153,8 +151,11 @@ def get_session_info(
         )
     raise exceptions.NoSessionInfo(f"{record} not found in tracked sessions")
 
+
 def _get_session_info_from_data_repo() -> Iterator[SessionInfo]:
-    for subject, sessions in behavior_sessions.get_sessions_from_training_db(nsb=False).items():
+    for subject, sessions in behavior_sessions.get_sessions_from_training_db(
+        nsb=False
+    ).items():
         for session in sessions:
             yield SessionInfo(
                 id=behavior_sessions.get_session_id_from_db_row(subject, session),
@@ -165,6 +166,7 @@ def _get_session_info_from_data_repo() -> Iterator[SessionInfo]:
                     f"//allen/programs/mindscope/workgroups/dynamicrouting/DynamicRoutingTask/Data/{subject}"
                 ),
             )
+
 
 @typing.overload
 def get_session_issues() -> dict[npc_session.SessionRecord, list[str]]:
@@ -322,5 +324,9 @@ if __name__ == "__main__":
 
     dotenv.load_dotenv(dotenv.find_dotenv(usecwd=True))
     doctest.testmod(
-        optionflags=(doctest.IGNORE_EXCEPTION_DETAIL | doctest.NORMALIZE_WHITESPACE | doctest.FAIL_FAST)
+        optionflags=(
+            doctest.IGNORE_EXCEPTION_DETAIL
+            | doctest.NORMALIZE_WHITESPACE
+            | doctest.FAIL_FAST
+        )
     )
