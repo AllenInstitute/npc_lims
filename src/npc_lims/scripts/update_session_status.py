@@ -37,7 +37,7 @@ def main() -> None:
     )
     statement = "INSERT INTO status (date, subject_id, project, is_uploaded, is_sorted, is_annotated) VALUES "
     for s in sorted(npc_lims.get_session_info(), key=lambda s: s.date, reverse=True):
-        if not s.i_ephys:
+        if not s.is_ephys:
             continue
         statement += f"\n\t('{s.date}', '{s.subject}', '{s.project}', {int(s.is_uploaded)}, {int(s.is_sorted)}, {int(s.is_annotated)}),"
     statement = statement[:-1] + ";"
