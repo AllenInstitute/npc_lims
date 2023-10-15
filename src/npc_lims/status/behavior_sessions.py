@@ -40,7 +40,12 @@ def get_subjects_from_training_db(
     db = npc_lims.metadata.get_training_db(nsb)
 
     # use entries in `all_mice` table
-    subjects = tuple(set(npc_session.SubjectRecord(result['mouse_id']) for result in db.execute("SELECT * FROM all_mice").fetchall()))
+    subjects = tuple(
+        {
+            npc_session.SubjectRecord(result["mouse_id"])
+            for result in db.execute("SELECT * FROM all_mice").fetchall()
+        }
+    )
 
     return {
         subject: db.execute(
@@ -74,7 +79,9 @@ def get_sessions_from_training_db(
     {'ID': 1, 'start_time': '2023-03-07 12:56:27', 'rig_name': 'B2', 'task_version': 'stage 0 moving', 'hits': '0', 'dprime_same_modality': '', 'dprime_other_modality_go_stim': '', 'pass': '1', 'ignore': '0'}
     """
     if nsb:
-        raise NotImplementedError("Cannot currently get training info about individual NSB sessions")
+        raise NotImplementedError(
+            "Cannot currently get training info about individual NSB sessions"
+        )
     db = npc_lims.metadata.get_training_db(nsb)
     ## using tables other than `all_mice`
     subjects = tuple(
