@@ -1,5 +1,10 @@
 from __future__ import annotations
 
+import functools
+import tempfile
+import upath
+import sqlite3
+import openpyxl
 import re
 import sqlite3
 import tempfile
@@ -18,6 +23,25 @@ def get_training_sqlite_paths() -> tuple[upath.UPath, ...]:
         path.with_suffix(".sqlite") for path in get_training_spreadsheet_paths()
     )
 
+
+@functools.cache
+def get_training_db(nsb: bool = False) -> sqlite3.Connection:
+    """
+    Download db to tempdir, open connection, return connection.
+    
+    >>> assert get_training_db()
+    """
+    db_path = upath.UPath(tempfile.mkstemp(suffix='.db')[1])
+    s3_path = next(path for path in get_training_sqlite_paths() if ('NSB' in path.name) == nsb) 
+    db_path.write_bytes(s3_path.read_bytes())
+    con = sqlite3.connect(db_path)
+    def dict_factory(cursor, row):
+        d = {}
+        for idx, col in enumerate(cursor.description):
+            d[col[0]] = row[idx]
+        return d
+    con.row_factory = dict_factory
+    return con
 
 def get_training_spreadsheet_paths() -> tuple[upath.UPath, ...]:
     """

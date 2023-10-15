@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import functools
+import logging
+from typing import Any
 import typing
 
 import npc_session
@@ -8,6 +10,9 @@ import upath
 
 import npc_lims
 import npc_lims.paths
+import npc_lims.metadata
+
+logger = logging.getLogger(__name__)
 
 INVALID_SUBJECT_KEYS = (
     "test",
@@ -17,6 +22,42 @@ INVALID_SUBJECT_KEYS = (
     "retired",
     "sound",
 )
+
+def get_subjects_from_training_db(nsb: bool = False) -> tuple[npc_session.SubjectRecord, ...]:
+    """
+    Dynamic Routing training spreadsheet info. 
+    
+    >>> assert len(get_subjects_from_training_db()) > 0
+    """
+    db = npc_lims.metadata.get_training_db(nsb)
+    
+    ## using `all_mice` table
+    # return tuple(set(npc_session.SubjectRecord(result[1]) for result in db.execute("SELECT * FROM all_mice").fetchall()))
+    
+    ## using tables other than `all_mice`
+    return tuple(set(npc_session.SubjectRecord(table['name']) for table in db.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall() if table['name'] not in ('sqlite_sequence', 'all_mice')))
+    
+def get_session_id_from_db_row(subject: int | str, row: dict[str, Any]) -> npc_session.SessionRecord:
+    """
+    >>> get_session_id_from_db_row(366122, {'start_time': '2023-01-30 12:56:27'})
+    '366122_2023-01-30'
+    """
+    return npc_session.SessionRecord(f"{subject} {row[next(k for k in row.keys() if 'start' in k and any(t in k for t in ('date', 'time')))]}")
+
+def get_sessions_from_training_db(nsb: bool = False) -> dict[int, tuple[dict[str, Any], ...]]:
+    """
+    {subject: ({spreadsheet row}, ... )}
+    
+    >>> sessions = get_sessions_from_training_db()
+    >>> assert len(sessions) > 0
+    >>> sessions[659250][0]                         # doctest: +SKIP
+    {'ID': 1, 'start_time': '2023-03-07 12:56:27', 'rig_name': 'B2', 'task_version': 'stage 0 moving', 'hits': '0', 'dprime_same_modality': '', 'dprime_other_modality_go_stim': '', 'pass': '1', 'ignore': '0'}
+    """
+    db = npc_lims.metadata.get_training_db(nsb)
+    sessions: dict[int, tuple[dict[str, Any], ...]] = {}
+    for subject in get_subjects_from_training_db(nsb):
+        sessions[subject] = tuple(row for row in db.execute(f"SELECT * FROM '{subject}'").fetchall())
+    return sessions
 
 
 @typing.overload
