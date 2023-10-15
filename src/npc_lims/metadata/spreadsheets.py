@@ -107,8 +107,8 @@ def excel_to_sqlite(
             + repr(str(slugify(sheet)))
             + "(ID INTEGER PRIMARY KEY AUTOINCREMENT"
         )
-        for idx, col in enumerate(ws.rows):
-            for col in col:
+        for row in ws.rows:
+            for idx, col in enumerate(row):
                 column_name = slugify(col.value)
                 if column_name not in columns:
                     query += ", " + column_name + " TEXT"
