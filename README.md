@@ -16,7 +16,6 @@ issues](https://img.shields.io/github/issues/alleninstitute/npc_lims?logo=github
 - make a new Python >=3.9 virtual environment with conda or venv (lighter option, since this package does not require pandas, numpy etc.): 
   ```bash
   python -m venv .venv
-  cd .venv
   ```
   
 - activate the virtual environment and install the package:
@@ -31,23 +30,33 @@ issues](https://img.shields.io/github/issues/alleninstitute/npc_lims?logo=github
   python -m pip install npc_lims
   ```
   
-- set up credentials
+- setup credentials
   - required environment variables:
     - AWS S3
-      -  to find and read files on S3
-      -  must have read access on relevant aind buckets
-      -  can be in a standard `~/.aws` location, as used by AWS CLI or boto3
         - `AWS_DEFAULT_REGION`
         - `AWS_ACCESS_KEY_ID`
         - `AWS_SECRET_ACCESS_KEY`
+      -  to find and read files on S3
+      -  must have read access on relevant aind buckets
+      -  can be in a standard `~/.aws` location, as used by AWS CLI or boto3
     - CodeOcean API 
-      - to find processed data in "data assets" via the Codeocean API
         - `CODE_OCEAN_API_TOKEN`
         - `CODE_OCEAN_DOMAIN`
-  - credentials can also be specified via a file named `.env` in the current working directory
+      - to find processed data in "data assets" via the Codeocean API
+      - created in CodeOcean:
+        - right click on `Account` (bottom left, person icon)
+        - click `User Secrets` - these are secrets than can be made available as environment variables in CodeOcean capsules
+        - go to `Access Tokens` and click `Generate new token`
+          - in `Token Name` enter `Codeocean API (read)` and check `read` on capsules and datasets
+          - a token will be generated: click copy (storing it in a password manager, if you use one)
+        - head back to `User Secrets` where we'll paste it into a new secret via `Add secret > API credentials`
+          - in `description` enter `Codeocean API (read)`
+          - in `API key` enter `CODE_OCEAN_API_KEY`
+          - in `API secret` paste the copied secret from before (should start with `cop_`...)
+  - environment variables can also be specified in a file named `.env` in the current working directory
     - example: https://www.dotenv.org/docs/security/env.html
     - be very careful that this file does not get pushed to public locations, e.g. github   
-      - if using git, add it to a `.gitignore` file in the root directory: 
+      - if using git, add it to a `.gitignore` file in your project's root directory: 
       ```gitignore
       .env*
       ```
