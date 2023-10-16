@@ -30,6 +30,7 @@ issues](https://img.shields.io/github/issues/alleninstitute/npc_lims?logo=github
   source .venv/bin/activate.sh
   python -m pip install npc_lims
   ```
+  
 - set up credentials
   - required environment variables:
     - AWS S3
@@ -52,22 +53,22 @@ issues](https://img.shields.io/github/issues/alleninstitute/npc_lims?logo=github
       ```
       
 - now in Python we can find sessions that are available to work with:
-```python
->>> import npc_lims;
-
-# get a sequence of `SessionInfo` dataclass instances, one per session:
->>> tracked_sessions: tuple[npc_lims.SessionInfo, ...] = npc_lims.get_session_info()
-
-# each `SessionInfo` instance has minimal metadata about its session:
->>> tracked_sessions[0]                 # doctest: +SKIP
-npc_lims.SessionInfo(id='626791_2022-08-15', subject=626791, date='2022-08-15', idx=0, project='DRPilotSession', is_ephys=True, is_sync=True, allen_path=PosixUPath('//allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_626791_20220815'))
->>> tracked_sessions[0].is_ephys        # doctest: +SKIP 
-False
-
-# currently, we're only tracking behavior and ephys sessions that use variants of https://github.com/samgale/DynamicRoutingTask/blob/main/TaskControl.py: 
->>> all(s.date.year >= 2022 for s in tracked_sessions)
-True
-```
+  ```python
+  >>> import npc_lims;
+  
+  # get a sequence of `SessionInfo` dataclass instances, one per session:
+  >>> tracked_sessions: tuple[npc_lims.SessionInfo, ...] = npc_lims.get_session_info()
+  
+  # each `SessionInfo` instance has minimal metadata about its session:
+  >>> tracked_sessions[0]                 # doctest: +SKIP
+  npc_lims.SessionInfo(id='626791_2022-08-15', subject=626791, date='2022-08-15', idx=0, project='DRPilotSession', is_ephys=True, is_sync=True, allen_path=PosixUPath('//allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_626791_20220815'))
+  >>> tracked_sessions[0].is_ephys        # doctest: +SKIP 
+  False
+  
+  # currently, we're only tracking behavior and ephys sessions that use variants of https://github.com/samgale/DynamicRoutingTask/blob/main/TaskControl.py: 
+  >>> all(s.date.year >= 2022 for s in tracked_sessions)
+  True
+  ```
 
 - "tracked sessions" are discovered via 3 routes:
   - https://github.com/AllenInstitute/npc_lims/blob/main/tracked_sessions.yaml
