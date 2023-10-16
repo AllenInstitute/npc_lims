@@ -13,22 +13,63 @@ issues](https://img.shields.io/github/issues/alleninstitute/npc_lims?logo=github
 
 ## quickstart
 
-```bash
-pip install npc_lims
-```
-
-Get some minimal info on all the tracked sessions available to work with:
-
+- make a new Python >=3.9 virtual environment with conda or venv (lighter option, since this package does not require pandas, numpy etc.): 
+  ```bash
+  python -m venv .venv
+  cd .venv
+  ```
+  
+- activate the virtual environment and install the package:
+  - Windows
+  ```cmd
+  .venv\scripts\activate
+  python -m pip install npc_lims
+  ```
+  - Unix
+  ```bash
+  source .venv/bin/activate.sh
+  python -m pip install npc_lims
+  ```
+- set up credentials
+  - required environment variables:
+    - AWS S3
+      -  to find and read files on S3
+      -  must have read access on relevant aind buckets
+      -  can be in a standard `~/.aws` location, as used by AWS CLI or boto3
+        - `AWS_DEFAULT_REGION`
+        - `AWS_ACCESS_KEY_ID`
+        - `AWS_SECRET_ACCESS_KEY`
+    - CodeOcean API 
+      - to find processed data in "data assets" via the Codeocean API
+        - `CODE_OCEAN_API_TOKEN`
+        - `CODE_OCEAN_DOMAIN`
+  - credentials can also be specified via a file named `.env` in the current working directory
+    - example: https://www.dotenv.org/docs/security/env.html
+    - be very careful that this file does not get pushed to public locations, e.g. github   
+      - if using git, add it to a `.gitignore` file in the root directory: 
+      ```gitignore
+      .env*
+      ```
+      
+- now in Python we can find sessions that are available to work with:
 ```python
->>> from npc_lims import get_session_info;
+>>> import npc_lims;
 
-# each record in the sequence has info about one session:
->>> tracked_sessions = get_session_info()
+# get a sequence of `SessionInfo` dataclass instances, one per session:
+>>> tracked_sessions: tuple[npc_lims.SessionInfo, ...] = npc_lims.get_session_info()
+
+# each `SessionInfo` instance has minimal metadata about its session:
 >>> tracked_sessions[0]                 # doctest: +SKIP
-SessionInfo(id='626791_2022-08-15', subject=626791, date='2022-08-15', idx=0, project='DRPilotSession', is_ephys=True, is_sync=True, allen_path=PosixUPath('//allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_626791_20220815'))
+npc_lims.SessionInfo(id='626791_2022-08-15', subject=626791, date='2022-08-15', idx=0, project='DRPilotSession', is_ephys=True, is_sync=True, allen_path=PosixUPath('//allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_626791_20220815'))
 >>> tracked_sessions[0].is_ephys        # doctest: +SKIP 
 False
+
+# currently, we're only tracking behavior and ephys sessions that use variants of https://github.com/samgale/DynamicRoutingTask/blob/main/TaskControl.py: 
 >>> all(s.date.year >= 2022 for s in tracked_sessions)
 True
-
 ```
+
+- "tracked sessions" are discovered via 3 routes:
+  - https://github.com/AllenInstitute/npc_lims/blob/main/tracked_sessions.yaml
+  - `\\allen\programs\mindscope\workgroups\dynamicrouting\DynamicRoutingTask\DynamicRoutingTraining.xlsx`
+  - `\\allen\programs\mindscope\workgroups\dynamicrouting\DynamicRoutingTask\DynamicRoutingTrainingNSB.xlsx`
