@@ -18,15 +18,17 @@ issues](https://img.shields.io/github/issues/alleninstitute/npc_lims?logo=github
   python -m venv .venv
   ```
   
-- activate the virtual environment and install the package:
+- activate the virtual environment:
   - Windows
   ```cmd
   .venv\scripts\activate
-  python -m pip install npc_lims
   ```
   - Unix
   ```bash
   source .venv/bin/activate.sh
+  ```
+- install the package:
+  ```bash
   python -m pip install npc_lims
   ```
   
