@@ -45,16 +45,17 @@ issues](https://img.shields.io/github/issues/alleninstitute/npc_lims?logo=github
         - `CODE_OCEAN_API_TOKEN`
         - `CODE_OCEAN_DOMAIN`
       - to find processed data in "data assets" via the Codeocean API
-      - created in CodeOcean:
+      - generated in CodeOcean:
         - right click on `Account` (bottom left, person icon)
         - click `User Secrets` - these are secrets than can be made available as environment variables in CodeOcean capsules
-        - go to `Access Tokens` and click `Generate new token`
+        - go to `Access Tokens` and click `Generate new token` - this is for programatically querying CodeOcean's databases
           - in `Token Name` enter `Codeocean API (read)` and check `read` on capsules and datasets
           - a token will be generated: click copy (storing it in a password manager, if you use one)
         - head back to `User Secrets` where we'll paste it into a new secret via `Add secret > API credentials`
           - in `description` enter `Codeocean API (read)`
           - in `API key` enter `CODE_OCEAN_API_KEY`
           - in `API secret` paste the copied secret from before (should start with `cop_`...)
+      `CODE_OCEAN_DOMAIN` is the codeocean https address, up to and including `.org`
   - environment variables can also be specified in a file named `.env` in the current working directory
     - example: https://www.dotenv.org/docs/security/env.html
     - be very careful that this file does not get pushed to public locations, e.g. github   
