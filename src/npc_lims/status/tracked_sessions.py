@@ -25,6 +25,9 @@ FileContents: TypeAlias = dict[
     Literal["ephys", "behavior_with_sync", "behavior"], dict[str, str]
 ]
 
+DR_DATA_REPO_ISILON = upath.UPath(
+    f"//allen/programs/mindscope/workgroups/dynamicrouting/DynamicRoutingTask/Data"
+)
 
 @dataclasses.dataclass(frozen=True, eq=True)
 class SessionInfo:
@@ -63,18 +66,26 @@ class SessionInfo:
         return self.id.date
 
     @property
+    def cloud_path(self) -> upath.UPath | None:
+        with contextlib.suppress(FileNotFoundError, ValueError):
+            return codeocean.get_raw_data_root(self.id)
+        if DR_DATA_REPO_ISILON in self.allen_path.parents:
+            return s3.DR_DATA_REPO / self.allen_path.relative_to(DR_DATA_REPO_ISILON)
+        return None
+        
+    @property
     def is_uploaded(self) -> bool:
-        """The session's raw data has been uploaded to S3 and can be found in
-        CodeOcean.
+        """All of the session's raw data has been uploaded to S3 and can be found in
+        CodeOcean. Not the same as `cloud_path` being non-None: this property
+        indicates a proper session upload via aind tools, with metadata etc.
 
         >>> any(session.is_uploaded for session in get_session_info())
         True
         """
-        try:
+        with contextlib.suppress(FileNotFoundError, ValueError):
             return bool(codeocean.get_raw_data_root(self.id))
-        except (FileNotFoundError, ValueError):
-            return False
-
+        return False
+    
     @property
     def is_sorted(self) -> bool:
         """The AIND sorting pipeline has yielded a Result asset for this
@@ -162,9 +173,7 @@ def _get_session_info_from_data_repo() -> Iterator[SessionInfo]:
                 project=npc_session.ProjectRecord("DynamicRouting"),
                 is_ephys=False,
                 is_sync=False,
-                allen_path=upath.UPath(
-                    f"//allen/programs/mindscope/workgroups/dynamicrouting/DynamicRoutingTask/Data/{subject}"
-                ),
+                allen_path=DR_DATA_REPO_ISILON / str(subject),
             )
 
 
