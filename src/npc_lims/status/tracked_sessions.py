@@ -26,8 +26,9 @@ FileContents: TypeAlias = dict[
 ]
 
 DR_DATA_REPO_ISILON = upath.UPath(
-    f"//allen/programs/mindscope/workgroups/dynamicrouting/DynamicRoutingTask/Data"
+    "//allen/programs/mindscope/workgroups/dynamicrouting/DynamicRoutingTask/Data"
 )
+
 
 @dataclasses.dataclass(frozen=True, eq=True)
 class SessionInfo:
@@ -72,7 +73,7 @@ class SessionInfo:
         if DR_DATA_REPO_ISILON in self.allen_path.parents:
             return s3.DR_DATA_REPO / self.allen_path.relative_to(DR_DATA_REPO_ISILON)
         return None
-        
+
     @property
     def is_uploaded(self) -> bool:
         """All of the session's raw data has been uploaded to S3 and can be found in
@@ -85,7 +86,7 @@ class SessionInfo:
         with contextlib.suppress(FileNotFoundError, ValueError):
             return bool(codeocean.get_raw_data_root(self.id))
         return False
-    
+
     @property
     def is_sorted(self) -> bool:
         """The AIND sorting pipeline has yielded a Result asset for this
