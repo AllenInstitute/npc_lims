@@ -166,8 +166,8 @@ ephys:
         notes: no behavior, DynamicRouting1_670248_20230802_120703.hdf5 not written correctly by task script
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-08-03_09-39-59_670248:
         notes: recording truncated ~5 mins before end
-behavior_with_4sync: # hab sessions with sync + video, or sync + opto, etc.
-  DRPilotSession:
+behavior_with_sync: # hab sessions with sync + video, or sync + opto, etc.
+  DynamicRouting:
 behavior:
-  DRPilotSession:
+  DynamicRouting:
   TempletonPilotSession:
