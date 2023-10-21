@@ -36,6 +36,7 @@ class SessionInfo:
 
     Currently using:
     https://raw.githubusercontent.com/AllenInstitute/npc_lims/main/tracked_sessions.yaml
+    and training spreadsheets.
     """
 
     id: npc_session.SessionRecord
