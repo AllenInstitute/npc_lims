@@ -30,7 +30,7 @@ DR_DATA_REPO_ISILON = upath.UPath(
 )
 
 
-@dataclasses.dataclass(frozen=True, eq=True)
+@dataclasses.dataclass(frozen=True)
 class SessionInfo:
     """Minimal session metadata obtained quickly from a database.
 
@@ -120,6 +120,11 @@ class SessionInfo:
 
     def __hash__(self) -> int:
         return hash(self.id)
+    
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, SessionInfo):
+            return NotImplemented
+        return self.id == other.id
 
 
 @typing.overload
