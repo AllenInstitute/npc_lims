@@ -8,7 +8,7 @@ authors = [
 ]
 dependencies = [
     "typing-extensions>=4.7.1",
-    "npc_session>=0.1.28",
+    "npc_session>=0.1.30",
     "redis>=4.1.4",
     "universal-pathlib>=0.1.1",
     "aind-codeocean-api>=0.2.4",
