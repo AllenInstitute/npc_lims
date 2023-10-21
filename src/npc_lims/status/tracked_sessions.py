@@ -164,19 +164,6 @@ def get_session_info(
     raise exceptions.NoSessionInfo(f"{record} not found in tracked sessions")
 
 
-def _get_session_info_from_data_repo() -> Iterator[SessionInfo]:
-    for subject, sessions in behavior_sessions.get_sessions_from_training_db(
-        nsb=False
-    ).items():
-        for session in sessions:
-            yield SessionInfo(
-                id=behavior_sessions.get_session_id_from_db_row(subject, session),
-                project=npc_session.ProjectRecord("DynamicRouting"),
-                is_ephys=False,
-                is_sync=False,
-                allen_path=DR_DATA_REPO_ISILON / str(subject),
-            )
-
 
 @typing.overload
 def get_session_issues() -> dict[npc_session.SessionRecord, list[str]]:
@@ -254,6 +241,22 @@ def get_session_kwargs(
             return {}
     return {session.id: session.session_kwargs for session in get_session_info()}
 
+
+def _get_session_info_from_data_repo() -> Iterator[SessionInfo]:
+    """
+    >>> session_info = next(_get_session_info_from_data_repo())
+    """
+    for subject, sessions in behavior_sessions.get_sessions_from_training_db(
+        nsb=False
+    ).items():
+        for session in sessions:
+            yield SessionInfo(
+                id=behavior_sessions.get_session_id_from_db_row(subject, session),
+                project=npc_session.ProjectRecord("DynamicRouting"),
+                is_ephys=False,
+                is_sync=False,
+                allen_path=DR_DATA_REPO_ISILON / str(subject),
+            )
 
 def _get_session_info_from_file() -> tuple[SessionInfo, ...]:
     """Load yaml and parse sessions.
