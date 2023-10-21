@@ -304,6 +304,7 @@ def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInf
                     allen_path: str = tuple(info.keys())[0]
                     session_config = tuple(info.values())[0]
                 else:
+                    assert isinstance(info, str)
                     allen_path = info
                     session_config = {}
                 record = npc_session.SessionRecord(allen_path)
