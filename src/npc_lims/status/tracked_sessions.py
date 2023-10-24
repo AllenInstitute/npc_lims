@@ -81,9 +81,11 @@ class SessionInfo:
         CodeOcean. Not the same as `cloud_path` being non-None: this property
         indicates a proper session upload via aind tools, with metadata etc.
 
-        >>> any(session.is_uploaded for session in get_session_info())
+        >>> next(session.is_uploaded for session in get_session_info() if session.is_uploaded)
         True
         """
+        if not self.is_ephys:
+            return False # currently only ephys sessions are uploaded to AIND-codeocean
         with contextlib.suppress(FileNotFoundError, ValueError):
             return bool(codeocean.get_raw_data_root(self.id))
         return False
@@ -96,6 +98,8 @@ class SessionInfo:
         >>> any(session.is_sorted for session in get_session_info())
         True
         """
+        if not self.is_ephys:
+            return False
         try:
             return any(
                 asset
@@ -110,9 +114,11 @@ class SessionInfo:
         """The subject associated with the sessions has CCF annotation data for
         probes available on S3.
 
-        >>> any(session.is_annotated for session in get_session_info())
+        >>> next(session.is_annotated for session in get_session_info() if session.is_annotated)
         True
         """
+        if not self.is_sorted:
+            return False
         try:
             return bool(s3.get_tissuecyte_annotation_files_from_s3(self.id))
         except (FileNotFoundError, ValueError):
