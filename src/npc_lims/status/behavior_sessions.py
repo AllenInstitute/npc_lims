@@ -66,7 +66,7 @@ def get_session_id_from_db_row(
         f"{subject} {row[next(k for k in row.keys() if 'start' in k and any(t in k for t in ('date', 'time')))]}"
     )
 
-
+@functools.cache
 def get_sessions_from_training_db(
 ) -> dict[int, tuple[dict[str, Any], ...]]:
     """
