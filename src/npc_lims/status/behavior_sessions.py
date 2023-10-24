@@ -66,12 +66,12 @@ def get_session_id_from_db_row(
         f"{subject} {row[next(k for k in row.keys() if 'start' in k and any(t in k for t in ('date', 'time')))]}"
     )
 
+
 @functools.cache
-def get_sessions_from_training_db(
-) -> dict[int, tuple[dict[str, Any], ...]]:
+def get_sessions_from_training_db() -> dict[int, tuple[dict[str, Any], ...]]:
     """
     Includes NSB sessions.
-    
+
     {subject: ({spreadsheet row}, ... )}
 
     >>> sessions = get_sessions_from_training_db()
@@ -92,7 +92,8 @@ def get_sessions_from_training_db(
         )
         for subject in subjects:
             sessions[subject] = tuple(
-                row | {'nsb': nsb} for row in db.execute(f"SELECT * FROM '{subject}'").fetchall()
+                row | {"nsb": nsb}
+                for row in db.execute(f"SELECT * FROM '{subject}'").fetchall()
             )
     return sessions
 
@@ -167,7 +168,7 @@ def get_sessions_from_data_repo(
 ):
     """
     Globs synced behavior data repo for sessions.
-    
+
     # get a dict of all subjects mapped to their sessions
     >>> all_subjects_sessions = get_sessions_from_data_repo()
     >>> len(all_subjects_sessions)                      # doctest: +SKIP

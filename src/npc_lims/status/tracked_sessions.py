@@ -76,13 +76,13 @@ class SessionInfo:
         if DR_DATA_REPO_ISILON in self.allen_path.parents:
             return s3.DR_DATA_REPO / self.allen_path.relative_to(DR_DATA_REPO_ISILON)
         return None
-    
+
     @functools.cached_property
     def behavior_day(self) -> int:
         if self.is_templeton:
             raise AttributeError("`behavior_day` is not defined for Templeton sessions")
-        return self.training_info["ID"] # row of training spreadsheet
-    
+        return self.training_info["ID"]  # row of training spreadsheet
+
     @functools.cached_property
     def is_uploaded(self) -> bool:
         """All of the session's raw data has been uploaded to S3 and can be found in
@@ -93,11 +93,11 @@ class SessionInfo:
         True
         """
         if not self.is_ephys:
-            return False # currently only ephys sessions are uploaded to AIND-codeocean
+            return False  # currently only ephys sessions are uploaded to AIND-codeocean
         with contextlib.suppress(FileNotFoundError, ValueError):
             return bool(codeocean.get_raw_data_root(self.id))
         return False
-    
+
     @functools.cached_property
     def is_sorted(self) -> bool:
         """The AIND sorting pipeline has yielded a Result asset for this
@@ -135,17 +135,20 @@ class SessionInfo:
     @functools.cached_property
     def training_info(self) -> dict[str, Any]:
         """Session metadata from Sam's DR training database.
-        - empty dict for Templeton sessions 
-        
+        - empty dict for Templeton sessions
+
         >>> next(get_session_info()).session_info                       # doctest: +SKIP
         {'ID': 1, 'start_time': '2023-03-07 12:56:27', 'rig_name': 'B2', 'task_version': 'stage 0 moving', 'hits': '0', 'dprime_same_modality': '', 'dprime_other_modality_go_stim': '', 'pass': '1', 'ignore': '0'}
         >>> assert next(session.training_info for session in get_session_info() if session.training_info)
         """
         return next(
             (
-                s 
-                for s in behavior_sessions.get_sessions_from_training_db().get(self.subject, {})
-                if (start := s.get('start_time')) and npc_session.DateRecord(start) == self.date
+                s
+                for s in behavior_sessions.get_sessions_from_training_db().get(
+                    self.subject, {}
+                )
+                if (start := s.get("start_time"))
+                and npc_session.DateRecord(start) == self.date
             ),
             {},
         )
@@ -154,13 +157,15 @@ class SessionInfo:
     def is_templeton(self) -> bool:
         """Uses project in `tracked_sessions.yaml` if available, then infers from whether the session is in Sam's DR training
         database."""
-        if 'templeton' in self.project.lower():
+        if "templeton" in self.project.lower():
             return True
-        return not bool(self.training_info) # training_info not available for Templeton sessions
+        return not bool(
+            self.training_info
+        )  # training_info not available for Templeton sessions
 
     def __hash__(self) -> int:
         return hash(self.id)
-    
+
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, SessionInfo):
             return NotImplemented
@@ -201,7 +206,11 @@ def get_session_info(
     )
     tracked_sessions.update(_get_session_info_from_data_repo())
     if session is None:
-        filtered_sessions = (s for s in tracked_sessions if all(getattr(s, k) == v for k, v in bool_filter_kwargs.items()))
+        filtered_sessions = (
+            s
+            for s in tracked_sessions
+            if all(getattr(s, k) == v for k, v in bool_filter_kwargs.items())
+        )
         return tuple(sorted(filtered_sessions, key=lambda s: s.id.date, reverse=True))
     with contextlib.suppress(StopIteration):
         return next(
@@ -210,7 +219,6 @@ def get_session_info(
             if s.id == (record := npc_session.SessionRecord(session))
         )
     raise exceptions.NoSessionInfo(f"{record} not found in tracked sessions")
-
 
 
 @typing.overload
@@ -299,10 +307,11 @@ def _get_session_info_from_data_repo() -> Iterator[SessionInfo]:
             yield SessionInfo(
                 id=behavior_sessions.get_session_id_from_db_row(subject, session),
                 project=npc_session.ProjectRecord("DynamicRouting"),
-                is_ephys=False, #! not enough info
-                is_sync=False, #! not enough info
+                is_ephys=False,  #! not enough info
+                is_sync=False,  #! not enough info
                 allen_path=DR_DATA_REPO_ISILON / str(subject),
             )
+
 
 def _get_session_info_from_file() -> tuple[SessionInfo, ...]:
     """Load yaml and parse sessions.

@@ -3,10 +3,9 @@
 
 [metadata]
 groups = ["default", "dev"]
-cross_platform = true
-static_urls = false
-lock_version = "4.3"
-content_hash = "sha256:aead860ed54b47d674ee3f0ec7c2a9dcb8cf9a48e28302f50695a87863f98b1c"
+strategy = ["cross_platform"]
+lock_version = "4.4"
+content_hash = "sha256:6d81b164adf36740761f75cb84d96abd9c6aee3898643d4e430fc1a41bb8f34c"
 
 [[package]]
 name = "aind-codeocean-api"
@@ -720,15 +719,15 @@ files = [
 
 [[package]]
 name = "npc-session"
-version = "0.1.28"
+version = "0.1.30"
 requires_python = ">=3.9"
 summary = "Basic tools for parsing subject, session, date and time associated with data from the Mindscope Neuropixels team, in the cloud."
 dependencies = [
     "typing-extensions>=4.7.1",
 ]
 files = [
-    {file = "npc_session-0.1.28-py3-none-any.whl", hash = "sha256:e32e386a3a0f0b86d052e63f0c2f370a74e51c75a3cdf44cb0fe95785d9f45ad"},
-    {file = "npc_session-0.1.28.tar.gz", hash = "sha256:446581ecf4b5b227202a194f93c564302cedb77b329e06a58aae1078b21e9ff9"},
+    {file = "npc_session-0.1.30-py3-none-any.whl", hash = "sha256:922dc69683e84b7c96bc378d675c1422bf7b2f01494925fe3333ff889ae21654"},
+    {file = "npc_session-0.1.30.tar.gz", hash = "sha256:64f8f9993138a338f7d0485b5a24fd0f96d240287e94f5c0fe411b822150df98"},
 ]
 
 [[package]]
