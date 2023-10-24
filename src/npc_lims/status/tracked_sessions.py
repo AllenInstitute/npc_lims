@@ -142,6 +142,15 @@ class SessionInfo:
             ),
             {},
         )
+
+    @functools.cached_property
+    def is_templeton(self) -> bool:
+        """Uses project in `tracked_sessions.yaml` if available, then infers from whether the session is in Sam's DR training
+        database."""
+        if 'templeton' in self.project:
+            return True
+        return not bool(self.training_info) # training_info not available for Templeton sessions
+
     def __hash__(self) -> int:
         return hash(self.id)
     
