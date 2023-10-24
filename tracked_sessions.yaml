@@ -119,6 +119,8 @@ ephys:
         notes: recording stopped on first SpontaneousRewards for ~5 mins
         # TODO add invalid times
         # TODO upload split recording
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686740_20231023:
+        day: 1
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-07-26_14-09-36_620263
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-07-27_13-57-17_620263
