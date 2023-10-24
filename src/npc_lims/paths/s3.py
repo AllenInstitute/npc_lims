@@ -273,7 +273,7 @@ def get_tissuecyte_annotation_files_from_s3(
     'Probe_A2_channels_626791_warped_processed.csv'
     """
     session = npc_session.SessionRecord(session)
-    day = tracked_sessions.get_session_info(session).day
+    day = tracked_sessions.get_session_info(session).experiment_day
     subject_electrode_network_path = TISSUECYTE_REPO / str(session.subject.id)
 
     if not subject_electrode_network_path.exists():

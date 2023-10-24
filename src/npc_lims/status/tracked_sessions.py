@@ -45,8 +45,9 @@ class SessionInfo:
     is_sync: bool
     """The session has sync data, implying more than a behavior-box."""
     allen_path: upath.UPath
-    day: int | None = None
-    """Recording day, starting from 1 for each subject."""
+    experiment_day: int | None = None
+    """Experiment day (ephys recording, or opto experiment), starting from 1 for
+    each subject. `None` for training behavior-only sessions."""
     session_kwargs: dict[str, str] = dataclasses.field(default_factory=dict)
     notes: str = dataclasses.field(default="")
     issues: list[str] = dataclasses.field(default_factory=list)
@@ -326,7 +327,7 @@ def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInf
                 sessions.append(
                     SessionInfo(
                         id=record,
-                        day=int(
+                        experiment_day=int(
                             session_config.get("day", _get_day_from_sessions(record))
                         ),
                         project=npc_session.ProjectRecord(project_name),
