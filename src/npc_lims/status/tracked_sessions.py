@@ -154,7 +154,7 @@ class SessionInfo:
     def is_templeton(self) -> bool:
         """Uses project in `tracked_sessions.yaml` if available, then infers from whether the session is in Sam's DR training
         database."""
-        if 'templeton' in self.project:
+        if 'templeton' in self.project.lower():
             return True
         return not bool(self.training_info) # training_info not available for Templeton sessions
 
