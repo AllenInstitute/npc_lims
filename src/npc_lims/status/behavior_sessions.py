@@ -68,9 +68,10 @@ def get_session_id_from_db_row(
 
 
 def get_sessions_from_training_db(
-    nsb: bool = False,
 ) -> dict[int, tuple[dict[str, Any], ...]]:
     """
+    Includes NSB sessions.
+    
     {subject: ({spreadsheet row}, ... )}
 
     >>> sessions = get_sessions_from_training_db()
@@ -78,24 +79,21 @@ def get_sessions_from_training_db(
     >>> sessions[659250][0]                         # doctest: +SKIP
     {'ID': 1, 'start_time': '2023-03-07 12:56:27', 'rig_name': 'B2', 'task_version': 'stage 0 moving', 'hits': '0', 'dprime_same_modality': '', 'dprime_other_modality_go_stim': '', 'pass': '1', 'ignore': '0'}
     """
-    if nsb:
-        raise NotImplementedError(
-            "Cannot currently get training info about individual NSB sessions"
-        )
-    db = npc_lims.metadata.get_training_db(nsb)
-    ## using tables other than `all_mice`
-    subjects = tuple(
-        npc_session.SubjectRecord(table["name"])
-        for table in db.execute(
-            "SELECT name FROM sqlite_master WHERE type='table'"
-        ).fetchall()
-        if table["name"] not in ("sqlite_sequence", "all_mice")
-    )
     sessions: dict[int, tuple[dict[str, Any], ...]] = {}
-    for subject in subjects:
-        sessions[subject] = tuple(
-            row for row in db.execute(f"SELECT * FROM '{subject}'").fetchall()
+    for nsb in (False, True):
+        db = npc_lims.metadata.get_training_db(nsb)
+        ## using tables other than `all_mice`
+        subjects = tuple(
+            npc_session.SubjectRecord(table["name"])
+            for table in db.execute(
+                "SELECT name FROM sqlite_master WHERE type='table'"
+            ).fetchall()
+            if table["name"] not in ("sqlite_sequence", "all_mice")
         )
+        for subject in subjects:
+            sessions[subject] = tuple(
+                row | {'nsb': nsb} for row in db.execute(f"SELECT * FROM '{subject}'").fetchall()
+            )
     return sessions
 
 
@@ -168,7 +166,8 @@ def get_sessions_from_data_repo(
     | dict[npc_session.SubjectRecord, tuple[npc_session.SessionRecord, ...]]
 ):
     """
-
+    Globs synced behavior data repo for sessions.
+    
     # get a dict of all subjects mapped to their sessions
     >>> all_subjects_sessions = get_sessions_from_data_repo()
     >>> len(all_subjects_sessions)                      # doctest: +SKIP
