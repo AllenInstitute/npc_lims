@@ -95,7 +95,7 @@ class SessionInfo:
         """The AIND sorting pipeline has yielded a Result asset for this
         session.
 
-        >>> any(session.is_sorted for session in get_session_info())
+        >>> next(session.is_sorted for session in get_session_info() if session.is_sorted)
         True
         """
         if not self.is_ephys:
