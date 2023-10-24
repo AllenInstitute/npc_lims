@@ -55,7 +55,7 @@ class SessionInfo:
 
     @property
     def idx(self) -> int:
-        """Recording index, starting from 0 for each subject on each day/
+        """Session index, starting from 0 for each subject on each day.
         Currently one session per day, so index isn't specified - implicitly equal to 0.
         """
         return self.id.idx
@@ -297,8 +297,8 @@ def _get_session_info_from_data_repo() -> Iterator[SessionInfo]:
             yield SessionInfo(
                 id=behavior_sessions.get_session_id_from_db_row(subject, session),
                 project=npc_session.ProjectRecord("DynamicRouting"),
-                is_ephys=False,
-                is_sync=False,
+                is_ephys=False, #! not enough info
+                is_sync=False, #! not enough info
                 allen_path=DR_DATA_REPO_ISILON / str(subject),
             )
 
