@@ -258,9 +258,7 @@ def _get_session_info_from_data_repo() -> Iterator[SessionInfo]:
     """
     >>> session_info = next(_get_session_info_from_data_repo())
     """
-    for subject, sessions in behavior_sessions.get_sessions_from_training_db(
-        nsb=False
-    ).items():
+    for subject, sessions in behavior_sessions.get_sessions_from_training_db().items():
         for session in sessions:
             yield SessionInfo(
                 id=behavior_sessions.get_session_id_from_db_row(subject, session),
