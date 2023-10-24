@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import contextlib
 import dataclasses
+import functools
 import json
 import typing
 from collections.abc import Iterator, Mapping, MutableSequence
@@ -68,7 +69,7 @@ class SessionInfo:
         """YY-MM-DD"""
         return self.id.date
 
-    @property
+    @functools.cached_property
     def cloud_path(self) -> upath.UPath | None:
         with contextlib.suppress(FileNotFoundError, ValueError):
             return codeocean.get_raw_data_root(self.id)
@@ -82,6 +83,7 @@ class SessionInfo:
             raise AttributeError("`behavior_day` is not defined for Templeton sessions")
         return self.training_info["ID"] # row of training spreadsheet
     
+    @functools.cached_property
     def is_uploaded(self) -> bool:
         """All of the session's raw data has been uploaded to S3 and can be found in
         CodeOcean. Not the same as `cloud_path` being non-None: this property
@@ -95,8 +97,8 @@ class SessionInfo:
         with contextlib.suppress(FileNotFoundError, ValueError):
             return bool(codeocean.get_raw_data_root(self.id))
         return False
-
-    @property
+    
+    @functools.cached_property
     def is_sorted(self) -> bool:
         """The AIND sorting pipeline has yielded a Result asset for this
         session.
@@ -115,7 +117,7 @@ class SessionInfo:
         except (FileNotFoundError, ValueError):
             return False
 
-    @property
+    @functools.cached_property
     def is_annotated(self) -> bool:
         """The subject associated with the sessions has CCF annotation data for
         probes available on S3.
