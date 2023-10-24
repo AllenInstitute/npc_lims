@@ -125,6 +125,23 @@ class SessionInfo:
         except (FileNotFoundError, ValueError):
             return False
 
+    @functools.cached_property
+    def training_info(self) -> dict[str, Any]:
+        """Session metadata from Sam's DR training database.
+        - empty dict for Templeton sessions 
+        
+        >>> next(get_session_info()).session_info                       # doctest: +SKIP
+        {'ID': 1, 'start_time': '2023-03-07 12:56:27', 'rig_name': 'B2', 'task_version': 'stage 0 moving', 'hits': '0', 'dprime_same_modality': '', 'dprime_other_modality_go_stim': '', 'pass': '1', 'ignore': '0'}
+        >>> assert next(session.training_info for session in get_session_info() if session.training_info)
+        """
+        return next(
+            (
+                s 
+                for s in behavior_sessions.get_sessions_from_training_db().get(self.subject, {})
+                if (start := s.get('start_time')) and npc_session.DateRecord(start) == self.date
+            ),
+            {},
+        )
     def __hash__(self) -> int:
         return hash(self.id)
     
