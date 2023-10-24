@@ -75,8 +75,13 @@ class SessionInfo:
         if DR_DATA_REPO_ISILON in self.allen_path.parents:
             return s3.DR_DATA_REPO / self.allen_path.relative_to(DR_DATA_REPO_ISILON)
         return None
-
-    @property
+    
+    @functools.cached_property
+    def behavior_day(self) -> int:
+        if self.is_templeton:
+            raise AttributeError("`behavior_day` is not defined for Templeton sessions")
+        return self.training_info["ID"] # row of training spreadsheet
+    
     def is_uploaded(self) -> bool:
         """All of the session's raw data has been uploaded to S3 and can be found in
         CodeOcean. Not the same as `cloud_path` being non-None: this property
