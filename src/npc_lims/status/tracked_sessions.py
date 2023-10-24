@@ -179,6 +179,7 @@ def get_session_info(session: str | npc_session.SessionRecord) -> SessionInfo:
 
 def get_session_info(
     session: str | npc_session.SessionRecord | None = None,
+    **bool_filter_kwargs: bool,
 ) -> tuple[SessionInfo, ...] | SessionInfo:
     """Quickly get a sequence of all tracked sessions.
 
@@ -200,7 +201,8 @@ def get_session_info(
     )
     tracked_sessions.update(_get_session_info_from_data_repo())
     if session is None:
-        return tuple(sorted(tracked_sessions, key=lambda s: s.id.date, reverse=True))
+        filtered_sessions = (s for s in tracked_sessions if all(getattr(s, k) == v for k, v in bool_filter_kwargs.items()))
+        return tuple(sorted(filtered_sessions, key=lambda s: s.id.date, reverse=True))
     with contextlib.suppress(StopIteration):
         return next(
             s
