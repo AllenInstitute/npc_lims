@@ -166,12 +166,12 @@ class SessionInfo:
     @property
     def rig(self) -> str:
         """From DR training spreadsheet (`NP2`, `B2`, 'BEH.E`).
-        
-        - does not necessarily match `AIBS_RIG_ID` on computer 
+
+        - does not necessarily match `AIBS_RIG_ID` on computer
         - `unknown` if not available (for Templeton sessions)
         """
         return self.training_info.get("rig_name", "unknown")
-    
+
     @property
     def task_version(self) -> str:
         """From DR training spreadsheet (`stage 5 ori AMN moving timeouts
@@ -179,7 +179,7 @@ class SessionInfo:
         - `unknown` if not available (for Templeton sessions)
         """
         return self.training_info.get("task_version", "unknown")
-    
+
     def __hash__(self) -> int:
         return hash(self.id)
 
