@@ -165,22 +165,22 @@ ephys:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-18_10-05-51_670181
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-19_10-00-22_670181:
       # ^ no behavior task hdf5
-      session_kwargs:
-        is_task: false
+        session_kwargs:
+            is_task: false
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-20_12-21-41_670181:
         notes: task only, mapping recording is in `stopped_early` subfolder
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-25_09-47-29_670180:
     # ^ recording stops mid-task: main recording incls mapping and some of task.
     # subfolder has rest of task. could be stitched together, add 'unobserved interval'
     # - hasn't been uploaded yet (need to rearrange folders & spike-sort with CONCAT=True)
-      issues:
-        - https://github.com/AllenInstitute/npc_sessions/issues/52
+        issues:
+            - https://github.com/AllenInstitute/npc_sessions/issues/52
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-26_09-55-57_670180
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-27_09-36-37_670180
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-08-01_09-28-08_670248
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-08-02_09-58-44_670248:
         session_kwargs:
-          is_task: false
+            is_task: false
         notes: no behavior, DynamicRouting1_670248_20230802_120703.hdf5 not written correctly by task script
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-08-03_09-39-59_670248:
         notes: recording truncated ~5 mins before end
