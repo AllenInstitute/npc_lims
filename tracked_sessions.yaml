@@ -163,13 +163,13 @@ ephys:
         issues:
           - https://github.com/AllenInstitute/npc_sessions/issues/25
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-18_10-05-51_670181
-    //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-19_10-00-22_670181
+    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-19_10-00-22_670181:
       # ^ no behavior task hdf5
       session_kwargs:
         is_task: false
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-20_12-21-41_670181:
         notes: task only, mapping recording is in `stopped_early` subfolder
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-25_09-47-29_670180
+    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-25_09-47-29_670180:
     # ^ recording stops mid-task: main recording incls mapping and some of task.
     # subfolder has rest of task. could be stitched together, add 'unobserved interval'
     # - hasn't been uploaded yet (need to rearrange folders & spike-sort with CONCAT=True)
