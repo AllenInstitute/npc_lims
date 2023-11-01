@@ -32,8 +32,8 @@ ephys:
           - https://github.com/AllenInstitute/npc_sessions/issues/52
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644866_20230208:
         day: 2
-        issues:
-          - https://github.com/AllenInstitute/npc_sessions/issues/63
+        session_kwargs:
+            probe_letters_to_skip: [E] # no dye track, see https://github.com/AllenInstitute/npc_sessions/issues/63
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644866_20230209:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644866_20230210:
