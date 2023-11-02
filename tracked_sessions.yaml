@@ -24,6 +24,8 @@ ephys:
         day: 4
         session_kwargs:
             probe_letters_to_skip: [F] # spikeinterface skipped
+            sorted_data_asset_id: de4eb1b8-fbb6-4b99-8afc-5b5c523e3938 
+            # was reuploaded, but asset still exists with 00-00-00 time
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644866_20230207:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644866_20230208:
