@@ -78,12 +78,12 @@ def get_sorted_data_paths_from_s3(
     >>> sorted_data_s3_paths = get_sorted_data_paths_from_s3('668759_20230711')
     >>> assert len(sorted_data_s3_paths) > 0
     """
-    if session is None and sorted_data_asset_id is None:
-        raise ValueError("Must provide either session or sorted_data_asset_id")
     if sorted_data_asset_id is not None:
         sorted_data_asset = codeocean.get_data_asset(sorted_data_asset_id)
-    else:
+    elif session is not None:
         sorted_data_asset = codeocean.get_session_sorted_data_asset(session)
+    else:
+        raise ValueError("Must provide either session or sorted_data_asset_id")
     return tuple(get_data_asset_s3_path(sorted_data_asset).iterdir())
 
 
