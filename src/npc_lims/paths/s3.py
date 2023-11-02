@@ -70,14 +70,20 @@ def get_raw_data_paths_from_s3(
 
 @functools.cache
 def get_sorted_data_paths_from_s3(
-    session: str | npc_session.SessionRecord,
+    session: str | npc_session.SessionRecord | None = None,
+    sorted_data_asset_id: str | None = None,
 ) -> tuple[upath.UPath, ...]:
     """
     Gets the top level files/folders for the sorted data
     >>> sorted_data_s3_paths = get_sorted_data_paths_from_s3('668759_20230711')
     >>> assert len(sorted_data_s3_paths) > 0
     """
-    sorted_data_asset = codeocean.get_session_sorted_data_asset(session)
+    if session is None and sorted_data_asset_id is None:
+        raise ValueError("Must provide either session or sorted_data_asset_id")
+    if sorted_data_asset_id is not None:
+        sorted_data_asset = codeocean.get_data_asset(sorted_data_asset_id)
+    else:
+        sorted_data_asset = codeocean.get_session_sorted_data_asset(session)
     return tuple(get_data_asset_s3_path(sorted_data_asset).iterdir())
 
 
