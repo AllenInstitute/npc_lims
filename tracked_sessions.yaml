@@ -141,9 +141,12 @@ ephys:
           is_video: false
         issues:
           - https://github.com/AllenInstitute/npc_sessions/issues/27
+          - https://github.com/AllenInstitute/npc_lims/issues/5
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-09-20_14-10-18_628801:
         session_kwargs:
           is_video: false
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
     # ^ two sessions for this mouse - split recording?
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-09-26_12-48-09_636397
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-09-27_11-37-08_636397
@@ -186,7 +189,9 @@ ephys:
             is_task: false
         notes: no behavior, DynamicRouting1_670248_20230802_120703.hdf5 not written correctly by task script
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-08-03_09-39-59_670248:
-        notes: recording truncated ~5 mins before end
+        issues:
+            - https://github.com/AllenInstitute/npc_sessions/issues/66
+        notes: recording truncated ~5 mins before end - needs obs intervals
 behavior_with_sync: # hab sessions with sync + video, or sync + opto, etc.
   DynamicRouting:
 behavior:
