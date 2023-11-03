@@ -93,7 +93,7 @@ def get_sessions_from_training_db() -> dict[int, tuple[dict[str, Any], ...]]:
         for subject in subjects:
             sessions[subject] = tuple(
                 row | {"nsb": nsb}
-                for row in db.execute(f"SELECT * FROM '{subject}'").fetchall()
+                for row in db.execute(f"SELECT * FROM '{subject}' WHERE ignore != 1").fetchall()
             )
     return sessions
 
