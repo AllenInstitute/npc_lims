@@ -131,6 +131,10 @@ ephys:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686740_20231024:
         day: 2
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686740_20231025:
+        day: 3
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686740_20231026:
+        day: 4
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-07-26_14-09-36_620263
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-07-27_13-57-17_620263
