@@ -200,7 +200,7 @@ def get_session_info(session: str | npc_session.SessionRecord) -> SessionInfo:
 
 
 def get_session_info(
-    session: str | npc_session.SessionRecord | None = None,
+    session: str | npc_session.SessionRecord | SessionInfo | None = None,
     **bool_filter_kwargs: bool,
 ) -> tuple[SessionInfo, ...] | SessionInfo:
     """Quickly get a sequence of all tracked sessions.
@@ -218,6 +218,8 @@ def get_session_info(
     >>> info = get_session_info("DRpilot_667252_20230927")
     >>> assert isinstance(info, SessionInfo)
     """
+    if isinstance(session, SessionInfo):
+        session = session.id
     tracked_sessions = set(
         _get_session_info_from_file(),
     )
