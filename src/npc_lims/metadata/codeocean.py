@@ -405,7 +405,17 @@ def update_permissions_for_data_asset(data_asset: DataAssetAPI) -> None:
     )
     response.raise_for_status()
 
-
+def run_eye_tracking_capsule(session_id: str) -> None:
+    get_codeocean_client().run_capsule(
+        '4cf0be83-2245-4bb1-a55c-a78201b14bfe',
+        data_assets=[
+            {"id": data_asset["id"], "mount": data_asset["name"]}
+            for data_asset in [
+                get_session_raw_data_asset(session_id)
+            ]
+        ]
+    ).raise_for_status()
+    
 def run_capsules_for_units_spikes_kilosort_codeocean(session_id: str) -> None:
     raw_data_asset = get_session_raw_data_asset(session_id)
     sorted_data_asset = get_session_sorted_data_asset(session_id)
