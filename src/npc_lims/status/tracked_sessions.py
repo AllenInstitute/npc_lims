@@ -159,9 +159,8 @@ class SessionInfo:
         database."""
         if "templeton" in self.project.lower():
             return True
-        return not bool(
-            self.training_info
-        )  # training_info not available for Templeton sessions
+        # training_info not available for Templeton sessions:
+        return self.subject in behavior_sessions.get_sessions_from_training_db()
 
     @property
     def rig(self) -> str:
