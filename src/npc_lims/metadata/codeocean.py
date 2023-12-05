@@ -241,6 +241,7 @@ def get_session_raw_data_asset(
 
     return get_single_data_asset(session, raw_assets, "raw")
 
+
 def get_surface_channel_root(session: str | npc_session.SessionRecord) -> upath.UPath:
     """Reconstruct path to surface channel data in bucket (e.g. on s3) using data-asset
     info from Code Ocean.
@@ -256,6 +257,7 @@ def get_surface_channel_root(session: str | npc_session.SessionRecord) -> upath.
     raw_asset = get_single_data_asset(session.with_idx(1), raw_assets, "raw")
 
     return get_path_from_data_asset(raw_asset)
+
 
 @functools.cache
 def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath:
@@ -427,17 +429,17 @@ def update_permissions_for_data_asset(data_asset: DataAssetAPI) -> None:
     )
     response.raise_for_status()
 
+
 def run_eye_tracking_capsule(session_id: str) -> None:
     get_codeocean_client().run_capsule(
-        '4cf0be83-2245-4bb1-a55c-a78201b14bfe',
+        "4cf0be83-2245-4bb1-a55c-a78201b14bfe",
         data_assets=[
             {"id": data_asset["id"], "mount": data_asset["name"]}
-            for data_asset in [
-                get_session_raw_data_asset(session_id)
-            ]
-        ]
+            for data_asset in [get_session_raw_data_asset(session_id)]
+        ],
     ).raise_for_status()
-    
+
+
 def run_capsules_for_units_spikes_kilosort_codeocean(session_id: str) -> None:
     raw_data_asset = get_session_raw_data_asset(session_id)
     sorted_data_asset = get_session_sorted_data_asset(session_id)

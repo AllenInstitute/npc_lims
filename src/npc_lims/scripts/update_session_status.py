@@ -17,7 +17,7 @@ def main() -> None:
     # sync sqlite dbs with xlsx sheets on s3
     npc_lims.update_training_dbs()
     print("Successfully updated training DBs on s3.")
-    
+
     if not API_KEY:
         print("No API key found. Please set the `DBHUB_API_KEY` environment variable.")
         return

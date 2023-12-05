@@ -3,7 +3,6 @@ from __future__ import annotations
 import dataclasses
 import functools
 import operator
-import re
 from collections.abc import Iterator
 
 import npc_session

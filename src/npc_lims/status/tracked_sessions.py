@@ -102,7 +102,7 @@ class SessionInfo:
     def is_surface_channels(self) -> bool:
         """The session has ephys data collected separately to record surface
         channel.
-        
+
         >>> get_session_info("DRpilot_660023_20230808").is_surface_channels
         True
         """
@@ -113,7 +113,7 @@ class SessionInfo:
         except (FileNotFoundError, ValueError):
             return False
         return True
-        
+
     @functools.cached_property
     def is_sorted(self) -> bool:
         """The AIND sorting pipeline has yielded a Result asset for this
