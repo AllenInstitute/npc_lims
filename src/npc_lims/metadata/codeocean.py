@@ -241,6 +241,21 @@ def get_session_raw_data_asset(
 
     return get_single_data_asset(session, raw_assets, "raw")
 
+def get_surface_channel_root(session: str | npc_session.SessionRecord) -> upath.UPath:
+    """Reconstruct path to surface channel data in bucket (e.g. on s3) using data-asset
+    info from Code Ocean.
+
+    >>> get_surface_channel_root('660023_20230808')
+    S3Path('s3://aind-ephys-data/ecephys_660023_2023-08-08_15-11-14')
+    >>> assert get_surface_channel_root('660023_20230808') != get_raw_data_root('660023_20230808')
+    """
+    session = npc_session.SessionRecord(session)
+    raw_assets = tuple(
+        asset for asset in get_session_data_assets(session) if is_raw_data_asset(asset)
+    )
+    raw_asset = get_single_data_asset(session.with_idx(1), raw_assets, "raw")
+
+    return get_path_from_data_asset(raw_asset)
 
 @functools.cache
 def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath:
