@@ -176,7 +176,14 @@ def get_sessions_with_data_assets(
     >>> assert len(sessions) > 0
     """
     assets = get_subject_data_assets(subject)
-    return tuple({npc_session.SessionRecord(asset["name"]) for asset in assets})
+    sessions = set()
+    for asset in assets:
+        try:
+            session = npc_session.SessionRecord(asset["name"])
+        except ValueError:
+            continue
+        sessions.add(session)
+    return tuple(sessions)
 
 
 def get_data_asset(asset: str | uuid.UUID | DataAssetAPI) -> DataAssetAPI:
