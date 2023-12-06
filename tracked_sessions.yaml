@@ -58,11 +58,15 @@ ephys:
         day: 1
         issues:
           - https://github.com/AllenInstitute/npc_sessions/issues/26
+        session_kwargs:
+            probe_letters_with_surface_channel_recording: 'D'
     # ^ first DR ephys in a while - is this still 'DRpilot'? 
     # ^ first session with 'surface_channels' after main recording, middle probe bank
     # 103 extra vsyncs for DynamicRouting1 (c.f. num frameIntervals + 1)
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_660023_20230809:
         day: 2
+        session_kwargs:
+            probe_letters_with_surface_channel_recording: 'D'
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230814:
         day: 1
         issues:
@@ -79,8 +83,12 @@ ephys:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_662892_20230823:
         day: 3
+        session_kwargs:
+            probe_letters_with_surface_channel_recording: 'ABDE'
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_662892_20230824:
         day: 4
+        session_kwargs:
+            probe_letters_with_surface_channel_recording: 'A'
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230828:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230829:
