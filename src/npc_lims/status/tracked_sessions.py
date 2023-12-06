@@ -78,10 +78,10 @@ class SessionInfo:
         return None
 
     @functools.cached_property
-    def behavior_day(self) -> int:
+    def behavior_day(self) -> int | None:
         if self.is_templeton:
             raise AttributeError("`behavior_day` is not defined for Templeton sessions")
-        return self.training_info["ID"]  # row of training spreadsheet
+        return self.training_info.get("ID")  # row of training spreadsheet
 
     @functools.cached_property
     def is_uploaded(self) -> bool:
