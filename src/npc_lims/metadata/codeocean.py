@@ -38,6 +38,7 @@ DataAssetAPI: TypeAlias = dict[
 class SessionIndexError(IndexError):
     pass
 
+
 @functools.cache
 def get_codeocean_client() -> aind_codeocean_api.CodeOceanClient:
     token = os.getenv(
@@ -116,7 +117,7 @@ def get_single_data_asset(
         )
 
     session = npc_session.SessionRecord(session)
-    
+
     if len(data_assets) == 1 and session.idx == 0:
         return data_assets[0]
 
