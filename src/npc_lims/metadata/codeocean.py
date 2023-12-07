@@ -253,6 +253,10 @@ def get_surface_channel_root(session: str | npc_session.SessionRecord) -> upath.
     >>> get_surface_channel_root('660023_20230808')
     S3Path('s3://aind-ephys-data/ecephys_660023_2023-08-08_15-11-14')
     >>> assert get_surface_channel_root('660023_20230808') != get_raw_data_root('660023_20230808')
+    >>> get_surface_channel_root('649943_20230216')
+    Traceback (most recent call last):
+    ...
+    FileNotFoundError: 649943_20230216 has no surface channel data assets
     """
     session = npc_session.SessionRecord(session)
     raw_assets = tuple(
