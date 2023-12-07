@@ -35,6 +35,9 @@ DataAssetAPI: TypeAlias = dict[
 """Result from CodeOcean API when querying data assets."""
 
 
+class SessionIndexError(IndexError):
+    pass
+
 @functools.cache
 def get_codeocean_client() -> aind_codeocean_api.CodeOceanClient:
     token = os.getenv(
@@ -134,8 +137,8 @@ def get_single_data_asset(
         for session_time in session_times
     }
     if 0 < len(session_times) < session.idx + 1:  # 0-indexed
-        raise ValueError(
-            f"Number of assets is less than expected for the session idx specified:\n{data_assets = }\n{session = }"
+        raise SessionIndexError(
+            f"Number of assets is less than expected: cannot extract asset for session idx = {session.idx} from {asset_names = }"
         )
     data_assets = sessions_times_to_assets[session_times[session.idx]]
     if len(data_assets) > 1:
@@ -255,8 +258,12 @@ def get_surface_channel_root(session: str | npc_session.SessionRecord) -> upath.
     raw_assets = tuple(
         asset for asset in get_session_data_assets(session) if is_raw_data_asset(asset)
     )
-    raw_asset = get_single_data_asset(session.with_idx(1), raw_assets, "raw")
-
+    try:
+        raw_asset = get_single_data_asset(session.with_idx(1), raw_assets, "raw")
+    except SessionIndexError:
+        raise FileNotFoundError(
+            f"{session} has no surface channel data assets"
+        ) from None
     return get_path_from_data_asset(raw_asset)
 
 
