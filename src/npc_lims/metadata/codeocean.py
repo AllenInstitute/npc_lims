@@ -112,10 +112,11 @@ def get_single_data_asset(
             f"No {data_asset_type} data assets found for session {session}"
         )
 
-    if len(data_assets) == 1:
+    session = npc_session.SessionRecord(session)
+    
+    if len(data_assets) == 1 and session.idx == 0:
         return data_assets[0]
 
-    session = npc_session.SessionRecord(session)
     asset_names = tuple(asset["name"] for asset in data_assets)
     session_times = sorted(
         {
