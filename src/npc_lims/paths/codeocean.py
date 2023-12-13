@@ -21,7 +21,8 @@ def get_raw_data_paths_from_s3(
 ) -> tuple[upath.UPath, ...]:
     """All top-level files and folders from the `ephys` & `behavior`
     subdirectories in a session's raw data folder on s3.
-
+    
+    Examples:
         >>> files = get_raw_data_paths_from_s3 ('668759_20230711')
         >>> assert len(files) > 0
     """
@@ -51,11 +52,12 @@ def get_hdf5_stim_files_from_s3(
 ) -> tuple[StimFile, ...]:
     """All the stim files for a session, from the synced
     `DynamicRoutingTask/Data` folder on s3.
-
+    
+    Examples:
         >>> files = get_hdf5_stim_files_from_s3('668759_20230711')
         >>> assert len(files) > 0
         >>> files[0].name, files[0].time
-    ('DynamicRouting1', '13:25:00')
+        ('DynamicRouting1', '13:25:00')
     """
     session = npc_session.SessionRecord(session)
     root = DR_DATA_REPO / str(session.subject)

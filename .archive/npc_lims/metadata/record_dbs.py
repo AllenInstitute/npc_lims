@@ -223,13 +223,14 @@ class SqliteDBHub(SqliteRecordDB):
 
 class TestDBHub(SqliteDBHub):
     """Test database on dbhub.io.
-
+    
+    Examples:
         >>> db = TestDBHub()
         >>> db.execute("DROP TABLE IF EXISTS test;")
         >>> db.create()
         >>> db.insert("test", {'id': 1, 'name': 'one'}, {'id': 2, 'name': 'two'})
         >>> db.query("SELECT * FROM test;")
-    ({'id': 1, 'name': 'one'}, {'id': 2, 'name': 'two'})
+        ({'id': 1, 'name': 'one'}, {'id': 2, 'name': 'two'})
         >>> _ = db.execute("DROP TABLE test;")
     """
 
@@ -241,13 +242,14 @@ class TestDBHub(SqliteDBHub):
 
 class TestLocalDB(SqliteLocalDB):
     """Test database on local file.
-
+    
+    Examples:
         >>> db = TestLocalDB()
         >>> db.execute("DROP TABLE IF EXISTS test;")
         >>> db.create()
         >>> db.insert("test", {'id': 1, 'name': 'one'}, {'id': 2, 'name': 'two'})
         >>> db.query("SELECT * FROM test;")
-    ({'id': 1, 'name': 'one'}, {'id': 2, 'name': 'two'})
+        ({'id': 1, 'name': 'one'}, {'id': 2, 'name': 'two'})
         >>> _ = db.execute("DROP TABLE test;")
         >>> db.close()
         >>> db.path.unlink()

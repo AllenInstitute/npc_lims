@@ -29,23 +29,24 @@ class State(collections.abc.MutableMapping):
     - dict interface provides `keys`, `get`, `setdefault`, `pop`, etc.
     - accepted value types are str, int, float, bool, None
 
+    Examples:
         >>> test_id = 0
         >>> state = State(test_id)
         >>> state['test'] = 1.0
         >>> state['test']
-    1.0
+        1.0
         >>> state['test'] = 'test'
         >>> state['test']
-    'test'
+        'test'
         >>> all('test' in _ for _ in (state, state.keys(), state.values()))
-    True
+        True
         >>> state.setdefault('test', True)
-    'test'
+        'test'
         >>> state.pop('test')
-    'test'
+        'test'
         >>> del state['test']
         >>> state.get('test') is None
-    True
+        True
     """
 
     db: ClassVar[redis.Redis]

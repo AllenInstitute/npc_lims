@@ -47,7 +47,8 @@ def get_raw_data_paths_from_s3(
 ) -> tuple[upath.UPath, ...]:
     """All top-level files and folders from the `ephys` & `behavior`
     subdirectories in a session's raw data folder on s3.
-
+    
+    Examples:
         >>> files = get_raw_data_paths_from_s3 ('668759_20230711')
         >>> assert len(files) > 0
     """
@@ -74,7 +75,9 @@ def get_sorted_data_paths_from_s3(
     sorted_data_asset_id: str | None = None,
 ) -> tuple[upath.UPath, ...]:
     """
-    Gets the top level files/folders for the sorted data
+    Gets the top level files/folders for the sorted data    
+    
+    Examples:
         >>> sorted_data_s3_paths = get_sorted_data_paths_from_s3('668759_20230711')
         >>> assert len(sorted_data_s3_paths) > 0
     """
@@ -91,9 +94,10 @@ def get_sorted_data_paths_from_s3(
 def get_settings_xml_path_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> upath.UPath:
-    """
-    >>> settings_xml_path = get_settings_xml_path_from_s3('670180-2023-07-26')
-    >>> assert settings_xml_path.exists()
+    """    
+    Examples:
+        >>> settings_xml_path = get_settings_xml_path_from_s3('670180-2023-07-26')
+        >>> assert settings_xml_path.exists()
     """
     raw_data_paths_s3 = get_raw_data_paths_from_s3(session)
 
@@ -107,9 +111,10 @@ def get_settings_xml_path_from_s3(
 
 @functools.cache
 def get_h5_sync_from_s3(session: str | npc_session.SessionRecord) -> upath.UPath:
-    """
+    """    
+    Examples:
         >>> get_h5_sync_from_s3('662892_20230821')
-    S3Path('s3://aind-ephys-data/ecephys_662892_2023-08-21_12-43-45/behavior/20230821T124345.h5')
+        S3Path('s3://aind-ephys-data/ecephys_662892_2023-08-21_12-43-45/behavior/20230821T124345.h5')
     """
     raw_data_paths_s3 = get_raw_data_paths_from_s3(session)
     sync_path = tuple(path for path in raw_data_paths_s3 if ".h5" in path.suffix)
@@ -125,8 +130,8 @@ def get_spike_sorted_paths_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> tuple[upath.UPath, ...]:
     """
-    >>> spike_sorted_paths = get_spike_sorted_paths_from_s3('662892_20230821')
-    >>> assert spike_sorted_paths[0].exists()
+        >>> spike_sorted_paths = get_spike_sorted_paths_from_s3('662892_20230821')
+        >>> assert spike_sorted_paths[0].exists()
     """
     sorted_data_paths = get_sorted_data_paths_from_s3(session)
     return tuple(
@@ -139,8 +144,9 @@ def get_spike_sorting_device_path_from_s3(
     session: str | npc_session.SessionRecord, device_name: str
 ) -> upath.UPath:
     """
+    Examples:
         >>> get_spike_sorting_device_path_from_s3('662892_20230821', 'ProbeA')
-    S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/d527db85-39b7-4c4f-a465-9ca499b0ca47/spikesorted/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/sorting_cached.npz')
+        S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/d527db85-39b7-4c4f-a465-9ca499b0ca47/spikesorted/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/sorting_cached.npz')
     """
     spike_sorted_paths = get_spike_sorted_paths_from_s3(session)
     spike_probe_paths = next(
@@ -157,9 +163,10 @@ def get_spike_sorting_device_path_from_s3(
 def get_recording_dirs_experiment_path_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> tuple[upath.UPath, ...]:
-    """
-    >>> recording_dirs = get_recording_dirs_experiment_path_from_s3('662892_20230821')
-    >>> assert len(recording_dirs) > 0
+    """    
+    Examples:
+        >>> recording_dirs = get_recording_dirs_experiment_path_from_s3('662892_20230821')
+        >>> assert len(recording_dirs) > 0
     """
     raw_data_paths = get_raw_data_paths_from_s3(session)
     recording_dirs = (
@@ -178,9 +185,10 @@ def get_recording_dirs_experiment_path_from_s3(
 def get_quality_metrics_paths_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> tuple[upath.UPath, ...]:
-    """
-    >>> quality_metrics_paths = get_quality_metrics_paths_from_s3('662892_2023-08-21')
-    >>> assert len(quality_metrics_paths) > 0
+    """    
+    Examples:
+        >>> quality_metrics_paths = get_quality_metrics_paths_from_s3('662892_2023-08-21')
+        >>> assert len(quality_metrics_paths) > 0
     """
     sorted_paths = get_sorted_data_paths_from_s3(session)
     postprocessed_files = next(
@@ -197,9 +205,10 @@ def get_quality_metrics_paths_from_s3(
 def get_template_metrics_paths_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> tuple[upath.UPath, ...]:
-    """
-    >>> template_metrics_paths = get_template_metrics_paths_from_s3('662892_2023-08-21')
-    >>> assert len(template_metrics_paths) > 0
+    """    
+    Examples:
+        >>> template_metrics_paths = get_template_metrics_paths_from_s3('662892_2023-08-21')
+        >>> assert len(template_metrics_paths) > 0
     """
     sorted_paths = get_sorted_data_paths_from_s3(session)
     postprocessed_files = next(
@@ -216,9 +225,10 @@ def get_template_metrics_paths_from_s3(
 def get_spikesorted_cache_paths_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> tuple[upath.UPath, ...]:
-    """
-    >>> spike_sorted_cache_paths = get_spikesorted_cache_paths_from_s3('662892_20230821')
-    >>> assert len(spike_sorted_cache_paths) > 0
+    """    
+    Examples:
+        >>> spike_sorted_cache_paths = get_spikesorted_cache_paths_from_s3('662892_20230821')
+        >>> assert len(spike_sorted_cache_paths) > 0
     """
     spike_sorted_paths = get_spike_sorted_paths_from_s3(session)
     spike_sorted_cache_files = tuple(
@@ -232,9 +242,10 @@ def get_spikesorted_cache_paths_from_s3(
 def get_unit_locations_paths_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> tuple[upath.UPath, ...]:
-    """
-    >>> unit_locations_paths = get_unit_locations_paths_from_s3('662892_2023-08-21')
-    >>> assert len(unit_locations_paths) > 0
+    """    
+    Examples:
+        >>> unit_locations_paths = get_unit_locations_paths_from_s3('662892_2023-08-21')
+        >>> assert len(unit_locations_paths) > 0
     """
     sorted_paths = get_sorted_data_paths_from_s3(session)
     postprocessed_files = next(
@@ -252,9 +263,10 @@ def get_unit_locations_paths_from_s3(
 def get_sorted_precurated_paths_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> tuple[upath.UPath, ...]:
-    """
-    >>> sorted_precurated_paths = get_sorted_precurated_paths_from_s3('662892_2023-08-21')
-    >>> assert len(sorted_precurated_paths) > 0
+    """    
+    Examples:
+        >>> sorted_precurated_paths = get_sorted_precurated_paths_from_s3('662892_2023-08-21')
+        >>> assert len(sorted_precurated_paths) > 0
     """
     sorted_paths = get_sorted_data_paths_from_s3(session)
     sorted_precurated_dirs = tuple(
@@ -272,11 +284,12 @@ def get_tissuecyte_annotation_files_from_s3(
 ) -> tuple[upath.UPath, ...]:
     """For each probe inserted, get a csv file containing CCF coordinates for each
     electrode (channel) on the probe.
-
+    
+    Examples:
         >>> electrode_files = get_tissuecyte_annotation_files_from_s3('626791_2022-08-16')
         >>> assert len(electrode_files) > 0
         >>> electrode_files[0].name
-    'Probe_A2_channels_626791_warped_processed.csv'
+        'Probe_A2_channels_626791_warped_processed.csv'
     """
     session = npc_session.SessionRecord(session)
     day = tracked_sessions.get_session_info(session).experiment_day
@@ -318,11 +331,12 @@ def get_hdf5_stim_files_from_s3(
     `DynamicRoutingTask/Data` folder on s3.
 
     - filters out files that are obviously wrong
-
+    
+    Examples:
         >>> files = get_hdf5_stim_files_from_s3('668759_20230711')
         >>> assert len(files) > 0
         >>> files[0].name, files[0].time
-    ('DynamicRouting1', '13:25:00')
+        ('DynamicRouting1', '13:25:00')
     """
     session = npc_session.SessionRecord(session)
     root = DR_DATA_REPO / str(session.subject)
@@ -360,9 +374,10 @@ def get_hdf5_stim_files_from_s3(
 def get_nwb_file_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> upath.UPath:
-    """
+    """    
+    Examples:
         >>> get_nwb_file_from_s3('636766_20230125')
-    S3Path('s3://aind-scratch-data/ben.hardcastle/nwb/nwb/DRpilot_636766_20230125.nwb')
+        S3Path('s3://aind-scratch-data/ben.hardcastle/nwb/nwb/DRpilot_636766_20230125.nwb')
     """
     session = npc_session.SessionRecord(session)
     root = NWB_REPO
@@ -384,9 +399,10 @@ def get_nwb_file_from_s3(
 def get_units_spikes_codeocean_kilosort_top_level_files(
     session: str | npc_session.SessionRecord,
 ) -> tuple[upath.UPath, ...]:
-    """
-    >>> paths = get_units_spikes_codeocean_kilosort_top_level_files('668759_20230711')
-    >>> assert paths
+    """    
+    Examples:
+        >>> paths = get_units_spikes_codeocean_kilosort_top_level_files('668759_20230711')
+        >>> assert paths
     """
     units_spikes_data_asset = (
         codeocean.get_session_units_spikes_with_peak_channels_data_asset(session)
@@ -405,9 +421,10 @@ def get_units_spikes_codeocean_kilosort_top_level_files(
 def get_units_codeoean_kilosort_path_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> upath.UPath:
-    """
-    >>> path = get_units_codeoean_kilosort_path_from_s3('668759_20230711')
-    >>> assert path
+    """    
+    Examples:
+        >>> path = get_units_codeoean_kilosort_path_from_s3('668759_20230711')
+        >>> assert path
     """
     files = get_units_spikes_codeocean_kilosort_top_level_files(session)
     units_path = next(path for path in files if "csv" in str(path))
@@ -419,9 +436,10 @@ def get_units_codeoean_kilosort_path_from_s3(
 def get_spike_times_codeocean_kilosort_path_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> upath.UPath:
-    """
-    >>> path = get_spike_times_codeocean_kilosort_path_from_s3('668759_20230711')
-    >>> assert path
+    """    
+    Examples:
+        >>> path = get_spike_times_codeocean_kilosort_path_from_s3('668759_20230711')
+        >>> assert path
     """
     files = get_units_spikes_codeocean_kilosort_top_level_files(session)
     spike_times_path = next(path for path in files if "spike" in str(path))
@@ -433,9 +451,10 @@ def get_spike_times_codeocean_kilosort_path_from_s3(
 def get_mean_waveform_codeocean_kilosort_path_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> upath.UPath:
-    """
-    >>> path = get_spike_times_codeocean_kilosort_path_from_s3('668759_20230711')
-    >>> assert path
+    """    
+    Examples:
+        >>> path = get_spike_times_codeocean_kilosort_path_from_s3('668759_20230711')
+        >>> assert path
     """
     files = get_units_spikes_codeocean_kilosort_top_level_files(session)
     mean_waveforms_path = next(path for path in files if "mean" in str(path))

@@ -63,8 +63,9 @@ class RecordWithNWB(Record):
 @dataclasses.dataclass
 class Subject(RecordWithNWB):
     """
-    >>> from npc_lims import NWBSqliteDBHub as DB
-    >>> all_subjects = DB().get_records(Subject)
+    Examples:
+        >>> from npc_lims import NWBSqliteDBHub as DB
+        >>> all_subjects = DB().get_records(Subject)
     """
 
     db_excl: ClassVar[tuple[str, ...]] = (
@@ -91,8 +92,9 @@ class Subject(RecordWithNWB):
 @dataclasses.dataclass
 class Session(RecordWithNWB):
     """
-    >>> from npc_lims import NWBSqliteDBHub as DB
-    >>> all_sessions = DB().get_records(Session)
+    Examples:
+        >>> from npc_lims import NWBSqliteDBHub as DB
+        >>> all_sessions = DB().get_records(Session)
     """
 
     nwb_excl: ClassVar[tuple[str, ...]] = (
@@ -117,6 +119,7 @@ class Session(RecordWithNWB):
 @dataclasses.dataclass
 class Epoch(RecordWithNWB):
     """
+    Examples:
         >>> from npc_lims import NWBSqliteDBHub as DB
 
         >>> epoch = Epoch('626791_2022-08-15', '11:23:36', '12:23:54', ['DynamicRouting1'])
@@ -126,7 +129,7 @@ class Epoch(RecordWithNWB):
         >>> assert epoch in all_epochs, f"{epoch=} not in {all_epochs=}"
         >>> session_epochs = DB().get_records(Epoch, session_id='626791_2022-08-15')
         >>> session_epochs[0].tags
-    ['DynamicRouting1']
+        ['DynamicRouting1']
     """
 
     nwb_excl: ClassVar[tuple[str, ...]] = ("session_id",)

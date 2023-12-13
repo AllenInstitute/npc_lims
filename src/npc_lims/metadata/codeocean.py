@@ -63,8 +63,11 @@ def get_codeocean_client() -> aind_codeocean_api.CodeOceanClient:
 @functools.cache
 def get_subject_data_assets(subject: str | int) -> tuple[DataAssetAPI, ...]:
     """
-    >>> assets = get_subject_data_assets(668759)
-    >>> assert len(assets) > 0
+    All assets associated with a subject ID.
+
+    Examples:
+        >>> assets = get_subject_data_assets(668759)
+        >>> assert len(assets) > 0
     """
     response = get_codeocean_client().search_all_data_assets(
         query=f"subject id: {npc_session.SubjectRecord(subject)}"
@@ -92,9 +95,10 @@ def get_session_data_assets(
 def get_session_result_data_assets(
     session: str | npc_session.SessionRecord,
 ) -> tuple[DataAssetAPI, ...]:
-    """
-    >>> result_data_assets = get_session_result_data_assets('668759_20230711')
-    >>> assert len(result_data_assets) > 0
+    """    
+    Examples:
+        >>> result_data_assets = get_session_result_data_assets('668759_20230711')
+        >>> assert len(result_data_assets) > 0
     """
     session_data_assets = get_session_data_assets(session)
     result_data_assets = tuple(
@@ -155,9 +159,10 @@ def get_single_data_asset(
 def get_session_sorted_data_asset(
     session: str | npc_session.SessionRecord,
 ) -> DataAssetAPI:
-    """
-    >>> sorted_data_asset = get_session_sorted_data_asset('668759_20230711')
-    >>> assert isinstance(sorted_data_asset, dict)
+    """    
+    Examples:
+        >>> sorted_data_asset = get_session_sorted_data_asset('668759_20230711')
+        >>> assert isinstance(sorted_data_asset, dict)
     """
     session_result_data_assets = get_session_data_assets(session)
     sorted_data_assets = tuple(
@@ -176,9 +181,10 @@ def get_session_sorted_data_asset(
 def get_sessions_with_data_assets(
     subject: str | int,
 ) -> tuple[npc_session.SessionRecord, ...]:
-    """
-    >>> sessions = get_sessions_with_data_assets(668759)
-    >>> assert len(sessions) > 0
+    """    
+    Examples:
+        >>> sessions = get_sessions_with_data_assets(668759)
+        >>> assert len(sessions) > 0
     """
     assets = get_subject_data_assets(subject)
     sessions = set()
@@ -202,11 +208,12 @@ def get_data_asset(asset: str | uuid.UUID | DataAssetAPI) -> DataAssetAPI:
 
 
 def is_raw_data_asset(asset: str | DataAssetAPI) -> bool:
-    """
+    """    
+    Examples:
         >>> is_raw_data_asset('83636983-f80d-42d6-a075-09b60c6abd5e')
-    True
+        True
         >>> is_raw_data_asset('173e2fdc-0ca3-4a4e-9886-b74207a91a9a')
-    False
+        False
     """
     asset = get_data_asset(asset)
     if is_sorted_data_asset(asset):
@@ -217,11 +224,12 @@ def is_raw_data_asset(asset: str | DataAssetAPI) -> bool:
 
 
 def is_sorted_data_asset(asset: str | DataAssetAPI) -> bool:
-    """
+    """    
+    Examples:
         >>> is_sorted_data_asset('173e2fdc-0ca3-4a4e-9886-b74207a91a9a')
-    True
+        True
         >>> is_sorted_data_asset('83636983-f80d-42d6-a075-09b60c6abd5e')
-    False
+        False
     """
     asset = get_data_asset(asset)
     if "ecephys" not in asset["name"]:
@@ -232,9 +240,10 @@ def is_sorted_data_asset(asset: str | DataAssetAPI) -> bool:
 def get_session_raw_data_asset(
     session: str | npc_session.SessionRecord,
 ) -> DataAssetAPI:
-    """
+    """    
+    Examples:
         >>> get_session_raw_data_asset('668759_20230711')["id"]
-    '83636983-f80d-42d6-a075-09b60c6abd5e'
+        '83636983-f80d-42d6-a075-09b60c6abd5e'
     """
     session = npc_session.SessionRecord(session)
     raw_assets = tuple(
@@ -250,14 +259,15 @@ def get_session_raw_data_asset(
 def get_surface_channel_root(session: str | npc_session.SessionRecord) -> upath.UPath:
     """Reconstruct path to surface channel data in bucket (e.g. on s3) using data-asset
     info from Code Ocean.
-
+    
+    Examples:
         >>> get_surface_channel_root('660023_20230808')
-    S3Path('s3://aind-ephys-data/ecephys_660023_2023-08-08_15-11-14')
+        S3Path('s3://aind-ephys-data/ecephys_660023_2023-08-08_15-11-14')
         >>> assert get_surface_channel_root('660023_20230808') != get_raw_data_root('660023_20230808')
         >>> get_surface_channel_root('649943_20230216')
-    Traceback (most recent call last):
-    ...
-    FileNotFoundError: 649943_20230216 has no surface channel data assets
+        Traceback (most recent call last):
+        ...
+        FileNotFoundError: 649943_20230216 has no surface channel data assets
     """
     session = npc_session.SessionRecord(session)
     raw_assets = tuple(
@@ -278,7 +288,7 @@ def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath:
     info from Code Ocean.
 
         >>> get_raw_data_root('668759_20230711')
-    S3Path('s3://aind-ephys-data/ecephys_668759_2023-07-11_13-07-32')
+        S3Path('s3://aind-ephys-data/ecephys_668759_2023-07-11_13-07-32')
     """
     session = npc_session.SessionRecord(session)
     raw_assets = tuple(
@@ -367,9 +377,10 @@ def register_session_data_asset(
 def get_session_units_data_asset(
     session_id: str | npc_session.SessionRecord,
 ) -> DataAssetAPI:
-    """
-    >>> units_data_asset = get_session_units_data_asset('668759_20230711')
-    >>> assert units_data_asset is not None
+    """    
+    Examples:
+        >>> units_data_asset = get_session_units_data_asset('668759_20230711')
+        >>> assert units_data_asset is not None
     """
     session = npc_session.SessionRecord(session_id)
     session_data_assets = get_session_data_assets(session)
@@ -389,9 +400,10 @@ def get_session_units_data_asset(
 def get_session_units_spikes_with_peak_channels_data_asset(
     session_id: str | npc_session.SessionRecord,
 ) -> DataAssetAPI:
-    """
-    >>> units_peak_channel_data_asset = get_session_units_spikes_with_peak_channels_data_asset('668759_20230711')
-    >>> assert units_peak_channel_data_asset is not None
+    """    
+    Examples:
+        >>> units_peak_channel_data_asset = get_session_units_spikes_with_peak_channels_data_asset('668759_20230711')
+        >>> assert units_peak_channel_data_asset is not None
     """
     session = npc_session.SessionRecord(session_id)
     session_data_assets = get_session_data_assets(session)
