@@ -24,15 +24,15 @@ theme:
       name: Switch to light mode
   - media: "(prefers-color-scheme: light)"
     scheme: default
-    primary: purple
-    accent: teal
+    primary: teal
+    accent: purple
     toggle:
       icon: material/weather-sunny
       name: Switch to dark mode
   - media: "(prefers-color-scheme: dark)"
     scheme: slate
-    primary: purple
-    accent: teal
+    primary: teal
+    accent: purple
     toggle:
       icon: material/weather-night
       name: Switch to system preference
