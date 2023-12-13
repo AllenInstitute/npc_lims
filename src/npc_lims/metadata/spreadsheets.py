@@ -25,7 +25,7 @@ def get_training_db(nsb: bool = False) -> sqlite3.Connection:
     """
     Download db to tempdir, open connection, return connection.
 
-    >>> assert get_training_db()
+        >>> assert get_training_db()
     """
     db_path = upath.UPath(tempfile.mkstemp(suffix=".db")[1])
     s3_path = next(
@@ -56,7 +56,7 @@ def update_training_dbs() -> None:
     Read spreadsheets from the data repo and write them to corresponding
     databases, currently sqlite files in the same directory.
 
-    >>> update_training_dbs()
+        >>> update_training_dbs()
     """
     for spreadsheet, sqlite in zip(
         get_training_spreadsheet_paths(), get_training_sqlite_paths()

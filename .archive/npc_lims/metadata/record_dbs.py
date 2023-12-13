@@ -224,13 +224,13 @@ class SqliteDBHub(SqliteRecordDB):
 class TestDBHub(SqliteDBHub):
     """Test database on dbhub.io.
 
-    >>> db = TestDBHub()
-    >>> db.execute("DROP TABLE IF EXISTS test;")
-    >>> db.create()
-    >>> db.insert("test", {'id': 1, 'name': 'one'}, {'id': 2, 'name': 'two'})
-    >>> db.query("SELECT * FROM test;")
+        >>> db = TestDBHub()
+        >>> db.execute("DROP TABLE IF EXISTS test;")
+        >>> db.create()
+        >>> db.insert("test", {'id': 1, 'name': 'one'}, {'id': 2, 'name': 'two'})
+        >>> db.query("SELECT * FROM test;")
     ({'id': 1, 'name': 'one'}, {'id': 2, 'name': 'two'})
-    >>> _ = db.execute("DROP TABLE test;")
+        >>> _ = db.execute("DROP TABLE test;")
     """
 
     db_name = "test.db"
@@ -242,15 +242,15 @@ class TestDBHub(SqliteDBHub):
 class TestLocalDB(SqliteLocalDB):
     """Test database on local file.
 
-    >>> db = TestLocalDB()
-    >>> db.execute("DROP TABLE IF EXISTS test;")
-    >>> db.create()
-    >>> db.insert("test", {'id': 1, 'name': 'one'}, {'id': 2, 'name': 'two'})
-    >>> db.query("SELECT * FROM test;")
+        >>> db = TestLocalDB()
+        >>> db.execute("DROP TABLE IF EXISTS test;")
+        >>> db.create()
+        >>> db.insert("test", {'id': 1, 'name': 'one'}, {'id': 2, 'name': 'two'})
+        >>> db.query("SELECT * FROM test;")
     ({'id': 1, 'name': 'one'}, {'id': 2, 'name': 'two'})
-    >>> _ = db.execute("DROP TABLE test;")
-    >>> db.close()
-    >>> db.path.unlink()
+        >>> _ = db.execute("DROP TABLE test;")
+        >>> db.close()
+        >>> db.path.unlink()
     """
 
     db_name = "test.sqlite"

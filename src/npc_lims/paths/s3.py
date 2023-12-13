@@ -48,8 +48,8 @@ def get_raw_data_paths_from_s3(
     """All top-level files and folders from the `ephys` & `behavior`
     subdirectories in a session's raw data folder on s3.
 
-    >>> files = get_raw_data_paths_from_s3 ('668759_20230711')
-    >>> assert len(files) > 0
+        >>> files = get_raw_data_paths_from_s3 ('668759_20230711')
+        >>> assert len(files) > 0
     """
     raw_data_root = codeocean.get_raw_data_root(session)
     directories: Iterator[upath.UPath] = (
@@ -75,8 +75,8 @@ def get_sorted_data_paths_from_s3(
 ) -> tuple[upath.UPath, ...]:
     """
     Gets the top level files/folders for the sorted data
-    >>> sorted_data_s3_paths = get_sorted_data_paths_from_s3('668759_20230711')
-    >>> assert len(sorted_data_s3_paths) > 0
+        >>> sorted_data_s3_paths = get_sorted_data_paths_from_s3('668759_20230711')
+        >>> assert len(sorted_data_s3_paths) > 0
     """
     if sorted_data_asset_id is not None:
         sorted_data_asset = codeocean.get_data_asset(sorted_data_asset_id)
@@ -108,7 +108,7 @@ def get_settings_xml_path_from_s3(
 @functools.cache
 def get_h5_sync_from_s3(session: str | npc_session.SessionRecord) -> upath.UPath:
     """
-    >>> get_h5_sync_from_s3('662892_20230821')
+        >>> get_h5_sync_from_s3('662892_20230821')
     S3Path('s3://aind-ephys-data/ecephys_662892_2023-08-21_12-43-45/behavior/20230821T124345.h5')
     """
     raw_data_paths_s3 = get_raw_data_paths_from_s3(session)
@@ -139,7 +139,7 @@ def get_spike_sorting_device_path_from_s3(
     session: str | npc_session.SessionRecord, device_name: str
 ) -> upath.UPath:
     """
-    >>> get_spike_sorting_device_path_from_s3('662892_20230821', 'ProbeA')
+        >>> get_spike_sorting_device_path_from_s3('662892_20230821', 'ProbeA')
     S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/d527db85-39b7-4c4f-a465-9ca499b0ca47/spikesorted/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/sorting_cached.npz')
     """
     spike_sorted_paths = get_spike_sorted_paths_from_s3(session)
@@ -273,9 +273,9 @@ def get_tissuecyte_annotation_files_from_s3(
     """For each probe inserted, get a csv file containing CCF coordinates for each
     electrode (channel) on the probe.
 
-    >>> electrode_files = get_tissuecyte_annotation_files_from_s3('626791_2022-08-16')
-    >>> assert len(electrode_files) > 0
-    >>> electrode_files[0].name
+        >>> electrode_files = get_tissuecyte_annotation_files_from_s3('626791_2022-08-16')
+        >>> assert len(electrode_files) > 0
+        >>> electrode_files[0].name
     'Probe_A2_channels_626791_warped_processed.csv'
     """
     session = npc_session.SessionRecord(session)
@@ -319,9 +319,9 @@ def get_hdf5_stim_files_from_s3(
 
     - filters out files that are obviously wrong
 
-    >>> files = get_hdf5_stim_files_from_s3('668759_20230711')
-    >>> assert len(files) > 0
-    >>> files[0].name, files[0].time
+        >>> files = get_hdf5_stim_files_from_s3('668759_20230711')
+        >>> assert len(files) > 0
+        >>> files[0].name, files[0].time
     ('DynamicRouting1', '13:25:00')
     """
     session = npc_session.SessionRecord(session)
@@ -361,7 +361,7 @@ def get_nwb_file_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> upath.UPath:
     """
-    >>> get_nwb_file_from_s3('636766_20230125')
+        >>> get_nwb_file_from_s3('636766_20230125')
     S3Path('s3://aind-scratch-data/ben.hardcastle/nwb/nwb/DRpilot_636766_20230125.nwb')
     """
     session = npc_session.SessionRecord(session)

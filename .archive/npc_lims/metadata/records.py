@@ -117,15 +117,15 @@ class Session(RecordWithNWB):
 @dataclasses.dataclass
 class Epoch(RecordWithNWB):
     """
-    >>> from npc_lims import NWBSqliteDBHub as DB
+        >>> from npc_lims import NWBSqliteDBHub as DB
 
-    >>> epoch = Epoch('626791_2022-08-15', '11:23:36', '12:23:54', ['DynamicRouting1'])
-    >>> DB().add_records(epoch)
+        >>> epoch = Epoch('626791_2022-08-15', '11:23:36', '12:23:54', ['DynamicRouting1'])
+        >>> DB().add_records(epoch)
 
-    >>> all_epochs = DB().get_records(Epoch)
-    >>> assert epoch in all_epochs, f"{epoch=} not in {all_epochs=}"
-    >>> session_epochs = DB().get_records(Epoch, session_id='626791_2022-08-15')
-    >>> session_epochs[0].tags
+        >>> all_epochs = DB().get_records(Epoch)
+        >>> assert epoch in all_epochs, f"{epoch=} not in {all_epochs=}"
+        >>> session_epochs = DB().get_records(Epoch, session_id='626791_2022-08-15')
+        >>> session_epochs[0].tags
     ['DynamicRouting1']
     """
 

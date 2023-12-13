@@ -32,9 +32,9 @@ def get_subjects_from_training_db(
 
     {subject: ({spreadsheet row}, ... )}
 
-    >>> subjects = get_subjects_from_training_db(nsb=True)
-    >>> assert len(subjects) > 0
-    >>> subjects[659250]                       # doctest: +SKIP
+        >>> subjects = get_subjects_from_training_db(nsb=True)
+        >>> assert len(subjects) > 0
+        >>> subjects[659250]                       # doctest: +SKIP
     {'ID': 50, 'mouse_id': '659250', 'alive': 'False', 'genotype': 'PV Cre x Ai32', 'sex': 'male', 'birthdate': '2022-11-21 00:00:00', 'surgery_week': '2023-01-30 00:00:00', 'craniotomy': 'True', 'trainer': 'Sam', 'regimen': '7', 'wheel_fixed': 'False', 'timeouts': 'True', 'next_task_version': 'dead'}
     """
     db = npc_lims.metadata.get_training_db(nsb)
@@ -59,7 +59,7 @@ def get_session_id_from_db_row(
     subject: int | str, row: dict[str, Any]
 ) -> npc_session.SessionRecord:
     """
-    >>> get_session_id_from_db_row(366122, {'start_time': '2023-01-30 12:56:27'})
+        >>> get_session_id_from_db_row(366122, {'start_time': '2023-01-30 12:56:27'})
     '366122_2023-01-30'
     """
     return npc_session.SessionRecord(
@@ -74,9 +74,9 @@ def get_sessions_from_training_db() -> dict[int, tuple[dict[str, Any], ...]]:
 
     {subject: ({spreadsheet row}, ... )}
 
-    >>> sessions = get_sessions_from_training_db()
-    >>> assert len(sessions) > 0
-    >>> sessions[659250][0]                         # doctest: +SKIP
+        >>> sessions = get_sessions_from_training_db()
+        >>> assert len(sessions) > 0
+        >>> sessions[659250][0]                         # doctest: +SKIP
     {'ID': 1, 'start_time': '2023-03-07 12:56:27', 'rig_name': 'B2', 'task_version': 'stage 0 moving', 'hits': '0', 'dprime_same_modality': '', 'dprime_other_modality_go_stim': '', 'pass': '1', 'ignore': '0'}
     """
     sessions: dict[int, tuple[dict[str, Any], ...]] = {}
@@ -117,11 +117,11 @@ def get_subject_folders_from_data_repo(
     subject: int | str | None = None,
 ) -> dict[npc_session.SubjectRecord, upath.UPath] | upath.UPath:
     """
-    >>> all_subjects = get_subject_folders_from_data_repo()
-    >>> len(all_subjects)                               # doctest: +SKIP
+        >>> all_subjects = get_subject_folders_from_data_repo()
+        >>> len(all_subjects)                               # doctest: +SKIP
     93
 
-    >>> get_subject_folders_from_data_repo(366122).name
+        >>> get_subject_folders_from_data_repo(366122).name
     '366122'
     """
     if subject is not None:
@@ -172,15 +172,15 @@ def get_sessions_from_data_repo(
     Globs synced behavior data repo for sessions.
 
     # get a dict of all subjects mapped to their sessions
-    >>> all_subjects_sessions = get_sessions_from_data_repo()
-    >>> len(all_subjects_sessions)                      # doctest: +SKIP
+        >>> all_subjects_sessions = get_sessions_from_data_repo()
+        >>> len(all_subjects_sessions)                      # doctest: +SKIP
     93
 
-    >>> len(tuple(all_subjects_sessions.values())[0])   # doctest: +SKIP
+        >>> len(tuple(all_subjects_sessions.values())[0])   # doctest: +SKIP
     45
 
     # get a specific subject's sessions as a sequence
-    >>> get_sessions_from_data_repo(366122)[0]
+        >>> get_sessions_from_data_repo(366122)[0]
     '366122_2023-01-30'
 
     """

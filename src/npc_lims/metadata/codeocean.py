@@ -203,9 +203,9 @@ def get_data_asset(asset: str | uuid.UUID | DataAssetAPI) -> DataAssetAPI:
 
 def is_raw_data_asset(asset: str | DataAssetAPI) -> bool:
     """
-    >>> is_raw_data_asset('83636983-f80d-42d6-a075-09b60c6abd5e')
+        >>> is_raw_data_asset('83636983-f80d-42d6-a075-09b60c6abd5e')
     True
-    >>> is_raw_data_asset('173e2fdc-0ca3-4a4e-9886-b74207a91a9a')
+        >>> is_raw_data_asset('173e2fdc-0ca3-4a4e-9886-b74207a91a9a')
     False
     """
     asset = get_data_asset(asset)
@@ -218,9 +218,9 @@ def is_raw_data_asset(asset: str | DataAssetAPI) -> bool:
 
 def is_sorted_data_asset(asset: str | DataAssetAPI) -> bool:
     """
-    >>> is_sorted_data_asset('173e2fdc-0ca3-4a4e-9886-b74207a91a9a')
+        >>> is_sorted_data_asset('173e2fdc-0ca3-4a4e-9886-b74207a91a9a')
     True
-    >>> is_sorted_data_asset('83636983-f80d-42d6-a075-09b60c6abd5e')
+        >>> is_sorted_data_asset('83636983-f80d-42d6-a075-09b60c6abd5e')
     False
     """
     asset = get_data_asset(asset)
@@ -233,7 +233,7 @@ def get_session_raw_data_asset(
     session: str | npc_session.SessionRecord,
 ) -> DataAssetAPI:
     """
-    >>> get_session_raw_data_asset('668759_20230711')["id"]
+        >>> get_session_raw_data_asset('668759_20230711')["id"]
     '83636983-f80d-42d6-a075-09b60c6abd5e'
     """
     session = npc_session.SessionRecord(session)
@@ -251,10 +251,10 @@ def get_surface_channel_root(session: str | npc_session.SessionRecord) -> upath.
     """Reconstruct path to surface channel data in bucket (e.g. on s3) using data-asset
     info from Code Ocean.
 
-    >>> get_surface_channel_root('660023_20230808')
+        >>> get_surface_channel_root('660023_20230808')
     S3Path('s3://aind-ephys-data/ecephys_660023_2023-08-08_15-11-14')
-    >>> assert get_surface_channel_root('660023_20230808') != get_raw_data_root('660023_20230808')
-    >>> get_surface_channel_root('649943_20230216')
+        >>> assert get_surface_channel_root('660023_20230808') != get_raw_data_root('660023_20230808')
+        >>> get_surface_channel_root('649943_20230216')
     Traceback (most recent call last):
     ...
     FileNotFoundError: 649943_20230216 has no surface channel data assets
@@ -277,7 +277,7 @@ def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath:
     """Reconstruct path to raw data in bucket (e.g. on s3) using data-asset
     info from Code Ocean.
 
-    >>> get_raw_data_root('668759_20230711')
+        >>> get_raw_data_root('668759_20230711')
     S3Path('s3://aind-ephys-data/ecephys_668759_2023-07-11_13-07-32')
     """
     session = npc_session.SessionRecord(session)

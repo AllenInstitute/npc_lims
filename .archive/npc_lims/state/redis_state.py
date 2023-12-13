@@ -29,22 +29,22 @@ class State(collections.abc.MutableMapping):
     - dict interface provides `keys`, `get`, `setdefault`, `pop`, etc.
     - accepted value types are str, int, float, bool, None
 
-    >>> test_id = 0
-    >>> state = State(test_id)
-    >>> state['test'] = 1.0
-    >>> state['test']
+        >>> test_id = 0
+        >>> state = State(test_id)
+        >>> state['test'] = 1.0
+        >>> state['test']
     1.0
-    >>> state['test'] = 'test'
-    >>> state['test']
+        >>> state['test'] = 'test'
+        >>> state['test']
     'test'
-    >>> all('test' in _ for _ in (state, state.keys(), state.values()))
+        >>> all('test' in _ for _ in (state, state.keys(), state.values()))
     True
-    >>> state.setdefault('test', True)
+        >>> state.setdefault('test', True)
     'test'
-    >>> state.pop('test')
+        >>> state.pop('test')
     'test'
-    >>> del state['test']
-    >>> state.get('test') is None
+        >>> del state['test']
+        >>> state.get('test') is None
     True
     """
 

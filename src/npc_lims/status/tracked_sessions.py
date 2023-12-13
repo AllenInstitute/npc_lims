@@ -89,7 +89,7 @@ class SessionInfo:
         CodeOcean. Not the same as `cloud_path` being non-None: this property
         indicates a proper session upload via aind tools, with metadata etc.
 
-        >>> next(session.is_uploaded for session in get_session_info() if session.is_uploaded)
+            >>> next(session.is_uploaded for session in get_session_info() if session.is_uploaded)
         True
         """
         if not self.is_ephys:
@@ -103,7 +103,7 @@ class SessionInfo:
         """The session has ephys data collected separately to record surface
         channel.
 
-        >>> get_session_info("DRpilot_660023_20230808").is_surface_channels
+            >>> get_session_info("DRpilot_660023_20230808").is_surface_channels
         True
         """
         if self.session_kwargs.get("probe_letters_with_surface_channel_recording"):
@@ -119,7 +119,7 @@ class SessionInfo:
         """The AIND sorting pipeline has yielded a Result asset for this
         session.
 
-        >>> next(session.is_sorted for session in get_session_info() if session.is_sorted)
+            >>> next(session.is_sorted for session in get_session_info() if session.is_sorted)
         True
         """
         if not self.is_ephys:
@@ -138,7 +138,7 @@ class SessionInfo:
         """The subject associated with the sessions has CCF annotation data for
         probes available on S3.
 
-        >>> next(session.is_annotated for session in get_session_info() if session.is_annotated)
+            >>> next(session.is_annotated for session in get_session_info() if session.is_annotated)
         True
         """
         if not self.is_sorted:
@@ -153,9 +153,9 @@ class SessionInfo:
         """Session metadata from Sam's DR training database.
         - empty dict for Templeton sessions
 
-        >>> next(get_session_info()).session_info                       # doctest: +SKIP
+            >>> next(get_session_info()).session_info                       # doctest: +SKIP
         {'ID': 1, 'start_time': '2023-03-07 12:56:27', 'rig_name': 'B2', 'task_version': 'stage 0 moving', 'hits': '0', 'dprime_same_modality': '', 'dprime_other_modality_go_stim': '', 'pass': '1', 'ignore': '0'}
-        >>> assert next(session.training_info for session in get_session_info() if session.training_info)
+            >>> assert next(session.training_info for session in get_session_info() if session.training_info)
         """
         return next(
             (
@@ -221,17 +221,17 @@ def get_session_info(
     """Quickly get a sequence of all tracked sessions.
 
     Each object in the sequence has info about one session:
-    >>> sessions = get_session_info()
-    >>> sessions[0].__class__.__name__
+        >>> sessions = get_session_info()
+        >>> sessions[0].__class__.__name__
     'SessionInfo'
-    >>> sessions[0].is_ephys                    # doctest: +SKIP
+        >>> sessions[0].is_ephys                    # doctest: +SKIP
     True
-    >>> any(s for s in sessions if s.date.year < 2021)
+        >>> any(s for s in sessions if s.date.year < 2021)
     False
 
     Pass a session str or SessionRecord to get the info for that session:
-    >>> info = get_session_info("DRpilot_667252_20230927")
-    >>> assert isinstance(info, SessionInfo)
+        >>> info = get_session_info("DRpilot_667252_20230927")
+        >>> assert isinstance(info, SessionInfo)
     """
     if isinstance(session, SessionInfo):
         session = session.id
@@ -270,16 +270,16 @@ def get_session_issues(
 ) -> list[str] | list | dict[npc_session.SessionRecord, list[str]]:
     """Get a dictionary of all sessions with issues mapped to their issue url.
 
-    >>> issues = get_session_issues()
-    >>> issues                                                              # doctest: +SKIP
+        >>> issues = get_session_issues()
+        >>> issues                                                              # doctest: +SKIP
     {
         '644867_2023-02-21': ['https://github.com/AllenInstitute/npc_sessions/issues/28'],
         '660023_2023-08-08': ['https://github.com/AllenInstitute/npc_sessions/issues/26'],
     }
 
-    >>> single_session_issues = get_session_issues("DRPilot_644867_20230221")
-    >>> assert isinstance(single_session_issues, typing.Sequence)
-    >>> single_session_issues                                               # doctest: +SKIP
+        >>> single_session_issues = get_session_issues("DRPilot_644867_20230221")
+        >>> assert isinstance(single_session_issues, typing.Sequence)
+        >>> single_session_issues                                               # doctest: +SKIP
     ['https://github.com/AllenInstitute/npc_sessions/issues/28']
     """
     if session:
@@ -308,8 +308,8 @@ def get_session_kwargs(
     """Get a dictionary of all sessions mapped to their config kwargs. kwargs will
     be an empty dict if no kwargs have been specified.
 
-    >>> kwargs = get_session_kwargs()
-    >>> kwargs                                                          # doctest: +SKIP
+        >>> kwargs = get_session_kwargs()
+        >>> kwargs                                                          # doctest: +SKIP
     {   '670248_2023-08-02': {
             'is_task': False,
         },
@@ -319,9 +319,9 @@ def get_session_kwargs(
             ]
         },
     }
-    >>> single_session_kwargs = get_session_kwargs("DRpilot_670248_20230802")
-    >>> assert isinstance(single_session_kwargs, dict)
-    >>> single_session_kwargs                                           # doctest: +SKIP
+        >>> single_session_kwargs = get_session_kwargs("DRpilot_670248_20230802")
+        >>> assert isinstance(single_session_kwargs, dict)
+        >>> single_session_kwargs                                           # doctest: +SKIP
     {'is_task': False}
     """
     if session:
@@ -351,7 +351,7 @@ def _get_session_info_from_file() -> tuple[SessionInfo, ...]:
     """Load yaml and parse sessions.
     - currently assumes all sessions include behavior data
 
-    >>> assert len(_get_session_info_from_file()) > 0
+        >>> assert len(_get_session_info_from_file()) > 0
     """
     f = _session_info_from_file_contents
     if _TRACKED_SESSIONS_FILE.suffix == ".json":
