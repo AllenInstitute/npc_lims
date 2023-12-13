@@ -112,8 +112,8 @@ plugins:
         - https://docs.python.org/3/objects.inv
         paths: [src]
         options:
-          docstring_style: null
-          show_docstring_examples: false
+          docstring_style: google
+          show_docstring_examples: true
           docstring_options:
             ignore_init_summary: false
           docstring_section_style: list
