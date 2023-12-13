@@ -2,25 +2,39 @@
 </code></pre></div> <div class="doc doc-contents "> <p>YY-MM-DD</p> </div> </div> <div class="doc doc-object doc-attribute"> <h3 id=npc_lims.status.tracked_sessions.SessionInfo.experiment_day class="doc doc-heading"> <span class="doc doc-object-name doc-attribute-name">experiment_day</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small> <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small> </span> <a href=#npc_lims.status.tracked_sessions.SessionInfo.experiment_day class=headerlink title="Permanent link">&para;</a></h3> <div class="doc-signature highlight"><pre><span></span><code><span class=n>experiment_day</span><span class=p>:</span> <span class=nb>int</span> <span class=o>|</span> <span class=kc>None</span> <span class=o>=</span> <span class=kc>None</span>
 </code></pre></div> <div class="doc doc-contents "> <p>Experiment day (ephys recording, or opto experiment), starting from 1 for each subject. <code>None</code> for training behavior-only sessions.</p> </div> </div> <div class="doc doc-object doc-attribute"> <h3 id=npc_lims.status.tracked_sessions.SessionInfo.idx class="doc doc-heading"> <span class="doc doc-object-name doc-attribute-name">idx</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-property"><code>property</code></small> </span> <a href=#npc_lims.status.tracked_sessions.SessionInfo.idx class=headerlink title="Permanent link">&para;</a></h3> <div class="doc-signature highlight"><pre><span></span><code><span class=n>idx</span><span class=p>:</span> <span class=nb>int</span>
 </code></pre></div> <div class="doc doc-contents "> <p>Session index, starting from 0 for each subject on each day. Currently one session per day, so index isn't specified - implicitly equal to 0.</p> </div> </div> <div class="doc doc-object doc-attribute"> <h3 id=npc_lims.status.tracked_sessions.SessionInfo.is_annotated class="doc doc-heading"> <span class="doc doc-object-name doc-attribute-name">is_annotated</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> <small class="doc doc-label doc-label-property"><code>property</code></small> </span> <a href=#npc_lims.status.tracked_sessions.SessionInfo.is_annotated class=headerlink title="Permanent link">&para;</a></h3> <div class="doc-signature highlight"><pre><span></span><code><span class=n>is_annotated</span><span class=p>:</span> <span class=nb>bool</span>
-</code></pre></div> <div class="doc doc-contents "> <p>The subject associated with the sessions has CCF annotation data for probes available on S3.</p> <blockquote> <blockquote> <blockquote> <p>next(session.is_annotated for session in get_session_info() if session.is_annotated) True</p> </blockquote> </blockquote> </blockquote> </div> </div> <div class="doc doc-object doc-attribute"> <h3 id=npc_lims.status.tracked_sessions.SessionInfo.is_sorted class="doc doc-heading"> <span class="doc doc-object-name doc-attribute-name">is_sorted</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> <small class="doc doc-label doc-label-property"><code>property</code></small> </span> <a href=#npc_lims.status.tracked_sessions.SessionInfo.is_sorted class=headerlink title="Permanent link">&para;</a></h3> <div class="doc-signature highlight"><pre><span></span><code><span class=n>is_sorted</span><span class=p>:</span> <span class=nb>bool</span>
-</code></pre></div> <div class="doc doc-contents "> <p>The AIND sorting pipeline has yielded a Result asset for this session.</p> <blockquote> <blockquote> <blockquote> <p>next(session.is_sorted for session in get_session_info() if session.is_sorted) True</p> </blockquote> </blockquote> </blockquote> </div> </div> <div class="doc doc-object doc-attribute"> <h3 id=npc_lims.status.tracked_sessions.SessionInfo.is_surface_channels class="doc doc-heading"> <span class="doc doc-object-name doc-attribute-name">is_surface_channels</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> <small class="doc doc-label doc-label-property"><code>property</code></small> </span> <a href=#npc_lims.status.tracked_sessions.SessionInfo.is_surface_channels class=headerlink title="Permanent link">&para;</a></h3> <div class="doc-signature highlight"><pre><span></span><code><span class=n>is_surface_channels</span><span class=p>:</span> <span class=nb>bool</span>
-</code></pre></div> <div class="doc doc-contents "> <p>The session has ephys data collected separately to record surface channel.</p> <blockquote> <blockquote> <blockquote> <p>get_session_info("DRpilot_660023_20230808").is_surface_channels True</p> </blockquote> </blockquote> </blockquote> </div> </div> <div class="doc doc-object doc-attribute"> <h3 id=npc_lims.status.tracked_sessions.SessionInfo.is_sync class="doc doc-heading"> <span class="doc doc-object-name doc-attribute-name">is_sync</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small> </span> <a href=#npc_lims.status.tracked_sessions.SessionInfo.is_sync class=headerlink title="Permanent link">&para;</a></h3> <div class="doc-signature highlight"><pre><span></span><code><span class=n>is_sync</span><span class=p>:</span> <span class=nb>bool</span>
+</code></pre></div> <div class="doc doc-contents "> <p>The subject associated with the sessions has CCF annotation data for probes available on S3.</p> <p>Examples:</p> <pre><code>&gt;&gt;&gt; next(session.is_annotated for session in get_session_info() if session.is_annotated)
+True
+</code></pre> </div> </div> <div class="doc doc-object doc-attribute"> <h3 id=npc_lims.status.tracked_sessions.SessionInfo.is_sorted class="doc doc-heading"> <span class="doc doc-object-name doc-attribute-name">is_sorted</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> <small class="doc doc-label doc-label-property"><code>property</code></small> </span> <a href=#npc_lims.status.tracked_sessions.SessionInfo.is_sorted class=headerlink title="Permanent link">&para;</a></h3> <div class="doc-signature highlight"><pre><span></span><code><span class=n>is_sorted</span><span class=p>:</span> <span class=nb>bool</span>
+</code></pre></div> <div class="doc doc-contents "> <p>The AIND sorting pipeline has yielded a Result asset for this session.</p> <p>Examples:</p> <pre><code>&gt;&gt;&gt; next(session.is_sorted for session in get_session_info() if session.is_sorted)
+True
+</code></pre> </div> </div> <div class="doc doc-object doc-attribute"> <h3 id=npc_lims.status.tracked_sessions.SessionInfo.is_surface_channels class="doc doc-heading"> <span class="doc doc-object-name doc-attribute-name">is_surface_channels</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> <small class="doc doc-label doc-label-property"><code>property</code></small> </span> <a href=#npc_lims.status.tracked_sessions.SessionInfo.is_surface_channels class=headerlink title="Permanent link">&para;</a></h3> <div class="doc-signature highlight"><pre><span></span><code><span class=n>is_surface_channels</span><span class=p>:</span> <span class=nb>bool</span>
+</code></pre></div> <div class="doc doc-contents "> <p>The session has ephys data collected separately to record surface channel.</p> <p>Examples:</p> <pre><code>&gt;&gt;&gt; get_session_info("DRpilot_660023_20230808").is_surface_channels
+True
+</code></pre> </div> </div> <div class="doc doc-object doc-attribute"> <h3 id=npc_lims.status.tracked_sessions.SessionInfo.is_sync class="doc doc-heading"> <span class="doc doc-object-name doc-attribute-name">is_sync</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small> </span> <a href=#npc_lims.status.tracked_sessions.SessionInfo.is_sync class=headerlink title="Permanent link">&para;</a></h3> <div class="doc-signature highlight"><pre><span></span><code><span class=n>is_sync</span><span class=p>:</span> <span class=nb>bool</span>
 </code></pre></div> <div class="doc doc-contents "> <p>The session has sync data, implying more than a behavior-box.</p> </div> </div> <div class="doc doc-object doc-attribute"> <h3 id=npc_lims.status.tracked_sessions.SessionInfo.is_templeton class="doc doc-heading"> <span class="doc doc-object-name doc-attribute-name">is_templeton</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> <small class="doc doc-label doc-label-property"><code>property</code></small> </span> <a href=#npc_lims.status.tracked_sessions.SessionInfo.is_templeton class=headerlink title="Permanent link">&para;</a></h3> <div class="doc-signature highlight"><pre><span></span><code><span class=n>is_templeton</span><span class=p>:</span> <span class=nb>bool</span>
 </code></pre></div> <div class="doc doc-contents "> <p>Uses project in <code>tracked_sessions.yaml</code> if available, then infers from whether the session is in Sam's DR training database.</p> </div> </div> <div class="doc doc-object doc-attribute"> <h3 id=npc_lims.status.tracked_sessions.SessionInfo.is_uploaded class="doc doc-heading"> <span class="doc doc-object-name doc-attribute-name">is_uploaded</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> <small class="doc doc-label doc-label-property"><code>property</code></small> </span> <a href=#npc_lims.status.tracked_sessions.SessionInfo.is_uploaded class=headerlink title="Permanent link">&para;</a></h3> <div class="doc-signature highlight"><pre><span></span><code><span class=n>is_uploaded</span><span class=p>:</span> <span class=nb>bool</span>
-</code></pre></div> <div class="doc doc-contents "> <p>All of the session's raw data has been uploaded to S3 and can be found in CodeOcean. Not the same as <code>cloud_path</code> being non-None: this property indicates a proper session upload via aind tools, with metadata etc.</p> <blockquote> <blockquote> <blockquote> <p>next(session.is_uploaded for session in get_session_info() if session.is_uploaded) True</p> </blockquote> </blockquote> </blockquote> </div> </div> <div class="doc doc-object doc-attribute"> <h3 id=npc_lims.status.tracked_sessions.SessionInfo.rig class="doc doc-heading"> <span class="doc doc-object-name doc-attribute-name">rig</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-property"><code>property</code></small> </span> <a href=#npc_lims.status.tracked_sessions.SessionInfo.rig class=headerlink title="Permanent link">&para;</a></h3> <div class="doc-signature highlight"><pre><span></span><code><span class=n>rig</span><span class=p>:</span> <span class=nb>str</span>
+</code></pre></div> <div class="doc doc-contents "> <p>All of the session's raw data has been uploaded to S3 and can be found in CodeOcean. Not the same as <code>cloud_path</code> being non-None: this property indicates a proper session upload via aind tools, with metadata etc.</p> <p><strong>Examples:</strong></p> <div class=highlight><pre><span></span><code><span class=gp>&gt;&gt;&gt; </span><span class=nb>next</span><span class=p>(</span><span class=n>session</span><span class=o>.</span><span class=n>is_uploaded</span> <span class=k>for</span> <span class=n>session</span> <span class=ow>in</span> <span class=n>get_session_info</span><span class=p>()</span> <span class=k>if</span> <span class=n>session</span><span class=o>.</span><span class=n>is_uploaded</span><span class=p>)</span>
+<span class=go>True</span>
+</code></pre></div> </div> </div> <div class="doc doc-object doc-attribute"> <h3 id=npc_lims.status.tracked_sessions.SessionInfo.rig class="doc doc-heading"> <span class="doc doc-object-name doc-attribute-name">rig</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-property"><code>property</code></small> </span> <a href=#npc_lims.status.tracked_sessions.SessionInfo.rig class=headerlink title="Permanent link">&para;</a></h3> <div class="doc-signature highlight"><pre><span></span><code><span class=n>rig</span><span class=p>:</span> <span class=nb>str</span>
 </code></pre></div> <div class="doc doc-contents "> <p>From DR training spreadsheet (<code>NP2</code>, <code>B2</code>, 'BEH.E`).</p> <ul> <li>does not necessarily match <code>AIBS_RIG_ID</code> on computer</li> <li><code>unknown</code> if not available (for Templeton sessions)</li> </ul> </div> </div> <div class="doc doc-object doc-attribute"> <h3 id=npc_lims.status.tracked_sessions.SessionInfo.task_version class="doc doc-heading"> <span class="doc doc-object-name doc-attribute-name">task_version</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-property"><code>property</code></small> </span> <a href=#npc_lims.status.tracked_sessions.SessionInfo.task_version class=headerlink title="Permanent link">&para;</a></h3> <div class="doc-signature highlight"><pre><span></span><code><span class=n>task_version</span><span class=p>:</span> <span class=nb>str</span>
 </code></pre></div> <div class="doc doc-contents "> <p>From DR training spreadsheet (<code>stage 5 ori AMN moving timeouts repeats</code>). - <code>unknown</code> if not available (for Templeton sessions)</p> </div> </div> <div class="doc doc-object doc-attribute"> <h3 id=npc_lims.status.tracked_sessions.SessionInfo.training_info class="doc doc-heading"> <span class="doc doc-object-name doc-attribute-name">training_info</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> <small class="doc doc-label doc-label-property"><code>property</code></small> </span> <a href=#npc_lims.status.tracked_sessions.SessionInfo.training_info class=headerlink title="Permanent link">&para;</a></h3> <div class="doc-signature highlight"><pre><span></span><code><span class=n>training_info</span><span class=p>:</span> <span class=nb>dict</span><span class=p>[</span><span class=nb>str</span><span class=p>,</span> <span class=n>Any</span><span class=p>]</span>
-</code></pre></div> <div class="doc doc-contents "> <p>Session metadata from Sam's DR training database. - empty dict for Templeton sessions</p> <blockquote> <blockquote> <blockquote> <p>next(get_session_info()).session_info # doctest: +SKIP {'ID': 1, 'start_time': '2023-03-07 12:56:27', 'rig_name': 'B2', 'task_version': 'stage 0 moving', 'hits': '0', 'dprime_same_modality': '', 'dprime_other_modality_go_stim': '', 'pass': '1', 'ignore': '0'} assert next(session.training_info for session in get_session_info() if session.training_info)</p> </blockquote> </blockquote> </blockquote> </div> </div> </div> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.status.tracked_sessions.get_session_info class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_session_info</span> <a href=#npc_lims.status.tracked_sessions.get_session_info class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_session_info</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span> <span class=o>|</span> <span class=n>SessionInfo</span> <span class=o>|</span> <span class=kc>None</span> <span class=o>=</span> <span class=kc>None</span><span class=p>,</span> <span class=o>**</span><span class=n>bool_filter_kwargs</span><span class=p>:</span> <span class=nb>bool</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>SessionInfo</span><span class=p>,</span> <span class=o>...</span><span class=p>]</span> <span class=o>|</span> <span class=n>SessionInfo</span>
-</code></pre></div> <div class="doc doc-contents "> <p>Quickly get a sequence of all tracked sessions.</p> <p>Each object in the sequence has info about one session:</p> <blockquote> <blockquote> <blockquote> <p>sessions = get_session_info() sessions[0].<strong>class</strong>.<strong>name</strong> 'SessionInfo' sessions[0].is_ephys # doctest: +SKIP True any(s for s in sessions if s.date.year &lt; 2021) False</p> </blockquote> </blockquote> </blockquote> <p>Pass a session str or SessionRecord to get the info for that session:</p> <blockquote> <blockquote> <blockquote> <p>info = get_session_info("DRpilot_667252_20230927") assert isinstance(info, SessionInfo)</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/status/tracked_sessions.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>217</span>
-<span class=normal>218</span>
-<span class=normal>219</span>
-<span class=normal>220</span>
-<span class=normal>221</span>
-<span class=normal>222</span>
-<span class=normal>223</span>
-<span class=normal>224</span>
-<span class=normal>225</span>
-<span class=normal>226</span>
+</code></pre></div> <div class="doc doc-contents "> <p>Session metadata from Sam's DR training database. - empty dict for Templeton sessions</p> <p>Examples:</p> <pre><code>&gt;&gt;&gt; next(get_session_info()).session_info                       # doctest: +SKIP
+{'ID': 1, 'start_time': '2023-03-07 12:56:27', 'rig_name': 'B2', 'task_version': 'stage 0 moving', 'hits': '0', 'dprime_same_modality': '', 'dprime_other_modality_go_stim': '', 'pass': '1', 'ignore': '0'}
+&gt;&gt;&gt; assert next(session.training_info for session in get_session_info() if session.training_info)
+</code></pre> </div> </div> </div> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.status.tracked_sessions.get_session_info class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_session_info</span> <a href=#npc_lims.status.tracked_sessions.get_session_info class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_session_info</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span> <span class=o>|</span> <span class=n>SessionInfo</span> <span class=o>|</span> <span class=kc>None</span> <span class=o>=</span> <span class=kc>None</span><span class=p>,</span> <span class=o>**</span><span class=n>bool_filter_kwargs</span><span class=p>:</span> <span class=nb>bool</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>SessionInfo</span><span class=p>,</span> <span class=o>...</span><span class=p>]</span> <span class=o>|</span> <span class=n>SessionInfo</span>
+</code></pre></div> <div class="doc doc-contents "> <p>Quickly get a sequence of all tracked sessions.</p> <p>Examples:</p> <pre><code>Each object in the sequence has info about one session:
+&gt;&gt;&gt; sessions = get_session_info()
+&gt;&gt;&gt; sessions[0].__class__.__name__
+'SessionInfo'
+&gt;&gt;&gt; sessions[0].is_ephys                    # doctest: +SKIP
+True
+&gt;&gt;&gt; any(s for s in sessions if s.date.year &lt; 2021)
+False
+
+Pass a session str or SessionRecord to get the info for that session:
+&gt;&gt;&gt; info = get_session_info("DRpilot_667252_20230927")
+&gt;&gt;&gt; assert isinstance(info, SessionInfo)
+</code></pre> <details class=quote> <summary>Source code in <code>npc_lims/status/tracked_sessions.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>226</span>
 <span class=normal>227</span>
 <span class=normal>228</span>
 <span class=normal>229</span>
@@ -49,24 +63,37 @@
 <span class=normal>252</span>
 <span class=normal>253</span>
 <span class=normal>254</span>
-<span class=normal>255</span></pre></div></td><td class=code><div><pre><span></span><code><span class=k>def</span> <span class=nf>get_session_info</span><span class=p>(</span>
+<span class=normal>255</span>
+<span class=normal>256</span>
+<span class=normal>257</span>
+<span class=normal>258</span>
+<span class=normal>259</span>
+<span class=normal>260</span>
+<span class=normal>261</span>
+<span class=normal>262</span>
+<span class=normal>263</span>
+<span class=normal>264</span>
+<span class=normal>265</span>
+<span class=normal>266</span></pre></div></td><td class=code><div><pre><span></span><code><span class=k>def</span> <span class=nf>get_session_info</span><span class=p>(</span>
     <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span> <span class=o>|</span> <span class=n>SessionInfo</span> <span class=o>|</span> <span class=kc>None</span> <span class=o>=</span> <span class=kc>None</span><span class=p>,</span>
     <span class=o>**</span><span class=n>bool_filter_kwargs</span><span class=p>:</span> <span class=nb>bool</span><span class=p>,</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>SessionInfo</span><span class=p>,</span> <span class=o>...</span><span class=p>]</span> <span class=o>|</span> <span class=n>SessionInfo</span><span class=p>:</span>
 <span class=w>    </span><span class=sd>&quot;&quot;&quot;Quickly get a sequence of all tracked sessions.</span>
 
-<span class=sd>    Each object in the sequence has info about one session:</span>
-<span class=sd>    &gt;&gt;&gt; sessions = get_session_info()</span>
-<span class=sd>    &gt;&gt;&gt; sessions[0].__class__.__name__</span>
-<span class=sd>    &#39;SessionInfo&#39;</span>
-<span class=sd>    &gt;&gt;&gt; sessions[0].is_ephys                    # doctest: +SKIP</span>
-<span class=sd>    True</span>
-<span class=sd>    &gt;&gt;&gt; any(s for s in sessions if s.date.year &lt; 2021)</span>
-<span class=sd>    False</span>
+<span class=sd>    Examples:</span>
 
-<span class=sd>    Pass a session str or SessionRecord to get the info for that session:</span>
-<span class=sd>    &gt;&gt;&gt; info = get_session_info(&quot;DRpilot_667252_20230927&quot;)</span>
-<span class=sd>    &gt;&gt;&gt; assert isinstance(info, SessionInfo)</span>
+<span class=sd>        Each object in the sequence has info about one session:</span>
+<span class=sd>        &gt;&gt;&gt; sessions = get_session_info()</span>
+<span class=sd>        &gt;&gt;&gt; sessions[0].__class__.__name__</span>
+<span class=sd>        &#39;SessionInfo&#39;</span>
+<span class=sd>        &gt;&gt;&gt; sessions[0].is_ephys                    # doctest: +SKIP</span>
+<span class=sd>        True</span>
+<span class=sd>        &gt;&gt;&gt; any(s for s in sessions if s.date.year &lt; 2021)</span>
+<span class=sd>        False</span>
+
+<span class=sd>        Pass a session str or SessionRecord to get the info for that session:</span>
+<span class=sd>        &gt;&gt;&gt; info = get_session_info(&quot;DRpilot_667252_20230927&quot;)</span>
+<span class=sd>        &gt;&gt;&gt; assert isinstance(info, SessionInfo)</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=k>if</span> <span class=nb>isinstance</span><span class=p>(</span><span class=n>session</span><span class=p>,</span> <span class=n>SessionInfo</span><span class=p>):</span>
         <span class=n>session</span> <span class=o>=</span> <span class=n>session</span><span class=o>.</span><span class=n>id</span>
@@ -89,18 +116,18 @@
         <span class=p>)</span>
     <span class=k>raise</span> <span class=n>exceptions</span><span class=o>.</span><span class=n>NoSessionInfo</span><span class=p>(</span><span class=sa>f</span><span class=s2>&quot;</span><span class=si>{</span><span class=n>record</span><span class=si>}</span><span class=s2> not found in tracked sessions&quot;</span><span class=p>)</span>
 </code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.status.tracked_sessions.get_session_issues class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_session_issues</span> <a href=#npc_lims.status.tracked_sessions.get_session_issues class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_session_issues</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span> <span class=o>|</span> <span class=kc>None</span> <span class=o>=</span> <span class=kc>None</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>list</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span> <span class=o>|</span> <span class=nb>list</span> <span class=o>|</span> <span class=nb>dict</span><span class=p>[</span><span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span> <span class=nb>list</span><span class=p>[</span><span class=nb>str</span><span class=p>]]</span>
-</code></pre></div> <div class="doc doc-contents "> <p>Get a dictionary of all sessions with issues mapped to their issue url.</p> <blockquote> <blockquote> <blockquote> <p>issues = get_session_issues() issues # doctest: +SKIP { '644867_2023-02-21': ['<a href=https://github.com/AllenInstitute/npc_sessions/issues/28>https://github.com/AllenInstitute/npc_sessions/issues/28</a>'], '660023_2023-08-08': ['<a href=https://github.com/AllenInstitute/npc_sessions/issues/26>https://github.com/AllenInstitute/npc_sessions/issues/26</a>'], }</p> <p>single_session_issues = get_session_issues("DRPilot_644867_20230221") assert isinstance(single_session_issues, typing.Sequence) single_session_issues # doctest: +SKIP ['<a href=https://github.com/AllenInstitute/npc_sessions/issues/28>https://github.com/AllenInstitute/npc_sessions/issues/28</a>']</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/status/tracked_sessions.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>268</span>
-<span class=normal>269</span>
-<span class=normal>270</span>
-<span class=normal>271</span>
-<span class=normal>272</span>
-<span class=normal>273</span>
-<span class=normal>274</span>
-<span class=normal>275</span>
-<span class=normal>276</span>
-<span class=normal>277</span>
-<span class=normal>278</span>
-<span class=normal>279</span>
+</code></pre></div> <div class="doc doc-contents "> <p>Get a dictionary of all sessions with issues mapped to their issue url.</p> <p>Examples:</p> <pre><code>&gt;&gt;&gt; issues = get_session_issues()
+&gt;&gt;&gt; issues                                                              # doctest: +SKIP
+{
+    '644867_2023-02-21': ['https://github.com/AllenInstitute/npc_sessions/issues/28'],
+    '660023_2023-08-08': ['https://github.com/AllenInstitute/npc_sessions/issues/26'],
+}
+
+&gt;&gt;&gt; single_session_issues = get_session_issues("DRPilot_644867_20230221")
+&gt;&gt;&gt; assert isinstance(single_session_issues, typing.Sequence)
+&gt;&gt;&gt; single_session_issues                                               # doctest: +SKIP
+['https://github.com/AllenInstitute/npc_sessions/issues/28']
+</code></pre> <details class=quote> <summary>Source code in <code>npc_lims/status/tracked_sessions.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>279</span>
 <span class=normal>280</span>
 <span class=normal>281</span>
 <span class=normal>282</span>
@@ -113,22 +140,37 @@
 <span class=normal>289</span>
 <span class=normal>290</span>
 <span class=normal>291</span>
-<span class=normal>292</span></pre></div></td><td class=code><div><pre><span></span><code><span class=k>def</span> <span class=nf>get_session_issues</span><span class=p>(</span>
+<span class=normal>292</span>
+<span class=normal>293</span>
+<span class=normal>294</span>
+<span class=normal>295</span>
+<span class=normal>296</span>
+<span class=normal>297</span>
+<span class=normal>298</span>
+<span class=normal>299</span>
+<span class=normal>300</span>
+<span class=normal>301</span>
+<span class=normal>302</span>
+<span class=normal>303</span>
+<span class=normal>304</span>
+<span class=normal>305</span></pre></div></td><td class=code><div><pre><span></span><code><span class=k>def</span> <span class=nf>get_session_issues</span><span class=p>(</span>
     <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span> <span class=o>|</span> <span class=kc>None</span> <span class=o>=</span> <span class=kc>None</span><span class=p>,</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>list</span><span class=p>[</span><span class=nb>str</span><span class=p>]</span> <span class=o>|</span> <span class=nb>list</span> <span class=o>|</span> <span class=nb>dict</span><span class=p>[</span><span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span> <span class=nb>list</span><span class=p>[</span><span class=nb>str</span><span class=p>]]:</span>
 <span class=w>    </span><span class=sd>&quot;&quot;&quot;Get a dictionary of all sessions with issues mapped to their issue url.</span>
 
-<span class=sd>    &gt;&gt;&gt; issues = get_session_issues()</span>
-<span class=sd>    &gt;&gt;&gt; issues                                                              # doctest: +SKIP</span>
-<span class=sd>    {</span>
-<span class=sd>        &#39;644867_2023-02-21&#39;: [&#39;https://github.com/AllenInstitute/npc_sessions/issues/28&#39;],</span>
-<span class=sd>        &#39;660023_2023-08-08&#39;: [&#39;https://github.com/AllenInstitute/npc_sessions/issues/26&#39;],</span>
-<span class=sd>    }</span>
+<span class=sd>    Examples:</span>
 
-<span class=sd>    &gt;&gt;&gt; single_session_issues = get_session_issues(&quot;DRPilot_644867_20230221&quot;)</span>
-<span class=sd>    &gt;&gt;&gt; assert isinstance(single_session_issues, typing.Sequence)</span>
-<span class=sd>    &gt;&gt;&gt; single_session_issues                                               # doctest: +SKIP</span>
-<span class=sd>    [&#39;https://github.com/AllenInstitute/npc_sessions/issues/28&#39;]</span>
+<span class=sd>        &gt;&gt;&gt; issues = get_session_issues()</span>
+<span class=sd>        &gt;&gt;&gt; issues                                                              # doctest: +SKIP</span>
+<span class=sd>        {</span>
+<span class=sd>            &#39;644867_2023-02-21&#39;: [&#39;https://github.com/AllenInstitute/npc_sessions/issues/28&#39;],</span>
+<span class=sd>            &#39;660023_2023-08-08&#39;: [&#39;https://github.com/AllenInstitute/npc_sessions/issues/26&#39;],</span>
+<span class=sd>        }</span>
+
+<span class=sd>        &gt;&gt;&gt; single_session_issues = get_session_issues(&quot;DRPilot_644867_20230221&quot;)</span>
+<span class=sd>        &gt;&gt;&gt; assert isinstance(single_session_issues, typing.Sequence)</span>
+<span class=sd>        &gt;&gt;&gt; single_session_issues                                               # doctest: +SKIP</span>
+<span class=sd>        [&#39;https://github.com/AllenInstitute/npc_sessions/issues/28&#39;]</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=k>if</span> <span class=n>session</span><span class=p>:</span>
         <span class=k>try</span><span class=p>:</span>
@@ -139,20 +181,22 @@
         <span class=n>session</span><span class=o>.</span><span class=n>id</span><span class=p>:</span> <span class=n>session</span><span class=o>.</span><span class=n>issues</span> <span class=k>for</span> <span class=n>session</span> <span class=ow>in</span> <span class=n>get_session_info</span><span class=p>()</span> <span class=k>if</span> <span class=n>session</span><span class=o>.</span><span class=n>issues</span>
     <span class=p>}</span>
 </code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.status.tracked_sessions.get_session_kwargs class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_session_kwargs</span> <a href=#npc_lims.status.tracked_sessions.get_session_kwargs class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_session_kwargs</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span> <span class=o>|</span> <span class=kc>None</span> <span class=o>=</span> <span class=kc>None</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>dict</span><span class=p>[</span><span class=nb>str</span><span class=p>,</span> <span class=nb>str</span><span class=p>]</span> <span class=o>|</span> <span class=nb>dict</span> <span class=o>|</span> <span class=nb>dict</span><span class=p>[</span><span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span> <span class=nb>dict</span><span class=p>[</span><span class=nb>str</span><span class=p>,</span> <span class=nb>str</span><span class=p>]]</span>
-</code></pre></div> <div class="doc doc-contents "> <p>Get a dictionary of all sessions mapped to their config kwargs. kwargs will be an empty dict if no kwargs have been specified.</p> <blockquote> <blockquote> <blockquote> <p false=False _is_task_:="'is_task':">kwargs = get_session_kwargs() kwargs # doctest: +SKIP { '670248_2023-08-02': { 'is_task': False, }, '667252_2023-09-25': { 'invalid_times': [ {'start_time': 4996, 'stop_time': -1, 'reason': 'auditory stimulus not presented (amplifier power issue)'} ] }, } single_session_kwargs = get_session_kwargs("DRpilot_670248_20230802") assert isinstance(single_session_kwargs, dict) single_session_kwargs # doctest: +SKIP</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/status/tracked_sessions.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>305</span>
-<span class=normal>306</span>
-<span class=normal>307</span>
-<span class=normal>308</span>
-<span class=normal>309</span>
-<span class=normal>310</span>
-<span class=normal>311</span>
-<span class=normal>312</span>
-<span class=normal>313</span>
-<span class=normal>314</span>
-<span class=normal>315</span>
-<span class=normal>316</span>
-<span class=normal>317</span>
-<span class=normal>318</span>
+</code></pre></div> <div class="doc doc-contents "> <p>Get a dictionary of all sessions mapped to their config kwargs. kwargs will be an empty dict if no kwargs have been specified.</p> <p>Examples:</p> <pre><code>&gt;&gt;&gt; kwargs = get_session_kwargs()
+&gt;&gt;&gt; kwargs                                                          # doctest: +SKIP
+{   '670248_2023-08-02': {
+        'is_task': False,
+    },
+    '667252_2023-09-25': {
+        'invalid_times': [
+            {'start_time': 4996, 'stop_time': -1, 'reason': 'auditory stimulus not presented (amplifier power issue)'}
+        ]
+    },
+}
+&gt;&gt;&gt; single_session_kwargs = get_session_kwargs("DRpilot_670248_20230802")
+&gt;&gt;&gt; assert isinstance(single_session_kwargs, dict)
+&gt;&gt;&gt; single_session_kwargs                                           # doctest: +SKIP
+{'is_task': False}
+</code></pre> <details class=quote> <summary>Source code in <code>npc_lims/status/tracked_sessions.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>318</span>
 <span class=normal>319</span>
 <span class=normal>320</span>
 <span class=normal>321</span>
@@ -166,27 +210,44 @@
 <span class=normal>329</span>
 <span class=normal>330</span>
 <span class=normal>331</span>
-<span class=normal>332</span></pre></div></td><td class=code><div><pre><span></span><code><span class=k>def</span> <span class=nf>get_session_kwargs</span><span class=p>(</span>
+<span class=normal>332</span>
+<span class=normal>333</span>
+<span class=normal>334</span>
+<span class=normal>335</span>
+<span class=normal>336</span>
+<span class=normal>337</span>
+<span class=normal>338</span>
+<span class=normal>339</span>
+<span class=normal>340</span>
+<span class=normal>341</span>
+<span class=normal>342</span>
+<span class=normal>343</span>
+<span class=normal>344</span>
+<span class=normal>345</span>
+<span class=normal>346</span>
+<span class=normal>347</span></pre></div></td><td class=code><div><pre><span></span><code><span class=k>def</span> <span class=nf>get_session_kwargs</span><span class=p>(</span>
     <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span> <span class=o>|</span> <span class=kc>None</span> <span class=o>=</span> <span class=kc>None</span><span class=p>,</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>dict</span><span class=p>[</span><span class=nb>str</span><span class=p>,</span> <span class=nb>str</span><span class=p>]</span> <span class=o>|</span> <span class=nb>dict</span> <span class=o>|</span> <span class=nb>dict</span><span class=p>[</span><span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span> <span class=nb>dict</span><span class=p>[</span><span class=nb>str</span><span class=p>,</span> <span class=nb>str</span><span class=p>]]:</span>
 <span class=w>    </span><span class=sd>&quot;&quot;&quot;Get a dictionary of all sessions mapped to their config kwargs. kwargs will</span>
 <span class=sd>    be an empty dict if no kwargs have been specified.</span>
 
-<span class=sd>    &gt;&gt;&gt; kwargs = get_session_kwargs()</span>
-<span class=sd>    &gt;&gt;&gt; kwargs                                                          # doctest: +SKIP</span>
-<span class=sd>    {   &#39;670248_2023-08-02&#39;: {</span>
-<span class=sd>            &#39;is_task&#39;: False,</span>
-<span class=sd>        },</span>
-<span class=sd>        &#39;667252_2023-09-25&#39;: {</span>
-<span class=sd>            &#39;invalid_times&#39;: [</span>
-<span class=sd>                {&#39;start_time&#39;: 4996, &#39;stop_time&#39;: -1, &#39;reason&#39;: &#39;auditory stimulus not presented (amplifier power issue)&#39;}</span>
-<span class=sd>            ]</span>
-<span class=sd>        },</span>
-<span class=sd>    }</span>
-<span class=sd>    &gt;&gt;&gt; single_session_kwargs = get_session_kwargs(&quot;DRpilot_670248_20230802&quot;)</span>
-<span class=sd>    &gt;&gt;&gt; assert isinstance(single_session_kwargs, dict)</span>
-<span class=sd>    &gt;&gt;&gt; single_session_kwargs                                           # doctest: +SKIP</span>
-<span class=sd>    {&#39;is_task&#39;: False}</span>
+<span class=sd>    Examples:</span>
+
+<span class=sd>        &gt;&gt;&gt; kwargs = get_session_kwargs()</span>
+<span class=sd>        &gt;&gt;&gt; kwargs                                                          # doctest: +SKIP</span>
+<span class=sd>        {   &#39;670248_2023-08-02&#39;: {</span>
+<span class=sd>                &#39;is_task&#39;: False,</span>
+<span class=sd>            },</span>
+<span class=sd>            &#39;667252_2023-09-25&#39;: {</span>
+<span class=sd>                &#39;invalid_times&#39;: [</span>
+<span class=sd>                    {&#39;start_time&#39;: 4996, &#39;stop_time&#39;: -1, &#39;reason&#39;: &#39;auditory stimulus not presented (amplifier power issue)&#39;}</span>
+<span class=sd>                ]</span>
+<span class=sd>            },</span>
+<span class=sd>        }</span>
+<span class=sd>        &gt;&gt;&gt; single_session_kwargs = get_session_kwargs(&quot;DRpilot_670248_20230802&quot;)</span>
+<span class=sd>        &gt;&gt;&gt; assert isinstance(single_session_kwargs, dict)</span>
+<span class=sd>        &gt;&gt;&gt; single_session_kwargs                                           # doctest: +SKIP</span>
+<span class=sd>        {&#39;is_task&#39;: False}</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=k>if</span> <span class=n>session</span><span class=p>:</span>
         <span class=k>try</span><span class=p>:</span>

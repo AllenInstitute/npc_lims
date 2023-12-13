@@ -29,11 +29,9 @@
         <span class=k>return</span> <span class=n>bucket</span> <span class=o>/</span> <span class=n>asset_id</span><span class=o>.</span><span class=n>id</span>  <span class=c1># type: ignore[union-attr]</span>
     <span class=k>return</span> <span class=n>bucket</span> <span class=o>/</span> <span class=nb>str</span><span class=p>(</span><span class=n>asset_id</span><span class=p>)</span>
 </code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.paths.s3.get_h5_sync_from_s3 class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_h5_sync_from_s3</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> </span> <a href=#npc_lims.paths.s3.get_h5_sync_from_s3 class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_h5_sync_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>upath</span><span class=o>.</span><span class=n>UPath</span>
-</code></pre></div> <div class="doc doc-contents "> <blockquote> <blockquote> <blockquote> <p>get_h5_sync_from_s3('662892_20230821') S3Path('s3://aind-ephys-data/ecephys_662892_2023-08-21_12-43-45/behavior/20230821T124345.h5')</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>108</span>
-<span class=normal>109</span>
-<span class=normal>110</span>
-<span class=normal>111</span>
-<span class=normal>112</span>
+</code></pre></div> <div class="doc doc-contents "> <p><strong>Examples:</strong></p> <div class=highlight><pre><span></span><code><span class=gp>&gt;&gt;&gt; </span><span class=n>get_h5_sync_from_s3</span><span class=p>(</span><span class=s1>&#39;662892_20230821&#39;</span><span class=p>)</span>
+<span class=go>S3Path(&#39;s3://aind-ephys-data/ecephys_662892_2023-08-21_12-43-45/behavior/20230821T124345.h5&#39;)</span>
+</code></pre></div> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>112</span>
 <span class=normal>113</span>
 <span class=normal>114</span>
 <span class=normal>115</span>
@@ -41,11 +39,17 @@
 <span class=normal>117</span>
 <span class=normal>118</span>
 <span class=normal>119</span>
-<span class=normal>120</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
+<span class=normal>120</span>
+<span class=normal>121</span>
+<span class=normal>122</span>
+<span class=normal>123</span>
+<span class=normal>124</span>
+<span class=normal>125</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
 <span class=k>def</span> <span class=nf>get_h5_sync_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>:</span>
-<span class=w>    </span><span class=sd>&quot;&quot;&quot;</span>
-<span class=sd>    &gt;&gt;&gt; get_h5_sync_from_s3(&#39;662892_20230821&#39;)</span>
-<span class=sd>    S3Path(&#39;s3://aind-ephys-data/ecephys_662892_2023-08-21_12-43-45/behavior/20230821T124345.h5&#39;)</span>
+<span class=w>    </span><span class=sd>&quot;&quot;&quot;    </span>
+<span class=sd>    Examples:</span>
+<span class=sd>        &gt;&gt;&gt; get_h5_sync_from_s3(&#39;662892_20230821&#39;)</span>
+<span class=sd>        S3Path(&#39;s3://aind-ephys-data/ecephys_662892_2023-08-21_12-43-45/behavior/20230821T124345.h5&#39;)</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=n>raw_data_paths_s3</span> <span class=o>=</span> <span class=n>get_raw_data_paths_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>)</span>
     <span class=n>sync_path</span> <span class=o>=</span> <span class=nb>tuple</span><span class=p>(</span><span class=n>path</span> <span class=k>for</span> <span class=n>path</span> <span class=ow>in</span> <span class=n>raw_data_paths_s3</span> <span class=k>if</span> <span class=s2>&quot;.h5&quot;</span> <span class=ow>in</span> <span class=n>path</span><span class=o>.</span><span class=n>suffix</span><span class=p>)</span>
@@ -55,20 +59,11 @@
 
     <span class=k>return</span> <span class=n>sync_path</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
 </code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.paths.s3.get_hdf5_stim_files_from_s3 class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_hdf5_stim_files_from_s3</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> </span> <a href=#npc_lims.paths.s3.get_hdf5_stim_files_from_s3 class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_hdf5_stim_files_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>StimFile</span><span class=p>,</span> <span class=o>...</span><span class=p>]</span>
-</code></pre></div> <div class="doc doc-contents "> <p>All the stim files for a session, from the synced <code>DynamicRoutingTask/Data</code> folder on s3.</p> <ul> <li>filters out files that are obviously wrong</li> </ul> <blockquote> <blockquote> <blockquote> <p>files = get_hdf5_stim_files_from_s3('668759_20230711') assert len(files) &gt; 0 files[0].name, files[0].time ('DynamicRouting1', '13:25:00')</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>313</span>
-<span class=normal>314</span>
-<span class=normal>315</span>
-<span class=normal>316</span>
-<span class=normal>317</span>
-<span class=normal>318</span>
-<span class=normal>319</span>
-<span class=normal>320</span>
-<span class=normal>321</span>
-<span class=normal>322</span>
-<span class=normal>323</span>
-<span class=normal>324</span>
-<span class=normal>325</span>
-<span class=normal>326</span>
+</code></pre></div> <div class="doc doc-contents "> <p>All the stim files for a session, from the synced <code>DynamicRoutingTask/Data</code> folder on s3.</p> <ul> <li>filters out files that are obviously wrong</li> </ul> <p><strong>Examples:</strong></p> <div class=highlight><pre><span></span><code><span class=gp>&gt;&gt;&gt; </span><span class=n>files</span> <span class=o>=</span> <span class=n>get_hdf5_stim_files_from_s3</span><span class=p>(</span><span class=s1>&#39;668759_20230711&#39;</span><span class=p>)</span>
+<span class=gp>&gt;&gt;&gt; </span><span class=k>assert</span> <span class=nb>len</span><span class=p>(</span><span class=n>files</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span>
+<span class=gp>&gt;&gt;&gt; </span><span class=n>files</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span><span class=o>.</span><span class=n>name</span><span class=p>,</span> <span class=n>files</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span><span class=o>.</span><span class=n>time</span>
+<span class=go>(&#39;DynamicRouting1&#39;, &#39;13:25:00&#39;)</span>
+</code></pre></div> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>326</span>
 <span class=normal>327</span>
 <span class=normal>328</span>
 <span class=normal>329</span>
@@ -98,7 +93,21 @@
 <span class=normal>353</span>
 <span class=normal>354</span>
 <span class=normal>355</span>
-<span class=normal>356</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
+<span class=normal>356</span>
+<span class=normal>357</span>
+<span class=normal>358</span>
+<span class=normal>359</span>
+<span class=normal>360</span>
+<span class=normal>361</span>
+<span class=normal>362</span>
+<span class=normal>363</span>
+<span class=normal>364</span>
+<span class=normal>365</span>
+<span class=normal>366</span>
+<span class=normal>367</span>
+<span class=normal>368</span>
+<span class=normal>369</span>
+<span class=normal>370</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
 <span class=k>def</span> <span class=nf>get_hdf5_stim_files_from_s3</span><span class=p>(</span>
     <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>StimFile</span><span class=p>,</span> <span class=o>...</span><span class=p>]:</span>
@@ -107,10 +116,11 @@
 
 <span class=sd>    - filters out files that are obviously wrong</span>
 
-<span class=sd>    &gt;&gt;&gt; files = get_hdf5_stim_files_from_s3(&#39;668759_20230711&#39;)</span>
-<span class=sd>    &gt;&gt;&gt; assert len(files) &gt; 0</span>
-<span class=sd>    &gt;&gt;&gt; files[0].name, files[0].time</span>
-<span class=sd>    (&#39;DynamicRouting1&#39;, &#39;13:25:00&#39;)</span>
+<span class=sd>    Examples:</span>
+<span class=sd>        &gt;&gt;&gt; files = get_hdf5_stim_files_from_s3(&#39;668759_20230711&#39;)</span>
+<span class=sd>        &gt;&gt;&gt; assert len(files) &gt; 0</span>
+<span class=sd>        &gt;&gt;&gt; files[0].name, files[0].time</span>
+<span class=sd>        (&#39;DynamicRouting1&#39;, &#39;13:25:00&#39;)</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=n>session</span> <span class=o>=</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>(</span><span class=n>session</span><span class=p>)</span>
     <span class=n>root</span> <span class=o>=</span> <span class=n>DR_DATA_REPO</span> <span class=o>/</span> <span class=nb>str</span><span class=p>(</span><span class=n>session</span><span class=o>.</span><span class=n>subject</span><span class=p>)</span>
@@ -143,58 +153,66 @@
 
     <span class=k>return</span> <span class=nb>tuple</span><span class=p>(</span><span class=n>files</span><span class=p>)</span>
 </code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.paths.s3.get_mean_waveform_codeocean_kilosort_path_from_s3 class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_mean_waveform_codeocean_kilosort_path_from_s3</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> </span> <a href=#npc_lims.paths.s3.get_mean_waveform_codeocean_kilosort_path_from_s3 class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_mean_waveform_codeocean_kilosort_path_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>upath</span><span class=o>.</span><span class=n>UPath</span>
-</code></pre></div> <div class="doc doc-contents "> <blockquote> <blockquote> <blockquote> <p>path = get_spike_times_codeocean_kilosort_path_from_s3('668759_20230711') assert path</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>432</span>
-<span class=normal>433</span>
-<span class=normal>434</span>
-<span class=normal>435</span>
-<span class=normal>436</span>
-<span class=normal>437</span>
-<span class=normal>438</span>
-<span class=normal>439</span>
-<span class=normal>440</span>
-<span class=normal>441</span>
-<span class=normal>442</span>
-<span class=normal>443</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
+</code></pre></div> <div class="doc doc-contents "> <p><strong>Examples:</strong></p> <div class=highlight><pre><span></span><code><span class=gp>&gt;&gt;&gt; </span><span class=n>path</span> <span class=o>=</span> <span class=n>get_spike_times_codeocean_kilosort_path_from_s3</span><span class=p>(</span><span class=s1>&#39;668759_20230711&#39;</span><span class=p>)</span>
+<span class=gp>&gt;&gt;&gt; </span><span class=k>assert</span> <span class=n>path</span>
+</code></pre></div> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>450</span>
+<span class=normal>451</span>
+<span class=normal>452</span>
+<span class=normal>453</span>
+<span class=normal>454</span>
+<span class=normal>455</span>
+<span class=normal>456</span>
+<span class=normal>457</span>
+<span class=normal>458</span>
+<span class=normal>459</span>
+<span class=normal>460</span>
+<span class=normal>461</span>
+<span class=normal>462</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
 <span class=k>def</span> <span class=nf>get_mean_waveform_codeocean_kilosort_path_from_s3</span><span class=p>(</span>
     <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>:</span>
-<span class=w>    </span><span class=sd>&quot;&quot;&quot;</span>
-<span class=sd>    &gt;&gt;&gt; path = get_spike_times_codeocean_kilosort_path_from_s3(&#39;668759_20230711&#39;)</span>
-<span class=sd>    &gt;&gt;&gt; assert path</span>
+<span class=w>    </span><span class=sd>&quot;&quot;&quot;    </span>
+<span class=sd>    Examples:</span>
+<span class=sd>        &gt;&gt;&gt; path = get_spike_times_codeocean_kilosort_path_from_s3(&#39;668759_20230711&#39;)</span>
+<span class=sd>        &gt;&gt;&gt; assert path</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=n>files</span> <span class=o>=</span> <span class=n>get_units_spikes_codeocean_kilosort_top_level_files</span><span class=p>(</span><span class=n>session</span><span class=p>)</span>
     <span class=n>mean_waveforms_path</span> <span class=o>=</span> <span class=nb>next</span><span class=p>(</span><span class=n>path</span> <span class=k>for</span> <span class=n>path</span> <span class=ow>in</span> <span class=n>files</span> <span class=k>if</span> <span class=s2>&quot;mean&quot;</span> <span class=ow>in</span> <span class=nb>str</span><span class=p>(</span><span class=n>path</span><span class=p>))</span>
 
     <span class=k>return</span> <span class=n>mean_waveforms_path</span>
 </code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.paths.s3.get_nwb_file_from_s3 class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_nwb_file_from_s3</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> </span> <a href=#npc_lims.paths.s3.get_nwb_file_from_s3 class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_nwb_file_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>upath</span><span class=o>.</span><span class=n>UPath</span>
-</code></pre></div> <div class="doc doc-contents "> <blockquote> <blockquote> <blockquote> <p>get_nwb_file_from_s3('636766_20230125') S3Path('s3://aind-scratch-data/ben.hardcastle/nwb/nwb/DRpilot_636766_20230125.nwb')</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>359</span>
-<span class=normal>360</span>
-<span class=normal>361</span>
-<span class=normal>362</span>
-<span class=normal>363</span>
-<span class=normal>364</span>
-<span class=normal>365</span>
-<span class=normal>366</span>
-<span class=normal>367</span>
-<span class=normal>368</span>
-<span class=normal>369</span>
-<span class=normal>370</span>
-<span class=normal>371</span>
-<span class=normal>372</span>
-<span class=normal>373</span>
+</code></pre></div> <div class="doc doc-contents "> <p><strong>Examples:</strong></p> <div class=highlight><pre><span></span><code><span class=gp>&gt;&gt;&gt; </span><span class=n>get_nwb_file_from_s3</span><span class=p>(</span><span class=s1>&#39;636766_20230125&#39;</span><span class=p>)</span>
+<span class=go>S3Path(&#39;s3://aind-scratch-data/ben.hardcastle/nwb/nwb/DRpilot_636766_20230125.nwb&#39;)</span>
+</code></pre></div> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>373</span>
 <span class=normal>374</span>
 <span class=normal>375</span>
 <span class=normal>376</span>
 <span class=normal>377</span>
 <span class=normal>378</span>
 <span class=normal>379</span>
-<span class=normal>380</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
+<span class=normal>380</span>
+<span class=normal>381</span>
+<span class=normal>382</span>
+<span class=normal>383</span>
+<span class=normal>384</span>
+<span class=normal>385</span>
+<span class=normal>386</span>
+<span class=normal>387</span>
+<span class=normal>388</span>
+<span class=normal>389</span>
+<span class=normal>390</span>
+<span class=normal>391</span>
+<span class=normal>392</span>
+<span class=normal>393</span>
+<span class=normal>394</span>
+<span class=normal>395</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
 <span class=k>def</span> <span class=nf>get_nwb_file_from_s3</span><span class=p>(</span>
     <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>:</span>
-<span class=w>    </span><span class=sd>&quot;&quot;&quot;</span>
-<span class=sd>    &gt;&gt;&gt; get_nwb_file_from_s3(&#39;636766_20230125&#39;)</span>
-<span class=sd>    S3Path(&#39;s3://aind-scratch-data/ben.hardcastle/nwb/nwb/DRpilot_636766_20230125.nwb&#39;)</span>
+<span class=w>    </span><span class=sd>&quot;&quot;&quot;    </span>
+<span class=sd>    Examples:</span>
+<span class=sd>        &gt;&gt;&gt; get_nwb_file_from_s3(&#39;636766_20230125&#39;)</span>
+<span class=sd>        S3Path(&#39;s3://aind-scratch-data/ben.hardcastle/nwb/nwb/DRpilot_636766_20230125.nwb&#39;)</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=n>session</span> <span class=o>=</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>(</span><span class=n>session</span><span class=p>)</span>
     <span class=n>root</span> <span class=o>=</span> <span class=n>NWB_REPO</span>
@@ -211,14 +229,9 @@
         <span class=k>raise</span> <span class=ne>FileNotFoundError</span><span class=p>(</span><span class=sa>f</span><span class=s2>&quot;No NWB file found at </span><span class=si>{</span><span class=n>root</span><span class=si>}</span><span class=s2>/</span><span class=si>{</span><span class=n>glob</span><span class=si>}</span><span class=s2>&quot;</span><span class=p>)</span>
     <span class=k>return</span> <span class=n>result</span>
 </code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.paths.s3.get_quality_metrics_paths_from_s3 class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_quality_metrics_paths_from_s3</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> </span> <a href=#npc_lims.paths.s3.get_quality_metrics_paths_from_s3 class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_quality_metrics_paths_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]</span>
-</code></pre></div> <div class="doc doc-contents "> <blockquote> <blockquote> <blockquote> <p>quality_metrics_paths = get_quality_metrics_paths_from_s3('662892_2023-08-21') assert len(quality_metrics_paths) &gt; 0</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>177</span>
-<span class=normal>178</span>
-<span class=normal>179</span>
-<span class=normal>180</span>
-<span class=normal>181</span>
-<span class=normal>182</span>
-<span class=normal>183</span>
-<span class=normal>184</span>
+</code></pre></div> <div class="doc doc-contents "> <p><strong>Examples:</strong></p> <div class=highlight><pre><span></span><code><span class=gp>&gt;&gt;&gt; </span><span class=n>quality_metrics_paths</span> <span class=o>=</span> <span class=n>get_quality_metrics_paths_from_s3</span><span class=p>(</span><span class=s1>&#39;662892_2023-08-21&#39;</span><span class=p>)</span>
+<span class=gp>&gt;&gt;&gt; </span><span class=k>assert</span> <span class=nb>len</span><span class=p>(</span><span class=n>quality_metrics_paths</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span>
+</code></pre></div> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>184</span>
 <span class=normal>185</span>
 <span class=normal>186</span>
 <span class=normal>187</span>
@@ -227,13 +240,22 @@
 <span class=normal>190</span>
 <span class=normal>191</span>
 <span class=normal>192</span>
-<span class=normal>193</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
+<span class=normal>193</span>
+<span class=normal>194</span>
+<span class=normal>195</span>
+<span class=normal>196</span>
+<span class=normal>197</span>
+<span class=normal>198</span>
+<span class=normal>199</span>
+<span class=normal>200</span>
+<span class=normal>201</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
 <span class=k>def</span> <span class=nf>get_quality_metrics_paths_from_s3</span><span class=p>(</span>
     <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]:</span>
-<span class=w>    </span><span class=sd>&quot;&quot;&quot;</span>
-<span class=sd>    &gt;&gt;&gt; quality_metrics_paths = get_quality_metrics_paths_from_s3(&#39;662892_2023-08-21&#39;)</span>
-<span class=sd>    &gt;&gt;&gt; assert len(quality_metrics_paths) &gt; 0</span>
+<span class=w>    </span><span class=sd>&quot;&quot;&quot;    </span>
+<span class=sd>    Examples:</span>
+<span class=sd>        &gt;&gt;&gt; quality_metrics_paths = get_quality_metrics_paths_from_s3(&#39;662892_2023-08-21&#39;)</span>
+<span class=sd>        &gt;&gt;&gt; assert len(quality_metrics_paths) &gt; 0</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=n>sorted_paths</span> <span class=o>=</span> <span class=n>get_sorted_data_paths_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>)</span>
     <span class=n>postprocessed_files</span> <span class=o>=</span> <span class=nb>next</span><span class=p>(</span>
@@ -245,7 +267,9 @@
 
     <span class=k>return</span> <span class=n>quality_metrics_paths</span>
 </code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.paths.s3.get_raw_data_paths_from_s3 class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_raw_data_paths_from_s3</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> </span> <a href=#npc_lims.paths.s3.get_raw_data_paths_from_s3 class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_raw_data_paths_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]</span>
-</code></pre></div> <div class="doc doc-contents "> <p>All top-level files and folders from the <code>ephys</code> &amp; <code>behavior</code> subdirectories in a session's raw data folder on s3.</p> <blockquote> <blockquote> <blockquote> <p>files = get_raw_data_paths_from_s3 ('668759_20230711') assert len(files) &gt; 0</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>44</span>
+</code></pre></div> <div class="doc doc-contents "> <p>All top-level files and folders from the <code>ephys</code> &amp; <code>behavior</code> subdirectories in a session's raw data folder on s3.</p> <p><strong>Examples:</strong></p> <div class=highlight><pre><span></span><code><span class=gp>&gt;&gt;&gt; </span><span class=n>files</span> <span class=o>=</span> <span class=n>get_raw_data_paths_from_s3</span> <span class=p>(</span><span class=s1>&#39;668759_20230711&#39;</span><span class=p>)</span>
+<span class=gp>&gt;&gt;&gt; </span><span class=k>assert</span> <span class=nb>len</span><span class=p>(</span><span class=n>files</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span>
+</code></pre></div> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>44</span>
 <span class=normal>45</span>
 <span class=normal>46</span>
 <span class=normal>47</span>
@@ -269,15 +293,17 @@
 <span class=normal>65</span>
 <span class=normal>66</span>
 <span class=normal>67</span>
-<span class=normal>68</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
+<span class=normal>68</span>
+<span class=normal>69</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
 <span class=k>def</span> <span class=nf>get_raw_data_paths_from_s3</span><span class=p>(</span>
     <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]:</span>
 <span class=w>    </span><span class=sd>&quot;&quot;&quot;All top-level files and folders from the `ephys` &amp; `behavior`</span>
 <span class=sd>    subdirectories in a session&#39;s raw data folder on s3.</span>
 
-<span class=sd>    &gt;&gt;&gt; files = get_raw_data_paths_from_s3 (&#39;668759_20230711&#39;)</span>
-<span class=sd>    &gt;&gt;&gt; assert len(files) &gt; 0</span>
+<span class=sd>    Examples:</span>
+<span class=sd>        &gt;&gt;&gt; files = get_raw_data_paths_from_s3 (&#39;668759_20230711&#39;)</span>
+<span class=sd>        &gt;&gt;&gt; assert len(files) &gt; 0</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=n>raw_data_root</span> <span class=o>=</span> <span class=n>codeocean</span><span class=o>.</span><span class=n>get_raw_data_root</span><span class=p>(</span><span class=n>session</span><span class=p>)</span>
     <span class=n>directories</span><span class=p>:</span> <span class=n>Iterator</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>]</span> <span class=o>=</span> <span class=p>(</span>
@@ -295,13 +321,9 @@
         <span class=p>)</span>
     <span class=k>return</span> <span class=n>paths</span>
 </code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.paths.s3.get_recording_dirs_experiment_path_from_s3 class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_recording_dirs_experiment_path_from_s3</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> </span> <a href=#npc_lims.paths.s3.get_recording_dirs_experiment_path_from_s3 class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_recording_dirs_experiment_path_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]</span>
-</code></pre></div> <div class="doc doc-contents "> <blockquote> <blockquote> <blockquote> <p>recording_dirs = get_recording_dirs_experiment_path_from_s3('662892_20230821') assert len(recording_dirs) &gt; 0</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>156</span>
-<span class=normal>157</span>
-<span class=normal>158</span>
-<span class=normal>159</span>
-<span class=normal>160</span>
-<span class=normal>161</span>
-<span class=normal>162</span>
+</code></pre></div> <div class="doc doc-contents "> <p><strong>Examples:</strong></p> <div class=highlight><pre><span></span><code><span class=gp>&gt;&gt;&gt; </span><span class=n>recording_dirs</span> <span class=o>=</span> <span class=n>get_recording_dirs_experiment_path_from_s3</span><span class=p>(</span><span class=s1>&#39;662892_20230821&#39;</span><span class=p>)</span>
+<span class=gp>&gt;&gt;&gt; </span><span class=k>assert</span> <span class=nb>len</span><span class=p>(</span><span class=n>recording_dirs</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span>
+</code></pre></div> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>162</span>
 <span class=normal>163</span>
 <span class=normal>164</span>
 <span class=normal>165</span>
@@ -313,13 +335,21 @@
 <span class=normal>171</span>
 <span class=normal>172</span>
 <span class=normal>173</span>
-<span class=normal>174</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
+<span class=normal>174</span>
+<span class=normal>175</span>
+<span class=normal>176</span>
+<span class=normal>177</span>
+<span class=normal>178</span>
+<span class=normal>179</span>
+<span class=normal>180</span>
+<span class=normal>181</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
 <span class=k>def</span> <span class=nf>get_recording_dirs_experiment_path_from_s3</span><span class=p>(</span>
     <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]:</span>
-<span class=w>    </span><span class=sd>&quot;&quot;&quot;</span>
-<span class=sd>    &gt;&gt;&gt; recording_dirs = get_recording_dirs_experiment_path_from_s3(&#39;662892_20230821&#39;)</span>
-<span class=sd>    &gt;&gt;&gt; assert len(recording_dirs) &gt; 0</span>
+<span class=w>    </span><span class=sd>&quot;&quot;&quot;    </span>
+<span class=sd>    Examples:</span>
+<span class=sd>        &gt;&gt;&gt; recording_dirs = get_recording_dirs_experiment_path_from_s3(&#39;662892_20230821&#39;)</span>
+<span class=sd>        &gt;&gt;&gt; assert len(recording_dirs) &gt; 0</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=n>raw_data_paths</span> <span class=o>=</span> <span class=n>get_raw_data_paths_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>)</span>
     <span class=n>recording_dirs</span> <span class=o>=</span> <span class=p>(</span>
@@ -333,10 +363,9 @@
 
     <span class=k>return</span> <span class=n>recording_dirs_experiment</span>
 </code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.paths.s3.get_settings_xml_path_from_s3 class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_settings_xml_path_from_s3</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> </span> <a href=#npc_lims.paths.s3.get_settings_xml_path_from_s3 class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_settings_xml_path_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>upath</span><span class=o>.</span><span class=n>UPath</span>
-</code></pre></div> <div class="doc doc-contents "> <blockquote> <blockquote> <blockquote> <p>settings_xml_path = get_settings_xml_path_from_s3('670180-2023-07-26') assert settings_xml_path.exists()</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 90</span>
-<span class=normal> 91</span>
-<span class=normal> 92</span>
-<span class=normal> 93</span>
+</code></pre></div> <div class="doc doc-contents "> <p><strong>Examples:</strong></p> <div class=highlight><pre><span></span><code><span class=gp>&gt;&gt;&gt; </span><span class=n>settings_xml_path</span> <span class=o>=</span> <span class=n>get_settings_xml_path_from_s3</span><span class=p>(</span><span class=s1>&#39;670180-2023-07-26&#39;</span><span class=p>)</span>
+<span class=gp>&gt;&gt;&gt; </span><span class=k>assert</span> <span class=n>settings_xml_path</span><span class=o>.</span><span class=n>exists</span><span class=p>()</span>
+</code></pre></div> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 93</span>
 <span class=normal> 94</span>
 <span class=normal> 95</span>
 <span class=normal> 96</span>
@@ -348,13 +377,18 @@
 <span class=normal>102</span>
 <span class=normal>103</span>
 <span class=normal>104</span>
-<span class=normal>105</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
+<span class=normal>105</span>
+<span class=normal>106</span>
+<span class=normal>107</span>
+<span class=normal>108</span>
+<span class=normal>109</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
 <span class=k>def</span> <span class=nf>get_settings_xml_path_from_s3</span><span class=p>(</span>
     <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>:</span>
-<span class=w>    </span><span class=sd>&quot;&quot;&quot;</span>
-<span class=sd>    &gt;&gt;&gt; settings_xml_path = get_settings_xml_path_from_s3(&#39;670180-2023-07-26&#39;)</span>
-<span class=sd>    &gt;&gt;&gt; assert settings_xml_path.exists()</span>
+<span class=w>    </span><span class=sd>&quot;&quot;&quot;    </span>
+<span class=sd>    Examples:</span>
+<span class=sd>        &gt;&gt;&gt; settings_xml_path = get_settings_xml_path_from_s3(&#39;670180-2023-07-26&#39;)</span>
+<span class=sd>        &gt;&gt;&gt; assert settings_xml_path.exists()</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=n>raw_data_paths_s3</span> <span class=o>=</span> <span class=n>get_raw_data_paths_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>)</span>
 
@@ -365,8 +399,9 @@
     <span class=p>)</span>
     <span class=k>return</span> <span class=nb>tuple</span><span class=p>(</span><span class=n>raw_path</span> <span class=o>/</span> <span class=s2>&quot;settings.xml&quot;</span> <span class=k>for</span> <span class=n>raw_path</span> <span class=ow>in</span> <span class=n>directories</span><span class=p>)[</span><span class=mi>0</span><span class=p>]</span>
 </code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.paths.s3.get_sorted_data_paths_from_s3 class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_sorted_data_paths_from_s3</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> </span> <a href=#npc_lims.paths.s3.get_sorted_data_paths_from_s3 class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_sorted_data_paths_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span> <span class=o>|</span> <span class=kc>None</span> <span class=o>=</span> <span class=kc>None</span><span class=p>,</span> <span class=n>sorted_data_asset_id</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=kc>None</span> <span class=o>=</span> <span class=kc>None</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]</span>
-</code></pre></div> <div class="doc doc-contents "> <p>Gets the top level files/folders for the sorted data</p> <blockquote> <blockquote> <blockquote> <p>sorted_data_s3_paths = get_sorted_data_paths_from_s3('668759_20230711') assert len(sorted_data_s3_paths) &gt; 0</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>71</span>
-<span class=normal>72</span>
+</code></pre></div> <div class="doc doc-contents "> <p>Gets the top level files/folders for the sorted data </p> <p><strong>Examples:</strong></p> <div class=highlight><pre><span></span><code><span class=gp>&gt;&gt;&gt; </span><span class=n>sorted_data_s3_paths</span> <span class=o>=</span> <span class=n>get_sorted_data_paths_from_s3</span><span class=p>(</span><span class=s1>&#39;668759_20230711&#39;</span><span class=p>)</span>
+<span class=gp>&gt;&gt;&gt; </span><span class=k>assert</span> <span class=nb>len</span><span class=p>(</span><span class=n>sorted_data_s3_paths</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span>
+</code></pre></div> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>72</span>
 <span class=normal>73</span>
 <span class=normal>74</span>
 <span class=normal>75</span>
@@ -381,15 +416,20 @@
 <span class=normal>84</span>
 <span class=normal>85</span>
 <span class=normal>86</span>
-<span class=normal>87</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
+<span class=normal>87</span>
+<span class=normal>88</span>
+<span class=normal>89</span>
+<span class=normal>90</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
 <span class=k>def</span> <span class=nf>get_sorted_data_paths_from_s3</span><span class=p>(</span>
     <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span> <span class=o>|</span> <span class=kc>None</span> <span class=o>=</span> <span class=kc>None</span><span class=p>,</span>
     <span class=n>sorted_data_asset_id</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=kc>None</span> <span class=o>=</span> <span class=kc>None</span><span class=p>,</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]:</span>
 <span class=w>    </span><span class=sd>&quot;&quot;&quot;</span>
-<span class=sd>    Gets the top level files/folders for the sorted data</span>
-<span class=sd>    &gt;&gt;&gt; sorted_data_s3_paths = get_sorted_data_paths_from_s3(&#39;668759_20230711&#39;)</span>
-<span class=sd>    &gt;&gt;&gt; assert len(sorted_data_s3_paths) &gt; 0</span>
+<span class=sd>    Gets the top level files/folders for the sorted data    </span>
+
+<span class=sd>    Examples:</span>
+<span class=sd>        &gt;&gt;&gt; sorted_data_s3_paths = get_sorted_data_paths_from_s3(&#39;668759_20230711&#39;)</span>
+<span class=sd>        &gt;&gt;&gt; assert len(sorted_data_s3_paths) &gt; 0</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=k>if</span> <span class=n>sorted_data_asset_id</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span><span class=p>:</span>
         <span class=n>sorted_data_asset</span> <span class=o>=</span> <span class=n>codeocean</span><span class=o>.</span><span class=n>get_data_asset</span><span class=p>(</span><span class=n>sorted_data_asset_id</span><span class=p>)</span>
@@ -399,28 +439,32 @@
         <span class=k>raise</span> <span class=ne>ValueError</span><span class=p>(</span><span class=s2>&quot;Must provide either session or sorted_data_asset_id&quot;</span><span class=p>)</span>
     <span class=k>return</span> <span class=nb>tuple</span><span class=p>(</span><span class=n>get_data_asset_s3_path</span><span class=p>(</span><span class=n>sorted_data_asset</span><span class=p>)</span><span class=o>.</span><span class=n>iterdir</span><span class=p>())</span>
 </code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.paths.s3.get_sorted_precurated_paths_from_s3 class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_sorted_precurated_paths_from_s3</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> </span> <a href=#npc_lims.paths.s3.get_sorted_precurated_paths_from_s3 class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_sorted_precurated_paths_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]</span>
-</code></pre></div> <div class="doc doc-contents "> <blockquote> <blockquote> <blockquote> <p>sorted_precurated_paths = get_sorted_precurated_paths_from_s3('662892_2023-08-21') assert len(sorted_precurated_paths) &gt; 0</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>251</span>
-<span class=normal>252</span>
-<span class=normal>253</span>
-<span class=normal>254</span>
-<span class=normal>255</span>
-<span class=normal>256</span>
-<span class=normal>257</span>
-<span class=normal>258</span>
-<span class=normal>259</span>
-<span class=normal>260</span>
-<span class=normal>261</span>
-<span class=normal>262</span>
+</code></pre></div> <div class="doc doc-contents "> <p><strong>Examples:</strong></p> <div class=highlight><pre><span></span><code><span class=gp>&gt;&gt;&gt; </span><span class=n>sorted_precurated_paths</span> <span class=o>=</span> <span class=n>get_sorted_precurated_paths_from_s3</span><span class=p>(</span><span class=s1>&#39;662892_2023-08-21&#39;</span><span class=p>)</span>
+<span class=gp>&gt;&gt;&gt; </span><span class=k>assert</span> <span class=nb>len</span><span class=p>(</span><span class=n>sorted_precurated_paths</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span>
+</code></pre></div> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>262</span>
 <span class=normal>263</span>
 <span class=normal>264</span>
 <span class=normal>265</span>
-<span class=normal>266</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
+<span class=normal>266</span>
+<span class=normal>267</span>
+<span class=normal>268</span>
+<span class=normal>269</span>
+<span class=normal>270</span>
+<span class=normal>271</span>
+<span class=normal>272</span>
+<span class=normal>273</span>
+<span class=normal>274</span>
+<span class=normal>275</span>
+<span class=normal>276</span>
+<span class=normal>277</span>
+<span class=normal>278</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
 <span class=k>def</span> <span class=nf>get_sorted_precurated_paths_from_s3</span><span class=p>(</span>
     <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]:</span>
-<span class=w>    </span><span class=sd>&quot;&quot;&quot;</span>
-<span class=sd>    &gt;&gt;&gt; sorted_precurated_paths = get_sorted_precurated_paths_from_s3(&#39;662892_2023-08-21&#39;)</span>
-<span class=sd>    &gt;&gt;&gt; assert len(sorted_precurated_paths) &gt; 0</span>
+<span class=w>    </span><span class=sd>&quot;&quot;&quot;    </span>
+<span class=sd>    Examples:</span>
+<span class=sd>        &gt;&gt;&gt; sorted_precurated_paths = get_sorted_precurated_paths_from_s3(&#39;662892_2023-08-21&#39;)</span>
+<span class=sd>        &gt;&gt;&gt; assert len(sorted_precurated_paths) &gt; 0</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=n>sorted_paths</span> <span class=o>=</span> <span class=n>get_sorted_data_paths_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>)</span>
     <span class=n>sorted_precurated_dirs</span> <span class=o>=</span> <span class=nb>tuple</span><span class=p>(</span>
@@ -431,36 +475,33 @@
 
     <span class=k>return</span> <span class=n>sorted_precurated_dirs</span>
 </code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.paths.s3.get_spike_sorted_paths_from_s3 class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_spike_sorted_paths_from_s3</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> </span> <a href=#npc_lims.paths.s3.get_spike_sorted_paths_from_s3 class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_spike_sorted_paths_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]</span>
-</code></pre></div> <div class="doc doc-contents "> <blockquote> <blockquote> <blockquote> <p>spike_sorted_paths = get_spike_sorted_paths_from_s3('662892_20230821') assert spike_sorted_paths[0].exists()</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>123</span>
-<span class=normal>124</span>
-<span class=normal>125</span>
-<span class=normal>126</span>
-<span class=normal>127</span>
-<span class=normal>128</span>
+</code></pre></div> <div class="doc doc-contents "> <blockquote> <blockquote> <blockquote> <p>spike_sorted_paths = get_spike_sorted_paths_from_s3('662892_20230821') assert spike_sorted_paths[0].exists()</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>128</span>
 <span class=normal>129</span>
 <span class=normal>130</span>
 <span class=normal>131</span>
 <span class=normal>132</span>
 <span class=normal>133</span>
-<span class=normal>134</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
+<span class=normal>134</span>
+<span class=normal>135</span>
+<span class=normal>136</span>
+<span class=normal>137</span>
+<span class=normal>138</span>
+<span class=normal>139</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
 <span class=k>def</span> <span class=nf>get_spike_sorted_paths_from_s3</span><span class=p>(</span>
     <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]:</span>
 <span class=w>    </span><span class=sd>&quot;&quot;&quot;</span>
-<span class=sd>    &gt;&gt;&gt; spike_sorted_paths = get_spike_sorted_paths_from_s3(&#39;662892_20230821&#39;)</span>
-<span class=sd>    &gt;&gt;&gt; assert spike_sorted_paths[0].exists()</span>
+<span class=sd>        &gt;&gt;&gt; spike_sorted_paths = get_spike_sorted_paths_from_s3(&#39;662892_20230821&#39;)</span>
+<span class=sd>        &gt;&gt;&gt; assert spike_sorted_paths[0].exists()</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=n>sorted_data_paths</span> <span class=o>=</span> <span class=n>get_sorted_data_paths_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>)</span>
     <span class=k>return</span> <span class=nb>tuple</span><span class=p>(</span>
         <span class=nb>next</span><span class=p>(</span><span class=n>path</span> <span class=k>for</span> <span class=n>path</span> <span class=ow>in</span> <span class=n>sorted_data_paths</span> <span class=k>if</span> <span class=s2>&quot;spike&quot;</span> <span class=ow>in</span> <span class=nb>str</span><span class=p>(</span><span class=n>path</span><span class=p>))</span><span class=o>.</span><span class=n>iterdir</span><span class=p>()</span>
     <span class=p>)</span>
 </code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.paths.s3.get_spike_sorting_device_path_from_s3 class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_spike_sorting_device_path_from_s3</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> </span> <a href=#npc_lims.paths.s3.get_spike_sorting_device_path_from_s3 class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_spike_sorting_device_path_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span> <span class=n>device_name</span><span class=p>:</span> <span class=nb>str</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>upath</span><span class=o>.</span><span class=n>UPath</span>
-</code></pre></div> <div class="doc doc-contents "> <blockquote> <blockquote> <blockquote> <p>get_spike_sorting_device_path_from_s3('662892_20230821', 'ProbeA') S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/d527db85-39b7-4c4f-a465-9ca499b0ca47/spikesorted/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/sorting_cached.npz')</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>137</span>
-<span class=normal>138</span>
-<span class=normal>139</span>
-<span class=normal>140</span>
-<span class=normal>141</span>
-<span class=normal>142</span>
+</code></pre></div> <div class="doc doc-contents "> <p><strong>Examples:</strong></p> <div class=highlight><pre><span></span><code><span class=gp>&gt;&gt;&gt; </span><span class=n>get_spike_sorting_device_path_from_s3</span><span class=p>(</span><span class=s1>&#39;662892_20230821&#39;</span><span class=p>,</span> <span class=s1>&#39;ProbeA&#39;</span><span class=p>)</span>
+<span class=go>S3Path(&#39;s3://codeocean-s3datasetsbucket-1u41qdg42ur9/d527db85-39b7-4c4f-a465-9ca499b0ca47/spikesorted/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/sorting_cached.npz&#39;)</span>
+</code></pre></div> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>142</span>
 <span class=normal>143</span>
 <span class=normal>144</span>
 <span class=normal>145</span>
@@ -471,13 +512,20 @@
 <span class=normal>150</span>
 <span class=normal>151</span>
 <span class=normal>152</span>
-<span class=normal>153</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
+<span class=normal>153</span>
+<span class=normal>154</span>
+<span class=normal>155</span>
+<span class=normal>156</span>
+<span class=normal>157</span>
+<span class=normal>158</span>
+<span class=normal>159</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
 <span class=k>def</span> <span class=nf>get_spike_sorting_device_path_from_s3</span><span class=p>(</span>
     <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span> <span class=n>device_name</span><span class=p>:</span> <span class=nb>str</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>:</span>
 <span class=w>    </span><span class=sd>&quot;&quot;&quot;</span>
-<span class=sd>    &gt;&gt;&gt; get_spike_sorting_device_path_from_s3(&#39;662892_20230821&#39;, &#39;ProbeA&#39;)</span>
-<span class=sd>    S3Path(&#39;s3://codeocean-s3datasetsbucket-1u41qdg42ur9/d527db85-39b7-4c4f-a465-9ca499b0ca47/spikesorted/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/sorting_cached.npz&#39;)</span>
+<span class=sd>    Examples:</span>
+<span class=sd>        &gt;&gt;&gt; get_spike_sorting_device_path_from_s3(&#39;662892_20230821&#39;, &#39;ProbeA&#39;)</span>
+<span class=sd>        S3Path(&#39;s3://codeocean-s3datasetsbucket-1u41qdg42ur9/d527db85-39b7-4c4f-a465-9ca499b0ca47/spikesorted/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/sorting_cached.npz&#39;)</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=n>spike_sorted_paths</span> <span class=o>=</span> <span class=n>get_spike_sorted_paths_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>)</span>
     <span class=n>spike_probe_paths</span> <span class=o>=</span> <span class=nb>next</span><span class=p>(</span>
@@ -489,50 +537,58 @@
 
     <span class=k>return</span> <span class=n>sorting_cached_path</span>
 </code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.paths.s3.get_spike_times_codeocean_kilosort_path_from_s3 class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_spike_times_codeocean_kilosort_path_from_s3</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> </span> <a href=#npc_lims.paths.s3.get_spike_times_codeocean_kilosort_path_from_s3 class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_spike_times_codeocean_kilosort_path_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>upath</span><span class=o>.</span><span class=n>UPath</span>
-</code></pre></div> <div class="doc doc-contents "> <blockquote> <blockquote> <blockquote> <p>path = get_spike_times_codeocean_kilosort_path_from_s3('668759_20230711') assert path</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>418</span>
-<span class=normal>419</span>
-<span class=normal>420</span>
-<span class=normal>421</span>
-<span class=normal>422</span>
-<span class=normal>423</span>
-<span class=normal>424</span>
-<span class=normal>425</span>
-<span class=normal>426</span>
-<span class=normal>427</span>
-<span class=normal>428</span>
-<span class=normal>429</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
+</code></pre></div> <div class="doc doc-contents "> <p><strong>Examples:</strong></p> <div class=highlight><pre><span></span><code><span class=gp>&gt;&gt;&gt; </span><span class=n>path</span> <span class=o>=</span> <span class=n>get_spike_times_codeocean_kilosort_path_from_s3</span><span class=p>(</span><span class=s1>&#39;668759_20230711&#39;</span><span class=p>)</span>
+<span class=gp>&gt;&gt;&gt; </span><span class=k>assert</span> <span class=n>path</span>
+</code></pre></div> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>435</span>
+<span class=normal>436</span>
+<span class=normal>437</span>
+<span class=normal>438</span>
+<span class=normal>439</span>
+<span class=normal>440</span>
+<span class=normal>441</span>
+<span class=normal>442</span>
+<span class=normal>443</span>
+<span class=normal>444</span>
+<span class=normal>445</span>
+<span class=normal>446</span>
+<span class=normal>447</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
 <span class=k>def</span> <span class=nf>get_spike_times_codeocean_kilosort_path_from_s3</span><span class=p>(</span>
     <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>:</span>
-<span class=w>    </span><span class=sd>&quot;&quot;&quot;</span>
-<span class=sd>    &gt;&gt;&gt; path = get_spike_times_codeocean_kilosort_path_from_s3(&#39;668759_20230711&#39;)</span>
-<span class=sd>    &gt;&gt;&gt; assert path</span>
+<span class=w>    </span><span class=sd>&quot;&quot;&quot;    </span>
+<span class=sd>    Examples:</span>
+<span class=sd>        &gt;&gt;&gt; path = get_spike_times_codeocean_kilosort_path_from_s3(&#39;668759_20230711&#39;)</span>
+<span class=sd>        &gt;&gt;&gt; assert path</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=n>files</span> <span class=o>=</span> <span class=n>get_units_spikes_codeocean_kilosort_top_level_files</span><span class=p>(</span><span class=n>session</span><span class=p>)</span>
     <span class=n>spike_times_path</span> <span class=o>=</span> <span class=nb>next</span><span class=p>(</span><span class=n>path</span> <span class=k>for</span> <span class=n>path</span> <span class=ow>in</span> <span class=n>files</span> <span class=k>if</span> <span class=s2>&quot;spike&quot;</span> <span class=ow>in</span> <span class=nb>str</span><span class=p>(</span><span class=n>path</span><span class=p>))</span>
 
     <span class=k>return</span> <span class=n>spike_times_path</span>
 </code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.paths.s3.get_spikesorted_cache_paths_from_s3 class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_spikesorted_cache_paths_from_s3</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> </span> <a href=#npc_lims.paths.s3.get_spikesorted_cache_paths_from_s3 class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_spikesorted_cache_paths_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]</span>
-</code></pre></div> <div class="doc doc-contents "> <blockquote> <blockquote> <blockquote> <p>spike_sorted_cache_paths = get_spikesorted_cache_paths_from_s3('662892_20230821') assert len(spike_sorted_cache_paths) &gt; 0</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>215</span>
-<span class=normal>216</span>
-<span class=normal>217</span>
-<span class=normal>218</span>
-<span class=normal>219</span>
-<span class=normal>220</span>
-<span class=normal>221</span>
-<span class=normal>222</span>
-<span class=normal>223</span>
-<span class=normal>224</span>
+</code></pre></div> <div class="doc doc-contents "> <p><strong>Examples:</strong></p> <div class=highlight><pre><span></span><code><span class=gp>&gt;&gt;&gt; </span><span class=n>spike_sorted_cache_paths</span> <span class=o>=</span> <span class=n>get_spikesorted_cache_paths_from_s3</span><span class=p>(</span><span class=s1>&#39;662892_20230821&#39;</span><span class=p>)</span>
+<span class=gp>&gt;&gt;&gt; </span><span class=k>assert</span> <span class=nb>len</span><span class=p>(</span><span class=n>spike_sorted_cache_paths</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span>
+</code></pre></div> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>224</span>
 <span class=normal>225</span>
 <span class=normal>226</span>
 <span class=normal>227</span>
-<span class=normal>228</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
+<span class=normal>228</span>
+<span class=normal>229</span>
+<span class=normal>230</span>
+<span class=normal>231</span>
+<span class=normal>232</span>
+<span class=normal>233</span>
+<span class=normal>234</span>
+<span class=normal>235</span>
+<span class=normal>236</span>
+<span class=normal>237</span>
+<span class=normal>238</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
 <span class=k>def</span> <span class=nf>get_spikesorted_cache_paths_from_s3</span><span class=p>(</span>
     <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]:</span>
-<span class=w>    </span><span class=sd>&quot;&quot;&quot;</span>
-<span class=sd>    &gt;&gt;&gt; spike_sorted_cache_paths = get_spikesorted_cache_paths_from_s3(&#39;662892_20230821&#39;)</span>
-<span class=sd>    &gt;&gt;&gt; assert len(spike_sorted_cache_paths) &gt; 0</span>
+<span class=w>    </span><span class=sd>&quot;&quot;&quot;    </span>
+<span class=sd>    Examples:</span>
+<span class=sd>        &gt;&gt;&gt; spike_sorted_cache_paths = get_spikesorted_cache_paths_from_s3(&#39;662892_20230821&#39;)</span>
+<span class=sd>        &gt;&gt;&gt; assert len(spike_sorted_cache_paths) &gt; 0</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=n>spike_sorted_paths</span> <span class=o>=</span> <span class=n>get_spike_sorted_paths_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>)</span>
     <span class=n>spike_sorted_cache_files</span> <span class=o>=</span> <span class=nb>tuple</span><span class=p>(</span>
@@ -541,15 +597,9 @@
 
     <span class=k>return</span> <span class=n>spike_sorted_cache_files</span>
 </code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.paths.s3.get_template_metrics_paths_from_s3 class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_template_metrics_paths_from_s3</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> </span> <a href=#npc_lims.paths.s3.get_template_metrics_paths_from_s3 class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_template_metrics_paths_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]</span>
-</code></pre></div> <div class="doc doc-contents "> <blockquote> <blockquote> <blockquote> <p>template_metrics_paths = get_template_metrics_paths_from_s3('662892_2023-08-21') assert len(template_metrics_paths) &gt; 0</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>196</span>
-<span class=normal>197</span>
-<span class=normal>198</span>
-<span class=normal>199</span>
-<span class=normal>200</span>
-<span class=normal>201</span>
-<span class=normal>202</span>
-<span class=normal>203</span>
-<span class=normal>204</span>
+</code></pre></div> <div class="doc doc-contents "> <p><strong>Examples:</strong></p> <div class=highlight><pre><span></span><code><span class=gp>&gt;&gt;&gt; </span><span class=n>template_metrics_paths</span> <span class=o>=</span> <span class=n>get_template_metrics_paths_from_s3</span><span class=p>(</span><span class=s1>&#39;662892_2023-08-21&#39;</span><span class=p>)</span>
+<span class=gp>&gt;&gt;&gt; </span><span class=k>assert</span> <span class=nb>len</span><span class=p>(</span><span class=n>template_metrics_paths</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span>
+</code></pre></div> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>204</span>
 <span class=normal>205</span>
 <span class=normal>206</span>
 <span class=normal>207</span>
@@ -557,13 +607,23 @@
 <span class=normal>209</span>
 <span class=normal>210</span>
 <span class=normal>211</span>
-<span class=normal>212</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
+<span class=normal>212</span>
+<span class=normal>213</span>
+<span class=normal>214</span>
+<span class=normal>215</span>
+<span class=normal>216</span>
+<span class=normal>217</span>
+<span class=normal>218</span>
+<span class=normal>219</span>
+<span class=normal>220</span>
+<span class=normal>221</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
 <span class=k>def</span> <span class=nf>get_template_metrics_paths_from_s3</span><span class=p>(</span>
     <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]:</span>
-<span class=w>    </span><span class=sd>&quot;&quot;&quot;</span>
-<span class=sd>    &gt;&gt;&gt; template_metrics_paths = get_template_metrics_paths_from_s3(&#39;662892_2023-08-21&#39;)</span>
-<span class=sd>    &gt;&gt;&gt; assert len(template_metrics_paths) &gt; 0</span>
+<span class=w>    </span><span class=sd>&quot;&quot;&quot;    </span>
+<span class=sd>    Examples:</span>
+<span class=sd>        &gt;&gt;&gt; template_metrics_paths = get_template_metrics_paths_from_s3(&#39;662892_2023-08-21&#39;)</span>
+<span class=sd>        &gt;&gt;&gt; assert len(template_metrics_paths) &gt; 0</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=n>sorted_paths</span> <span class=o>=</span> <span class=n>get_sorted_data_paths_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>)</span>
     <span class=n>postprocessed_files</span> <span class=o>=</span> <span class=nb>next</span><span class=p>(</span>
@@ -575,19 +635,11 @@
 
     <span class=k>return</span> <span class=n>template_metrics_paths</span>
 </code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.paths.s3.get_tissuecyte_annotation_files_from_s3 class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_tissuecyte_annotation_files_from_s3</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> </span> <a href=#npc_lims.paths.s3.get_tissuecyte_annotation_files_from_s3 class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_tissuecyte_annotation_files_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]</span>
-</code></pre></div> <div class="doc doc-contents "> <p>For each probe inserted, get a csv file containing CCF coordinates for each electrode (channel) on the probe.</p> <blockquote> <blockquote> <blockquote> <p>electrode_files = get_tissuecyte_annotation_files_from_s3('626791_2022-08-16') assert len(electrode_files) &gt; 0 electrode_files[0].name 'Probe_A2_channels_626791_warped_processed.csv'</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>269</span>
-<span class=normal>270</span>
-<span class=normal>271</span>
-<span class=normal>272</span>
-<span class=normal>273</span>
-<span class=normal>274</span>
-<span class=normal>275</span>
-<span class=normal>276</span>
-<span class=normal>277</span>
-<span class=normal>278</span>
-<span class=normal>279</span>
-<span class=normal>280</span>
-<span class=normal>281</span>
+</code></pre></div> <div class="doc doc-contents "> <p>For each probe inserted, get a csv file containing CCF coordinates for each electrode (channel) on the probe.</p> <p><strong>Examples:</strong></p> <div class=highlight><pre><span></span><code><span class=gp>&gt;&gt;&gt; </span><span class=n>electrode_files</span> <span class=o>=</span> <span class=n>get_tissuecyte_annotation_files_from_s3</span><span class=p>(</span><span class=s1>&#39;626791_2022-08-16&#39;</span><span class=p>)</span>
+<span class=gp>&gt;&gt;&gt; </span><span class=k>assert</span> <span class=nb>len</span><span class=p>(</span><span class=n>electrode_files</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span>
+<span class=gp>&gt;&gt;&gt; </span><span class=n>electrode_files</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span><span class=o>.</span><span class=n>name</span>
+<span class=go>&#39;Probe_A2_channels_626791_warped_processed.csv&#39;</span>
+</code></pre></div> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>281</span>
 <span class=normal>282</span>
 <span class=normal>283</span>
 <span class=normal>284</span>
@@ -606,17 +658,31 @@
 <span class=normal>297</span>
 <span class=normal>298</span>
 <span class=normal>299</span>
-<span class=normal>300</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
+<span class=normal>300</span>
+<span class=normal>301</span>
+<span class=normal>302</span>
+<span class=normal>303</span>
+<span class=normal>304</span>
+<span class=normal>305</span>
+<span class=normal>306</span>
+<span class=normal>307</span>
+<span class=normal>308</span>
+<span class=normal>309</span>
+<span class=normal>310</span>
+<span class=normal>311</span>
+<span class=normal>312</span>
+<span class=normal>313</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
 <span class=k>def</span> <span class=nf>get_tissuecyte_annotation_files_from_s3</span><span class=p>(</span>
     <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]:</span>
 <span class=w>    </span><span class=sd>&quot;&quot;&quot;For each probe inserted, get a csv file containing CCF coordinates for each</span>
 <span class=sd>    electrode (channel) on the probe.</span>
 
-<span class=sd>    &gt;&gt;&gt; electrode_files = get_tissuecyte_annotation_files_from_s3(&#39;626791_2022-08-16&#39;)</span>
-<span class=sd>    &gt;&gt;&gt; assert len(electrode_files) &gt; 0</span>
-<span class=sd>    &gt;&gt;&gt; electrode_files[0].name</span>
-<span class=sd>    &#39;Probe_A2_channels_626791_warped_processed.csv&#39;</span>
+<span class=sd>    Examples:</span>
+<span class=sd>        &gt;&gt;&gt; electrode_files = get_tissuecyte_annotation_files_from_s3(&#39;626791_2022-08-16&#39;)</span>
+<span class=sd>        &gt;&gt;&gt; assert len(electrode_files) &gt; 0</span>
+<span class=sd>        &gt;&gt;&gt; electrode_files[0].name</span>
+<span class=sd>        &#39;Probe_A2_channels_626791_warped_processed.csv&#39;</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=n>session</span> <span class=o>=</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>(</span><span class=n>session</span><span class=p>)</span>
     <span class=n>day</span> <span class=o>=</span> <span class=n>tracked_sessions</span><span class=o>.</span><span class=n>get_session_info</span><span class=p>(</span><span class=n>session</span><span class=p>)</span><span class=o>.</span><span class=n>experiment_day</span>
@@ -639,30 +705,34 @@
 
     <span class=k>return</span> <span class=n>electrode_files</span>
 </code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.paths.s3.get_unit_locations_paths_from_s3 class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_unit_locations_paths_from_s3</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> </span> <a href=#npc_lims.paths.s3.get_unit_locations_paths_from_s3 class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_unit_locations_paths_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]</span>
-</code></pre></div> <div class="doc doc-contents "> <blockquote> <blockquote> <blockquote> <p>unit_locations_paths = get_unit_locations_paths_from_s3('662892_2023-08-21') assert len(unit_locations_paths) &gt; 0</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>231</span>
-<span class=normal>232</span>
-<span class=normal>233</span>
-<span class=normal>234</span>
-<span class=normal>235</span>
-<span class=normal>236</span>
-<span class=normal>237</span>
-<span class=normal>238</span>
-<span class=normal>239</span>
-<span class=normal>240</span>
-<span class=normal>241</span>
+</code></pre></div> <div class="doc doc-contents "> <p><strong>Examples:</strong></p> <div class=highlight><pre><span></span><code><span class=gp>&gt;&gt;&gt; </span><span class=n>unit_locations_paths</span> <span class=o>=</span> <span class=n>get_unit_locations_paths_from_s3</span><span class=p>(</span><span class=s1>&#39;662892_2023-08-21&#39;</span><span class=p>)</span>
+<span class=gp>&gt;&gt;&gt; </span><span class=k>assert</span> <span class=nb>len</span><span class=p>(</span><span class=n>unit_locations_paths</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>0</span>
+</code></pre></div> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>241</span>
 <span class=normal>242</span>
 <span class=normal>243</span>
 <span class=normal>244</span>
 <span class=normal>245</span>
 <span class=normal>246</span>
 <span class=normal>247</span>
-<span class=normal>248</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
+<span class=normal>248</span>
+<span class=normal>249</span>
+<span class=normal>250</span>
+<span class=normal>251</span>
+<span class=normal>252</span>
+<span class=normal>253</span>
+<span class=normal>254</span>
+<span class=normal>255</span>
+<span class=normal>256</span>
+<span class=normal>257</span>
+<span class=normal>258</span>
+<span class=normal>259</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
 <span class=k>def</span> <span class=nf>get_unit_locations_paths_from_s3</span><span class=p>(</span>
     <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]:</span>
-<span class=w>    </span><span class=sd>&quot;&quot;&quot;</span>
-<span class=sd>    &gt;&gt;&gt; unit_locations_paths = get_unit_locations_paths_from_s3(&#39;662892_2023-08-21&#39;)</span>
-<span class=sd>    &gt;&gt;&gt; assert len(unit_locations_paths) &gt; 0</span>
+<span class=w>    </span><span class=sd>&quot;&quot;&quot;    </span>
+<span class=sd>    Examples:</span>
+<span class=sd>        &gt;&gt;&gt; unit_locations_paths = get_unit_locations_paths_from_s3(&#39;662892_2023-08-21&#39;)</span>
+<span class=sd>        &gt;&gt;&gt; assert len(unit_locations_paths) &gt; 0</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=n>sorted_paths</span> <span class=o>=</span> <span class=n>get_sorted_data_paths_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>)</span>
     <span class=n>postprocessed_files</span> <span class=o>=</span> <span class=nb>next</span><span class=p>(</span>
@@ -675,7 +745,43 @@
 
     <span class=k>return</span> <span class=n>unit_locations_paths</span>
 </code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.paths.s3.get_units_codeoean_kilosort_path_from_s3 class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_units_codeoean_kilosort_path_from_s3</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> </span> <a href=#npc_lims.paths.s3.get_units_codeoean_kilosort_path_from_s3 class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_units_codeoean_kilosort_path_from_s3</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>upath</span><span class=o>.</span><span class=n>UPath</span>
-</code></pre></div> <div class="doc doc-contents "> <blockquote> <blockquote> <blockquote> <p>path = get_units_codeoean_kilosort_path_from_s3('668759_20230711') assert path</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>404</span>
+</code></pre></div> <div class="doc doc-contents "> <p><strong>Examples:</strong></p> <div class=highlight><pre><span></span><code><span class=gp>&gt;&gt;&gt; </span><span class=n>path</span> <span class=o>=</span> <span class=n>get_units_codeoean_kilosort_path_from_s3</span><span class=p>(</span><span class=s1>&#39;668759_20230711&#39;</span><span class=p>)</span>
+<span class=gp>&gt;&gt;&gt; </span><span class=k>assert</span> <span class=n>path</span>
+</code></pre></div> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>420</span>
+<span class=normal>421</span>
+<span class=normal>422</span>
+<span class=normal>423</span>
+<span class=normal>424</span>
+<span class=normal>425</span>
+<span class=normal>426</span>
+<span class=normal>427</span>
+<span class=normal>428</span>
+<span class=normal>429</span>
+<span class=normal>430</span>
+<span class=normal>431</span>
+<span class=normal>432</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
+<span class=k>def</span> <span class=nf>get_units_codeoean_kilosort_path_from_s3</span><span class=p>(</span>
+    <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span>
+<span class=p>)</span> <span class=o>-&gt;</span> <span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>:</span>
+<span class=w>    </span><span class=sd>&quot;&quot;&quot;    </span>
+<span class=sd>    Examples:</span>
+<span class=sd>        &gt;&gt;&gt; path = get_units_codeoean_kilosort_path_from_s3(&#39;668759_20230711&#39;)</span>
+<span class=sd>        &gt;&gt;&gt; assert path</span>
+<span class=sd>    &quot;&quot;&quot;</span>
+    <span class=n>files</span> <span class=o>=</span> <span class=n>get_units_spikes_codeocean_kilosort_top_level_files</span><span class=p>(</span><span class=n>session</span><span class=p>)</span>
+    <span class=n>units_path</span> <span class=o>=</span> <span class=nb>next</span><span class=p>(</span><span class=n>path</span> <span class=k>for</span> <span class=n>path</span> <span class=ow>in</span> <span class=n>files</span> <span class=k>if</span> <span class=s2>&quot;csv&quot;</span> <span class=ow>in</span> <span class=nb>str</span><span class=p>(</span><span class=n>path</span><span class=p>))</span>
+
+    <span class=k>return</span> <span class=n>units_path</span>
+</code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.paths.s3.get_units_spikes_codeocean_kilosort_top_level_files class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_units_spikes_codeocean_kilosort_top_level_files</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> </span> <a href=#npc_lims.paths.s3.get_units_spikes_codeocean_kilosort_top_level_files class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_units_spikes_codeocean_kilosort_top_level_files</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]</span>
+</code></pre></div> <div class="doc doc-contents "> <p><strong>Examples:</strong></p> <div class=highlight><pre><span></span><code><span class=gp>&gt;&gt;&gt; </span><span class=n>paths</span> <span class=o>=</span> <span class=n>get_units_spikes_codeocean_kilosort_top_level_files</span><span class=p>(</span><span class=s1>&#39;668759_20230711&#39;</span><span class=p>)</span>
+<span class=gp>&gt;&gt;&gt; </span><span class=k>assert</span> <span class=n>paths</span>
+</code></pre></div> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>398</span>
+<span class=normal>399</span>
+<span class=normal>400</span>
+<span class=normal>401</span>
+<span class=normal>402</span>
+<span class=normal>403</span>
+<span class=normal>404</span>
 <span class=normal>405</span>
 <span class=normal>406</span>
 <span class=normal>407</span>
@@ -686,44 +792,16 @@
 <span class=normal>412</span>
 <span class=normal>413</span>
 <span class=normal>414</span>
-<span class=normal>415</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
-<span class=k>def</span> <span class=nf>get_units_codeoean_kilosort_path_from_s3</span><span class=p>(</span>
-    <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span>
-<span class=p>)</span> <span class=o>-&gt;</span> <span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>:</span>
-<span class=w>    </span><span class=sd>&quot;&quot;&quot;</span>
-<span class=sd>    &gt;&gt;&gt; path = get_units_codeoean_kilosort_path_from_s3(&#39;668759_20230711&#39;)</span>
-<span class=sd>    &gt;&gt;&gt; assert path</span>
-<span class=sd>    &quot;&quot;&quot;</span>
-    <span class=n>files</span> <span class=o>=</span> <span class=n>get_units_spikes_codeocean_kilosort_top_level_files</span><span class=p>(</span><span class=n>session</span><span class=p>)</span>
-    <span class=n>units_path</span> <span class=o>=</span> <span class=nb>next</span><span class=p>(</span><span class=n>path</span> <span class=k>for</span> <span class=n>path</span> <span class=ow>in</span> <span class=n>files</span> <span class=k>if</span> <span class=s2>&quot;csv&quot;</span> <span class=ow>in</span> <span class=nb>str</span><span class=p>(</span><span class=n>path</span><span class=p>))</span>
-
-    <span class=k>return</span> <span class=n>units_path</span>
-</code></pre></div></td></tr></table></div> </details> </div> </div> <div class="doc doc-object doc-function"> <h2 id=npc_lims.paths.s3.get_units_spikes_codeocean_kilosort_top_level_files class="doc doc-heading"> <span class="doc doc-object-name doc-function-name">get_units_spikes_codeocean_kilosort_top_level_files</span> <span class="doc doc-labels"> <small class="doc doc-label doc-label-cached"><code>cached</code></small> </span> <a href=#npc_lims.paths.s3.get_units_spikes_codeocean_kilosort_top_level_files class=headerlink title="Permanent link">&para;</a></h2> <div class="doc-signature highlight"><pre><span></span><code><span class=n>get_units_spikes_codeocean_kilosort_top_level_files</span><span class=p>(</span><span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]</span>
-</code></pre></div> <div class="doc doc-contents "> <blockquote> <blockquote> <blockquote> <p>paths = get_units_spikes_codeocean_kilosort_top_level_files('668759_20230711') assert paths</p> </blockquote> </blockquote> </blockquote> <details class=quote> <summary>Source code in <code>npc_lims/paths/s3.py</code></summary> <div class=highlight><table class=highlighttable><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>383</span>
-<span class=normal>384</span>
-<span class=normal>385</span>
-<span class=normal>386</span>
-<span class=normal>387</span>
-<span class=normal>388</span>
-<span class=normal>389</span>
-<span class=normal>390</span>
-<span class=normal>391</span>
-<span class=normal>392</span>
-<span class=normal>393</span>
-<span class=normal>394</span>
-<span class=normal>395</span>
-<span class=normal>396</span>
-<span class=normal>397</span>
-<span class=normal>398</span>
-<span class=normal>399</span>
-<span class=normal>400</span>
-<span class=normal>401</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
+<span class=normal>415</span>
+<span class=normal>416</span>
+<span class=normal>417</span></pre></div></td><td class=code><div><pre><span></span><code><span class=nd>@functools</span><span class=o>.</span><span class=n>cache</span>
 <span class=k>def</span> <span class=nf>get_units_spikes_codeocean_kilosort_top_level_files</span><span class=p>(</span>
     <span class=n>session</span><span class=p>:</span> <span class=nb>str</span> <span class=o>|</span> <span class=n>npc_session</span><span class=o>.</span><span class=n>SessionRecord</span><span class=p>,</span>
 <span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>tuple</span><span class=p>[</span><span class=n>upath</span><span class=o>.</span><span class=n>UPath</span><span class=p>,</span> <span class=o>...</span><span class=p>]:</span>
-<span class=w>    </span><span class=sd>&quot;&quot;&quot;</span>
-<span class=sd>    &gt;&gt;&gt; paths = get_units_spikes_codeocean_kilosort_top_level_files(&#39;668759_20230711&#39;)</span>
-<span class=sd>    &gt;&gt;&gt; assert paths</span>
+<span class=w>    </span><span class=sd>&quot;&quot;&quot;    </span>
+<span class=sd>    Examples:</span>
+<span class=sd>        &gt;&gt;&gt; paths = get_units_spikes_codeocean_kilosort_top_level_files(&#39;668759_20230711&#39;)</span>
+<span class=sd>        &gt;&gt;&gt; assert paths</span>
 <span class=sd>    &quot;&quot;&quot;</span>
     <span class=n>units_spikes_data_asset</span> <span class=o>=</span> <span class=p>(</span>
         <span class=n>codeocean</span><span class=o>.</span><span class=n>get_session_units_spikes_with_peak_channels_data_asset</span><span class=p>(</span><span class=n>session</span><span class=p>)</span>
