@@ -3,8 +3,8 @@ site_description: "Tools to fetch and update paths, metadata and state for Minds
 site_url: "https://AllenInstitute.github.io/npc_lims"
 repo_url: "https://github.com/AllenInstitute/npc_lims"
 repo_name: "AllenInstitute/npc_lims"
-# site_dir: "site"
-# watch: [mkdocs.yml, ../src/npc_lims]
+site_dir: "site"
+watch: [mkdocs.yml, ../src/npc_lims]
 copyright: Copyright &copy; 2023 Allen Institute for Neural Dynamics
 # edit_uri: edit/main/docs/
 
