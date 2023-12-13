@@ -54,8 +54,22 @@ dev = [
     "mypy>=1.4.1",
     "pytest-cov>=4.1.0",
     "black>=23.7.0",
-    "types-redis>=4.6.0.3",
-    "types-PyYAML>=6.0.12.11",
+    ##
+    # "towncrier>=19.2",
+    "parver>=0.3",
+    "markdown-callouts>=0.3",
+    "markdown-exec>=1.7",
+    "mkdocs>=1.5",
+    "mkdocs-coverage>=1.0",
+    "mkdocs-gen-files>=0.5",
+    # "mkdocs-git-committers-plugin-2>=1.2",
+    # "mkdocs-git-revision-date-localized-plugin>=1.2",
+    "mkdocs-literate-nav>=0.6",
+    "mkdocs-material>=9.4",
+    "mkdocs-minify-plugin>=0.7",
+    "mkdocstrings[python]>=0.23",
+    "tomli>=2.0; python_version < '3.11'",
+    "git-changelog>=2.3",
 ]
 
 [tool.pdm.scripts]
@@ -63,6 +77,8 @@ ruff = "ruff check src --fix-only"
 black = "black src"
 test = "pytest --cov --cov-report=xml"
 mypy = "mypy src --install-types --non-interactive"
+doc = {shell = "cd docs && mkdocs serve", help = "Start the dev server for doc preview"}
+log = "git-changelog -o CHANGELOG.md"
 
 [tool.pdm.scripts.bumpver]
 composite = [
@@ -82,6 +98,7 @@ composite = [
     "test",
     "black",
     "ruff",
+    "log",
 ]
 
 [tool.pdm.scripts.dryrun]

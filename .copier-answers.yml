@@ -1,0 +1,21 @@
+# Changes here will be overwritten by Copier
+_commit: ea532c5
+_src_path: gh:bjhardcastle/copier-pdm-npc
+author_email: ben.hardcastle@alleninstitue.org
+author_fullname: Ben Hardcastle
+author_username: bjhardcastle
+build_doc: true
+copyright_date: '2023'
+copyright_holder: Allen Institute for Neural Dynamics
+copyright_holder_email: ''
+copyright_license: MIT
+package_version: 0.1.92
+project_description: Tools to fetch and update paths, metadata and state for Mindscope
+    Neuropixels sessions, in the cloud.
+project_name: npc_lims
+python_package_distribution_name: npc-lims
+python_package_import_name: npc_lims
+python_package_requires_python: '>=3.9'
+repository_name: npc_lims
+repository_namespace: AllenInstitute
+
