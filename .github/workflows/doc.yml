@@ -6,8 +6,11 @@ on:
       - master
       - main
     paths:
-      - "*.md"
+      - "CHANGELOG.md"
       - docs/**
+  release:
+    types: [published]
+  workflow_dispatch:
 
 jobs:
   build-doc:
