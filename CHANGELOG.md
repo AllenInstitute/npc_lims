@@ -6,11 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
-## Unreleased
+## [0.1.0](https://github.com/AllenInstitute/npc_lims/releases/tag/0.1.0) - 2023-12-13
 
-<small>[Compare with latest](https://github.com/alleninstitute/npc_lims/compare/v0.1.94...HEAD)</small>
+<small>[Compare with first commit](https://github.com/AllenInstitute/npc_lims/compare/9eddf7254e7666cab5abccc3733501159776bb67...0.1.0)</small>
 
-<!-- insertion marker -->
 
 ## [v0.1.94](https://github.com/alleninstitute/npc_lims/releases/tag/v0.1.94) - 2023-12-13
 

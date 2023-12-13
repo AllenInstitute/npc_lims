@@ -31,7 +31,7 @@ def get_subjects_from_training_db(
     Dynamic Routing training spreadsheet info.
 
     {subject: ({spreadsheet row}, ... )}
-    
+
     Examples:
         >>> subjects = get_subjects_from_training_db(nsb=True)
         >>> assert len(subjects) > 0
@@ -75,7 +75,7 @@ def get_sessions_from_training_db() -> dict[int, tuple[dict[str, Any], ...]]:
     Includes NSB sessions.
 
     {subject: ({spreadsheet row}, ... )}
-    
+
     Examples:
         >>> sessions = get_sessions_from_training_db()
         >>> assert len(sessions) > 0
@@ -119,7 +119,7 @@ def get_subject_folders_from_data_repo() -> (
 def get_subject_folders_from_data_repo(
     subject: int | str | None = None,
 ) -> dict[npc_session.SubjectRecord, upath.UPath] | upath.UPath:
-    """    
+    """
     Examples:
         >>> all_subjects = get_subject_folders_from_data_repo()
         >>> len(all_subjects)                               # doctest: +SKIP
@@ -174,7 +174,7 @@ def get_sessions_from_data_repo(
 ):
     """
     Globs synced behavior data repo for sessions.
-    
+
     Examples:
         get a dict of all subjects mapped to their sessions:
         >>> all_subjects_sessions = get_sessions_from_data_repo()

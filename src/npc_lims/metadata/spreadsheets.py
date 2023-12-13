@@ -12,7 +12,7 @@ import npc_lims.paths
 
 
 def get_training_sqlite_paths() -> tuple[upath.UPath, ...]:
-    """    
+    """
     Examples:
         >>> assert len(get_training_sqlite_paths()) == len(get_training_spreadsheet_paths())
     """
@@ -25,7 +25,7 @@ def get_training_sqlite_paths() -> tuple[upath.UPath, ...]:
 def get_training_db(nsb: bool = False) -> sqlite3.Connection:
     """
     Download db to tempdir, open connection, return connection.
-    
+
     Examples:
         >>> assert get_training_db()
     """
@@ -47,7 +47,7 @@ def get_training_db(nsb: bool = False) -> sqlite3.Connection:
 
 
 def get_training_spreadsheet_paths() -> tuple[upath.UPath, ...]:
-    """    
+    """
     Examples:
         >>> assert len(get_training_spreadsheet_paths()) > 0
     """
@@ -58,7 +58,7 @@ def update_training_dbs() -> None:
     """
     Read spreadsheets from the data repo and write them to corresponding
     databases, currently sqlite files in the same directory.
-    
+
     Examples:
         >>> update_training_dbs()
     """
@@ -78,7 +78,7 @@ def excel_to_sqlite(
     The code assumes that the first row of every sheet is the column name
     Every sheet is stored in a separate table
     The sheet name is assigned as the table name for every sheet.
-    
+
     From
     https://stackoverflow.com/questions/17439885/export-data-from-excel-to-sqlite-database
     """

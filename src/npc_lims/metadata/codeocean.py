@@ -95,7 +95,7 @@ def get_session_data_assets(
 def get_session_result_data_assets(
     session: str | npc_session.SessionRecord,
 ) -> tuple[DataAssetAPI, ...]:
-    """    
+    """
     Examples:
         >>> result_data_assets = get_session_result_data_assets('668759_20230711')
         >>> assert len(result_data_assets) > 0
@@ -159,7 +159,7 @@ def get_single_data_asset(
 def get_session_sorted_data_asset(
     session: str | npc_session.SessionRecord,
 ) -> DataAssetAPI:
-    """    
+    """
     Examples:
         >>> sorted_data_asset = get_session_sorted_data_asset('668759_20230711')
         >>> assert isinstance(sorted_data_asset, dict)
@@ -181,7 +181,7 @@ def get_session_sorted_data_asset(
 def get_sessions_with_data_assets(
     subject: str | int,
 ) -> tuple[npc_session.SessionRecord, ...]:
-    """    
+    """
     Examples:
         >>> sessions = get_sessions_with_data_assets(668759)
         >>> assert len(sessions) > 0
@@ -208,7 +208,7 @@ def get_data_asset(asset: str | uuid.UUID | DataAssetAPI) -> DataAssetAPI:
 
 
 def is_raw_data_asset(asset: str | DataAssetAPI) -> bool:
-    """    
+    """
     Examples:
         >>> is_raw_data_asset('83636983-f80d-42d6-a075-09b60c6abd5e')
         True
@@ -224,7 +224,7 @@ def is_raw_data_asset(asset: str | DataAssetAPI) -> bool:
 
 
 def is_sorted_data_asset(asset: str | DataAssetAPI) -> bool:
-    """    
+    """
     Examples:
         >>> is_sorted_data_asset('173e2fdc-0ca3-4a4e-9886-b74207a91a9a')
         True
@@ -240,7 +240,7 @@ def is_sorted_data_asset(asset: str | DataAssetAPI) -> bool:
 def get_session_raw_data_asset(
     session: str | npc_session.SessionRecord,
 ) -> DataAssetAPI:
-    """    
+    """
     Examples:
         >>> get_session_raw_data_asset('668759_20230711')["id"]
         '83636983-f80d-42d6-a075-09b60c6abd5e'
@@ -259,7 +259,7 @@ def get_session_raw_data_asset(
 def get_surface_channel_root(session: str | npc_session.SessionRecord) -> upath.UPath:
     """Reconstruct path to surface channel data in bucket (e.g. on s3) using data-asset
     info from Code Ocean.
-    
+
     Examples:
         >>> get_surface_channel_root('660023_20230808')
         S3Path('s3://aind-ephys-data/ecephys_660023_2023-08-08_15-11-14')
@@ -377,7 +377,7 @@ def register_session_data_asset(
 def get_session_units_data_asset(
     session_id: str | npc_session.SessionRecord,
 ) -> DataAssetAPI:
-    """    
+    """
     Examples:
         >>> units_data_asset = get_session_units_data_asset('668759_20230711')
         >>> assert units_data_asset is not None
@@ -400,7 +400,7 @@ def get_session_units_data_asset(
 def get_session_units_spikes_with_peak_channels_data_asset(
     session_id: str | npc_session.SessionRecord,
 ) -> DataAssetAPI:
-    """    
+    """
     Examples:
         >>> units_peak_channel_data_asset = get_session_units_spikes_with_peak_channels_data_asset('668759_20230711')
         >>> assert units_peak_channel_data_asset is not None

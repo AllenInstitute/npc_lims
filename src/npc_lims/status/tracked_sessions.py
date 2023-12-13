@@ -88,7 +88,7 @@ class SessionInfo:
         """All of the session's raw data has been uploaded to S3 and can be found in
         CodeOcean. Not the same as `cloud_path` being non-None: this property
         indicates a proper session upload via aind tools, with metadata etc.
-    
+
         Examples:
             >>> next(session.is_uploaded for session in get_session_info() if session.is_uploaded)
             True
@@ -103,7 +103,7 @@ class SessionInfo:
     def is_surface_channels(self) -> bool:
         """The session has ephys data collected separately to record surface
         channel.
-        
+
         Examples:
 
             >>> get_session_info("DRpilot_660023_20230808").is_surface_channels
@@ -121,7 +121,7 @@ class SessionInfo:
     def is_sorted(self) -> bool:
         """The AIND sorting pipeline has yielded a Result asset for this
         session.
-        
+
         Examples:
 
             >>> next(session.is_sorted for session in get_session_info() if session.is_sorted)
@@ -142,7 +142,7 @@ class SessionInfo:
     def is_annotated(self) -> bool:
         """The subject associated with the sessions has CCF annotation data for
         probes available on S3.
-        
+
         Examples:
 
             >>> next(session.is_annotated for session in get_session_info() if session.is_annotated)
@@ -159,7 +159,7 @@ class SessionInfo:
     def training_info(self) -> dict[str, Any]:
         """Session metadata from Sam's DR training database.
         - empty dict for Templeton sessions
-        
+
         Examples:
 
             >>> next(get_session_info()).session_info                       # doctest: +SKIP
@@ -228,7 +228,7 @@ def get_session_info(
     **bool_filter_kwargs: bool,
 ) -> tuple[SessionInfo, ...] | SessionInfo:
     """Quickly get a sequence of all tracked sessions.
-        
+
     Examples:
 
         Each object in the sequence has info about one session:
@@ -280,7 +280,7 @@ def get_session_issues(
     session: str | npc_session.SessionRecord | None = None,
 ) -> list[str] | list | dict[npc_session.SessionRecord, list[str]]:
     """Get a dictionary of all sessions with issues mapped to their issue url.
-        
+
     Examples:
 
         >>> issues = get_session_issues()
@@ -320,7 +320,7 @@ def get_session_kwargs(
 ) -> dict[str, str] | dict | dict[npc_session.SessionRecord, dict[str, str]]:
     """Get a dictionary of all sessions mapped to their config kwargs. kwargs will
     be an empty dict if no kwargs have been specified.
-        
+
     Examples:
 
         >>> kwargs = get_session_kwargs()
@@ -348,7 +348,7 @@ def get_session_kwargs(
 
 
 def _get_session_info_from_data_repo() -> Iterator[SessionInfo]:
-    """        
+    """
     Examples:
 
     >>> session_info = next(_get_session_info_from_data_repo())
@@ -367,7 +367,7 @@ def _get_session_info_from_data_repo() -> Iterator[SessionInfo]:
 def _get_session_info_from_file() -> tuple[SessionInfo, ...]:
     """Load yaml and parse sessions.
     - currently assumes all sessions include behavior data
-        
+
     Examples:
 
         >>> assert len(_get_session_info_from_file()) > 0
