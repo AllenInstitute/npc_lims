@@ -59,7 +59,7 @@ dev = [
     "parver>=0.3",
     "git-changelog>=2.3",
 ]
-doc =[
+docs =[
     "markdown-callouts>=0.3",
     "markdown-exec>=1.7",
     "mkdocs>=1.5",
@@ -188,7 +188,7 @@ exclude_also = [
 addopts = [
     "--import-mode=importlib",
     "--doctest-modules",
-    "--ignore-glob=*scripts*,*examples*",
+    "--ignore-glob=*scripts*,*examples*,*docs*",
     "--doctest-glob=*README.md",
 ]
 doctest_optionflags = [
@@ -197,7 +197,6 @@ doctest_optionflags = [
     "ELLIPSIS",
 ]
 testpaths = [
-    ".",
     "src",
     "tests",
 ]

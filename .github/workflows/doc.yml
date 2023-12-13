@@ -21,8 +21,8 @@ jobs:
           cache: true
       - name: Build pages
         run: |
-          pdm install -s doc
-          cd docs && pdm run mkdocs build
+          pdm install -G docs
+          pdm run docs
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
