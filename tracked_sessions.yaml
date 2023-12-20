@@ -59,14 +59,14 @@ ephys:
         issues:
           - https://github.com/AllenInstitute/npc_sessions/issues/26
         session_kwargs:
-            probe_letters_with_surface_channel_recording: 'D'
+            probe_letters_with_surface_channel_recording: D
     # ^ first DR ephys in a while - is this still 'DRpilot'? 
     # ^ first session with 'surface_channels' after main recording, middle probe bank
     # 103 extra vsyncs for DynamicRouting1 (c.f. num frameIntervals + 1)
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_660023_20230809:
         day: 2
         session_kwargs:
-            probe_letters_with_surface_channel_recording: 'D'
+            probe_letters_with_surface_channel_recording: D
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230814:
         day: 1
         issues:
@@ -86,15 +86,15 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_662892_20230824:
         day: 4
         session_kwargs:
-            surface_recording_probe_letters_to_skip: 'BDE'
+            surface_recording_probe_letters_to_skip: BDE
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230828:
         day: 1
         session_kwargs:
-            surface_recording_probe_letters_to_skip: 'BCDE'
+            surface_recording_probe_letters_to_skip: BCDE
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230829:
         day: 2
         session_kwargs:
-            surface_recording_probe_letters_to_skip: 'BCDE'
+            surface_recording_probe_letters_to_skip: BCDE
         issues:
           - https://github.com/AllenInstitute/npc_lims/issues/15 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230830:
@@ -139,6 +139,8 @@ ephys:
         # TODO upload split recording
         issues:
           - https://github.com/AllenInstitute/npc_lims/issues/5
+        session_kwargs:
+            concatenate_recordings: [recording1, recording2]
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686740_20231023:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686740_20231024:
@@ -162,17 +164,21 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_690706_20231129:
         day: 3
         session_kwargs:
-            probe_letters_with_surface_channel_recording: 'ABCDEF'
+            probe_letters_with_surface_channel_recording: ABCDEF
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_690706_20231130:
         day: 4
         session_kwargs:
-            probe_letters_with_surface_channel_recording: 'ABCDEF'
+            probe_letters_with_surface_channel_recording: ABCDEF
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686176_20231204:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686176_20231205:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686176_20231206:
         day: 3
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
+        session_kwargs:
+            concatenate_recordings: [recording1, recording2]
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686176_20231207:
         day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231211:
@@ -182,6 +188,10 @@ ephys:
         notes: post-task Spontaneous & OptoTagging ran twice - ephys stopped halfway through final OptoTagging
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231212:
         day: 2
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231213:
+        day: 3
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231214:
+        day: 4
 
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-07-26_14-09-36_620263
@@ -227,10 +237,14 @@ ephys:
         notes: task only, mapping recording is in `stopped_early` subfolder
         issues:
           - https://github.com/AllenInstitute/npc_lims/issues/5
+        session_kwargs:
+          concatenate_recordings: [recording1, recording2]
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-25_09-47-29_670180:
     # ^ recording stops mid-task: main recording incls mapping and some of task.
     # subfolder has rest of task. could be stitched together, add 'unobserved interval'
     # - hasn't been uploaded yet (need to rearrange folders & spike-sort with CONCAT=True)
+        session_kwargs:
+          concatenate_recordings: [recording1, recording2]
         issues:
             - https://github.com/AllenInstitute/npc_lims/issues/5
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-26_09-55-57_670180
