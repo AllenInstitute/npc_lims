@@ -17,6 +17,8 @@ DR_DATA_REPO = upath.UPath(
 )
 NWB_REPO = upath.UPath("s3://aind-scratch-data/ben.hardcastle/nwb/nwb")
 
+S3_SCRATCH_ROOT = upath.UPath("s3://aind-scratch-data/ben.hardcastle")
+
 TISSUECYTE_REPO = upath.UPath(
     "s3://aind-scratch-data/arjun.sridhar/tissuecyte_cloud_processed"
 )
