@@ -23,18 +23,8 @@ NWBComponentStr = Literal[
     "devices",
 ]
 
-CACHED_FILE_EXTENSIONS = {
-    "session": ".parquet",
-    "subject": ".parquet",
-    "units": ".parquet",
-    "epochs": ".parquet",
-    "intervals": ".parquet",
-    "invalid_times": ".parquet",
-    "electrodes": ".parquet",
-    "electrode_groups": ".parquet",
-    "devices": ".parquet",
-}
-"""Mapping from NWB component to file extension"""
+CACHED_FILE_EXTENSIONS: dict[str, str] = dict.fromkeys(typing.get_args(NWBComponentStr), '.parquet')
+"""Mapping of NWB component name to file extension"""
 
 assert CACHED_FILE_EXTENSIONS.keys() == set(
     typing.get_args(NWBComponentStr)
