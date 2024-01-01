@@ -6,12 +6,12 @@ import typing
 import npc_session
 import packaging.version
 import upath
-
+from typing_extensions import TypeAlias
 import npc_lims.paths.s3
 
 CACHE_ROOT = npc_lims.paths.s3.S3_SCRATCH_ROOT / "session-caches"
 
-NWBComponentStr = Literal[
+NWBComponentStr: TypeAlias = Literal[
     "session",
     "subject",
     "units",
@@ -23,7 +23,7 @@ NWBComponentStr = Literal[
     "devices",
 ]
 
-CACHED_FILE_EXTENSIONS: dict[str, str] = dict.fromkeys(typing.get_args(NWBComponentStr), '.parquet')
+CACHED_FILE_EXTENSIONS: dict[str, str] = dict.fromkeys(str(typing.get_args(NWBComponentStr)), '.parquet')
 """Mapping of NWB component name to file extension"""
 
 assert CACHED_FILE_EXTENSIONS.keys() == set(
