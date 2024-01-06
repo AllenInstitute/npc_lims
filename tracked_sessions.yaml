@@ -161,37 +161,61 @@ ephys:
         day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686176_20231204:
         day: 1
+        session_kwargs:
+            is_sorted: False
+        issues:
+          - https://github.com/AllenInstitute/npc_sessions/issues/73
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686176_20231205:
         day: 2
+        session_kwargs:
+            is_sorted: False
+        issues:
+          - https://github.com/AllenInstitute/npc_sessions/issues/73
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686176_20231206:
         day: 3
         issues:
           - https://github.com/AllenInstitute/npc_lims/issues/5
+          - https://github.com/AllenInstitute/npc_sessions/issues/73
         session_kwargs:
             concatenate_recordings: [recording1, recording2]
+            is_sorted: False
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686176_20231207:
         day: 4
+        session_kwargs:
+            is_sorted: False
+        issues:
+          - https://github.com/AllenInstitute/npc_sessions/issues/73
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231211:
         day: 1
         session_kwargs:
             is_sorted: False
+        issues:
+          - https://github.com/AllenInstitute/npc_sessions/issues/73
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231212:
         day: 2
         notes: post-task Spontaneous & OptoTagging ran twice - ephys stopped halfway through final OptoTagging
         session_kwargs:
             is_sorted: False
+        issues:
+          - https://github.com/AllenInstitute/npc_sessions/issues/73
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231212:
         day: 2
         session_kwargs:
             is_sorted: False
+        issues:
+          - https://github.com/AllenInstitute/npc_sessions/issues/73
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231213:
         day: 3
         session_kwargs:
             is_sorted: False
+        issues:
+          - https://github.com/AllenInstitute/npc_sessions/issues/73
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231214:
         day: 4
         session_kwargs:
             is_sorted: False
+        issues:
+          - https://github.com/AllenInstitute/npc_sessions/issues/73
 
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-07-26_14-09-36_620263
