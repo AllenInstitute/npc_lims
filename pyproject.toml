@@ -51,7 +51,7 @@ plugins = [
 dev = [
     "pytest>=7.4.0",
     "ruff>=0.0.282",
-    "mypy>=1.4.1",
+    "mypy==1.4.1",
     "pytest-cov>=4.1.0",
     "black>=23.7.0",
     "parver>=0.3",
