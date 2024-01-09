@@ -8,8 +8,7 @@ import tempfile
 import openpyxl
 import upath
 
-import npc_lims.paths
-
+from npc_lims.paths.codeocean import DR_DATA_REPO
 
 def get_training_sqlite_paths() -> tuple[upath.UPath, ...]:
     """
@@ -51,7 +50,7 @@ def get_training_spreadsheet_paths() -> tuple[upath.UPath, ...]:
     Examples:
         >>> assert len(get_training_spreadsheet_paths()) > 0
     """
-    return tuple(npc_lims.DR_DATA_REPO.parent.glob("DynamicRoutingTraining*.xlsx"))
+    return tuple(DR_DATA_REPO.parent.glob("DynamicRoutingTraining*.xlsx"))
 
 
 def update_training_dbs() -> None:
