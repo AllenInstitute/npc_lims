@@ -77,7 +77,7 @@ ruff = "ruff check src --fix-only"
 black = "black src"
 test = "pytest --cov --cov-report=xml"
 mypy = "mypy src --install-types --non-interactive"
-log = "git-changelog -o CHANGELOG.md -i -p github"
+log = "git-changelog -o CHANGELOG.md -p github"
 
 [tool.pdm.scripts.doc]
 shell = "cd docs && mkdocs serve"

@@ -61,6 +61,7 @@ jobs:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         REDIS_DEFAULT_USER_PASSWORD: ${{ secrets.REDIS_DEFAULT_USER_PASSWORD }}
       run: |
+        git clone https://github.com/alleninstitute/npc_lims
         pdm prebuild
         
     - name: Bump project version
