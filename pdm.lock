@@ -4,8 +4,8 @@
 [metadata]
 groups = ["default", "dev", "docs"]
 strategy = ["cross_platform"]
-lock_version = "4.4.1"
-content_hash = "sha256:05bcc9c3c925d87ce67caa43bf95b6710c978b7f7c0f92f99a7c7139ef684314"
+lock_version = "4.4"
+content_hash = "sha256:9e64c558be04eccff1ec15438171c158c93c3a8a2f7fb13b114d3d360db6075f"
 
 [[package]]
 name = "aind-codeocean-api"
@@ -1640,6 +1640,15 @@ summary = "A lil' TOML parser"
 files = [
     {file = "tomli-2.0.1-py3-none-any.whl", hash = "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"},
     {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
+]
+
+[[package]]
+name = "types-pyyaml"
+version = "6.0.12.12"
+summary = "Typing stubs for PyYAML"
+files = [
+    {file = "types-PyYAML-6.0.12.12.tar.gz", hash = "sha256:334373d392fde0fdf95af5c3f1661885fa10c52167b14593eb856289e1855062"},
+    {file = "types_PyYAML-6.0.12.12-py3-none-any.whl", hash = "sha256:c05bc6c158facb0676674b7f11fe3960db4f389718e19e62bd2b84d6205cfd24"},
 ]
 
 [[package]]
