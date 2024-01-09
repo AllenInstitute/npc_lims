@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import typing
 from typing import Literal
-import typing 
 
 import npc_session
 import packaging.version
@@ -26,7 +26,7 @@ NWBComponentStr: TypeAlias = Literal[
     "electrode_groups",
     "electrodes",
     "units",
-    #TODO licks, pupil area, xy pos, running speed (zarr?)
+    # TODO licks, pupil area, xy pos, running speed (zarr?)
 ]
 
 CACHED_FILE_EXTENSIONS: dict[str, str] = dict.fromkeys(
@@ -40,6 +40,7 @@ assert CACHED_FILE_EXTENSIONS.keys() == set(
 assert all(
     v.startswith(".") for v in CACHED_FILE_EXTENSIONS.values()
 ), "CACHED_FILE_EXTENSIONS must have values that start with a period"
+
 
 def get_cache_file_suffix(nwb_component: NWBComponentStr) -> str:
     """
@@ -74,14 +75,13 @@ def _parse_cache_path(
     version: str | None = None,
 ) -> upath.UPath:
     version = _parse_version(version) if version else get_current_cache_version()
-    d = (
-        CACHE_ROOT
-        / version
-        / nwb_component
-    )
+    d = CACHE_ROOT / version / nwb_component
     if session_id is None:
         return d
-    return d / f"{npc_session.SessionRecord(session_id)}{get_cache_file_suffix(nwb_component)}"
+    return (
+        d
+        / f"{npc_session.SessionRecord(session_id)}{get_cache_file_suffix(nwb_component)}"
+    )
 
 
 def get_cache_path(
@@ -99,7 +99,9 @@ def get_cache_path(
     >>> get_cache_path(nwb_component="units", session_id="366122_2023-12-31", version="1.0.0")
     S3Path('s3://aind-scratch-data/ben.hardcastle/session-caches/v1.0.0/units/366122_2023-12-31.parquet')
     """
-    path = _parse_cache_path(session_id=session_id, nwb_component=nwb_component, version=version)
+    path = _parse_cache_path(
+        session_id=session_id, nwb_component=nwb_component, version=version
+    )
     if check_exists and not path.exists():
         raise FileNotFoundError(
             f"Cache file for {session_id} {nwb_component} {version} does not exist"
@@ -123,10 +125,11 @@ def get_all_cache_paths(
         raise FileNotFoundError(
             f"Cache directory for {nwb_component} {version} does not exist"
         )
-    return tuple(path for path in dir_path.glob(f"*{get_cache_file_suffix(nwb_component)}"))
+    return tuple(
+        path for path in dir_path.glob(f"*{get_cache_file_suffix(nwb_component)}")
+    )
 
 
-    
 if __name__ == "__main__":
     import doctest
 

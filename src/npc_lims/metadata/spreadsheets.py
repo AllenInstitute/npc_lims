@@ -10,6 +10,7 @@ import upath
 
 from npc_lims.paths.codeocean import DR_DATA_REPO
 
+
 def get_training_sqlite_paths() -> tuple[upath.UPath, ...]:
     """
     Examples:
