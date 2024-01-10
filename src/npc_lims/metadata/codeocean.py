@@ -34,6 +34,10 @@ DataAssetAPI: TypeAlias = dict[
 ]
 """Result from CodeOcean API when querying data assets."""
 
+EYE_TRACKING_CAPSULE_ID = '4cf0be83-2245-4bb1-a55c-a78201b14bfe'
+DLC_SIDE_TRACKING_CAPSULE_ID = 'facff99f-d3aa-4ecd-8ef8-a343c38197aa'
+DLC_FACE_TRACKING_CAPSULE_ID = 'a561aa4c-2066-4ff2-a916-0db86b918cdf'
+FACEMAP_CAPSULE_ID = '670de0b3-f73d-4d22-afe6-6449c45fada4'
 
 class SessionIndexError(IndexError):
     pass
@@ -454,16 +458,46 @@ def update_permissions_for_data_asset(data_asset: DataAssetAPI) -> None:
     )
     response.raise_for_status()
 
+def get_data_assets_dict(session_id: str, type: str='raw') -> list[dict[str, str]]:
+    """
+    Gets the dictionary that is passed in to the run capsule function from aind codeocean api
+
+    >>> get_data_assets_dict('686740_2023-10-26', type='raw')
+    [{'id': 'aed59ffa-c7db-4246-84cc-d4bb61f4cbc7', 'mount': 'ecephys_686740_2023-10-26_12-29-08'}]
+    """
+
+    # add more types if needed
+    if type == 'raw':
+        data_assets=[
+                {"id": data_asset["id"], "mount": data_asset["name"]}
+                for data_asset in [get_session_raw_data_asset(session_id)]
+            ]
+
+    return data_assets
 
 def run_eye_tracking_capsule(session_id: str) -> None:
     get_codeocean_client().run_capsule(
-        "4cf0be83-2245-4bb1-a55c-a78201b14bfe",
-        data_assets=[
-            {"id": data_asset["id"], "mount": data_asset["name"]}
-            for data_asset in [get_session_raw_data_asset(session_id)]
-        ],
+        EYE_TRACKING_CAPSULE_ID,
+        get_data_assets_dict(session_id, type='raw'),
     ).raise_for_status()
 
+def run_dlc_side_tracking_capsule(session_id: str) -> None:
+    get_codeocean_client().run_capsule(
+        DLC_SIDE_TRACKING_CAPSULE_ID,
+        get_data_assets_dict(session_id, type='raw'),
+    ).raise_for_status()
+
+def run_dlc_face_tracking_capsule(session_id: str) -> None:
+    get_codeocean_client().run_capsule(
+        DLC_FACE_TRACKING_CAPSULE_ID,
+        get_data_assets_dict(session_id, type='raw'),
+    ).raise_for_status()
+
+def run_facemap_capsule(session_id: str) -> None:
+    get_codeocean_client().run_capsule(
+        FACEMAP_CAPSULE_ID,
+        get_data_assets_dict(session_id, type='raw'),
+    ).raise_for_status()
 
 def run_capsules_for_units_spikes_kilosort_codeocean(session_id: str) -> None:
     raw_data_asset = get_session_raw_data_asset(session_id)
