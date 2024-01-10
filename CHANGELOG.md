@@ -8,5 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## [0.1.0](https://github.com/AllenInstitute/npc_lims/releases/tag/0.1.0) - 2024-01-10
 
-<small>[Compare with first commit](https://github.com/AllenInstitute/npc_lims/compare/a2db5a1d1ea6bebf34f0b0cc2ce477386ddafc1a...0.1.0)</small>
+<small>[Compare with first commit](https://github.com/AllenInstitute/npc_lims/compare/85ffe81e9cffa58dd279710a088a3c7d604179f8...0.1.0)</small>
+
+### Added
+
+- add script/functions for running video capsules ([85ffe81](https://github.com/AllenInstitute/npc_lims/commit/85ffe81e9cffa58dd279710a088a3c7d604179f8) by arjun.sridhar12345).
 
