@@ -66,7 +66,10 @@ def get_current_cache_version() -> str:
 
 
 def _parse_version(version: str) -> str:
-    return f"v{packaging.version.parse(str(version))}"
+    try:
+        return f"v{packaging.version.parse(str(version))}"
+    except packaging.version.InvalidVersion:
+        raise ValueError(f"Invalid version {version!r}")
 
 
 def _parse_cache_path(
@@ -74,8 +77,12 @@ def _parse_cache_path(
     session_id: str | npc_session.SessionRecord | None = None,
     version: str | None = None,
 ) -> upath.UPath:
-    version = _parse_version(version) if version else get_current_cache_version()
-    d = CACHE_ROOT / version / nwb_component
+    version = version or get_current_cache_version()
+    d = (
+        CACHE_ROOT
+        / version
+        / nwb_component
+    )
     if session_id is None:
         return d
     return (
