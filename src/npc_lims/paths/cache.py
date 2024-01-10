@@ -94,11 +94,7 @@ def _parse_cache_path(
             version = version
     else:
         version = get_current_cache_version()
-    d = (
-        CACHE_ROOT
-        / version
-        / nwb_component
-    )
+    d = CACHE_ROOT / version / nwb_component
     if session_id is None:
         return d
     return (
