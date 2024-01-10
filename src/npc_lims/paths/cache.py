@@ -66,6 +66,16 @@ def get_current_cache_version() -> str:
 
 
 def _parse_version(version: str) -> str:
+    """
+    >>> _parse_version("0.0.0")
+    'v0.0.0'
+    >>> _parse_version("v0.0.0")
+    'v0.0.0'
+    >>> _parse_version("test")
+    Traceback (most recent call last):
+    ...
+    ValueError: Invalid version 'test'
+    """
     try:
         return f"v{packaging.version.parse(str(version))}"
     except packaging.version.InvalidVersion:
@@ -77,7 +87,13 @@ def _parse_cache_path(
     session_id: str | npc_session.SessionRecord | None = None,
     version: str | None = None,
 ) -> upath.UPath:
-    version = version or get_current_cache_version()
+    if version is not None:
+        try:
+            version = _parse_version(version)
+        except ValueError:
+            version = version
+    else:
+        version = get_current_cache_version()
     d = (
         CACHE_ROOT
         / version
