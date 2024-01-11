@@ -8,8 +8,8 @@ on:
     branches: [ "main" ]
     paths:
       - 'tracked_sessions.yaml'
-  release:
-    types: [published]
+    tags:        
+      - '*'           # Push events to every tag not containing /
   
   workflow_dispatch:
   
