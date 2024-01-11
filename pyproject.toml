@@ -19,6 +19,7 @@ dependencies = [
     "pyopenssl>=23.2.0",
     "openpyxl>=3.1.2",
     "packaging>=23.2",
+    "boto3==1.28.17",
 ]
 requires-python = ">=3.9"
 readme = "README.md"
@@ -58,6 +59,7 @@ dev = [
     "parver>=0.3",
     "git-changelog>=2.3",
     "types-PyYAML>=6.0.12.12",
+    "types-requests>=2.31.0.6",
 ]
 docs = [
     "markdown-callouts>=0.3",

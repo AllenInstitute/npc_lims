@@ -4,8 +4,8 @@
 [metadata]
 groups = ["default", "dev", "docs"]
 strategy = ["cross_platform"]
-lock_version = "4.4"
-content_hash = "sha256:9e64c558be04eccff1ec15438171c158c93c3a8a2f7fb13b114d3d360db6075f"
+lock_version = "4.4.1"
+content_hash = "sha256:18702f19a4612f7c1b8997efa3e5bf3fdf25f1a95817b3f7b9d9aa407d31b5b6"
 
 [[package]]
 name = "aind-codeocean-api"
@@ -24,18 +24,18 @@ files = [
 
 [[package]]
 name = "aiobotocore"
-version = "2.8.0"
+version = "2.7.0"
 requires_python = ">=3.8"
 summary = "Async client for aws services using botocore and aiohttp"
 dependencies = [
     "aiohttp<4.0.0,>=3.7.4.post0",
     "aioitertools<1.0.0,>=0.5.1",
-    "botocore<1.33.2,>=1.32.4",
+    "botocore<1.31.65,>=1.31.16",
     "wrapt<2.0.0,>=1.10.10",
 ]
 files = [
-    {file = "aiobotocore-2.8.0-py3-none-any.whl", hash = "sha256:32e632fea387acd45416c2bbc03828ee2c2a66a7dc4bd3a9bcb808dea249c469"},
-    {file = "aiobotocore-2.8.0.tar.gz", hash = "sha256:f160497cef21cfffc1a8d4219eeb27bb7b243389c2d021a812b9c0e3fb8e2bd1"},
+    {file = "aiobotocore-2.7.0-py3-none-any.whl", hash = "sha256:aec605df77ce4635a0479b50fd849aa6b640900f7b295021ecca192e1140e551"},
+    {file = "aiobotocore-2.7.0.tar.gz", hash = "sha256:506591374cc0aee1bdf0ebe290560424a24af176dfe2ea7057fe1df97c4f0467"},
 ]
 
 [[package]]
@@ -227,22 +227,22 @@ files = [
 
 [[package]]
 name = "boto3"
-version = "1.33.1"
+version = "1.28.17"
 requires_python = ">= 3.7"
 summary = "The AWS SDK for Python"
 dependencies = [
-    "botocore<1.34.0,>=1.33.1",
+    "botocore<1.32.0,>=1.31.17",
     "jmespath<2.0.0,>=0.7.1",
-    "s3transfer<0.9.0,>=0.8.0",
+    "s3transfer<0.7.0,>=0.6.0",
 ]
 files = [
-    {file = "boto3-1.33.1-py3-none-any.whl", hash = "sha256:fa5aa92d16763cb906fb4a83d6eba887342202a980bea07862af5ba40827aa5a"},
-    {file = "boto3-1.33.1.tar.gz", hash = "sha256:1fe5fa75ff0f0c29a6f55e818d149d33571731e692a7b785ded7a28ac832cae8"},
+    {file = "boto3-1.28.17-py3-none-any.whl", hash = "sha256:bca0526f819e0f19c0f1e6eba3e2d1d6b6a92a45129f98c0d716e5aab6d9444b"},
+    {file = "boto3-1.28.17.tar.gz", hash = "sha256:90f7cfb5e1821af95b1fc084bc50e6c47fa3edc99f32de1a2591faa0c546bea7"},
 ]
 
 [[package]]
 name = "botocore"
-version = "1.33.1"
+version = "1.31.64"
 requires_python = ">= 3.7"
 summary = "Low-level, data-driven core of boto 3."
 dependencies = [
@@ -252,8 +252,8 @@ dependencies = [
     "urllib3<2.1,>=1.25.4; python_version >= \"3.10\"",
 ]
 files = [
-    {file = "botocore-1.33.1-py3-none-any.whl", hash = "sha256:c744b90980786c610dd9ad9c50cf2cdde3f1c4634b954a33613f6f8a1865a1de"},
-    {file = "botocore-1.33.1.tar.gz", hash = "sha256:d22d29916905e5f0670b91f07688e92b2c4a2075f9a474d6edbe7d22040d8fbf"},
+    {file = "botocore-1.31.64-py3-none-any.whl", hash = "sha256:7b709310343a5b430ec9025b2e17c0bac6b16c05f1ac1d9521dece3f10c71bac"},
+    {file = "botocore-1.31.64.tar.gz", hash = "sha256:d8eb4b724ac437343359b318d73de0cfae0fecb24095827e56135b0ad6b44caf"},
 ]
 
 [[package]]
@@ -637,12 +637,12 @@ files = [
 
 [[package]]
 name = "fsspec"
-version = "2023.12.2"
+version = "2023.10.0"
 requires_python = ">=3.8"
 summary = "File-system specification"
 files = [
-    {file = "fsspec-2023.12.2-py3-none-any.whl", hash = "sha256:d800d87f72189a745fa3d6b033b9dc4a34ad069f60ca60b943a63599f5501960"},
-    {file = "fsspec-2023.12.2.tar.gz", hash = "sha256:8548d39e8810b59c38014934f6b31e57f40c1b20f911f4cc2b85389c7e9bf0cb"},
+    {file = "fsspec-2023.10.0-py3-none-any.whl", hash = "sha256:346a8f024efeb749d2a5fca7ba8854474b1ff9af7c3faaf636a4548781136529"},
+    {file = "fsspec-2023.10.0.tar.gz", hash = "sha256:330c66757591df346ad3091a53bd907e15348c2ba17d63fd54f5c39c4457d2a5"},
 ]
 
 [[package]]
@@ -1586,30 +1586,30 @@ files = [
 
 [[package]]
 name = "s3fs"
-version = "2023.12.2"
+version = "2023.10.0"
 requires_python = ">= 3.8"
 summary = "Convenient Filesystem interface over S3"
 dependencies = [
-    "aiobotocore<3.0.0,>=2.5.4",
+    "aiobotocore~=2.7.0",
     "aiohttp!=4.0.0a0,!=4.0.0a1",
-    "fsspec==2023.12.2",
+    "fsspec==2023.10.0",
 ]
 files = [
-    {file = "s3fs-2023.12.2-py3-none-any.whl", hash = "sha256:0d5a99039665f30b2dbee5495de3b299a022d51b3195a9440f5df47c2621b777"},
-    {file = "s3fs-2023.12.2.tar.gz", hash = "sha256:b5ec07062481bbb45cb061b31984c7188d106e292c27033039e024e4ba5740dc"},
+    {file = "s3fs-2023.10.0-py3-none-any.whl", hash = "sha256:3df68ff4f5f70c3338219a66df92e91fd15c6b78d0f559e57f617dfdd49feb41"},
+    {file = "s3fs-2023.10.0.tar.gz", hash = "sha256:c40f238ccc9fefff3f6d09d4b5762abd6c913ba42e1a328976b54d038901b835"},
 ]
 
 [[package]]
 name = "s3transfer"
-version = "0.8.0"
+version = "0.6.2"
 requires_python = ">= 3.7"
 summary = "An Amazon S3 Transfer Manager"
 dependencies = [
-    "botocore<2.0a.0,>=1.32.7",
+    "botocore<2.0a.0,>=1.12.36",
 ]
 files = [
-    {file = "s3transfer-0.8.0-py3-none-any.whl", hash = "sha256:baa479dc2e63e5c2ed51611b4d46cdf0295e2070d8d0b86b22f335ee5b954986"},
-    {file = "s3transfer-0.8.0.tar.gz", hash = "sha256:e8d6bd52ffd99841e3a57b34370a54841f12d3aab072af862cdcc50955288002"},
+    {file = "s3transfer-0.6.2-py3-none-any.whl", hash = "sha256:b014be3a8a2aab98cfe1abc7229cc5a9a0cf05eb9c1f2b86b230fd8df3f78084"},
+    {file = "s3transfer-0.6.2.tar.gz", hash = "sha256:cab66d3380cca3e70939ef2255d01cd8aece6a4907a9528740f668c4b0611861"},
 ]
 
 [[package]]
@@ -1649,6 +1649,28 @@ summary = "Typing stubs for PyYAML"
 files = [
     {file = "types-PyYAML-6.0.12.12.tar.gz", hash = "sha256:334373d392fde0fdf95af5c3f1661885fa10c52167b14593eb856289e1855062"},
     {file = "types_PyYAML-6.0.12.12-py3-none-any.whl", hash = "sha256:c05bc6c158facb0676674b7f11fe3960db4f389718e19e62bd2b84d6205cfd24"},
+]
+
+[[package]]
+name = "types-requests"
+version = "2.31.0.6"
+requires_python = ">=3.7"
+summary = "Typing stubs for requests"
+dependencies = [
+    "types-urllib3",
+]
+files = [
+    {file = "types-requests-2.31.0.6.tar.gz", hash = "sha256:cd74ce3b53c461f1228a9b783929ac73a666658f223e28ed29753771477b3bd0"},
+    {file = "types_requests-2.31.0.6-py3-none-any.whl", hash = "sha256:a2db9cb228a81da8348b49ad6db3f5519452dd20a9c1e1a868c83c5fe88fd1a9"},
+]
+
+[[package]]
+name = "types-urllib3"
+version = "1.26.25.14"
+summary = "Typing stubs for urllib3"
+files = [
+    {file = "types-urllib3-1.26.25.14.tar.gz", hash = "sha256:229b7f577c951b8c1b92c1bc2b2fdb0b49847bd2af6d1cc2a2e3dd340f3bda8f"},
+    {file = "types_urllib3-1.26.25.14-py3-none-any.whl", hash = "sha256:9683bbb7fb72e32bfe9d2be6e04875fbe1b3eeec3cbb4ea231435aa7fd6b4f0e"},
 ]
 
 [[package]]
