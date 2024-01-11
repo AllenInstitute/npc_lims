@@ -5,6 +5,7 @@ from typing import Literal
 
 import npc_session
 import packaging.version
+import requests
 import upath
 from typing_extensions import TypeAlias
 
@@ -55,14 +56,17 @@ def get_cache_file_suffix(nwb_component: NWBComponentStr) -> str:
 
 
 def get_current_cache_version() -> str:
-    """
+    """The current version of npc_sessions, formatted as a string starting with
+    'v'.
+    
     >>> (get_cache_path(nwb_component="units", session_id="366122_2023-12-31", version="v0.0.0").parent / 'test.txt').touch()
     >>> v = get_current_cache_version()
-    >>> assert v >= 'v0.0.0'
+    >>> assert v >= 'v0.0.0' 
     """
     if not (version_dirs := sorted(CACHE_ROOT.glob("v*"))):
         raise FileNotFoundError(f"No cache versions found in {CACHE_ROOT}")
-    return version_dirs[-1].name
+    npc_sessions_info = requests.get("https://pypi.org/pypi/npc_sessions/json").json()
+    return _parse_version(npc_sessions_info["info"]["version"])
 
 
 def _parse_version(version: str) -> str:
