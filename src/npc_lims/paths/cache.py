@@ -11,7 +11,7 @@ from typing_extensions import TypeAlias
 
 from npc_lims.paths.s3 import S3_SCRATCH_ROOT
 
-CACHE_ROOT = S3_SCRATCH_ROOT / "session-caches"
+CACHE_ROOT = S3_SCRATCH_ROOT / "cache" / "nwb"
 
 NWBComponentStr: TypeAlias = Literal[
     "session",
