@@ -11,6 +11,11 @@ from typing import Any, Literal
 import npc_session
 import upath
 from aind_codeocean_api import codeocean as aind_codeocean_api
+from aind_codeocean_api.models.data_assets_requests import (
+    CreateDataAssetRequest,
+    Source,
+    Sources,
+)
 from typing_extensions import TypeAlias
 
 import npc_lims.exceptions as exceptions
@@ -34,15 +39,43 @@ DataAssetAPI: TypeAlias = dict[
 ]
 """Result from CodeOcean API when querying data assets."""
 
-EYE_TRACKING_CAPSULE_ID = "4cf0be83-2245-4bb1-a55c-a78201b14bfe"
-DLC_SIDE_TRACKING_CAPSULE_ID = "facff99f-d3aa-4ecd-8ef8-a343c38197aa"
-DLC_FACE_TRACKING_CAPSULE_ID = "a561aa4c-2066-4ff2-a916-0db86b918cdf"
-FACEMAP_CAPSULE_ID = "670de0b3-f73d-4d22-afe6-6449c45fada4"
+CapsuleComputationAPI: TypeAlias = dict[
+    Literal[
+        "created",
+        "end_status",
+        "has_results",
+        "id",
+        "name",
+        "run_time",
+        "state"
+    ],
+    Any
+]
+"""Result from CodeOceanAPI when querying for computations for a capsule"""
 
+ResultItemAPI: TypeAlias = dict[
+    Literal[
+        "name",
+        "path",
+        "size",
+        "type"
+    ],
+    Any
+]
+"""Result from CodeOceanAPI when querying for results from a computation"""
+
+MODEL_CAPSULE_MAPPING: dict[str, str] = {
+    'dlc_eye': "4cf0be83-2245-4bb1-a55c-a78201b14bfe",
+    'dlc_side': "facff99f-d3aa-4ecd-8ef8-a343c38197aa",
+    'dlc_front': "a561aa4c-2066-4ff2-a916-0db86b918cdf",
+    'facemap': "670de0b3-f73d-4d22-afe6-6449c45fada4"
+}
 
 class SessionIndexError(IndexError):
     pass
 
+class ModelCapsuleMappingError(KeyError):
+    pass
 
 @functools.cache
 def get_codeocean_client() -> aind_codeocean_api.CodeOceanClient:
@@ -322,62 +355,6 @@ def get_path_from_data_asset(asset: DataAssetAPI) -> upath.UPath:
     )
 
 
-def run_capsule_and_get_results(
-    capsule_id: str, data_assets: tuple[DataAssetAPI, ...]
-) -> tuple[dict[str, str | int], ...]:
-    response = get_codeocean_client().run_capsule(
-        capsule_id,
-        [
-            {"id": data_asset["id"], "mount": data_asset["name"]}
-            for data_asset in data_assets
-        ],
-    )
-
-    response.raise_for_status()
-
-    while True:
-        response = get_codeocean_client().get_capsule_computations(capsule_id)
-        response.raise_for_status()
-        capsule_runs = response.json()
-        states = [run["state"] for run in capsule_runs]
-
-        if all(state == "completed" for state in states):
-            break
-
-    capsule_runs_has_results = tuple(run for run in capsule_runs if run["has_results"])
-    return capsule_runs_has_results
-
-
-def register_session_data_asset(
-    session_id: str | npc_session.SessionRecord,
-    capsule_run_results: tuple[dict[str, str | int], ...],
-) -> None:
-    session = npc_session.SessionRecord(session_id)
-    computation_id = None
-    data_asset_name = ""
-
-    for result in capsule_run_results:
-        response = get_codeocean_client().get_list_result_items(result["id"])
-        response.raise_for_status()
-        result_items = response.json()["items"]
-        folder_result = tuple(
-            item for item in result_items if item["type"] == "folder"
-        )[0]
-
-        if re.match(
-            f"ecephys_{session.subject}_{session.date}_{npc_session.PARSE_TIME}",
-            folder_result["name"],
-        ):
-            data_asset_name = folder_result["name"]
-            computation_id = result["id"]
-            break
-
-    response = get_codeocean_client().register_result_as_data_asset(
-        computation_id, data_asset_name, tags=[str(session.subject.id), "results"]
-    )
-    response.raise_for_status()
-
-
 @functools.cache
 def get_session_units_data_asset(
     session_id: str | npc_session.SessionRecord,
@@ -424,112 +401,77 @@ def get_session_units_spikes_with_peak_channels_data_asset(
 
     return session_units_spikes_peak_channel_data_asset
 
-
-def run_codeocean_nwb_units_capsule_and_register_data_asset(
-    session_id: str, raw_data_asset: DataAssetAPI, sorted_data_asset: DataAssetAPI
-) -> None:
-    capsule_results_units = run_capsule_and_get_results(
-        "980c5218-abef-41d8-99ed-24798d42313b", (raw_data_asset, sorted_data_asset)
-    )
-
-    register_session_data_asset(session_id, capsule_results_units)
-
-
-def run_codeocean_units_spikes_peak_channel_capsule_and_register_data_asset(
-    session_id: str, raw_data_asset: DataAssetAPI, sorted_data_asset: DataAssetAPI
-) -> None:
-    num_tries = 0
-    while True:
-        try:
-            units_no_peak_channel_asset = get_session_units_data_asset(session_id)
-            break
-        except (FileNotFoundError, ValueError):
-            num_tries += 1
-
-    capsule_result_units_peak_channels = run_capsule_and_get_results(
-        "d1a5c3a8-8fb2-4cb0-8e9e-96e6e1d03ff1",
-        (raw_data_asset, sorted_data_asset, units_no_peak_channel_asset),
-    )
-    register_session_data_asset(session_id, capsule_result_units_peak_channels)
-
-
 def update_permissions_for_data_asset(data_asset: DataAssetAPI) -> None:
     response = get_codeocean_client().update_permissions(
         data_asset_id=data_asset["id"], everyone="viewer"
     )
     response.raise_for_status()
 
-
-def get_data_assets_dict(session_id: str, type: str = "raw") -> list[dict[str, str]]:
-    """
-    Gets the dictionary that is passed in to the run capsule function from aind codeocean api
-
-    >>> get_data_assets_dict('686740_2023-10-26', type='raw')
-    [{'id': 'aed59ffa-c7db-4246-84cc-d4bb61f4cbc7', 'mount': 'ecephys_686740_2023-10-26_12-29-08'}]
-    """
-
-    # add more types if needed
-    if type == "raw":
+def run_capsule(
+    session_id: str,    
+    model_name: str,
+) -> None:
+    # TODO might need to fix later, can't think clearly right now
+    if model_name not in MODEL_CAPSULE_MAPPING:
+        raise ModelCapsuleMappingError(f'No capsule associated with {model_name}. Check codeocean')
+    
+    get_codeocean_client().run_capsule(
+        MODEL_CAPSULE_MAPPING[model_name],
         data_assets = [
             {"id": data_asset["id"], "mount": data_asset["name"]}
             for data_asset in [get_session_raw_data_asset(session_id)]
-        ]
-
-    return data_assets
-
-
-def run_eye_tracking_capsule(session_id: str) -> None:
-    get_codeocean_client().run_capsule(
-        EYE_TRACKING_CAPSULE_ID,
-        get_data_assets_dict(session_id, type="raw"),
+        ],
     ).raise_for_status()
 
+def get_session_computation_id_and_data_asset_name(session: npc_session.SessionRecord, model_name: str,
+                                                   capsule_computations: list[CapsuleComputationAPI]) -> tuple[str, str]:
+    """
+    Returns the computation id and data asset name for the session that will be used to create the data asset
+    >>> session = npc_session.SessionRecord('626791_20220816')
+    >>> capsule_computations = get_codeocean_client().get_capsule_computations(MODEL_CAPSULE_MAPPING['dlc_eye'])
+    >>> capsule_computations.raise_for_status()
+    >>> get_session_computation_id_and_data_asset_name(session, 'eyetracking', capsule_computations.json())
+    ('3010ff06-aae5-4b35-b070-57df9ef85582', 'ecephys_626791_2022-08-16_00-00-00_eyetracking')
+    """
+    for computation in capsule_computations:
+        if not computation['has_results']:
+            continue
+        
+        response_result_items = get_codeocean_client().get_list_result_items(computation['id'])
+        response_result_items.raise_for_status()
+        result_items = response_result_items.json()
 
-def run_dlc_side_tracking_capsule(session_id: str) -> None:
-    get_codeocean_client().run_capsule(
-        DLC_SIDE_TRACKING_CAPSULE_ID,
-        get_data_assets_dict(session_id, type="raw"),
-    ).raise_for_status()
+        session_item = tuple(item for item in result_items['items'] if re.match(f"ecephys_{session.subject}_{session.date}_{npc_session.PARSE_TIME}.json",
+            item['name']))[0]
 
+        session_comp_id_data_asset_name = (computation['id'], session_item['name'].replace('.json', f'_{model_name}'))
+        break
 
-def run_dlc_face_tracking_capsule(session_id: str) -> None:
-    get_codeocean_client().run_capsule(
-        DLC_FACE_TRACKING_CAPSULE_ID,
-        get_data_assets_dict(session_id, type="raw"),
-    ).raise_for_status()
+    return session_comp_id_data_asset_name
 
+def create_session_data_asset(session: str | npc_session.SessionRecord, model_name: str) -> None:
+    session = npc_session.SessionRecord(session)
+ 
+    if model_name not in MODEL_CAPSULE_MAPPING:
+        raise ModelCapsuleMappingError(f'No capsule associated with {model_name}. Check codeocean')
+    
+    # TODO: waiting for response to see if get_capsule_computations returns the computations in order of what was most recently run
+    response_computations = get_codeocean_client().get_capsule_computations(MODEL_CAPSULE_MAPPING[model_name])
+    response_computations.raise_for_status()
 
-def run_facemap_capsule(session_id: str) -> None:
-    get_codeocean_client().run_capsule(
-        FACEMAP_CAPSULE_ID,
-        get_data_assets_dict(session_id, type="raw"),
-    ).raise_for_status()
+    capsule_computations: list[CapsuleComputationAPI] = response_computations.json()
 
-
-def run_capsules_for_units_spikes_kilosort_codeocean(session_id: str) -> None:
-    raw_data_asset = get_session_raw_data_asset(session_id)
-    sorted_data_asset = get_session_sorted_data_asset(session_id)
-
-    run_codeocean_nwb_units_capsule_and_register_data_asset(
-        session_id, raw_data_asset, sorted_data_asset
-    )
-    run_codeocean_units_spikes_peak_channel_capsule_and_register_data_asset(
-        session_id, raw_data_asset, sorted_data_asset
-    )
-
-    num_tries = 0
-    while True:
-        try:
-            units_spike_peak_channel_asset = (
-                get_session_units_spikes_with_peak_channels_data_asset(session_id)
-            )
-            break
-        except (FileNotFoundError, ValueError):
-            num_tries += 1
-
-    update_permissions_for_data_asset(units_spike_peak_channel_asset)
-
-
+    computation_id, data_asset_name = get_session_computation_id_and_data_asset_name(session, model_name,
+                                                                                     capsule_computations)
+    
+    source = Source(Sources.Computation(id=computation_id))
+    tags = [model_name]
+    custom_metadata = {'subject_id': session.subject}
+    create_data_asset_request = CreateDataAssetRequest(name=data_asset_name, mount=data_asset_name, tags=tags,
+                                                       source=source, custom_metadata=custom_metadata)
+    
+    get_codeocean_client().create_data_asset(create_data_asset_request).raise_for_status()
+    # TODO: add tests and function to get data asset
 if __name__ == "__main__":
     import doctest
 
