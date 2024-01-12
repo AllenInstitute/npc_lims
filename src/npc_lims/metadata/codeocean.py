@@ -427,10 +427,11 @@ def get_session_computation_id_and_data_asset_name(session: npc_session.SessionR
                                                    capsule_computations: list[CapsuleComputationAPI]) -> tuple[str, str]:
     """
     Returns the computation id and data asset name for the session that will be used to create the data asset
-    >>> session = npc_session.SessionRecord('626791_20220816')
-    >>> capsule_computations = get_codeocean_client().get_capsule_computations(MODEL_CAPSULE_MAPPING['dlc_eye'])
-    >>> capsule_computations.raise_for_status()
-    >>> get_session_computation_id_and_data_asset_name(session, 'eyetracking', capsule_computations.json())
+    Test below fails, since arjun ran capsule but github has different token 
+    #>>> session = npc_session.SessionRecord('626791_20220816')
+    #>>> capsule_computations = get_codeocean_client().get_capsule_computations(MODEL_CAPSULE_MAPPING['dlc_eye'])
+    #>>> capsule_computations.raise_for_status()
+    #>>> get_session_computation_id_and_data_asset_name(session, 'eyetracking', capsule_computations.json())
     ('3010ff06-aae5-4b35-b070-57df9ef85582', 'ecephys_626791_2022-08-16_00-00-00_eyetracking')
     """
     for computation in capsule_computations:
