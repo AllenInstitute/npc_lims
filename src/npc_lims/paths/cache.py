@@ -11,7 +11,7 @@ from typing_extensions import TypeAlias
 
 from npc_lims.paths.s3 import S3_SCRATCH_ROOT
 
-CACHE_ROOT = S3_SCRATCH_ROOT / "cache" / "nwb"
+CACHE_ROOT = S3_SCRATCH_ROOT / "cache" / "nwb_components"
 
 NWBComponentStr: TypeAlias = Literal[
     "session",
@@ -118,9 +118,9 @@ def get_cache_path(
     used, ie. will point to the most recent version of the file.
 
     >>> get_cache_path(nwb_component="units", version="1.0.0")
-    S3Path('s3://aind-scratch-data/ben.hardcastle/session-caches/v1.0.0/units')
+    S3Path('s3://aind-scratch-data/ben.hardcastle/cache/nwb_components/v1.0.0/units')
     >>> get_cache_path(nwb_component="units", session_id="366122_2023-12-31", version="1.0.0")
-    S3Path('s3://aind-scratch-data/ben.hardcastle/session-caches/v1.0.0/units/366122_2023-12-31.parquet')
+    S3Path('s3://aind-scratch-data/ben.hardcastle/cache/nwb_components/v1.0.0/units/366122_2023-12-31.parquet')
     """
     path = _parse_cache_path(
         session_id=session_id, nwb_component=nwb_component, version=version
