@@ -475,7 +475,9 @@ def create_session_data_asset(
         session, model_name, capsule_computations
     )
 
-    source = aind_codeocean_requests.Source(aind_codeocean_requests.Sources.Computation(id=computation_id))
+    source = aind_codeocean_requests.Source(
+        aind_codeocean_requests.Sources.Computation(id=computation_id)
+    )
     tags = [model_name]
     custom_metadata = {"subject_id": session.subject}
     create_data_asset_request = aind_codeocean_requests.CreateDataAssetRequest(
