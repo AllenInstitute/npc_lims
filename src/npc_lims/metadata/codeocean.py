@@ -11,11 +11,7 @@ from typing import Any, Literal
 import npc_session
 import upath
 from aind_codeocean_api import codeocean as aind_codeocean_api
-from aind_codeocean_api.models.data_assets_requests import (
-    CreateDataAssetRequest,
-    Source,
-    Sources,
-)
+from aind_codeocean_api.models import data_assets_requests as aind_codeocean_requests
 from typing_extensions import TypeAlias
 
 import npc_lims.exceptions as exceptions
@@ -479,10 +475,10 @@ def create_session_data_asset(
         session, model_name, capsule_computations
     )
 
-    source = Source(Sources.Computation(id=computation_id))
+    source = aind_codeocean_requests.Source(aind_codeocean_requests.Sources.Computation(id=computation_id))
     tags = [model_name]
     custom_metadata = {"subject_id": session.subject}
-    create_data_asset_request = CreateDataAssetRequest(
+    create_data_asset_request = aind_codeocean_requests.CreateDataAssetRequest(
         name=data_asset_name,
         mount=data_asset_name,
         tags=tags,
