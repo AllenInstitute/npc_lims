@@ -173,6 +173,8 @@ ephys:
         day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231211:
         day: 1
+        session_kwargs:
+            is_sorted: False # codeocean update cancelled spike sorting
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231212:
         day: 2
         notes: post-task Spontaneous & OptoTagging ran twice - ephys stopped halfway through final OptoTagging
