@@ -62,6 +62,7 @@ jobs:
         REDIS_DEFAULT_USER_PASSWORD: ${{ secrets.REDIS_DEFAULT_USER_PASSWORD }}
       run: |
         git clone https://github.com/alleninstitute/npc_lims
+        mkdir .mypy_cache
         pdm prebuild
         
     - name: Bump project version
