@@ -8,5 +8,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## [0.1.0](https://github.com/AllenInstitute/npc_lims/releases/tag/0.1.0) - 2024-01-14
 
-<small>[Compare with first commit](https://github.com/AllenInstitute/npc_lims/compare/b2254f04490181338a41244e3c26293e4a5ea46f...0.1.0)</small>
+<small>[Compare with first commit](https://github.com/AllenInstitute/npc_lims/compare/f221381adb159bd00df512cb50d29b53ba20220d...0.1.0)</small>
 
