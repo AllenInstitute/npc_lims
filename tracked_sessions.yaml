@@ -155,6 +155,10 @@ ephys:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_690706_20231128:
         day: 2
+        session_kwargs:
+            is_sorted: False # spike sorting failed
+        issues:
+          - https://github.com/AllenNeuralDynamics/aind-ephys-spikesort-kilosort25-full/issues/22
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_690706_20231129:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_690706_20231130:
@@ -174,7 +178,9 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231211:
         day: 1
         session_kwargs:
-            is_sorted: False # codeocean update cancelled spike sorting
+            is_sorted: False # spike sorting failed
+        issues:
+          - https://github.com/AllenNeuralDynamics/aind-ephys-spikesort-kilosort25-full/issues/22
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231212:
         day: 2
         notes: post-task Spontaneous & OptoTagging ran twice - ephys stopped halfway through final OptoTagging
