@@ -261,6 +261,6 @@ behavior_with_sync: # hab sessions with sync + video, or sync + opto, etc.
 behavior:
   DynamicRouting:
     - //allen/programs/mindscope/workgroups/dynamicrouting/DynamicRoutingTask/Data/677352/DynamicRouting1_677352_20231013_155330.hdf5:
-      issues:
-        - https://github.com/AllenInstitute/npc_sessions/issues/78
+        issues:
+          - https://github.com/AllenInstitute/npc_sessions/issues/78
   TempletonPilotSession:
