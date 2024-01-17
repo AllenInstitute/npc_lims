@@ -111,7 +111,7 @@ def get_cache_path(
     nwb_component: NWBComponentStr,
     session_id: str | npc_session.SessionRecord | None = None,
     version: str | None = None,
-    check_exists: bool = False,
+    consolidated: bool = True,
 ) -> upath.UPath:
     """
     If version is not specified, the latest version currently in the cache will be
@@ -121,14 +121,14 @@ def get_cache_path(
     S3Path('s3://aind-scratch-data/ben.hardcastle/cache/nwb_components/v1.0.0/units')
     >>> get_cache_path(nwb_component="units", session_id="366122_2023-12-31", version="1.0.0")
     S3Path('s3://aind-scratch-data/ben.hardcastle/cache/nwb_components/v1.0.0/units/366122_2023-12-31.parquet')
+    >>> get_cache_path(nwb_component="trials", version="1.0.0")
+    S3Path('s3://aind-scratch-data/ben.hardcastle/cache/nwb_components/v1.0.0/consolidated/trials.parquet')
     """
     path = _parse_cache_path(
         session_id=session_id, nwb_component=nwb_component, version=version
     )
-    if check_exists and not path.exists():
-        raise FileNotFoundError(
-            f"Cache file for {session_id} {nwb_component} {version} does not exist"
-        )
+    if consolidated and session_id is None and nwb_component != "units":
+        path = path.parent / 'consolidated' / f"{nwb_component}.parquet"
     return path
 
 
