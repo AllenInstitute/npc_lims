@@ -251,6 +251,7 @@ ephys:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-08-02_09-58-44_670248:
         session_kwargs:
             is_task: false
+            rig: NP3
         notes: no behavior, DynamicRouting1_670248_20230802_120703.hdf5 not written correctly by task script
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-08-03_09-39-59_670248:
         issues:
