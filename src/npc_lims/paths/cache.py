@@ -143,10 +143,10 @@ def get_all_cache_paths(
     >>> get_all_cache_paths("units", version="0.0.0")
     ()
     """
-    dir_path = get_cache_path(nwb_component=nwb_component, version=version)
+    dir_path = get_cache_path(nwb_component=nwb_component, version=version, consolidated=False)
     if not dir_path.exists():
         raise FileNotFoundError(
-            f"Cache directory for {nwb_component} {version} does not exist"
+            f"Cache directory for {nwb_component} {version=} does not exist"
         )
     return tuple(
         path for path in dir_path.glob(f"*{get_cache_file_suffix(nwb_component)}")
