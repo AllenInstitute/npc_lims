@@ -204,18 +204,25 @@ def get_quality_metrics_paths_from_s3(
 
 
 @functools.cache
-def get_behavior_video_path_from_s3(session: str | npc_session.SessionRecord) -> upath.UPath:
+def get_behavior_video_path_from_s3(
+    session: str | npc_session.SessionRecord,
+) -> upath.UPath:
     """
     >>> get_behavior_video_path_from_s3('686740_2023-10-26')
     S3Path('s3://aind-ephys-data/ecephys_686740_2023-10-26_12-29-08/behavior_videos/Behavior_20231026T122922.mp4')
     """
     raw_data_paths = get_raw_data_paths_from_s3(session)
-    behavior_video_path = tuple(path for path in raw_data_paths if 'Behavior' in path.stem and 'mp4' in path.suffix)
+    behavior_video_path = tuple(
+        path
+        for path in raw_data_paths
+        if "Behavior" in path.stem and "mp4" in path.suffix
+    )
 
     if not behavior_video_path:
-        raise FileNotFoundError(f'{session} has no behavior video on s3')
-    
+        raise FileNotFoundError(f"{session} has no behavior video on s3")
+
     return behavior_video_path[0]
+
 
 @functools.cache
 def get_eye_video_path_from_s3(session: str | npc_session.SessionRecord) -> upath.UPath:
@@ -224,26 +231,34 @@ def get_eye_video_path_from_s3(session: str | npc_session.SessionRecord) -> upat
     S3Path('s3://aind-ephys-data/ecephys_686740_2023-10-26_12-29-08/behavior_videos/Eye_20231026T122922.mp4')
     """
     raw_data_paths = get_raw_data_paths_from_s3(session)
-    eye_video_path = tuple(path for path in raw_data_paths if 'Eye' in path.stem and 'mp4' in path.suffix)
+    eye_video_path = tuple(
+        path for path in raw_data_paths if "Eye" in path.stem and "mp4" in path.suffix
+    )
 
     if not eye_video_path:
-        raise FileNotFoundError(f'{session} has no eye video on s3')
-    
+        raise FileNotFoundError(f"{session} has no eye video on s3")
+
     return eye_video_path[0]
 
+
 @functools.cache
-def get_face_video_path_from_s3(session: str | npc_session.SessionRecord) -> upath.UPath:
+def get_face_video_path_from_s3(
+    session: str | npc_session.SessionRecord,
+) -> upath.UPath:
     """
     >>> get_face_video_path_from_s3('686740_2023-10-26')
     S3Path('s3://aind-ephys-data/ecephys_686740_2023-10-26_12-29-08/behavior_videos/Face_20231026T122923.mp4')
     """
     raw_data_paths = get_raw_data_paths_from_s3(session)
-    face_video_path = tuple(path for path in raw_data_paths if 'Face' in path.stem and 'mp4' in path.suffix)
+    face_video_path = tuple(
+        path for path in raw_data_paths if "Face" in path.stem and "mp4" in path.suffix
+    )
 
     if not face_video_path:
-        raise FileNotFoundError(f'{session} has no face video on s3')
+        raise FileNotFoundError(f"{session} has no face video on s3")
 
     return face_video_path[0]
+
 
 @functools.cache
 def get_template_metrics_paths_from_s3(

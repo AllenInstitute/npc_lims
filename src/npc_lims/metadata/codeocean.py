@@ -49,7 +49,7 @@ MODEL_CAPSULE_MAPPING: dict[str, str] = {
     "dlc_side": "facff99f-d3aa-4ecd-8ef8-a343c38197aa",
     "dlc_front": "a561aa4c-2066-4ff2-a916-0db86b918cdf",
     "facemap": "670de0b3-f73d-4d22-afe6-6449c45fada4",
-    "video_pipeline": "edbc4721-d251-4cca-ba39-db8f167c3468"
+    "video_pipeline": "edbc4721-d251-4cca-ba39-db8f167c3468",
 }
 
 
@@ -438,7 +438,7 @@ def get_session_computation_id_and_data_asset_name(
         session_item = tuple(
             item
             for item in result_items["items"]
-            if re.match( # TODO add folder 
+            if re.match(  # TODO add folder
                 f"ecephys_{session.subject}_{session.date}_{npc_session.PARSE_TIME}.json",
                 item["name"],
             )
@@ -492,6 +492,7 @@ def create_session_data_asset(
         create_data_asset_request
     ).raise_for_status()
     # TODO: add tests and function to get data asset
+
 
 if __name__ == "__main__":
     import doctest
