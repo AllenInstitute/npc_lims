@@ -8,5 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## [0.1.0](https://github.com/AllenInstitute/npc_lims/releases/tag/0.1.0) - 2024-01-18
 
-<small>[Compare with first commit](https://github.com/AllenInstitute/npc_lims/compare/ad132a373ac2eccab9ce64bb7d86012847fbf2e0...0.1.0)</small>
+<small>[Compare with first commit](https://github.com/AllenInstitute/npc_lims/compare/d83a5f30a685056383e3470bc1d5b8cb17ab2480...0.1.0)</small>
+
+### Added
+
+- add general video suffixes ([d83a5f3](https://github.com/AllenInstitute/npc_lims/commit/d83a5f30a685056383e3470bc1d5b8cb17ab2480) by arjun.sridhar12345).
 
