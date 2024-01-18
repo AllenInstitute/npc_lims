@@ -12,7 +12,10 @@ import npc_session
 import upath
 from aind_codeocean_api import codeocean as aind_codeocean_api
 from aind_codeocean_api.models import data_assets_requests as aind_codeocean_requests
-from aind_codeocean_api.models.computations_requests import RunCapsuleRequest, ComputationDataAsset
+from aind_codeocean_api.models.computations_requests import (
+    ComputationDataAsset,
+    RunCapsuleRequest,
+)
 from typing_extensions import TypeAlias
 
 import npc_lims.exceptions as exceptions
@@ -404,18 +407,20 @@ def run_capsule(
         )
 
     data_assets = [
-        ComputationDataAsset(id=data_asset['id'], mount=data_asset['name'])
+        ComputationDataAsset(id=data_asset["id"], mount=data_asset["name"])
         for data_asset in [get_session_raw_data_asset(session_id)]
     ]
 
-    if 'pipeline' in model_name:
-        run_capsule_request = RunCapsuleRequest(pipeline_id=MODEL_CAPSULE_MAPPING[model_name], data_assets=data_assets)
+    if "pipeline" in model_name:
+        run_capsule_request = RunCapsuleRequest(
+            pipeline_id=MODEL_CAPSULE_MAPPING[model_name], data_assets=data_assets
+        )
     else:
-        run_capsule_request = RunCapsuleRequest(capsule_id=MODEL_CAPSULE_MAPPING[model_name], data_assets=data_assets)
+        run_capsule_request = RunCapsuleRequest(
+            capsule_id=MODEL_CAPSULE_MAPPING[model_name], data_assets=data_assets
+        )
 
-    get_codeocean_client().run_capsule(
-        run_capsule_request
-    ).raise_for_status()
+    get_codeocean_client().run_capsule(run_capsule_request).raise_for_status()
 
 
 def get_session_computation_id_and_data_asset_name(
