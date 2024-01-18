@@ -25,6 +25,7 @@ TISSUECYTE_REPO = upath.UPath(
 
 CODE_OCEAN_DATA_BUCKET = upath.UPath("s3://codeocean-s3datasetsbucket-1u41qdg42ur9")
 
+VIDEO_SUFFIXES = ('.mp4', '.avi', '.wmv', '.mov')
 
 def get_data_asset_s3_path(asset_id: str | codeocean.DataAssetAPI) -> upath.UPath:
     """Path on s3 that contains actual data for CodeOcean data asset.
@@ -215,7 +216,7 @@ def get_behavior_video_path_from_s3(
     behavior_video_path = tuple(
         path
         for path in raw_data_paths
-        if "Behavior" in path.stem and "mp4" in path.suffix
+        if "Behavior" in path.stem and path.suffix in VIDEO_SUFFIXES
     )
 
     if not behavior_video_path:
@@ -232,7 +233,7 @@ def get_eye_video_path_from_s3(session: str | npc_session.SessionRecord) -> upat
     """
     raw_data_paths = get_raw_data_paths_from_s3(session)
     eye_video_path = tuple(
-        path for path in raw_data_paths if "Eye" in path.stem and "mp4" in path.suffix
+        path for path in raw_data_paths if "Eye" in path.stem and path.suffix in VIDEO_SUFFIXES
     )
 
     if not eye_video_path:
@@ -251,7 +252,7 @@ def get_face_video_path_from_s3(
     """
     raw_data_paths = get_raw_data_paths_from_s3(session)
     face_video_path = tuple(
-        path for path in raw_data_paths if "Face" in path.stem and "mp4" in path.suffix
+        path for path in raw_data_paths if "Face" in path.stem and path.suffix in VIDEO_SUFFIXES
     )
 
     if not face_video_path:
