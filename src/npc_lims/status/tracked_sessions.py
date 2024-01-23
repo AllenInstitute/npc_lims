@@ -181,7 +181,14 @@ class SessionInfo:
     @functools.cached_property
     def is_templeton(self) -> bool:
         """Uses project in `tracked_sessions.yaml` if available, then infers from whether the session is in Sam's DR training
-        database."""
+        database.
+        
+        Examples:
+            >>> SessionInfo("2023-05-15_09-50-06_662983").is_templeton
+            True
+            >>> SessionInfo("DRpilot_644867_20230221").is_templeton
+            False
+        """
         if "templeton" in self.project.lower():
             return True
         # training_info not available for Templeton sessions:
@@ -245,9 +252,6 @@ def get_session_info(
         >>> assert isinstance(info, SessionInfo)
         >>> info.is_templeton
         False
-        >>> another_info = get_session_info("2022-07-26_14-09-36_620263")
-        >>> another_info.is_templeton
-        True
     """
     if isinstance(session, SessionInfo):
         session = session.id
