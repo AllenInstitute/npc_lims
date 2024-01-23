@@ -494,12 +494,9 @@ def create_session_data_asset(
     source = aind_codeocean_requests.Source(
         computation=aind_codeocean_requests.Sources.Computation(id=computation_id)
     )
-    tags = [model_name, 'results']
+    tags = [model_name, "results"]
     create_data_asset_request = aind_codeocean_requests.CreateDataAssetRequest(
-        name=data_asset_name,
-        mount=data_asset_name,
-        tags=tags,
-        source=source
+        name=data_asset_name, mount=data_asset_name, tags=tags, source=source
     )
 
     get_codeocean_client().create_data_asset(
