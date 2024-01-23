@@ -185,7 +185,7 @@ class SessionInfo:
         if "templeton" in self.project.lower():
             return True
         # training_info not available for Templeton sessions:
-        return self.subject in behavior_sessions.get_sessions_from_training_db()
+        return self.subject in behavior_sessions.get_subjects_from_training_db()
 
     @property
     def rig(self) -> str:
@@ -243,6 +243,11 @@ def get_session_info(
         Pass a session str or SessionRecord to get the info for that session:
         >>> info = get_session_info("DRpilot_667252_20230927")
         >>> assert isinstance(info, SessionInfo)
+        >>> info.is_templeton
+        False
+        >>> another_info = get_session_info("2022-07-26_14-09-36_620263")
+        >>> another_info.is_templeton
+        True
     """
     if isinstance(session, SessionInfo):
         session = session.id

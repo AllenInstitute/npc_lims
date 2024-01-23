@@ -447,15 +447,19 @@ def get_session_computation_id_and_data_asset_name(
         response_result_items.raise_for_status()
         result_items = response_result_items.json()
 
-        session_item = tuple(
+        session_result_item = tuple(
             item
             for item in result_items["items"]
             if re.match(  # TODO add folder
                 f"ecephys_{session.subject}_{session.date}_{npc_session.PARSE_TIME}.json",
                 item["name"],
             )
-        )[0]
+        )
 
+        if not session_result_item:
+            continue
+
+        session_item = session_result_item[0]
         session_comp_id_data_asset_name = (
             computation["id"],
             session_item["name"].replace(".json", f"_{model_name}"),
@@ -488,16 +492,14 @@ def create_session_data_asset(
     )
 
     source = aind_codeocean_requests.Source(
-        aind_codeocean_requests.Sources.Computation(id=computation_id)
+        computation=aind_codeocean_requests.Sources.Computation(id=computation_id)
     )
-    tags = [model_name]
-    custom_metadata = {"subject_id": session.subject}
+    tags = [model_name, 'results']
     create_data_asset_request = aind_codeocean_requests.CreateDataAssetRequest(
         name=data_asset_name,
         mount=data_asset_name,
         tags=tags,
-        source=source,
-        custom_metadata=custom_metadata,
+        source=source
     )
 
     get_codeocean_client().create_data_asset(
