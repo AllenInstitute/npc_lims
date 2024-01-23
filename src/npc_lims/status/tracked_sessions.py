@@ -184,9 +184,9 @@ class SessionInfo:
         database.
         
         Examples:
-            >>> SessionInfo("2023-05-15_09-50-06_662983").is_templeton
+            >>> get_session_info("2023-05-15_09-50-06_662983").is_templeton
             True
-            >>> SessionInfo("DRpilot_644867_20230221").is_templeton
+            >>> get_session_info("DRpilot_644867_20230221").is_templeton
             False
         """
         if "templeton" in self.project.lower():

@@ -1,0 +1,14 @@
+TempletonPilotSession:
+    # subjects not in this list are considered DynamicRouting
+    - 620263
+    - 620264
+    - 628801
+    - 636397
+    - 644547
+    - 646318
+    - 649944
+    - 662983
+    - 668759
+    - 670181
+    - 670180
+    - 670248
