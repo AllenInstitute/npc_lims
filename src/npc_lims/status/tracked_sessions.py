@@ -185,7 +185,7 @@ class SessionInfo:
         if "templeton" in self.project.lower():
             return True
         # training_info not available for Templeton sessions:
-        return self.subject in (behavior_sessions.get_subjects_from_training_db() | behavior_sessions.get_subjects_from_training_db(nsb=True))
+        return self.subject not in (behavior_sessions.get_subjects_from_training_db() | behavior_sessions.get_subjects_from_training_db(nsb=True))
 
     @property
     def rig(self) -> str:
