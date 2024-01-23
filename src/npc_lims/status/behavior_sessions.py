@@ -24,6 +24,7 @@ INVALID_SUBJECT_KEYS = (
 )
 
 
+@functools.cache
 def get_subjects_from_training_db(
     nsb: bool = False,
 ) -> dict[npc_session.SubjectRecord, dict[str, Any]]:
