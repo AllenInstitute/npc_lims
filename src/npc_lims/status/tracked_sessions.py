@@ -182,7 +182,7 @@ class SessionInfo:
     def is_templeton(self) -> bool:
         """Uses project in `tracked_sessions.yaml` if available, then infers from whether the session is in Sam's DR training
         database.
-        
+
         Examples:
             >>> get_session_info("2023-05-15_09-50-06_662983").is_templeton
             True
@@ -192,7 +192,10 @@ class SessionInfo:
         if "templeton" in self.project.lower():
             return True
         # training_info not available for Templeton sessions:
-        return self.subject not in (behavior_sessions.get_subjects_from_training_db() | behavior_sessions.get_subjects_from_training_db(nsb=True))
+        return self.subject not in (
+            behavior_sessions.get_subjects_from_training_db()
+            | behavior_sessions.get_subjects_from_training_db(nsb=True)
+        )
 
     @property
     def rig(self) -> str:
