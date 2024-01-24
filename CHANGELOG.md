@@ -8,14 +8,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.108...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.109...HEAD)</small>
+
+### Added
+
+- Add script ([6326b7e](https://github.com/AllenInstitute/npc_lims/commit/6326b7e45981e7ba8df798f707d9ee7ad28ca5bc) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.109](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.109) - 2024-01-23
+
+<small>[Compare with v0.1.108](https://github.com/AllenInstitute/npc_lims/compare/v0.1.108...v0.1.109)</small>
 
 ### Fixed
 
 - Fix `is_templeton` ([f86a502](https://github.com/AllenInstitute/npc_lims/commit/f86a502c858fcc799dd76e543a234c3b6695948c) by bjhardcastle).
 - Fix `is_templeton` and use cache ([089e71c](https://github.com/AllenInstitute/npc_lims/commit/089e71ca3f8a3deb2e3ee60727d6d73013e64287) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.108](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.108) - 2024-01-23
 
 <small>[Compare with v0.1.107](https://github.com/AllenInstitute/npc_lims/compare/v0.1.107...v0.1.108)</small>
