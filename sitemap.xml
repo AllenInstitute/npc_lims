@@ -2,112 +2,127 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/changelog/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/contributing/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/reference/SUMMARY/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/reference/npc_lims/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/reference/npc_lims/exceptions/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/reference/npc_lims/jobs/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/reference/npc_lims/metadata/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/reference/npc_lims/metadata/codeocean/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/reference/npc_lims/metadata/spreadsheets/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/reference/npc_lims/metadata/types/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/reference/npc_lims/paths/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/reference/npc_lims/paths/cache/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/reference/npc_lims/paths/codeocean/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/reference/npc_lims/paths/s3/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/reference/npc_lims/scripts/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://AllenInstitute.github.io/npc_lims/reference/npc_lims/scripts/generate_session_data_assets/</loc>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/reference/npc_lims/scripts/regenerate_all_nwbs/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://AllenInstitute.github.io/npc_lims/reference/npc_lims/scripts/run_session_cache_capsule/</loc>
+         <lastmod>2024-01-24</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://AllenInstitute.github.io/npc_lims/reference/npc_lims/scripts/run_video_processing/</loc>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/reference/npc_lims/scripts/update_session_status/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/reference/npc_lims/status/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/reference/npc_lims/status/behavior_sessions/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/reference/npc_lims/status/tracked_sessions/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://AllenInstitute.github.io/npc_lims/coverage/</loc>
-         <lastmod>2024-01-09</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
