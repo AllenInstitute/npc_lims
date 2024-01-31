@@ -21,6 +21,7 @@ dependencies = [
     "packaging>=23.2",
     "boto3==1.28.17",
     "types-pyYAML>=6.0.12.12",
+    "types-requests>=2.31.0.6",
 ]
 requires-python = ">=3.9"
 readme = "README.md"
