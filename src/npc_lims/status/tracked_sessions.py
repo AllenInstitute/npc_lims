@@ -149,7 +149,7 @@ class SessionInfo:
         except(FileNotFoundError, ValueError):
             return False
 
-    @property
+    @functools.cached_property
     def is_dlc_face(self) -> bool:
         """
         The dlc face capsule has yield a result for this session
