@@ -8,13 +8,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.110...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.111...HEAD)</small>
+
+### Added
+
+- add workflows and update db  #19, #18, https://github.com/AllenNeuralDynamics/dynamic-routing/issues/11 ([7e01eb4](https://github.com/AllenInstitute/npc_lims/commit/7e01eb4f0890d363757a6b41649bd1a264f231c0) by arjun.sridhar12345).
+
+<!-- insertion marker -->
+## [v0.1.111](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.111) - 2024-01-31
+
+<small>[Compare with v0.1.110](https://github.com/AllenInstitute/npc_lims/compare/v0.1.110...v0.1.111)</small>
 
 ### Added
 
 - add dependency ([9887751](https://github.com/AllenInstitute/npc_lims/commit/988775125b4fdbd8f6e7bffd8d257928829615ad) by arjun.sridhar12345).
 
-<!-- insertion marker -->
 ## [v0.1.110](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.110) - 2024-01-24
 
 <small>[Compare with v0.1.109](https://github.com/AllenInstitute/npc_lims/compare/v0.1.109...v0.1.110)</small>
