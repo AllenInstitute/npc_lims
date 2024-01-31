@@ -8,13 +8,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.109...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.110...HEAD)</small>
+
+### Added
+
+- add dependency ([9887751](https://github.com/AllenInstitute/npc_lims/commit/988775125b4fdbd8f6e7bffd8d257928829615ad) by arjun.sridhar12345).
+
+<!-- insertion marker -->
+## [v0.1.110](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.110) - 2024-01-24
+
+<small>[Compare with v0.1.109](https://github.com/AllenInstitute/npc_lims/compare/v0.1.109...v0.1.110)</small>
 
 ### Added
 
 - Add script ([6326b7e](https://github.com/AllenInstitute/npc_lims/commit/6326b7e45981e7ba8df798f707d9ee7ad28ca5bc) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.109](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.109) - 2024-01-23
 
 <small>[Compare with v0.1.108](https://github.com/AllenInstitute/npc_lims/compare/v0.1.108...v0.1.109)</small>

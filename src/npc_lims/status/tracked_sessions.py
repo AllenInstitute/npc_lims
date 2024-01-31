@@ -129,8 +129,8 @@ class SessionInfo:
             return False
 
         try:
-            return bool(codeocean.get_model_data_asset(self.id, 'dlc_eye'))
-        except(FileNotFoundError, ValueError):
+            return bool(codeocean.get_model_data_asset(self.id, "dlc_eye"))
+        except (FileNotFoundError, ValueError):
             return False
 
     @functools.cached_property
@@ -145,8 +145,8 @@ class SessionInfo:
             return False
 
         try:
-            return bool(codeocean.get_model_data_asset(self.id, 'dlc_side'))
-        except(FileNotFoundError, ValueError):
+            return bool(codeocean.get_model_data_asset(self.id, "dlc_side"))
+        except (FileNotFoundError, ValueError):
             return False
 
     @functools.cached_property
@@ -161,8 +161,8 @@ class SessionInfo:
             return False
 
         try:
-            return bool(codeocean.get_model_data_asset(self.id, 'dlc_face'))
-        except(FileNotFoundError, ValueError):
+            return bool(codeocean.get_model_data_asset(self.id, "dlc_face"))
+        except (FileNotFoundError, ValueError):
             return False
 
     @functools.cached_property
@@ -177,8 +177,8 @@ class SessionInfo:
             return False
 
         try:
-            return bool(codeocean.get_model_data_asset(self.id, 'facemap'))
-        except(FileNotFoundError, ValueError):
+            return bool(codeocean.get_model_data_asset(self.id, "facemap"))
+        except (FileNotFoundError, ValueError):
             return False
 
     @functools.cached_property
@@ -288,13 +288,11 @@ class SessionInfo:
 
 
 @typing.overload
-def get_session_info() -> tuple[SessionInfo, ...]:
-    ...
+def get_session_info() -> tuple[SessionInfo, ...]: ...
 
 
 @typing.overload
-def get_session_info(session: str | npc_session.SessionRecord) -> SessionInfo:
-    ...
+def get_session_info(session: str | npc_session.SessionRecord) -> SessionInfo: ...
 
 
 def get_session_info(
@@ -343,13 +341,11 @@ def get_session_info(
 
 
 @typing.overload
-def get_session_issues() -> dict[npc_session.SessionRecord, list[str]]:
-    ...
+def get_session_issues() -> dict[npc_session.SessionRecord, list[str]]: ...
 
 
 @typing.overload
-def get_session_issues(session: str | npc_session.SessionRecord) -> list[str]:
-    ...
+def get_session_issues(session: str | npc_session.SessionRecord) -> list[str]: ...
 
 
 def get_session_issues(
@@ -382,13 +378,11 @@ def get_session_issues(
 
 
 @typing.overload
-def get_session_kwargs() -> dict[npc_session.SessionRecord, dict]:
-    ...
+def get_session_kwargs() -> dict[npc_session.SessionRecord, dict]: ...
 
 
 @typing.overload
-def get_session_kwargs(session: str | npc_session.SessionRecord) -> dict[str, Any]:
-    ...
+def get_session_kwargs(session: str | npc_session.SessionRecord) -> dict[str, Any]: ...
 
 
 def get_session_kwargs(

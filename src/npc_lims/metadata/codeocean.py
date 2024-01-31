@@ -53,7 +53,7 @@ MODEL_CAPSULE_MAPPING: dict[str, str] = {
     "dlc_side": "facff99f-d3aa-4ecd-8ef8-a343c38197aa",
     "dlc_face": "a561aa4c-2066-4ff2-a916-0db86b918cdf",
     "facemap": "670de0b3-f73d-4d22-afe6-6449c45fada4",
-    "video_pipeline": "edbc4721-d251-4cca-ba39-db8f167c3468"
+    "video_pipeline": "edbc4721-d251-4cca-ba39-db8f167c3468",
 }
 
 
@@ -469,7 +469,9 @@ def get_session_computation_id_and_data_asset_name(
     return session_comp_id_data_asset_name
 
 
-def get_model_data_asset(session: str | npc_session.SessionRecord, model_name: str) -> DataAssetAPI:
+def get_model_data_asset(
+    session: str | npc_session.SessionRecord, model_name: str
+) -> DataAssetAPI:
     """
     Returns the data asset for a given model
     >>> model_asset = get_model_data_asset('676909_2023-12-13', 'dlc_eye')
@@ -481,13 +483,16 @@ def get_model_data_asset(session: str | npc_session.SessionRecord, model_name: s
         raise ModelCapsuleMappingError(
             f"No capsule associated with {model_name}. Check codeocean"
         )
-    
+
     session_data_assets = get_session_data_assets(session)
-    session_model_asset = tuple(asset for asset in session_data_assets if model_name in asset['name'])
+    session_model_asset = tuple(
+        asset for asset in session_data_assets if model_name in asset["name"]
+    )
     if not session_model_asset:
-        raise FileNotFoundError(f'{session} has no {model_name} results')
-    
+        raise FileNotFoundError(f"{session} has no {model_name} results")
+
     return session_model_asset[0]
+
 
 def create_session_data_asset(
     session: str | npc_session.SessionRecord, model_name: str
@@ -517,7 +522,11 @@ def create_session_data_asset(
     custom_metadata = {"subject id": str(session.subject)}
     tags = [model_name, "results"]
     create_data_asset_request = aind_codeocean_requests.CreateDataAssetRequest(
-        name=data_asset_name, mount=data_asset_name, tags=tags, source=source, custom_metadata=custom_metadata
+        name=data_asset_name,
+        mount=data_asset_name,
+        tags=tags,
+        source=source,
+        custom_metadata=custom_metadata,
     )
 
     get_codeocean_client().create_data_asset(

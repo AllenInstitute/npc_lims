@@ -10,43 +10,36 @@ class SupportsDB(Protocol):
     table: ClassVar[str]
 
     @property
-    def db(self) -> dict[str, str | int | float | None]:
-        ...
+    def db(self) -> dict[str, str | int | float | None]: ...
 
 
 class SupportsFromDB(Protocol):
     table: ClassVar[str]
 
     @classmethod
-    def from_db(cls, row: dict[str, str | int | float | None]) -> Self:
-        ...
+    def from_db(cls, row: dict[str, str | int | float | None]) -> Self: ...
 
 
 class RecordDB(Protocol):
     def add_records(
         self, records: Iterable[SupportsDB], **kwargs: str | int | float | None
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def get_records(
         self,
         cls: type[SupportsFromDB],
         **kwargs: str | int | float | None,
-    ) -> tuple[SupportsFromDB, ...]:
-        ...
+    ) -> tuple[SupportsFromDB, ...]: ...
 
     def delete_records(
         self, *rows: SupportsDB, **kwargs: str | int | float | None
-    ) -> None:
-        ...
+    ) -> None: ...
 
 
 class SupportsNWB(Protocol):
     @property
-    def nwb(self) -> dict[str, str | int | float | None]:
-        ...
+    def nwb(self) -> dict[str, str | int | float | None]: ...
 
 
 class SupportsToNWB(Protocol):
-    def to_nwb(self, nwb) -> None:
-        ...
+    def to_nwb(self, nwb) -> None: ...

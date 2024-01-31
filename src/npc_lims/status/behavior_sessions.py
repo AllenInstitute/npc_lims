@@ -105,15 +105,13 @@ def get_sessions_from_training_db() -> dict[int, tuple[dict[str, Any], ...]]:
 
 
 @typing.overload
-def get_subject_folders_from_data_repo(subject: int | str) -> upath.UPath:
-    ...
+def get_subject_folders_from_data_repo(subject: int | str) -> upath.UPath: ...
 
 
 @typing.overload
 def get_subject_folders_from_data_repo() -> (
     dict[npc_session.SubjectRecord, upath.UPath]
-):
-    ...
+): ...
 
 
 @functools.cache
@@ -155,15 +153,13 @@ def get_subject_folders_from_data_repo(
 @typing.overload
 def get_sessions_from_data_repo() -> (
     dict[npc_session.SubjectRecord, tuple[npc_session.SessionRecord, ...]]
-):
-    ...
+): ...
 
 
 @typing.overload
 def get_sessions_from_data_repo(
     subject: int | str,
-) -> tuple[npc_session.SessionRecord, ...]:
-    ...
+) -> tuple[npc_session.SessionRecord, ...]: ...
 
 
 @functools.cache

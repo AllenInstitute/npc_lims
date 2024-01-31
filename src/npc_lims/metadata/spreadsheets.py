@@ -135,9 +135,11 @@ def excel_to_sqlite(
             for idx, col in enumerate(col):
                 if idx in duplicate_column_idx:
                     continue
-                tuprow.append(str(col.value).strip()) if str(
-                    col.value
-                ).strip() != "None" else tuprow.append("")
+                (
+                    tuprow.append(str(col.value).strip())
+                    if str(col.value).strip() != "None"
+                    else tuprow.append("")
+                )
             tup.append(tuple(tuprow))
 
         insQuery1 = "INSERT INTO " + repr(str(slugify(sheet))) + "("
