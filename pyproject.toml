@@ -20,6 +20,7 @@ dependencies = [
     "openpyxl>=3.1.2",
     "packaging>=23.2",
     "boto3==1.28.17",
+    "types-pyYAML>=6.0.12.12",
 ]
 requires-python = ">=3.9"
 readme = "README.md"
