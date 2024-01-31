@@ -118,6 +118,70 @@ class SessionInfo:
         return True
 
     @functools.cached_property
+    def is_dlc_eye(self) -> bool:
+        """
+        The dlc eye capsule has yield a result for this session
+        >>> get_session_info("676909_2023-12-13").is_dlc_eye
+        True
+        """
+
+        if not self.is_ephys:
+            return False
+
+        try:
+            return bool(codeocean.get_model_data_asset(self.id, 'dlc_eye'))
+        except(FileNotFoundError, ValueError):
+            return False
+
+    @functools.cached_property
+    def is_dlc_side(self) -> bool:
+        """
+        The dlc side capsule has yield a result for this session
+        >>> get_session_info("676909_2023-12-13").is_dlc_side
+        True
+        """
+
+        if not self.is_ephys:
+            return False
+
+        try:
+            return bool(codeocean.get_model_data_asset(self.id, 'dlc_side'))
+        except(FileNotFoundError, ValueError):
+            return False
+
+    @property
+    def is_dlc_face(self) -> bool:
+        """
+        The dlc face capsule has yield a result for this session
+        >>> get_session_info("676909_2023-12-13").is_dlc_face
+        True
+        """
+
+        if not self.is_ephys:
+            return False
+
+        try:
+            return bool(codeocean.get_model_data_asset(self.id, 'dlc_face'))
+        except(FileNotFoundError, ValueError):
+            return False
+
+    @functools.cached_property
+    def is_facemap(self) -> bool:
+        """
+        The facemap capsule has yield a result for this session
+        >>> get_session_info("676909_2023-12-13").is_facemap
+        True
+        """
+
+        if not self.is_ephys:
+            return False
+
+        try:
+            return bool(codeocean.get_model_data_asset(self.id, 'facemap'))
+        except(FileNotFoundError, ValueError):
+            return False
+
+    @functools.cached_property
     def is_sorted(self) -> bool:
         """The AIND sorting pipeline has yielded a Result asset for this
         session.

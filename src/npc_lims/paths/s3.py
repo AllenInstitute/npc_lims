@@ -93,6 +93,53 @@ def get_sorted_data_paths_from_s3(
         raise ValueError("Must provide either session or sorted_data_asset_id")
     return tuple(get_data_asset_s3_path(sorted_data_asset).iterdir())
 
+@functools.cache
+def get_dlc_eye_s3_paths(session: str | npc_session.SessionRecord) -> tuple[upath.UPath, ...]:
+    """
+    >>> paths = get_dlc_eye_s3_paths('676909_2023-12-13')
+    >>> len(paths)
+    7
+    """
+    session = npc_session.SessionRecord(session)
+    dlc_eye_data_asset = codeocean.get_model_data_asset(session, 'dlc_eye')
+
+    return tuple(get_data_asset_s3_path(dlc_eye_data_asset).iterdir())
+
+@functools.cache
+def get_dlc_side_s3_paths(session: str | npc_session.SessionRecord) -> tuple[upath.UPath, ...]:
+    """
+    >>> paths = get_dlc_side_s3_paths('676909_2023-12-13')
+    >>> len(paths)
+    5
+    """
+    session = npc_session.SessionRecord(session)
+    dlc_eye_data_asset = codeocean.get_model_data_asset(session, 'dlc_side')
+
+    return tuple(get_data_asset_s3_path(dlc_eye_data_asset).iterdir())
+
+@functools.cache
+def get_dlc_face_s3_paths(session: str | npc_session.SessionRecord) -> tuple[upath.UPath, ...]:
+    """
+    >>> paths = get_dlc_face_s3_paths('676909_2023-12-13')
+    >>> len(paths)
+    5
+    """
+    session = npc_session.SessionRecord(session)
+    dlc_eye_data_asset = codeocean.get_model_data_asset(session, 'dlc_face')
+
+    return tuple(get_data_asset_s3_path(dlc_eye_data_asset).iterdir())
+
+@functools.cache
+def get_facemap_s3_paths(session: str | npc_session.SessionRecord) -> tuple[upath.UPath, ...]:
+    """
+    >>> paths = get_facemap_s3_paths('676909_2023-12-13')
+    >>> len(paths)
+    4
+    """
+    session = npc_session.SessionRecord(session)
+    dlc_eye_data_asset = codeocean.get_model_data_asset(session, 'facemap')
+
+    return tuple(get_data_asset_s3_path(dlc_eye_data_asset).iterdir())
 
 @functools.cache
 def get_settings_xml_path_from_s3(
