@@ -32,15 +32,19 @@ def main() -> None:
             project VARCHAR DEFAULT NULL,
             is_uploaded BOOLEAN DEFAULT NULL,
             is_sorted BOOLEAN DEFAULT NULL,
-            is_annotated BOOLEAN DEFAULT NULL
+            is_annotated BOOLEAN DEFAULT NULL,
+            is_dlc_eye BOOLEAN DEFAULT NULL,
+            is_dlc_side BOOLEAN DEFAULT NULL,
+            is_dlc_face BOOLEAN DEFAULT NULL,
+            is_facemap BOOLEAN DEFAULT NULL
         );
         """
     )
-    statement = "INSERT INTO status (date, subject_id, project, is_uploaded, is_sorted, is_annotated) VALUES "
+    statement = "INSERT INTO status (date, subject_id, project, is_uploaded, is_sorted, is_annotated, is_dlc_eye, is_dlc_side, is_dlc_face, is_facemap) VALUES "
     for s in sorted(npc_lims.get_session_info(), key=lambda s: s.date, reverse=True):
         if not s.is_ephys:
             continue
-        statement += f"\n\t('{s.date}', '{s.subject}', '{s.project}', {int(s.is_uploaded)}, {int(s.is_sorted)}, {int(s.is_annotated)}),"
+        statement += f"\n\t('{s.date}', '{s.subject}', '{s.project}', {int(s.is_uploaded)}, {int(s.is_sorted)}, {int(s.is_annotated)}, {int(s.is_dlc_eye)}, {int(s.is_dlc_side)}, {int(s.is_dlc_face)}, {int(s.is_facemap)}),"
     statement = statement[:-1] + ";"
     response = connection.Execute(statement)
     if response[1]:
