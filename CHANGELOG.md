@@ -8,13 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.112...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.113...HEAD)</small>
+
+<!-- insertion marker -->
+## [v0.1.113](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.113) - 2024-01-31
+
+<small>[Compare with v0.1.112](https://github.com/AllenInstitute/npc_lims/compare/v0.1.112...v0.1.113)</small>
 
 ### Fixed
 
 - fix names in workflow and scripts #19, #18, https://github.com/AllenNeuralDynamics/dynamic-routing/issues/11 ([1f287e5](https://github.com/AllenInstitute/npc_lims/commit/1f287e5315cc4e9fd39fd81a41748c6211aa3c17) by arjun.sridhar12345).
 
-<!-- insertion marker -->
 ## [v0.1.112](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.112) - 2024-01-31
 
 <small>[Compare with v0.1.111](https://github.com/AllenInstitute/npc_lims/compare/v0.1.111...v0.1.112)</small>

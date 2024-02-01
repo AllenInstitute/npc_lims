@@ -4,9 +4,7 @@ import npc_lims.status as status
 
 def update_helper(session_info: status.SessionInfo, model_name: str) -> None:
     try:
-        model_session_data = codeocean.get_model_data_asset(
-            session_info.id, model_name
-        )
+        model_session_data = codeocean.get_model_data_asset(session_info.id, model_name)
         codeocean.update_permissions_for_data_asset(model_session_data)
     except (ValueError, FileNotFoundError):
         pass
