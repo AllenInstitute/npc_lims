@@ -3,7 +3,7 @@ import npc_lims.status as status
 
 
 def generate_helper(session_info: status.SessionInfo, model_name: str) -> None:
-    if not getattr(session_info, f'is_{model_name}'):
+    if not getattr(session_info, f"is_{model_name}"):
         try:
             codeocean.create_session_data_asset(session_info.id, model_name)
         except UnboundLocalError:

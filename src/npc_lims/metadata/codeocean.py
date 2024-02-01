@@ -454,7 +454,8 @@ def get_session_computation_id_and_data_asset_name(
             if re.match(  # TODO add folder
                 f"ecephys_{session.subject}_{session.date}_{npc_session.PARSE_TIME}.json",
                 item["name"],
-            ) and len(result_items['items']) > 2
+            )
+            and len(result_items["items"]) > 2
         )
 
         if not session_result_item:
@@ -493,10 +494,13 @@ def get_model_data_asset(
         raise FileNotFoundError(f"{session} has no {model_name} results")
 
     single_model_asset = get_single_data_asset(session, session_model_asset, model_name)
-    if single_model_asset['files'] < 3:
-        raise ValueError(f'{model_name} did not finish and was stopped abrutly. Rerun for session {session}')
-    
+    if single_model_asset["files"] < 3:
+        raise ValueError(
+            f"{model_name} did not finish and was stopped abrutly. Rerun for session {session}"
+        )
+
     return single_model_asset
+
 
 def create_session_data_asset(
     session: str | npc_session.SessionRecord, model_name: str
