@@ -438,7 +438,7 @@ def get_session_computation_id_and_data_asset_name(
     ('3010ff06-aae5-4b35-b070-57df9ef85582', 'ecephys_626791_2022-08-16_00-00-00_eyetracking')
     """
     for computation in capsule_computations:
-        if not computation["has_results"]:
+        if not computation["has_results"] and computation["state"] != 'completed':
             continue
 
         response_result_items = get_codeocean_client().get_list_result_items(
@@ -491,7 +491,7 @@ def get_model_data_asset(
     if not session_model_asset:
         raise FileNotFoundError(f"{session} has no {model_name} results")
 
-    return session_model_asset[0]
+    return get_single_data_asset(session, session_model_asset, model_name)
 
 
 def create_session_data_asset(
