@@ -431,12 +431,13 @@ def get_session_computation_id_and_data_asset_name(
     """
     Returns the computation id and data asset name for the session that will be used to create the data asset
     Test below fails, since arjun ran capsule but github has different token
-    #>>> session = npc_session.SessionRecord('626791_20220816')
+    #>>> session = npc_session.SessionRecord('676909_2023-12-13')
     #>>> capsule_computations = get_codeocean_client().get_capsule_computations(MODEL_CAPSULE_MAPPING['dlc_eye'])
     #>>> capsule_computations.raise_for_status()
-    #>>> get_session_computation_id_and_data_asset_name(session, 'eyetracking', capsule_computations.json())
-    ('3010ff06-aae5-4b35-b070-57df9ef85582', 'ecephys_626791_2022-08-16_00-00-00_eyetracking')
+    #>>> get_session_computation_id_and_data_asset_name(session, 'dlc_eye', capsule_computations.json())
+    #('3010ff06-aae5-4b35-b070-57df9ef85582', 'ecephys_626791_2022-08-16_00-00-00_eyetracking')
     """
+    print(session, model_name)
     for computation in capsule_computations:
         if not computation["has_results"] and computation["state"] != "completed":
             continue
@@ -453,7 +454,7 @@ def get_session_computation_id_and_data_asset_name(
             if re.match(  # TODO add folder
                 f"ecephys_{session.subject}_{session.date}_{npc_session.PARSE_TIME}.json",
                 item["name"],
-            )
+            ) and len(result_items['items']) > 2
         )
 
         if not session_result_item:
@@ -491,8 +492,11 @@ def get_model_data_asset(
     if not session_model_asset:
         raise FileNotFoundError(f"{session} has no {model_name} results")
 
-    return get_single_data_asset(session, session_model_asset, model_name)
-
+    single_model_asset = get_single_data_asset(session, session_model_asset, model_name)
+    if single_model_asset['files'] < 3:
+        raise ValueError(f'{model_name} did not finish and was stopped abrutly. Rerun for session {session}')
+    
+    return single_model_asset
 
 def create_session_data_asset(
     session: str | npc_session.SessionRecord, model_name: str
