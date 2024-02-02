@@ -437,7 +437,6 @@ def get_session_computation_id_and_data_asset_name(
     #>>> get_session_computation_id_and_data_asset_name(session, 'dlc_eye', capsule_computations.json())
     #('3010ff06-aae5-4b35-b070-57df9ef85582', 'ecephys_626791_2022-08-16_00-00-00_eyetracking')
     """
-    print(session, model_name)
     for computation in capsule_computations:
         if not computation["has_results"] and computation["state"] != "completed":
             continue
