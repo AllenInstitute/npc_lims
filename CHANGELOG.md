@@ -8,9 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.114...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.115...HEAD)</small>
+
+### Removed
+
+- remove prints ([bdd96a4](https://github.com/AllenInstitute/npc_lims/commit/bdd96a4e9a49514b58c67c883d79659fb5ed2770) by arjun.sridhar12345).
 
 <!-- insertion marker -->
+## [v0.1.115](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.115) - 2024-02-01
+
+<small>[Compare with v0.1.114](https://github.com/AllenInstitute/npc_lims/compare/v0.1.114...v0.1.115)</small>
+
 ## [v0.1.114](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.114) - 2024-02-01
 
 <small>[Compare with v0.1.113](https://github.com/AllenInstitute/npc_lims/compare/v0.1.113...v0.1.114)</small>
