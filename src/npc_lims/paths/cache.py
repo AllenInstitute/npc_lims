@@ -128,7 +128,7 @@ def get_cache_path(
         session_id=session_id, nwb_component=nwb_component, version=version
     )
     if consolidated and session_id is None:
-        path = path.parent / "consolidated" / f"{nwb_component}{'.parquet' if nwb_component != 'units' else '.zarr'}"
+        path = path.parent / "consolidated" / f"{nwb_component}{'.parquet' if nwb_component != 'spike_times' else '.zarr'}"
     return path
 
 
