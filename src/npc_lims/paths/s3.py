@@ -495,30 +495,6 @@ def get_hdf5_stim_files_from_s3(
     return tuple(files)
 
 
-@functools.cache
-def get_nwb_file_from_s3(
-    session: str | npc_session.SessionRecord,
-) -> upath.UPath:
-    """
-    Examples:
-        >>> get_nwb_file_from_s3('636766_20230125')
-        S3Path('s3://aind-scratch-data/ben.hardcastle/nwb/nwb/DRpilot_636766_20230125.nwb')
-    """
-    session = npc_session.SessionRecord(session)
-    root = NWB_REPO
-    glob = "*.nwb*"
-    result = next(
-        (
-            path
-            for path in root.glob(glob)
-            if session == npc_session.SessionRecord(path.name)
-        ),
-        None,
-    )
-    if not result:
-        raise FileNotFoundError(f"No NWB file found at {root}/{glob}")
-    return result
-
 
 @functools.cache
 def get_units_spikes_codeocean_kilosort_top_level_files(
