@@ -320,15 +320,6 @@ def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath:
 
     return get_path_from_data_asset(raw_asset)
 
-@functools.cache
-def get_session_raw_data_asset(session) -> DataAssetAPI:
-    session = npc_session.SessionRecord(session)
-    raw_assets = tuple(
-        asset for asset in get_session_data_assets(session) if is_raw_data_asset(asset)
-    )
-    raw_asset = get_single_data_asset(session, raw_assets, "raw")
-    return raw_asset
-
 
 def get_path_from_data_asset(asset: DataAssetAPI) -> upath.UPath:
     """Reconstruct path to raw data in bucket (e.g. on s3) using data asset
