@@ -100,7 +100,7 @@ def get_subject_data_assets(subject: str | int) -> tuple[DataAssetAPI, ...]:
     )
     response.raise_for_status()
     return response.json()["results"]
-
+    
 
 @functools.cache
 def get_session_data_assets(
@@ -316,13 +316,18 @@ def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath:
         >>> get_raw_data_root('668759_20230711')
         S3Path('s3://aind-ephys-data/ecephys_668759_2023-07-11_13-07-32')
     """
+    raw_asset = get_session_raw_data_asset(session)
+
+    return get_path_from_data_asset(raw_asset)
+
+@functools.cache
+def get_session_raw_data_asset(session) -> DataAssetAPI:
     session = npc_session.SessionRecord(session)
     raw_assets = tuple(
         asset for asset in get_session_data_assets(session) if is_raw_data_asset(asset)
     )
     raw_asset = get_single_data_asset(session, raw_assets, "raw")
-
-    return get_path_from_data_asset(raw_asset)
+    return raw_asset
 
 
 def get_path_from_data_asset(asset: DataAssetAPI) -> upath.UPath:
