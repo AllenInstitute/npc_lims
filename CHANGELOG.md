@@ -8,7 +8,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.116...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.117...HEAD)</small>
+
+### Fixed
+
+- Fix getting cache version ([c60f2c2](https://github.com/AllenInstitute/npc_lims/commit/c60f2c2358f5d63075cee514153ea5221b55d9ec) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.117](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.117) - 2024-02-14
+
+<small>[Compare with v0.1.116](https://github.com/AllenInstitute/npc_lims/compare/v0.1.116...v0.1.117)</small>
 
 ### Added
 
@@ -21,7 +30,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Fix doctest ([b121f98](https://github.com/AllenInstitute/npc_lims/commit/b121f98f654f336e72a7ee683aca3f898d0faec5) by bjhardcastle).
 - Fix consolidated path name ([46bfdcd](https://github.com/AllenInstitute/npc_lims/commit/46bfdcdf8a626f6b320d76df452da4ae19a1875f) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.116](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.116) - 2024-02-02
 
 <small>[Compare with v0.1.115](https://github.com/AllenInstitute/npc_lims/compare/v0.1.115...v0.1.116)</small>
