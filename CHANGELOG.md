@@ -8,13 +8,28 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.115...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.116...HEAD)</small>
+
+### Added
+
+- Add `spike_times` as standalone nwb component ([6271e11](https://github.com/AllenInstitute/npc_lims/commit/6271e1101f1ff29ff16d9f6461a1333f9369f973) by bjhardcastle).
+- Add consolidated zarr cache for units ([1e58d3b](https://github.com/AllenInstitute/npc_lims/commit/1e58d3b3ad02baaf931ae2f1e4d74c60eb51a45b) by bjhardcastle).
+- Add separate `get_raw_data_asset()` ([24f3370](https://github.com/AllenInstitute/npc_lims/commit/24f3370ce28d36269dcf8c4a462dec3147c175b9) by bjhardcastle).
+
+### Fixed
+
+- Fix doctest ([b121f98](https://github.com/AllenInstitute/npc_lims/commit/b121f98f654f336e72a7ee683aca3f898d0faec5) by bjhardcastle).
+- Fix consolidated path name ([46bfdcd](https://github.com/AllenInstitute/npc_lims/commit/46bfdcdf8a626f6b320d76df452da4ae19a1875f) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.116](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.116) - 2024-02-02
+
+<small>[Compare with v0.1.115](https://github.com/AllenInstitute/npc_lims/compare/v0.1.115...v0.1.116)</small>
 
 ### Removed
 
 - remove prints ([bdd96a4](https://github.com/AllenInstitute/npc_lims/commit/bdd96a4e9a49514b58c67c883d79659fb5ed2770) by arjun.sridhar12345).
 
-<!-- insertion marker -->
 ## [v0.1.115](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.115) - 2024-02-01
 
 <small>[Compare with v0.1.114](https://github.com/AllenInstitute/npc_lims/compare/v0.1.114...v0.1.115)</small>

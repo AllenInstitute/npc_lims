@@ -495,7 +495,6 @@ def get_hdf5_stim_files_from_s3(
     return tuple(files)
 
 
-
 @functools.cache
 def get_units_spikes_codeocean_kilosort_top_level_files(
     session: str | npc_session.SessionRecord,

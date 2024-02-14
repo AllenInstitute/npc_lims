@@ -100,7 +100,7 @@ def get_subject_data_assets(subject: str | int) -> tuple[DataAssetAPI, ...]:
     )
     response.raise_for_status()
     return response.json()["results"]
-    
+
 
 @functools.cache
 def get_session_data_assets(
