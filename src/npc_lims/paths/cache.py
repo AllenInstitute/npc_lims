@@ -64,8 +64,6 @@ def get_current_cache_version() -> str:
     >>> v = get_current_cache_version()
     >>> assert v >= 'v0.0.0'
     """
-    if not (version_dirs := sorted(CACHE_ROOT.glob("v*"))):
-        raise FileNotFoundError(f"No cache versions found in {CACHE_ROOT}")
     npc_sessions_info = requests.get("https://pypi.org/pypi/npc_sessions/json").json()
     return _parse_version(npc_sessions_info["info"]["version"])
 
