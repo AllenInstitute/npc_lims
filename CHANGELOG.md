@@ -8,13 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.117...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.118...HEAD)</small>
+
+<!-- insertion marker -->
+## [v0.1.118](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.118) - 2024-02-14
+
+<small>[Compare with v0.1.117](https://github.com/AllenInstitute/npc_lims/compare/v0.1.117...v0.1.118)</small>
 
 ### Fixed
 
 - Fix getting cache version ([c60f2c2](https://github.com/AllenInstitute/npc_lims/commit/c60f2c2358f5d63075cee514153ea5221b55d9ec) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.117](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.117) - 2024-02-14
 
 <small>[Compare with v0.1.116](https://github.com/AllenInstitute/npc_lims/compare/v0.1.116...v0.1.117)</small>
