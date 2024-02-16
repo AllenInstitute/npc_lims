@@ -28,12 +28,14 @@ NWBComponentStr: TypeAlias = Literal[
     "electrodes",
     "units",
     "spike_times",
+    "licks",
+    "running_speed",
     # TODO licks, pupil area, xy pos, running speed (zarr?)
 ]
 
 CACHED_FILE_EXTENSIONS: dict[str, str] = dict.fromkeys(
     typing.get_args(NWBComponentStr), ".parquet"
-) | {"spike_times": ".zarr"}
+) | dict.fromkeys(("spike_times", "licks", "running_speed"), ".zarr")
 """Mapping of NWB component name to file extension"""
 
 assert CACHED_FILE_EXTENSIONS.keys() == set(
@@ -130,7 +132,7 @@ def get_cache_path(
         path = (
             path.parent
             / "consolidated"
-            / f"{nwb_component}{'.parquet' if nwb_component != 'spike_times' else '.zarr'}"
+            / f"{nwb_component}{CACHED_FILE_EXTENSIONS[nwb_component]}"
         )
     return path
 
