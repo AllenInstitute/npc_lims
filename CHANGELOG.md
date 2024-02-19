@@ -8,9 +8,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.119...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.120...HEAD)</small>
+
+### Added
+
+- Add npc_io ([783ecaf](https://github.com/AllenInstitute/npc_lims/commit/783ecaf146bb644149a3b9abfcb7b5cc7f769934) by bjhardcastle).
+- Add licks and running_speed as nwb components ([cc247aa](https://github.com/AllenInstitute/npc_lims/commit/cc247aaa083240859ba229a77443290091883882) by bjhardcastle).
 
 <!-- insertion marker -->
+## [v0.1.120](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.120) - 2024-02-15
+
+<small>[Compare with v0.1.119](https://github.com/AllenInstitute/npc_lims/compare/v0.1.119...v0.1.120)</small>
+
 ## [v0.1.119](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.119) - 2024-02-15
 
 <small>[Compare with v0.1.118](https://github.com/AllenInstitute/npc_lims/compare/v0.1.118...v0.1.119)</small>
