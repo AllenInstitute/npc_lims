@@ -6,7 +6,7 @@ import re
 import uuid
 import warnings
 from collections.abc import Mapping, Sequence
-from typing import Any, Literal
+from typing import Any, Literal, List
 
 import npc_session
 import upath
@@ -19,6 +19,7 @@ from aind_codeocean_api.models.computations_requests import (
 from typing_extensions import TypeAlias
 
 import npc_lims.exceptions as exceptions
+import requests
 
 DataAssetAPI: TypeAlias = dict[
     Literal[
@@ -39,6 +40,10 @@ DataAssetAPI: TypeAlias = dict[
 ]
 """Result from CodeOcean API when querying data assets."""
 
+RunCapsuleResponseAPI: TypeAlias = dict[
+    Literal['created', 'has_results', 'id', 'name', 'run_time', 'state'],
+    Any
+]
 CapsuleComputationAPI: TypeAlias = dict[
     Literal["created", "end_status", "has_results", "id", "name", "run_time", "state"],
     Any,
@@ -48,14 +53,12 @@ CapsuleComputationAPI: TypeAlias = dict[
 ResultItemAPI: TypeAlias = dict[Literal["name", "path", "size", "type"], Any]
 """Result from CodeOceanAPI when querying for results from a computation"""
 
-MODEL_CAPSULE_MAPPING: dict[str, str] = {
+MODEL_CAPSULE_PIPELINE_MAPPING: dict[str, str] = {
     "dlc_eye": "4cf0be83-2245-4bb1-a55c-a78201b14bfe",
     "dlc_side": "facff99f-d3aa-4ecd-8ef8-a343c38197aa",
     "dlc_face": "a561aa4c-2066-4ff2-a916-0db86b918cdf",
     "facemap": "670de0b3-f73d-4d22-afe6-6449c45fada4",
-    "video_pipeline": "edbc4721-d251-4cca-ba39-db8f167c3468",
 }
-
 
 class SessionIndexError(IndexError):
     pass
@@ -393,77 +396,27 @@ def update_permissions_for_data_asset(data_asset: DataAssetAPI) -> None:
     response.raise_for_status()
 
 
-def run_capsule(
-    session_id: str,
+def run_capsule_or_pipeline(
+    data_assets: List[ComputationDataAsset],
     model_name: str,
-) -> None:
-    if model_name not in MODEL_CAPSULE_MAPPING:
+) -> requests.models.Response:
+    if model_name not in MODEL_CAPSULE_PIPELINE_MAPPING:
         raise ModelCapsuleMappingError(
             f"No capsule associated with {model_name}. Check codeocean"
         )
 
-    data_assets = [
-        ComputationDataAsset(id=data_asset["id"], mount=data_asset["name"])
-        for data_asset in [get_session_raw_data_asset(session_id)]
-    ]
-
     if "pipeline" in model_name:
         run_capsule_request = RunCapsuleRequest(
-            pipeline_id=MODEL_CAPSULE_MAPPING[model_name], data_assets=data_assets
+            pipeline_id=MODEL_CAPSULE_PIPELINE_MAPPING[model_name], data_assets=data_assets
         )
     else:
         run_capsule_request = RunCapsuleRequest(
-            capsule_id=MODEL_CAPSULE_MAPPING[model_name], data_assets=data_assets
+            capsule_id=MODEL_CAPSULE_PIPELINE_MAPPING[model_name], data_assets=data_assets
         )
 
-    get_codeocean_client().run_capsule(run_capsule_request).raise_for_status()
-
-
-def get_session_computation_id_and_data_asset_name(
-    session: npc_session.SessionRecord,
-    model_name: str,
-    capsule_computations: list[CapsuleComputationAPI],
-) -> tuple[str, str]:
-    """
-    Returns the computation id and data asset name for the session that will be used to create the data asset
-    Test below fails, since arjun ran capsule but github has different token
-    #>>> session = npc_session.SessionRecord('676909_2023-12-13')
-    #>>> capsule_computations = get_codeocean_client().get_capsule_computations(MODEL_CAPSULE_MAPPING['dlc_eye'])
-    #>>> capsule_computations.raise_for_status()
-    #>>> get_session_computation_id_and_data_asset_name(session, 'dlc_eye', capsule_computations.json())
-    #('3010ff06-aae5-4b35-b070-57df9ef85582', 'ecephys_626791_2022-08-16_00-00-00_eyetracking')
-    """
-    for computation in capsule_computations:
-        if not computation["has_results"] and computation["state"] != "completed":
-            continue
-
-        response_result_items = get_codeocean_client().get_list_result_items(
-            computation["id"]
-        )
-        response_result_items.raise_for_status()
-        result_items = response_result_items.json()
-
-        session_result_item = tuple(
-            item
-            for item in result_items["items"]
-            if re.match(  # TODO add folder
-                f"ecephys_{session.subject}_{session.date}_{npc_session.PARSE_TIME}.json",
-                item["name"],
-            )
-            and len(result_items["items"]) > 2
-        )
-
-        if not session_result_item:
-            continue
-
-        session_item = session_result_item[0]
-        session_comp_id_data_asset_name = (
-            computation["id"],
-            session_item["name"].replace(".json", f"_{model_name}"),
-        )
-        break
-
-    return session_comp_id_data_asset_name
+    response = get_codeocean_client().run_capsule(run_capsule_request)
+    response.raise_for_status()
+    return response
 
 
 def get_model_data_asset(
@@ -476,7 +429,7 @@ def get_model_data_asset(
     'ecephys_676909_2023-12-13_13-43-40_dlc_eye'
     """
     session = npc_session.SessionRecord(session)
-    if model_name not in MODEL_CAPSULE_MAPPING:
+    if model_name not in MODEL_CAPSULE_PIPELINE_MAPPING:
         raise ModelCapsuleMappingError(
             f"No capsule associated with {model_name}. Check codeocean"
         )
@@ -497,27 +450,35 @@ def get_model_data_asset(
     return single_model_asset
 
 
+def check_computation_result(session: npc_session.SessionRecord, computation_id: str, model_name: str) -> None:
+    response_result_items = get_codeocean_client().get_list_result_items(
+        computation_id
+    )
+    response_result_items.raise_for_status()
+    result_items = response_result_items.json()
+
+    session_result_item = tuple(
+        item
+        for item in result_items["items"]
+        if len(result_items["items"]) > 2
+    )
+
+    if not session_result_item:
+        raise ValueError(f'Run {computation_id} for capsule {model_name} has no valid results')
+    
 def create_session_data_asset(
-    session: str | npc_session.SessionRecord, model_name: str
+    session: str | npc_session.SessionRecord, model_name: str, computation_id: str
 ) -> None:
     session = npc_session.SessionRecord(session)
 
-    if model_name not in MODEL_CAPSULE_MAPPING:
+    if model_name not in MODEL_CAPSULE_PIPELINE_MAPPING:
         raise ModelCapsuleMappingError(
             f"No capsule associated with {model_name}. Check codeocean"
         )
 
-    # get_capsule_computations returns the computations in order of what was most recently run
-    response_computations = get_codeocean_client().get_capsule_computations(
-        MODEL_CAPSULE_MAPPING[model_name]
-    )
-    response_computations.raise_for_status()
+    check_computation_result(session, computation_id, model_name)
 
-    capsule_computations: list[CapsuleComputationAPI] = response_computations.json()
-
-    computation_id, data_asset_name = get_session_computation_id_and_data_asset_name(
-        session, model_name, capsule_computations
-    )
+    data_asset_name = f"{get_session_raw_data_asset(session)['name']}_{model_name}"
 
     source = aind_codeocean_requests.Source(
         computation=aind_codeocean_requests.Sources.Computation(id=computation_id)
