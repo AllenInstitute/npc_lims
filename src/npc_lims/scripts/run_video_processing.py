@@ -1,10 +1,9 @@
-import npc_lims.metadata.codeocean as codeocean
 import npc_lims.status as status
 
 
 def run_helper(session_info: status.SessionInfo, model_name: str, num_jobs: int) -> int:
     if not getattr(session_info, f"is_{model_name}"):
-        #codeocean.run_capsule_or_pipeline(session_info.id, model_name)
+        # codeocean.run_capsule_or_pipeline(session_info.id, model_name)
         num_jobs += 1
 
     return num_jobs

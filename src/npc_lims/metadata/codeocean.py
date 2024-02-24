@@ -6,9 +6,10 @@ import re
 import uuid
 import warnings
 from collections.abc import Mapping, Sequence
-from typing import Any, Literal, List
+from typing import Any, Literal
 
 import npc_session
+import requests
 import upath
 from aind_codeocean_api import codeocean as aind_codeocean_api
 from aind_codeocean_api.models import data_assets_requests as aind_codeocean_requests
@@ -19,7 +20,6 @@ from aind_codeocean_api.models.computations_requests import (
 from typing_extensions import TypeAlias
 
 import npc_lims.exceptions as exceptions
-import requests
 
 DataAssetAPI: TypeAlias = dict[
     Literal[
@@ -41,8 +41,7 @@ DataAssetAPI: TypeAlias = dict[
 """Result from CodeOcean API when querying data assets."""
 
 RunCapsuleResponseAPI: TypeAlias = dict[
-    Literal['created', 'has_results', 'id', 'name', 'run_time', 'state'],
-    Any
+    Literal["created", "has_results", "id", "name", "run_time", "state"], Any
 ]
 CapsuleComputationAPI: TypeAlias = dict[
     Literal["created", "end_status", "has_results", "id", "name", "run_time", "state"],
@@ -59,6 +58,7 @@ MODEL_CAPSULE_PIPELINE_MAPPING: dict[str, str] = {
     "dlc_face": "a561aa4c-2066-4ff2-a916-0db86b918cdf",
     "facemap": "670de0b3-f73d-4d22-afe6-6449c45fada4",
 }
+
 
 class SessionIndexError(IndexError):
     pass
@@ -397,7 +397,7 @@ def update_permissions_for_data_asset(data_asset: DataAssetAPI) -> None:
 
 
 def run_capsule_or_pipeline(
-    data_assets: List[ComputationDataAsset],
+    data_assets: list[ComputationDataAsset],
     model_name: str,
 ) -> requests.models.Response:
     if model_name not in MODEL_CAPSULE_PIPELINE_MAPPING:
@@ -407,11 +407,13 @@ def run_capsule_or_pipeline(
 
     if "pipeline" in model_name:
         run_capsule_request = RunCapsuleRequest(
-            pipeline_id=MODEL_CAPSULE_PIPELINE_MAPPING[model_name], data_assets=data_assets
+            pipeline_id=MODEL_CAPSULE_PIPELINE_MAPPING[model_name],
+            data_assets=data_assets,
         )
     else:
         run_capsule_request = RunCapsuleRequest(
-            capsule_id=MODEL_CAPSULE_PIPELINE_MAPPING[model_name], data_assets=data_assets
+            capsule_id=MODEL_CAPSULE_PIPELINE_MAPPING[model_name],
+            data_assets=data_assets,
         )
 
     response = get_codeocean_client().run_capsule(run_capsule_request)
@@ -450,22 +452,23 @@ def get_model_data_asset(
     return single_model_asset
 
 
-def check_computation_result(session: npc_session.SessionRecord, computation_id: str, model_name: str) -> None:
-    response_result_items = get_codeocean_client().get_list_result_items(
-        computation_id
-    )
+def check_computation_result(
+    session: npc_session.SessionRecord, computation_id: str, model_name: str
+) -> None:
+    response_result_items = get_codeocean_client().get_list_result_items(computation_id)
     response_result_items.raise_for_status()
     result_items = response_result_items.json()
 
     session_result_item = tuple(
-        item
-        for item in result_items["items"]
-        if len(result_items["items"]) > 2
+        item for item in result_items["items"] if len(result_items["items"]) > 2
     )
 
     if not session_result_item:
-        raise ValueError(f'Run {computation_id} for capsule {model_name} has no valid results')
-    
+        raise ValueError(
+            f"Run {computation_id} for capsule {model_name} has no valid results"
+        )
+
+
 def create_session_data_asset(
     session: str | npc_session.SessionRecord, model_name: str, computation_id: str
 ) -> None:
