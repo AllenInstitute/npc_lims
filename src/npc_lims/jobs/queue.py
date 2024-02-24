@@ -42,7 +42,7 @@ def add_to_queue(session_id: str | npc_session.SessionRecord, capsule_or_pipelin
 
         # write to queue:
         # setting priority depends on capsule/pipeline
-        # {'data_assets': data_assets, 'run_id': 'Not started', 'session': session_id 'capsule_or_pipeline_name': capsule_or_pipeline_name, priority: 0}
+        # {'data_assets': [id, name for data_asset in data_assets], 'run_id': 'Not started', 'session': session_id 'capsule_or_pipeline_name': capsule_or_pipeline_name, priority: 0}
 
 def update_queue(session_json: dict[str, str | int]) -> None:  
     # run_response: codeocean.RunCapsuleResponseAPI = codeocean.get_codeocean_client().get_computation(session_json['id'])
