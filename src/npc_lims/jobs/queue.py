@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import npc_lims.metadata.codeocean as codeocean
 import npc_lims.paths.s3 as paths
 import npc_lims.status as status
