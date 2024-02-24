@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import npc_lims.metadata.codeocean as codeocean
-import npc_lims.paths.s3 as paths
 import npc_lims.status as status
 import npc_session
 from aind_codeocean_api.models.computations_requests import ComputationDataAsset
