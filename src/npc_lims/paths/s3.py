@@ -36,7 +36,7 @@ def get_data_asset_s3_path(asset_id: str | codeocean.DataAssetAPI) -> upath.UPat
     Assumes that the data asset has data on s3, which may not be true, and we can't tell from asset info.
     """
     bucket = CODE_OCEAN_DATA_BUCKET
-    with contextlib.suppress(AttributeError, KeyError):
+    with contextlib.suppress(AttributeError, KeyError, TypeError):
         bucket = upath.UPath(upath.UPath(f's3://{asset_id["sourceBucket"]}'))  # type: ignore[index]
     with contextlib.suppress(AttributeError, KeyError):
         return bucket / asset_id.get("id")  # type: ignore[union-attr, operator]
