@@ -122,7 +122,7 @@ def get_cache_path(
     used, ie. will point to the most recent version of the file.
 
     If version == "any", the most-recent version of the file will be found.
-    
+
     >>> get_cache_path(nwb_component="units", version="1.0.0")  # excludes spike_times or waveforms
     S3Path('s3://aind-scratch-data/ben.hardcastle/cache/nwb_components/v1.0.0/consolidated/units.parquet')
     >>> get_cache_path(nwb_component="units", session_id="366122_2023-12-31", version="1.0.0") # includes spike_times and waveforms
@@ -132,25 +132,31 @@ def get_cache_path(
     """
     if version and version.lower() == "any":
         for version_dir in sorted(CACHE_ROOT.iterdir(), reverse=True):
-            if (path := get_cache_path(nwb_component, session_id, version_dir.name, consolidated)).exists():
+            if (
+                path := get_cache_path(
+                    nwb_component, session_id, version_dir.name, consolidated
+                )
+            ).exists():
                 return path
-        raise FileNotFoundError(f"No cached file found for {nwb_component=} {session_id=} {version=}")
-    
+        raise FileNotFoundError(
+            f"No cached file found for {nwb_component=} {session_id=} {version=}"
+        )
+
     extension = get_cache_file_suffix(nwb_component)
     if consolidated and session_id is not None:
         consolidated = False
-        logger.debug(f"Consolidated files don't exist for individual sessions: setting consolidated=False")
+        logger.debug(
+            "Consolidated files don't exist for individual sessions: setting consolidated=False"
+        )
     if not consolidated and extension == ".zarr" and session_id is not None:
-        raise ValueError(f"Individual Zarr files for sessions don't exist: {nwb_component=} {consolidated=} {session_id=}")
+        raise ValueError(
+            f"Individual Zarr files for sessions don't exist: {nwb_component=} {consolidated=} {session_id=}"
+        )
     path = _parse_cache_path(
         session_id=session_id, nwb_component=nwb_component, version=version
     )
     if consolidated:
-        path = (
-            path.parent
-            / "consolidated"
-            / f"{nwb_component}{extension}"
-        )
+        path = path.parent / "consolidated" / f"{nwb_component}{extension}"
     return path
 
 

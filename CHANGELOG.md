@@ -8,7 +8,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.124...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.125...HEAD)</small>
+
+### Added
+
+- Add "any" version for cache paths ([f9754b1](https://github.com/AllenInstitute/npc_lims/commit/f9754b1eda74e48875ffdcf939353c37d5e45e6e) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.125](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.125) - 2024-02-29
+
+<small>[Compare with v0.1.124](https://github.com/AllenInstitute/npc_lims/compare/v0.1.124...v0.1.125)</small>
 
 ### Added
 
@@ -18,7 +27,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Fix error suppression in getting asset paths ([347bed0](https://github.com/AllenInstitute/npc_lims/commit/347bed01d0d98bef1fd8bbb5ee394c4ca1d5b336) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.124](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.124) - 2024-02-24
 
 <small>[Compare with v0.1.122](https://github.com/AllenInstitute/npc_lims/compare/v0.1.122...v0.1.124)</small>
