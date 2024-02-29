@@ -8,13 +8,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.122...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.124...HEAD)</small>
+
+### Added
+
+- Add sessions ([f2eea35](https://github.com/AllenInstitute/npc_lims/commit/f2eea358bf447571cbffe0d7f59517c1a47091dc) by bjhardcastle).
+
+### Fixed
+
+- Fix error suppression in getting asset paths ([347bed0](https://github.com/AllenInstitute/npc_lims/commit/347bed01d0d98bef1fd8bbb5ee394c4ca1d5b336) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.124](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.124) - 2024-02-24
+
+<small>[Compare with v0.1.122](https://github.com/AllenInstitute/npc_lims/compare/v0.1.122...v0.1.124)</small>
 
 ### Removed
 
 - remove unused import ([720dd43](https://github.com/AllenInstitute/npc_lims/commit/720dd43815b1077a74ca024bb4e40bd201c5b5d8) by arjun.sridhar12345).
 
-<!-- insertion marker -->
 ## [v0.1.122](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.122) - 2024-02-19
 
 <small>[Compare with v0.1.120](https://github.com/AllenInstitute/npc_lims/compare/v0.1.120...v0.1.122)</small>
