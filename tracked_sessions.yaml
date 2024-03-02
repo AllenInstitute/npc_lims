@@ -194,7 +194,10 @@ ephys:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702131_20240227:
         day: 2
-
+        issues:
+            - https://github.com/AllenInstitute/npc_sessions/issues/82
+            - https://github.com/AllenInstitute/npc_sessions/issues/83
+            
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-07-26_14-09-36_620263
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-07-27_13-57-17_620263
