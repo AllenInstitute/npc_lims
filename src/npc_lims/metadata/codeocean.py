@@ -89,7 +89,6 @@ def get_codeocean_client() -> aind_codeocean_api.CodeOceanClient:
     )
 
 
-@functools.cache
 def get_subject_data_assets(subject: str | int) -> tuple[DataAssetAPI, ...]:
     """
     All assets associated with a subject ID.
@@ -105,7 +104,6 @@ def get_subject_data_assets(subject: str | int) -> tuple[DataAssetAPI, ...]:
     return response.json()["results"]
 
 
-@functools.cache
 def get_session_data_assets(
     session: str | npc_session.SessionRecord,
 ) -> tuple[DataAssetAPI, ...]:
