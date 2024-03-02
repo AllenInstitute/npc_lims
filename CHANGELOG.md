@@ -8,13 +8,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.125...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.126...HEAD)</small>
+
+### Added
+
+- Add session issues ([e27218a](https://github.com/AllenInstitute/npc_lims/commit/e27218a1c117ec26c91a598e18e9ef496a8c34fa) by bjhardcastle).
+
+### Removed
+
+- Remove caching on functions required to check new data asset existence ([1761527](https://github.com/AllenInstitute/npc_lims/commit/176152718ca025bad662564bdf91af9f8bd28cfa) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.126](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.126) - 2024-02-29
+
+<small>[Compare with v0.1.125](https://github.com/AllenInstitute/npc_lims/compare/v0.1.125...v0.1.126)</small>
 
 ### Added
 
 - Add "any" version for cache paths ([f9754b1](https://github.com/AllenInstitute/npc_lims/commit/f9754b1eda74e48875ffdcf939353c37d5e45e6e) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.125](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.125) - 2024-02-29
 
 <small>[Compare with v0.1.124](https://github.com/AllenInstitute/npc_lims/compare/v0.1.124...v0.1.125)</small>
