@@ -7,7 +7,7 @@ import re
 import uuid
 import warnings
 from collections.abc import Mapping, Sequence
-from typing import Any, Literal
+from typing import Any, Literal, TypedDict
 
 import npc_session
 import requests
@@ -47,11 +47,17 @@ RunCapsuleResponseAPI: TypeAlias = dict[
     Literal["created", "has_results", "id", "name", "run_time", "state"], Any
 ]
 
-CapsuleComputationAPI: TypeAlias = dict[
-    Literal["created", "end_status", "has_results", "id", "name", "run_time", "state"],
-    Any,
-]
-"""Result from CodeOceanAPI when querying for computations for a capsule"""
+class CapsuleComputationAPI(TypedDict):
+    """Result from CodeOceanAPI when querying for computations for a capsule"""
+    """As returned from response.json()"""
+    created: int
+    has_results: bool
+    id: str
+    name: str
+    run_time: int
+    state: str
+    end_status: str | None
+    """Does not exist initially"""
 
 ResultItemAPI: TypeAlias = dict[Literal["name", "path", "size", "type"], Any]
 """Result from CodeOceanAPI when querying for results from a computation"""

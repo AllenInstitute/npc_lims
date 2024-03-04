@@ -82,7 +82,7 @@ def is_started(session_id: SessionID) -> bool:
     return is_in_json(session_id)
 
 @functools.lru_cache(maxsize=1)
-def get_current_job_status(job_or_session_id: JobID) -> JobStatus | npc_lims.CapsuleComputationAPI:
+def get_current_job_status(job_or_session_id: str) -> JobStatus | npc_lims.CapsuleComputationAPI:
     """
     >>> get_current_job_status("633d9d0d-511a-4601-884c-5a7f4a63365f")
     {'created': 1709241133, 'end_status': 'succeeded', 'has_results': True, 'id': '633d9d0d-511a-4601-884c-5a7f4a63365f', 'name': 'Run 9241133', 'run_time': 86398, 'state': 'completed'}
