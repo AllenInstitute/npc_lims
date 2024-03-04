@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import functools
+import logging
 import os
 import re
 import uuid
@@ -20,6 +21,8 @@ from aind_codeocean_api.models.computations_requests import (
 from typing_extensions import TypeAlias
 
 import npc_lims.exceptions as exceptions
+
+logger = logging.getLogger(__name__)
 
 DataAssetAPI: TypeAlias = dict[
     Literal[
@@ -43,6 +46,7 @@ DataAssetAPI: TypeAlias = dict[
 RunCapsuleResponseAPI: TypeAlias = dict[
     Literal["created", "has_results", "id", "name", "run_time", "state"], Any
 ]
+
 CapsuleComputationAPI: TypeAlias = dict[
     Literal["created", "end_status", "has_results", "id", "name", "run_time", "state"],
     Any,
@@ -59,6 +63,15 @@ MODEL_CAPSULE_PIPELINE_MAPPING: dict[str, str] = {
     "facemap": "670de0b3-f73d-4d22-afe6-6449c45fada4",
 }
 
+EXAMPLE_JOB_STATUS = {
+    "created": 1708570920,
+    "has_results": True,
+    "id": "eadd2f5e-6f3b-4179-8788-5d6e798b1f92",
+    "name": "Run 8570920",
+    "run_time": 92774,
+    "state": "completed",
+    "end_status": "succeeded"
+}
 
 class SessionIndexError(IndexError):
     pass
@@ -499,6 +512,82 @@ def create_session_data_asset(
     ).raise_for_status()
     # TODO: add tests and function to get data asset
 
+def set_asset_viewable_for_everyone(asset_id: str) -> None:
+    response = get_codeocean_client().update_permissions(
+        data_asset_id=asset_id, everyone="viewer"
+    )
+    response.raise_for_status()
+    logger.debug(f"Asset {asset_id} made viewable for everyone")
+    
+def get_job_status(job_id: str, check_files: bool = False) -> CapsuleComputationAPI:
+    """Current status from CodeOcean API, but with an additional check for no
+    output files, which is a common error in the spike-sorting pipeline."""
+    response = get_codeocean_client().get_computation(job_id)
+    response.raise_for_status()
+    job_status = response.json()
+    if check_files and is_computation_errorred(job_status):
+        logger.info(f"Job {job_status['id']} errorred, updating status")
+        job_status["end_status"] = "failed"
+    return job_status
+
+def _parse_job_id_and_response(job_id_or_response: str | CapsuleComputationAPI) -> CapsuleComputationAPI:
+    if isinstance(job_id_or_response, str):
+        return get_job_status(job_id_or_response)
+    return job_id_or_response
+
+def is_computation_finished(job_id_or_response: str | CapsuleComputationAPI) -> bool:
+    """
+    >>> is_finished(EXAMPLE_JOB_STATUS)
+    True
+    >>> is_finished({"state": "initializing"})
+    False
+    >>> is_finished({"state": "running"})
+    False
+    """
+    job_status = _parse_job_id_and_response(job_id_or_response)
+    return job_status["state"] == "completed"
+
+def get_result_names(job_id: str) -> list[str]:
+    """File and folder names in the output directory of a job's result"""
+    available_results = get_codeocean_client().get_list_result_items(job_id).json()['items']
+    result_item_names = sorted(item['name'] for item in available_results)
+    return result_item_names
+
+def is_computation_errorred(job_id_or_response: str | CapsuleComputationAPI) -> bool:
+    """Job status may say `completed` but the pipeline still errorred: check the
+    output folder for indications of error.
+    
+    >>> is_errorred(EXAMPLE_JOB_STATUS)
+    False
+    >>> is_errorred(EXAMPLE_JOB_STATUS | {"end_status": "failed"})
+    True
+    >>> is_errorred(EXAMPLE_JOB_STATUS | {"has_results": False})
+    True
+    >>> is_errorred(EXAMPLE_JOB_STATUS | {"id": "d5444fc9-9c0f-4c91-90c0-8d17969971b8"})
+    True
+    """
+    job_status = _parse_job_id_and_response(job_id_or_response)
+    if not is_computation_finished(job_status):
+        return False
+    job_id = job_status["id"]
+    if "error" in job_status["state"]:
+        return True
+    if job_status.get("end_status", None) == "failed":
+        return True
+    if job_status["has_results"] is False:
+        logger.debug(f"Job {job_id} suspected error based on no results")
+        return True
+
+    if job_status["state"] == "completed":
+        # check if errorred based on files in result
+        result_item_names = get_result_names(job_id)
+        is_no_files = len(result_item_names) == 0
+        is_pipeline_error = len(result_item_names) == 2 and result_item_names == ['nextflow', 'output']
+        is_capsule_error = len(result_item_names) == 1 and result_item_names == ['output']
+        if is_no_files or is_pipeline_error or is_capsule_error:
+            logger.debug(f"Job {job_id} suspected error based on number of files available in result")
+            return True
+    return False
 
 if __name__ == "__main__":
     import doctest
