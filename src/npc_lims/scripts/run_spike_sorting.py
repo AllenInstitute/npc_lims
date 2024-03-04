@@ -1,25 +1,26 @@
 from __future__ import annotations
-import dataclasses
+
 import datetime
 import functools
-
 import json
 import logging
 import time
-from typing import Any, TypedDict
+from typing import TypedDict
 
 import npc_session
 import requests
 import upath
 from aind_codeocean_api.models.computations_requests import (
     ComputationDataAsset, RunCapsuleRequest)
-from aind_codeocean_api.models.data_assets_requests import CreateDataAssetRequest, Source, Sources, Target, Targets
+from aind_codeocean_api.models.data_assets_requests import (
+    CreateDataAssetRequest, Source, Sources)
+from typing_extensions import TypeAlias
 
 import npc_lims
 
 logger = logging.getLogger()
 
-SessionID = str | npc_session.SessionRecord
+SessionID: TypeAlias = str | npc_session.SessionRecord
 class JobStatus(TypedDict):
     """As returned from response.json()"""
     created: int
@@ -31,7 +32,7 @@ class JobStatus(TypedDict):
     end_status: str | None
     """Does not exist initially"""
 
-JobID = str
+JobID: TypeAlias = str
 
 SORTING_PIPELINE_ID = "1f8f159a-7670-47a9-baf1-078905fc9c2e"
 JSON_PATH = upath.UPath("sorting_jobs.json")
@@ -95,8 +96,8 @@ def get_current_job_status(job_or_session_id: str) -> JobStatus | npc_lims.Capsu
     else:
         job_id = read_json()[session_id]["id"]
     job_status = npc_lims.get_job_status(job_id, check_files=True)
-        
-    return job_status    
+
+    return job_status
 
 def sync_json() -> None:
     current = read_json()
@@ -111,7 +112,7 @@ def sync_json() -> None:
 def sync_and_get_num_running_jobs() -> int:
     sync_json()
     return sum(1 for job in read_json().values() if job["state"] in ("running", "initializing"))
- 
+
 def start(session_id: SessionID) -> None:
     response = npc_lims.get_codeocean_client().run_capsule(get_run_sorting_request(session_id))
     response.raise_for_status()
@@ -147,7 +148,7 @@ def get_data_asset_name(session_id: SessionID) -> str:
             )
         ).replace(' ', '_').replace(':', '-')
     return f"{npc_lims.get_raw_data_root(session_id).name}_sorted_{created_dt}"
-    
+
 def create_data_asset(session_id: SessionID) -> None:
     asset = npc_lims.get_codeocean_client().create_data_asset(
         get_create_data_asset_request(session_id)
@@ -200,4 +201,4 @@ if __name__ == "__main__":
     doctest.testmod()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
     main(rerun_errorred_jobs=False)
-    
+

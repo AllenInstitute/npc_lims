@@ -6,12 +6,12 @@ import functools
 import json
 import typing
 from collections.abc import Iterator, Mapping, MutableSequence
-from typing import Any, Literal
+from typing import Any, Literal, TypedDict
 
 import npc_session
 import upath
 import yaml
-from typing_extensions import TypeAlias
+from typing_extensions import NotRequired, TypeAlias, Unpack
 
 import npc_lims.exceptions as exceptions
 import npc_lims.metadata.codeocean as codeocean
@@ -287,17 +287,24 @@ class SessionInfo:
         return self.id == other.id
 
 
+class SessionFilterKwargs(TypedDict, total=False):
+    is_ephys: NotRequired[bool]
+    is_uploaded: NotRequired[bool]
+    is_sync: NotRequired[bool]
+    is_sorted: NotRequired[bool]
+    is_annotated: NotRequired[bool]
+
 @typing.overload
-def get_session_info() -> tuple[SessionInfo, ...]: ...
+def get_session_info(**session_filter_kwargs: Unpack[SessionFilterKwargs]) -> tuple[SessionInfo, ...]: ...
 
 
 @typing.overload
-def get_session_info(session: str | npc_session.SessionRecord) -> SessionInfo: ...
+def get_session_info(session: str | npc_session.SessionRecord, **session_filter_kwargs: Unpack[SessionFilterKwargs]) -> SessionInfo: ...
 
 
 def get_session_info(
     session: str | npc_session.SessionRecord | SessionInfo | None = None,
-    **bool_filter_kwargs: bool,
+    **session_filter_kwargs: Unpack[SessionFilterKwargs],
 ) -> tuple[SessionInfo, ...] | SessionInfo:
     """Quickly get a sequence of all tracked sessions.
 
@@ -328,7 +335,7 @@ def get_session_info(
         filtered_sessions = (
             s
             for s in tracked_sessions
-            if all(getattr(s, k) == v for k, v in bool_filter_kwargs.items())
+            if all(getattr(s, k) == v for k, v in session_filter_kwargs.items())
         )
         return tuple(sorted(filtered_sessions, key=lambda s: s.id.date, reverse=True))
     with contextlib.suppress(StopIteration):
