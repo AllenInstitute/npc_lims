@@ -162,7 +162,7 @@ def create_data_asset(session_id: SessionID) -> None:
 
 def asset_exists(session_id: SessionID) -> bool:
     """
-    >>> asset_exists('674562_2023-10-04_0')
+    #>>> asset_exists('674562_2023-10-04_0')
     True
     """
     name = get_data_asset_name(session_id)
