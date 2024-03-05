@@ -67,6 +67,7 @@ MODEL_CAPSULE_PIPELINE_MAPPING: dict[str, str] = {
     "dlc_side": "facff99f-d3aa-4ecd-8ef8-a343c38197aa",
     "dlc_face": "a561aa4c-2066-4ff2-a916-0db86b918cdf",
     "facemap": "670de0b3-f73d-4d22-afe6-6449c45fada4",
+    "sorting_pipeline": "1f8f159a-7670-47a9-baf1-078905fc9c2e"
 }
 
 EXAMPLE_JOB_STATUS = {
@@ -543,11 +544,11 @@ def _parse_job_id_and_response(job_id_or_response: str | CapsuleComputationAPI) 
 
 def is_computation_finished(job_id_or_response: str | CapsuleComputationAPI) -> bool:
     """
-    >>> is_finished(EXAMPLE_JOB_STATUS)
+    >>> is_computation_finished(EXAMPLE_JOB_STATUS)
     True
-    >>> is_finished({"state": "initializing"})
+    >>> is_computation_finished({"state": "initializing"})
     False
-    >>> is_finished({"state": "running"})
+    >>> is_computation_finished({"state": "running"})
     False
     """
     job_status = _parse_job_id_and_response(job_id_or_response)
@@ -563,13 +564,13 @@ def is_computation_errorred(job_id_or_response: str | CapsuleComputationAPI) -> 
     """Job status may say `completed` but the pipeline still errorred: check the
     output folder for indications of error.
     
-    >>> is_errorred(EXAMPLE_JOB_STATUS)
+    >>> is_computation_errorred(EXAMPLE_JOB_STATUS)
     False
-    >>> is_errorred(EXAMPLE_JOB_STATUS | {"end_status": "failed"})
+    >>> is_computation_errorred(EXAMPLE_JOB_STATUS | {"end_status": "failed"})
     True
-    >>> is_errorred(EXAMPLE_JOB_STATUS | {"has_results": False})
+    >>> is_computation_errorred(EXAMPLE_JOB_STATUS | {"has_results": False})
     True
-    >>> is_errorred(EXAMPLE_JOB_STATUS | {"id": "d5444fc9-9c0f-4c91-90c0-8d17969971b8"})
+    >>> is_computation_errorred(EXAMPLE_JOB_STATUS | {"id": "d5444fc9-9c0f-4c91-90c0-8d17969971b8"})
     True
     """
     job_status = _parse_job_id_and_response(job_id_or_response)
