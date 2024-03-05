@@ -234,6 +234,6 @@ def main(rerun_errorred_jobs: bool = False) -> None:
 if __name__ == "__main__":
     import doctest
 
-    doctest.testmod()
+    doctest.testmod(raise_on_error=True)
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
     main(rerun_errorred_jobs=False)
