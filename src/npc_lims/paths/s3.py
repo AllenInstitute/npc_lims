@@ -190,40 +190,6 @@ def get_h5_sync_from_s3(session: str | npc_session.SessionRecord) -> upath.UPath
 
 
 @functools.cache
-def get_spike_sorted_paths_from_s3(
-    session: str | npc_session.SessionRecord,
-) -> tuple[upath.UPath, ...]:
-    """
-    >>> spike_sorted_paths = get_spike_sorted_paths_from_s3('662892_20230821')
-    >>> assert spike_sorted_paths[0].exists()
-    """
-    sorted_data_paths = get_sorted_data_paths_from_s3(session)
-    return tuple(
-        next(path for path in sorted_data_paths if "spike" in str(path)).iterdir()
-    )
-
-
-@functools.cache
-def get_spike_sorting_device_path_from_s3(
-    session: str | npc_session.SessionRecord, device_name: str
-) -> upath.UPath:
-    """
-    Examples:
-        >>> get_spike_sorting_device_path_from_s3('662892_20230821', 'ProbeA')
-        S3Path('s3://codeocean-s3datasetsbucket-1u41qdg42ur9/d527db85-39b7-4c4f-a465-9ca499b0ca47/spikesorted/experiment1_Record Node 102#Neuropix-PXI-100.ProbeA-AP_recording1/sorting_cached.npz')
-    """
-    spike_sorted_paths = get_spike_sorted_paths_from_s3(session)
-    spike_probe_paths = next(
-        path for path in spike_sorted_paths if device_name in str(path)
-    ).iterdir()
-    sorting_cached_path = next(
-        path for path in spike_probe_paths if "sorting_cached" in str(path)
-    )
-
-    return sorting_cached_path
-
-
-@functools.cache
 def get_recording_dirs_experiment_path_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> tuple[upath.UPath, ...]:
@@ -243,27 +209,6 @@ def get_recording_dirs_experiment_path_from_s3(
     )
 
     return recording_dirs_experiment
-
-
-@functools.cache
-def get_quality_metrics_paths_from_s3(
-    session: str | npc_session.SessionRecord,
-) -> tuple[upath.UPath, ...]:
-    """
-    Examples:
-        >>> quality_metrics_paths = get_quality_metrics_paths_from_s3('662892_2023-08-21')
-        >>> assert len(quality_metrics_paths) > 0
-    """
-    sorted_paths = get_sorted_data_paths_from_s3(session)
-    postprocessed_files = next(
-        path for path in sorted_paths if "postprocessed" in str(path)
-    ).iterdir()
-    quality_metrics_paths = tuple(
-        next(path.glob("quality_metrics/metrics.csv")) for path in postprocessed_files
-    )
-
-    return quality_metrics_paths
-
 
 @functools.cache
 def get_behavior_video_path_from_s3(
@@ -324,83 +269,6 @@ def get_face_video_path_from_s3(
         raise FileNotFoundError(f"{session} has no face video on s3")
 
     return face_video_path[0]
-
-
-@functools.cache
-def get_template_metrics_paths_from_s3(
-    session: str | npc_session.SessionRecord,
-) -> tuple[upath.UPath, ...]:
-    """
-    Examples:
-        >>> template_metrics_paths = get_template_metrics_paths_from_s3('662892_2023-08-21')
-        >>> assert len(template_metrics_paths) > 0
-    """
-    sorted_paths = get_sorted_data_paths_from_s3(session)
-    postprocessed_files = next(
-        path for path in sorted_paths if "postprocessed" in str(path)
-    ).iterdir()
-    template_metrics_paths = tuple(
-        next(path.glob("template_metrics/metrics.csv")) for path in postprocessed_files
-    )
-
-    return template_metrics_paths
-
-
-@functools.cache
-def get_spikesorted_cache_paths_from_s3(
-    session: str | npc_session.SessionRecord,
-) -> tuple[upath.UPath, ...]:
-    """
-    Examples:
-        >>> spike_sorted_cache_paths = get_spikesorted_cache_paths_from_s3('662892_20230821')
-        >>> assert len(spike_sorted_cache_paths) > 0
-    """
-    spike_sorted_paths = get_spike_sorted_paths_from_s3(session)
-    spike_sorted_cache_files = tuple(
-        next(path.glob("sorting_cached.npz")) for path in spike_sorted_paths
-    )
-
-    return spike_sorted_cache_files
-
-
-@functools.cache
-def get_unit_locations_paths_from_s3(
-    session: str | npc_session.SessionRecord,
-) -> tuple[upath.UPath, ...]:
-    """
-    Examples:
-        >>> unit_locations_paths = get_unit_locations_paths_from_s3('662892_2023-08-21')
-        >>> assert len(unit_locations_paths) > 0
-    """
-    sorted_paths = get_sorted_data_paths_from_s3(session)
-    postprocessed_files = next(
-        path for path in sorted_paths if "postprocessed" in str(path)
-    ).iterdir()
-    unit_locations_paths = tuple(
-        next(path.glob("unit_locations/unit_locations.npy"))
-        for path in postprocessed_files
-    )
-
-    return unit_locations_paths
-
-
-@functools.cache
-def get_sorted_precurated_paths_from_s3(
-    session: str | npc_session.SessionRecord,
-) -> tuple[upath.UPath, ...]:
-    """
-    Examples:
-        >>> sorted_precurated_paths = get_sorted_precurated_paths_from_s3('662892_2023-08-21')
-        >>> assert len(sorted_precurated_paths) > 0
-    """
-    sorted_paths = get_sorted_data_paths_from_s3(session)
-    sorted_precurated_dirs = tuple(
-        next(
-            path for path in sorted_paths if "sorting_precurated" in str(path)
-        ).iterdir()
-    )
-
-    return sorted_precurated_dirs
 
 
 @functools.cache
