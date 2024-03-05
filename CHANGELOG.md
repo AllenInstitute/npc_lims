@@ -8,7 +8,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.127...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.128...HEAD)</small>
+
+### Fixed
+
+- Fix broken tests ([63e4d4a](https://github.com/AllenInstitute/npc_lims/commit/63e4d4ae4e004cf16f670a36b0c527c4f20d9e46) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.128](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.128) - 2024-03-05
+
+<small>[Compare with v0.1.127](https://github.com/AllenInstitute/npc_lims/compare/v0.1.127...v0.1.128)</small>
 
 ### Added
 
@@ -25,7 +34,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - remove redundant spike interface getters ([411a48b](https://github.com/AllenInstitute/npc_lims/commit/411a48bc84f2827d62a05d6bc54d3f26f9b8d8bf) by arjun.sridhar12345).
 
-<!-- insertion marker -->
 ## [v0.1.127](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.127) - 2024-03-02
 
 <small>[Compare with v0.1.126](https://github.com/AllenInstitute/npc_lims/compare/v0.1.126...v0.1.127)</small>
