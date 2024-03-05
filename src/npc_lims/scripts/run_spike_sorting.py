@@ -5,7 +5,7 @@ import functools
 import json
 import logging
 import time
-from typing import TypedDict
+from typing import TypedDict, Union
 
 import npc_session
 import requests
@@ -20,7 +20,7 @@ import npc_lims
 
 logger = logging.getLogger()
 
-SessionID: TypeAlias = str | npc_session.SessionRecord
+SessionID: TypeAlias = Union[str, npc_session.SessionRecord]
 class JobStatus(TypedDict):
     """As returned from response.json()"""
     created: int
