@@ -85,10 +85,10 @@ def is_started(session_id: SessionID) -> bool:
 @functools.lru_cache(maxsize=1)
 def get_current_job_status(job_or_session_id: str) -> JobStatus | npc_lims.CapsuleComputationAPI:
     """
-    >>> get_current_job_status("633d9d0d-511a-4601-884c-5a7f4a63365f")
-    {'created': 1709241133, 'end_status': 'succeeded', 'has_results': True, 'id': '633d9d0d-511a-4601-884c-5a7f4a63365f', 'name': 'Run 9241133', 'run_time': 86398, 'state': 'completed'}
-    >>> get_current_job_status("690706_2023-11-28_0")
-    {'created': 1709337736, 'end_status': 'succeeded', 'has_results': True, 'id': 'a1f19eb9-1561-4a52-804f-02d2afc88350', 'name': 'Run 9337736', 'run_time': 76306, 'state': 'completed'}    """
+    #>>> get_current_job_status("633d9d0d-511a-4601-884c-5a7f4a63365f")
+    #{'created': 1709241133, 'end_status': 'succeeded', 'has_results': True, 'id': '633d9d0d-511a-4601-884c-5a7f4a63365f', 'name': 'Run 9241133', 'run_time': 86398, 'state': 'completed'}
+    #>>> get_current_job_status("690706_2023-11-28_0")
+    #{'created': 1709337736, 'end_status': 'succeeded', 'has_results': True, 'id': 'a1f19eb9-1561-4a52-804f-02d2afc88350', 'name': 'Run 9337736', 'run_time': 76306, 'state': 'completed'}    """
     try:
         session_id = npc_session.SessionRecord(job_or_session_id).id
     except ValueError:
