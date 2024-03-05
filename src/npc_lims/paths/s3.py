@@ -210,6 +210,7 @@ def get_recording_dirs_experiment_path_from_s3(
 
     return recording_dirs_experiment
 
+
 @functools.cache
 def get_behavior_video_path_from_s3(
     session: str | npc_session.SessionRecord,

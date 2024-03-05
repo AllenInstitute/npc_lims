@@ -47,8 +47,10 @@ RunCapsuleResponseAPI: TypeAlias = dict[
     Literal["created", "has_results", "id", "name", "run_time", "state"], Any
 ]
 
+
 class CapsuleComputationAPI(TypedDict):
     """Result from CodeOceanAPI when querying for computations for a capsule"""
+
     """As returned from response.json()"""
     created: int
     has_results: bool
@@ -59,6 +61,7 @@ class CapsuleComputationAPI(TypedDict):
     end_status: str | None
     """Does not exist initially"""
 
+
 ResultItemAPI: TypeAlias = dict[Literal["name", "path", "size", "type"], Any]
 """Result from CodeOceanAPI when querying for results from a computation"""
 
@@ -67,7 +70,7 @@ MODEL_CAPSULE_PIPELINE_MAPPING: dict[str, str] = {
     "dlc_side": "facff99f-d3aa-4ecd-8ef8-a343c38197aa",
     "dlc_face": "a561aa4c-2066-4ff2-a916-0db86b918cdf",
     "facemap": "670de0b3-f73d-4d22-afe6-6449c45fada4",
-    "sorting_pipeline": "1f8f159a-7670-47a9-baf1-078905fc9c2e"
+    "sorting_pipeline": "1f8f159a-7670-47a9-baf1-078905fc9c2e",
 }
 
 EXAMPLE_JOB_STATUS = {
@@ -77,8 +80,9 @@ EXAMPLE_JOB_STATUS = {
     "name": "Run 8570920",
     "run_time": 92774,
     "state": "completed",
-    "end_status": "succeeded"
+    "end_status": "succeeded",
 }
+
 
 class SessionIndexError(IndexError):
     pass
@@ -519,13 +523,15 @@ def create_session_data_asset(
     ).raise_for_status()
     # TODO: add tests and function to get data asset
 
+
 def set_asset_viewable_for_everyone(asset_id: str) -> None:
     response = get_codeocean_client().update_permissions(
         data_asset_id=asset_id, everyone="viewer"
     )
     response.raise_for_status()
     logger.debug(f"Asset {asset_id} made viewable for everyone")
-    
+
+
 def get_job_status(job_id: str, check_files: bool = False) -> CapsuleComputationAPI:
     """Current status from CodeOcean API, but with an additional check for no
     output files, which is a common error in the spike-sorting pipeline."""
@@ -537,10 +543,14 @@ def get_job_status(job_id: str, check_files: bool = False) -> CapsuleComputation
         job_status["end_status"] = "failed"
     return job_status
 
-def _parse_job_id_and_response(job_id_or_response: str | CapsuleComputationAPI) -> CapsuleComputationAPI:
+
+def _parse_job_id_and_response(
+    job_id_or_response: str | CapsuleComputationAPI,
+) -> CapsuleComputationAPI:
     if isinstance(job_id_or_response, str):
         return get_job_status(job_id_or_response)
     return job_id_or_response
+
 
 def is_computation_finished(job_id_or_response: str | CapsuleComputationAPI) -> bool:
     """
@@ -554,16 +564,20 @@ def is_computation_finished(job_id_or_response: str | CapsuleComputationAPI) -> 
     job_status = _parse_job_id_and_response(job_id_or_response)
     return job_status["state"] == "completed"
 
+
 def get_result_names(job_id: str) -> list[str]:
     """File and folder names in the output directory of a job's result"""
-    available_results = get_codeocean_client().get_list_result_items(job_id).json()['items']
-    result_item_names = sorted(item['name'] for item in available_results)
+    available_results = (
+        get_codeocean_client().get_list_result_items(job_id).json()["items"]
+    )
+    result_item_names = sorted(item["name"] for item in available_results)
     return result_item_names
+
 
 def is_computation_errorred(job_id_or_response: str | CapsuleComputationAPI) -> bool:
     """Job status may say `completed` but the pipeline still errorred: check the
     output folder for indications of error.
-    
+
     >>> is_computation_errorred(EXAMPLE_JOB_STATUS)
     False
     >>> is_computation_errorred(EXAMPLE_JOB_STATUS | {"end_status": "failed"})
@@ -589,12 +603,20 @@ def is_computation_errorred(job_id_or_response: str | CapsuleComputationAPI) -> 
         # check if errorred based on files in result
         result_item_names = get_result_names(job_id)
         is_no_files = len(result_item_names) == 0
-        is_pipeline_error = len(result_item_names) == 2 and result_item_names == ['nextflow', 'output']
-        is_capsule_error = len(result_item_names) == 1 and result_item_names == ['output']
+        is_pipeline_error = len(result_item_names) == 2 and result_item_names == [
+            "nextflow",
+            "output",
+        ]
+        is_capsule_error = len(result_item_names) == 1 and result_item_names == [
+            "output"
+        ]
         if is_no_files or is_pipeline_error or is_capsule_error:
-            logger.debug(f"Job {job_id} suspected error based on number of files available in result")
+            logger.debug(
+                f"Job {job_id} suspected error based on number of files available in result"
+            )
             return True
     return False
+
 
 if __name__ == "__main__":
     import doctest

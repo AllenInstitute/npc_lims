@@ -8,7 +8,27 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.126...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.127...HEAD)</small>
+
+### Added
+
+- add pipeline id and attempt to fix tests ([bdd8b04](https://github.com/AllenInstitute/npc_lims/commit/bdd8b0460e8be0e00f0b30ddf619b28c34282b50) by arjun.sridhar12345).
+- Add re-run spike-sorting script ([6219bd1](https://github.com/AllenInstitute/npc_lims/commit/6219bd1dd8d4f0e393543c3710c9432dd689a49c) by bjhardcastle).
+- Add utility functions for assessing job status ([950e57b](https://github.com/AllenInstitute/npc_lims/commit/950e57b59945e1bd7d67612a2a3a4e8eb020427c) by bjhardcastle).
+
+### Fixed
+
+- Fix TypeAlias ([3ace804](https://github.com/AllenInstitute/npc_lims/commit/3ace80452fe57f40a5d36f519419aa1c8aae7be4) by bjhardcastle).
+- Fix types ([d8e3fbf](https://github.com/AllenInstitute/npc_lims/commit/d8e3fbf69cd7f5d41cccbddf36911eab9723f7ef) by bjhardcastle).
+
+### Removed
+
+- remove redundant spike interface getters ([411a48b](https://github.com/AllenInstitute/npc_lims/commit/411a48bc84f2827d62a05d6bc54d3f26f9b8d8bf) by arjun.sridhar12345).
+
+<!-- insertion marker -->
+## [v0.1.127](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.127) - 2024-03-02
+
+<small>[Compare with v0.1.126](https://github.com/AllenInstitute/npc_lims/compare/v0.1.126...v0.1.127)</small>
 
 ### Added
 
@@ -18,7 +38,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Remove caching on functions required to check new data asset existence ([1761527](https://github.com/AllenInstitute/npc_lims/commit/176152718ca025bad662564bdf91af9f8bd28cfa) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.126](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.126) - 2024-02-29
 
 <small>[Compare with v0.1.125](https://github.com/AllenInstitute/npc_lims/compare/v0.1.125...v0.1.126)</small>

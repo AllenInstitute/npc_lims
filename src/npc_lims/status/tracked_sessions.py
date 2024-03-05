@@ -294,12 +294,18 @@ class SessionFilterKwargs(TypedDict, total=False):
     is_sorted: NotRequired[bool]
     is_annotated: NotRequired[bool]
 
+
 @typing.overload
-def get_session_info(**session_filter_kwargs: Unpack[SessionFilterKwargs]) -> tuple[SessionInfo, ...]: ...
+def get_session_info(
+    **session_filter_kwargs: Unpack[SessionFilterKwargs],
+) -> tuple[SessionInfo, ...]: ...
 
 
 @typing.overload
-def get_session_info(session: str | npc_session.SessionRecord, **session_filter_kwargs: Unpack[SessionFilterKwargs]) -> SessionInfo: ...
+def get_session_info(
+    session: str | npc_session.SessionRecord,
+    **session_filter_kwargs: Unpack[SessionFilterKwargs],
+) -> SessionInfo: ...
 
 
 def get_session_info(
