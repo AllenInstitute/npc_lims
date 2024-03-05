@@ -102,10 +102,10 @@ def get_current_job_status(
     job_or_session_id: str,
 ) -> JobStatus | npc_lims.CapsuleComputationAPI:
     """
-    #>>> get_current_job_status("633d9d0d-511a-4601-884c-5a7f4a63365f")
-    #{'created': 1709241133, 'end_status': 'succeeded', 'has_results': True, 'id': '633d9d0d-511a-4601-884c-5a7f4a63365f', 'name': 'Run 9241133', 'run_time': 86398, 'state': 'completed'}
-    #>>> get_current_job_status("690706_2023-11-28_0")
-    #{'created': 1709337736, 'end_status': 'succeeded', 'has_results': True, 'id': 'a1f19eb9-1561-4a52-804f-02d2afc88350', 'name': 'Run 9337736', 'run_time': 76306, 'state': 'completed'}
+    >>> get_current_job_status("633d9d0d-511a-4601-884c-5a7f4a63365f")
+    {'created': 1709382940, 'end_status': 'succeeded', 'has_results': True, 'id': '4ff8ff2e-c9ae-447d-a44f-c021e515833b', 'name': 'Run 9382940', 'run_time': 48294, 'state': 'completed'}
+    >>> get_current_job_status("690706_2023-11-28_0")
+    {'created': 1709337736, 'end_status': 'succeeded', 'has_results': True, 'id': 'a1f19eb9-1561-4a52-804f-02d2afc88350', 'name': 'Run 9337736', 'run_time': 76306, 'state': 'completed'}
     """
     try:
         session_id = npc_session.SessionRecord(job_or_session_id).id
@@ -191,10 +191,6 @@ def create_data_asset(session_id: SessionID) -> None:
 
 
 def asset_exists(session_id: SessionID) -> bool:
-    """
-    #>>> asset_exists('674562_2023-10-04_0')
-    True
-    """
     name = get_data_asset_name(session_id)
     return any(
         asset["name"] == name for asset in npc_lims.get_session_data_assets(session_id)
