@@ -7,7 +7,7 @@ import re
 import uuid
 import warnings
 from collections.abc import Mapping, Sequence
-from typing import Any, Literal, TypedDict
+from typing import Any, Literal, TypedDict, NamedTuple
 
 import npc_session
 import requests
@@ -18,6 +18,10 @@ from aind_codeocean_api.models.computations_requests import (
     ComputationDataAsset,
     RunCapsuleRequest,
 )
+from aind_codeocean_api.models.data_assets_requests import (
+    CreateDataAssetRequest
+)
+
 from typing_extensions import TypeAlias
 
 import npc_lims.exceptions as exceptions
@@ -47,6 +51,10 @@ RunCapsuleResponseAPI: TypeAlias = dict[
     Literal["created", "has_results", "id", "name", "run_time", "state"], Any
 ]
 
+class CapsulePipelineInfo(NamedTuple):
+    id: str
+    process_name: str
+    is_pipeline: bool
 
 class CapsuleComputationAPI(TypedDict):
     """Result from CodeOceanAPI when querying for computations for a capsule"""
@@ -363,153 +371,69 @@ def get_path_from_data_asset(asset: DataAssetAPI) -> upath.UPath:
         f"{roots[bucket_info['origin']]}://{bucket_info['bucket']}/{bucket_info['prefix']}"
     )
 
-
-@functools.cache
-def get_session_units_data_asset(
-    session_id: str | npc_session.SessionRecord,
-) -> DataAssetAPI:
-    """
-    Examples:
-        >>> units_data_asset = get_session_units_data_asset('668759_20230711')
-        >>> assert units_data_asset is not None
-    """
-    session = npc_session.SessionRecord(session_id)
-    session_data_assets = get_session_data_assets(session)
-    session_units_data_assets = tuple(
-        data_asset
-        for data_asset in session_data_assets
-        if "units" in data_asset["name"] and "peak" not in data_asset["name"]
-    )
-    session_units_data_asset = get_single_data_asset(
-        session, session_units_data_assets, "units"
-    )
-
-    return session_units_data_asset
-
-
-@functools.cache
-def get_session_units_spikes_with_peak_channels_data_asset(
-    session_id: str | npc_session.SessionRecord,
-) -> DataAssetAPI:
-    """
-    Examples:
-        >>> units_peak_channel_data_asset = get_session_units_spikes_with_peak_channels_data_asset('668759_20230711')
-        >>> assert units_peak_channel_data_asset is not None
-    """
-    session = npc_session.SessionRecord(session_id)
-    session_data_assets = get_session_data_assets(session)
-    session_units_spikes_peak_channel_data_assets = tuple(
-        data_asset
-        for data_asset in session_data_assets
-        if "units_with_peak_channels" in data_asset["name"]
-    )
-
-    session_units_spikes_peak_channel_data_asset = get_single_data_asset(
-        session, session_units_spikes_peak_channel_data_assets, "units"
-    )
-
-    return session_units_spikes_peak_channel_data_asset
-
-
-def update_permissions_for_data_asset(data_asset: DataAssetAPI) -> None:
-    response = get_codeocean_client().update_permissions(
-        data_asset_id=data_asset["id"], everyone="viewer"
-    )
-    response.raise_for_status()
-
-
 def run_capsule_or_pipeline(
     data_assets: list[ComputationDataAsset],
-    model_name: str,
-) -> requests.models.Response:
-    if model_name not in MODEL_CAPSULE_PIPELINE_MAPPING:
-        raise ModelCapsuleMappingError(
-            f"No capsule associated with {model_name}. Check codeocean"
-        )
-
-    if "pipeline" in model_name:
+    id: str,
+    is_pipeline:bool=False
+) -> CapsuleComputationAPI:
+    if is_pipeline:
         run_capsule_request = RunCapsuleRequest(
-            pipeline_id=MODEL_CAPSULE_PIPELINE_MAPPING[model_name],
+            pipeline_id=id,
             data_assets=data_assets,
         )
     else:
         run_capsule_request = RunCapsuleRequest(
-            capsule_id=MODEL_CAPSULE_PIPELINE_MAPPING[model_name],
+            capsule_id=id,
             data_assets=data_assets,
         )
 
     response = get_codeocean_client().run_capsule(run_capsule_request)
     response.raise_for_status()
-    return response
+    return response.json()
 
 
-def get_model_data_asset(
-    session: str | npc_session.SessionRecord, model_name: str
+def get_session_capsule_pipeline_data_asset(
+    session: str | npc_session.SessionRecord, process_name: str
 ) -> DataAssetAPI:
     """
     Returns the data asset for a given model
-    >>> model_asset = get_model_data_asset('676909_2023-12-13', 'dlc_eye')
-    >>> model_asset['name']
+    >>> asset = get_session_capsule_pipeline_data_asset('676909_2023-12-13', 'sorted')
+    >>> asset['name']
+    'ecephys_676909_2023-12-13_13-43-40_sorted_2024-03-01_16-02-45'
+    >>> asset = get_session_capsule_pipeline_data_asset('676909_2023-12-13', 'dlc_eye')
+    >>> asset['name']
     'ecephys_676909_2023-12-13_13-43-40_dlc_eye'
     """
     session = npc_session.SessionRecord(session)
-    if model_name not in MODEL_CAPSULE_PIPELINE_MAPPING:
-        raise ModelCapsuleMappingError(
-            f"No capsule associated with {model_name}. Check codeocean"
-        )
 
     session_data_assets = get_session_data_assets(session)
     session_model_asset = tuple(
-        asset for asset in session_data_assets if model_name in asset["name"]
+        asset for asset in session_data_assets if process_name in asset["name"]
     )
     if not session_model_asset:
-        raise FileNotFoundError(f"{session} has no {model_name} results")
+        raise FileNotFoundError(f"{session} has no {process_name} results")
 
-    single_model_asset = get_single_data_asset(session, session_model_asset, model_name)
-    if single_model_asset["files"] < 3:
-        raise ValueError(
-            f"{model_name} did not finish and was stopped abrutly. Rerun for session {session}"
-        )
-
-    return single_model_asset
-
-
-def check_computation_result(
-    session: npc_session.SessionRecord, computation_id: str, model_name: str
-) -> None:
-    response_result_items = get_codeocean_client().get_list_result_items(computation_id)
-    response_result_items.raise_for_status()
-    result_items = response_result_items.json()
-
-    session_result_item = tuple(
-        item for item in result_items["items"] if len(result_items["items"]) > 2
-    )
-
-    if not session_result_item:
-        raise ValueError(
-            f"Run {computation_id} for capsule {model_name} has no valid results"
-        )
+    return get_single_data_asset(session, session_model_asset, process_name)
 
 
 def create_session_data_asset(
-    session: str | npc_session.SessionRecord, model_name: str, computation_id: str
-) -> None:
+    session: str | npc_session.SessionRecord, computation_id: str, data_asset_name: str
+) -> requests.models.Response | None:
     session = npc_session.SessionRecord(session)
 
-    if model_name not in MODEL_CAPSULE_PIPELINE_MAPPING:
-        raise ModelCapsuleMappingError(
-            f"No capsule associated with {model_name}. Check codeocean"
-        )
-
-    check_computation_result(session, computation_id, model_name)
-
-    data_asset_name = f"{get_session_raw_data_asset(session)['name']}_{model_name}"
+    if is_computation_errorred(computation_id) or not is_computation_finished(computation_id):
+        return None
 
     source = aind_codeocean_requests.Source(
         computation=aind_codeocean_requests.Sources.Computation(id=computation_id)
     )
-    custom_metadata = {"subject id": str(session.subject)}
-    tags = [model_name, "results"]
+    tags=[str(session.subject), "derived", "ephys", "results"],
+    custom_metadata={
+        "data level": "derived data",
+        "experiment type": "ecephys",
+        "modality": "Extracellular electrophysiology",
+        "subject id": str(session.subject),
+    },
     create_data_asset_request = aind_codeocean_requests.CreateDataAssetRequest(
         name=data_asset_name,
         mount=data_asset_name,
@@ -518,10 +442,11 @@ def create_session_data_asset(
         custom_metadata=custom_metadata,
     )
 
-    get_codeocean_client().create_data_asset(
+    asset = get_codeocean_client().create_data_asset(
         create_data_asset_request
-    ).raise_for_status()
-    # TODO: add tests and function to get data asset
+    )
+    asset.raise_for_status()
+    return asset
 
 
 def set_asset_viewable_for_everyone(asset_id: str) -> None:

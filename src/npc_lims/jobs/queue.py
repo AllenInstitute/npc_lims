@@ -1,98 +1,170 @@
 from __future__ import annotations
 
 import npc_session
-from aind_codeocean_api.models.computations_requests import ComputationDataAsset
-
 import npc_lims.metadata.codeocean as codeocean
 import npc_lims.status as status
+import time
+import upath
+import json
+from typing_extensions import TypeAlias
+import logging
+import npc_lims
+import datetime
+import functools
 
-# TODO: update this module
+from aind_codeocean_api.models.computations_requests import (
+    ComputationDataAsset)
 
+logger = logging.getLogger()
 
-def check_capsule_exists(capsule_or_pipeline_name: str) -> None:
-    """
-    >>> check_capsule_exists('dlc_eye')
-    """
-    if capsule_or_pipeline_name not in codeocean.MODEL_CAPSULE_PIPELINE_MAPPING:
-        raise codeocean.ModelCapsuleMappingError(
-            f"No corresponding capsule for {capsule_or_pipeline_name}"
-        )
+SessionID: TypeAlias = str | npc_session.SessionRecord
+JobID: TypeAlias = str
 
+QUEUE_JSON_DIR = upath.UPath('s3://aind-scratch-data/arjun.sridhar/queue') # TODO figure out path
+INITIAL_VALUE = 'Added to Queue'
+INITIAL_INT_VALUE = -1
 
-def is_session_capsule_in_queue(
-    session: str | npc_session.SessionRecord, capsule_or_pipeline_name: str
+MAX_RUNNING_JOBS = 8
+
+def read_json(process_name: str) -> dict[str, npc_lims.CapsuleComputationAPI]:
+    return json.loads((QUEUE_JSON_DIR / process_name).read_bytes())
+
+def is_session_in_queue(
+    session: str | npc_session.SessionRecord, process_name: str
 ) -> bool:
-    check_capsule_exists(capsule_or_pipeline_name)
+    
+    if not (QUEUE_JSON_DIR / f'{process_name}.json').exists():
+        return False
+    
+    return session in read_json(process_name)
 
-    # if json path exits for session capsule
-    # return True
-    return True
+def add_to_json(session_id: SessionID, process_name:str, response: npc_lims.CapsuleComputationAPI) -> None:
+    if not (QUEUE_JSON_DIR / f'{process_name}.json').exists():
+        current = {}
+    else:
+        current = read_json(process_name)
 
+    is_new = session_id not in current
+    current.update({session_id: response})
+    (QUEUE_JSON_DIR / f'{process_name}.json').write_text(json.dumps(current, indent=4))
+    logger.info(f"{'Added' if is_new else 'Updated'} {session_id} {'to' if is_new else 'in'} json")
 
 def add_to_queue(
-    session_id: str | npc_session.SessionRecord, capsule_or_pipeline_name: str
+    session_id: str | npc_session.SessionRecord, process_name: str
 ) -> None:
-    # check if data asset already exists for session and capsule/pipeline
-    try:
-        codeocean.get_model_data_asset(session_id, capsule_or_pipeline_name)
-        return
-    except (FileNotFoundError, ValueError):
-        pass
-
-    check_capsule_exists(capsule_or_pipeline_name)
-
     session = npc_session.SessionRecord(session_id)
 
-    if not is_session_capsule_in_queue(session_id, capsule_or_pipeline_name):
-        # add to queue
-        data_assets = [
-            ComputationDataAsset(id=data_asset["id"], mount=data_asset["name"])
-            for data_asset in [codeocean.get_session_raw_data_asset(session)]
-        ]
+    if not is_session_in_queue(session_id, process_name):
+        request_dict: npc_lims.CapsuleComputationAPI = {'created': INITIAL_INT_VALUE, 'end_status': INITIAL_VALUE,
+                                   'has_results': False, 'id': INITIAL_VALUE, 'name': INITIAL_VALUE,
+                                   'run_time': INITIAL_INT_VALUE, 'state': INITIAL_VALUE}
+        add_to_json(session, process_name, request_dict)
 
-        # write to queue:
-        # setting priority depends on capsule/pipeline
-        # {'data_assets': [id, name for data_asset in data_assets], 'run_id': 'Not started', 'session': session_id 'capsule_or_pipeline_name': capsule_or_pipeline_name, priority: 0}
+@functools.lru_cache(maxsize=1)
+def get_current_job_status(job_or_session_id: str, process_name: str) -> npc_lims.CapsuleComputationAPI:
+    try:
+        session_id = npc_session.SessionRecord(job_or_session_id).id
+    except ValueError:
+        job_id = job_or_session_id
+    else:
+        job_id = read_json(process_name)[session_id]["id"]
+    job_status = npc_lims.get_job_status(job_id, check_files=True)
 
+    return job_status
 
-def update_queue(session_json: dict[str, str | int]) -> None:
-    # run_response: codeocean.RunCapsuleResponseAPI = codeocean.get_codeocean_client().get_computation(session_json['id'])
-    # if run_response['state'] == 'completed' and run_response['end_status'] == 'succeeded':
-    # codeocean.create_session_data_asset(session, capsule_or_pipeline_name, run_response['id'])
+def sync_json(process_name: str) -> None:
+    current = read_json(process_name)
+    for session_id in current:
+        current[session_id] = get_current_job_status(session_id)
+        logger.info(f"Updated {session_id} status")
 
-    # update permissions
-    # data_asset = codeocean.get_model_data_asset(session, capsule_or_pipeline_name)
-    # codeocean.update_permissions_for_data_asset(data_asset)
+    (QUEUE_JSON_DIR / f'{process_name}.json').write_text(json.dumps(current, indent=4))
+    logger.info("Wrote updated json")
 
-    # remove from queue
-    # else:
-    # overwrite with run_response parameters
-    pass
+def get_data_asset_name(session_id: SessionID, process_name:str) -> str:
+    created_dt = npc_session.DatetimeRecord(
+        datetime.datetime.fromtimestamp(
+            get_current_job_status(session_id)["created"]
+            )
+        ).replace(' ', '_').replace(':', '-')
+    return f"{npc_lims.get_raw_data_root(session_id).name}_{process_name}_{created_dt}"
 
+def create_data_asset(session_id: SessionID, job_id: str, process_name: str) -> None:
+    asset = codeocean.create_session_data_asset(session_id, job_id, process_name)
 
-def add_sessions_to_queue(capsule_or_pipeline_name: str) -> None:
-    for session_info in status.get_session_info():
-        if is_session_capsule_in_queue(session_info.id, capsule_or_pipeline_name):
+    if asset is None:
+        return
+    
+    asset.raise_for_status()
+    while not asset_exists(session_id, process_name):
+        time.sleep(10)
+    logger.info(f"Created data asset for {session_id}")
+    npc_lims.set_asset_viewable_for_everyone(asset.json()["id"])
+
+def asset_exists(session_id: SessionID, process_name: str) -> bool:
+    name = get_data_asset_name(session_id, process_name)
+    return any(asset["name"] == name for asset in npc_lims.get_session_data_assets(session_id))
+
+def create_all_data_assets(process_name: str) -> None:
+    sync_json(process_name)
+
+    for session_id in read_json(process_name):
+        job_status = get_current_job_status(session_id)
+        if npc_lims.is_computation_errorred(job_status) or not npc_lims.is_computation_finished(job_status):
             continue
+        if asset_exists(session_id, process_name):
+            continue
+        create_data_asset(session_id, job_status['id'], process_name)
 
-        add_to_queue(session_info.id, capsule_or_pipeline_name)
+def sync_and_get_num_running_jobs(process_name: str) -> int:
+    sync_json(process_name)
+    return sum(1 for job in read_json(process_name).values() if job["state"] in ("running", "initializing"))
 
+def is_started(session_id: SessionID, process_name: str) -> bool:
+    return read_json(process_name)[session_id]['state'] in ("running", "initializing")
 
-def process_queue() -> None:
-    pass
-    # read json files from directory
+def add_sessions_to_queue(process_name: str) -> None:
+    for session_info in npc_lims.get_session_info(is_ephys=True, is_uploaded=True):
+        session_id = session_info.id
+        add_to_queue(session_id, process_name)
 
-    # check if it has been run:
-    # session_json['run_id'] == 'not started'
-    # check priority based on capsule/pipeline (session_json['capsule_or_pipeline_name'])
-    # run the job
-    # run_response: codeocean.RunCapsuleResponseAPI = codeocean.run_capsule_or_pipeline(json['data_assets'], capsule_or_pipeline_name)
-    # overwrite json with new parameters using run_response
-    # repeat running new jobs n times to not flood server?
+def start(session_id: SessionID, capsule_pipeline_info: codeocean.CapsulePipelineInfo) -> None:
+    data_assets=[
+                ComputationDataAsset(
+                    id=npc_lims.get_session_raw_data_asset(session_id)["id"],
+                    mount="ecephys",
+                ),
+            ]
+    response = npc_lims.run_capsule_or_pipeline(data_assets, capsule_pipeline_info.id, capsule_pipeline_info.is_pipeline)
+    logger.info(f"Started job for {session_id}")
+    add_to_json(session_id, capsule_pipeline_info.process_name, response)
 
-    # if job is running: check state and create asset if done
-    # update_queue(session_json)
+def process_capsule_or_pipeline_queue(capsule_or_pipeline_id: str, process_name: str, is_pipeline:bool=False, 
+                                      rerun_errorred_jobs:bool=False) -> None:
+    """
+    adds jobs to queue for capsule/pipeline, then processes them - run capsule/pipeline and then create data asset
+    example: process_queue('1f8f159a-7670-47a9-baf1-078905fc9c2e', 'sorted', is_pipeline=True)
+    """
+    capsule_pipeline_info = codeocean.CapsulePipelineInfo(capsule_or_pipeline_id, process_name, is_pipeline)
 
+    add_sessions_to_queue(capsule_pipeline_info.process_name)
+
+    for session_info in npc_lims.get_session_info(is_ephys=True, is_uploaded=True):
+        session_id = session_info.id
+
+        if is_started(session_id, capsule_pipeline_info.process_name):
+            logger.debug(f"Already started: {session_id}")
+            if not rerun_errorred_jobs or not npc_lims.is_computation_errorred(get_current_job_status(session_id)):
+                continue
+
+        # to avoid overloading CodeOcean
+        while sync_and_get_num_running_jobs(capsule_pipeline_info.process_name) >= MAX_RUNNING_JOBS:
+            time.sleep(600)
+        start(session_id, capsule_pipeline_info)
+
+    while sync_and_get_num_running_jobs(capsule_pipeline_info.process_name) > 0:
+        time.sleep(600)
+    create_all_data_assets(capsule_pipeline_info.process_name)
 
 if __name__ == "__main__":
     import doctest

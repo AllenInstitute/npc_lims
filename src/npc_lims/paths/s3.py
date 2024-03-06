@@ -104,7 +104,7 @@ def get_dlc_eye_s3_paths(
     7
     """
     session = npc_session.SessionRecord(session)
-    dlc_eye_data_asset = codeocean.get_model_data_asset(session, "dlc_eye")
+    dlc_eye_data_asset = codeocean.get_session_capsule_pipeline_data_asset(session, 'dlc_eye')
 
     return tuple(get_data_asset_s3_path(dlc_eye_data_asset).iterdir())
 
@@ -119,9 +119,9 @@ def get_dlc_side_s3_paths(
     5
     """
     session = npc_session.SessionRecord(session)
-    dlc_eye_data_asset = codeocean.get_model_data_asset(session, "dlc_side")
+    dlc_side_data_asset = codeocean.get_session_capsule_pipeline_data_asset(session, 'dlc_side')
 
-    return tuple(get_data_asset_s3_path(dlc_eye_data_asset).iterdir())
+    return tuple(get_data_asset_s3_path(dlc_side_data_asset).iterdir())
 
 
 @functools.cache
@@ -134,9 +134,9 @@ def get_dlc_face_s3_paths(
     5
     """
     session = npc_session.SessionRecord(session)
-    dlc_eye_data_asset = codeocean.get_model_data_asset(session, "dlc_face")
+    dlc_face_data_asset = codeocean.get_session_capsule_pipeline_data_asset(session, 'dlc_face')
 
-    return tuple(get_data_asset_s3_path(dlc_eye_data_asset).iterdir())
+    return tuple(get_data_asset_s3_path(dlc_face_data_asset).iterdir())
 
 
 @functools.cache
@@ -149,10 +149,9 @@ def get_facemap_s3_paths(
     4
     """
     session = npc_session.SessionRecord(session)
-    dlc_eye_data_asset = codeocean.get_model_data_asset(session, "facemap")
+    facemap_data_asset = codeocean.get_session_capsule_pipeline_data_asset(session, 'facemap')
 
-    return tuple(get_data_asset_s3_path(dlc_eye_data_asset).iterdir())
-
+    return tuple(get_data_asset_s3_path(facemap_data_asset).iterdir())
 
 @functools.cache
 def get_settings_xml_path_from_s3(
@@ -362,84 +361,6 @@ def get_hdf5_stim_files_from_s3(
                 files.remove(f)
 
     return tuple(files)
-
-
-@functools.cache
-def get_units_spikes_codeocean_kilosort_top_level_files(
-    session: str | npc_session.SessionRecord,
-) -> tuple[upath.UPath, ...]:
-    """
-    Examples:
-        >>> paths = get_units_spikes_codeocean_kilosort_top_level_files('668759_20230711')
-        >>> assert paths
-    """
-    units_spikes_data_asset = (
-        codeocean.get_session_units_spikes_with_peak_channels_data_asset(session)
-    )
-
-    units_directory = next(
-        unit_path
-        for unit_path in get_data_asset_s3_path(units_spikes_data_asset).iterdir()
-        if unit_path.is_dir()
-    )
-
-    return tuple(units_directory.iterdir())
-
-
-@functools.cache
-def get_units_codeoean_kilosort_path_from_s3(
-    session: str | npc_session.SessionRecord,
-) -> upath.UPath:
-    """
-    Examples:
-        >>> path = get_units_codeoean_kilosort_path_from_s3('668759_20230711')
-        >>> assert path
-    """
-    files = get_units_spikes_codeocean_kilosort_top_level_files(session)
-    units_path = next(path for path in files if "csv" in str(path))
-
-    return units_path
-
-
-@functools.cache
-def get_spike_times_codeocean_kilosort_path_from_s3(
-    session: str | npc_session.SessionRecord,
-) -> upath.UPath:
-    """
-    Examples:
-        >>> path = get_spike_times_codeocean_kilosort_path_from_s3('668759_20230711')
-        >>> assert path
-    """
-    files = get_units_spikes_codeocean_kilosort_top_level_files(session)
-    spike_times_path = next(path for path in files if "spike" in str(path))
-
-    return spike_times_path
-
-
-@functools.cache
-def get_mean_waveform_codeocean_kilosort_path_from_s3(
-    session: str | npc_session.SessionRecord,
-) -> upath.UPath:
-    """
-    Examples:
-        >>> path = get_spike_times_codeocean_kilosort_path_from_s3('668759_20230711')
-        >>> assert path
-    """
-    files = get_units_spikes_codeocean_kilosort_top_level_files(session)
-    mean_waveforms_path = next(path for path in files if "mean" in str(path))
-
-    return mean_waveforms_path
-
-
-@functools.cache
-def get_sd_waveform_codeocean_kilosort_path_from_s3(
-    session: str | npc_session.SessionRecord,
-) -> upath.UPath:
-    files = get_units_spikes_codeocean_kilosort_top_level_files(session)
-    sd_waveforms_path = next(path for path in files if "sd" in str(path))
-
-    return sd_waveforms_path
-
 
 if __name__ == "__main__":
     import doctest
