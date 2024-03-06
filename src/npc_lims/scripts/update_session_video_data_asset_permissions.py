@@ -1,4 +1,3 @@
-import npc_lims.metadata.codeocean as codeocean
 import npc_lims.status as status
 
 
@@ -14,6 +13,7 @@ def update_helper(session_info: status.SessionInfo, model_name: str) -> None:
             pass
     """
     pass
+
 
 def main() -> None:
     for session_info in status.get_session_info():

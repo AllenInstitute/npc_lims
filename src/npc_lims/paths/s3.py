@@ -104,7 +104,9 @@ def get_dlc_eye_s3_paths(
     7
     """
     session = npc_session.SessionRecord(session)
-    dlc_eye_data_asset = codeocean.get_session_capsule_pipeline_data_asset(session, 'dlc_eye')
+    dlc_eye_data_asset = codeocean.get_session_capsule_pipeline_data_asset(
+        session, "dlc_eye"
+    )
 
     return tuple(get_data_asset_s3_path(dlc_eye_data_asset).iterdir())
 
@@ -119,7 +121,9 @@ def get_dlc_side_s3_paths(
     5
     """
     session = npc_session.SessionRecord(session)
-    dlc_side_data_asset = codeocean.get_session_capsule_pipeline_data_asset(session, 'dlc_side')
+    dlc_side_data_asset = codeocean.get_session_capsule_pipeline_data_asset(
+        session, "dlc_side"
+    )
 
     return tuple(get_data_asset_s3_path(dlc_side_data_asset).iterdir())
 
@@ -134,7 +138,9 @@ def get_dlc_face_s3_paths(
     5
     """
     session = npc_session.SessionRecord(session)
-    dlc_face_data_asset = codeocean.get_session_capsule_pipeline_data_asset(session, 'dlc_face')
+    dlc_face_data_asset = codeocean.get_session_capsule_pipeline_data_asset(
+        session, "dlc_face"
+    )
 
     return tuple(get_data_asset_s3_path(dlc_face_data_asset).iterdir())
 
@@ -149,9 +155,12 @@ def get_facemap_s3_paths(
     4
     """
     session = npc_session.SessionRecord(session)
-    facemap_data_asset = codeocean.get_session_capsule_pipeline_data_asset(session, 'facemap')
+    facemap_data_asset = codeocean.get_session_capsule_pipeline_data_asset(
+        session, "facemap"
+    )
 
     return tuple(get_data_asset_s3_path(facemap_data_asset).iterdir())
+
 
 @functools.cache
 def get_settings_xml_path_from_s3(
@@ -361,6 +370,7 @@ def get_hdf5_stim_files_from_s3(
                 files.remove(f)
 
     return tuple(files)
+
 
 if __name__ == "__main__":
     import doctest

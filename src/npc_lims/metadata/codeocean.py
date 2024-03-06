@@ -7,7 +7,7 @@ import re
 import uuid
 import warnings
 from collections.abc import Mapping, Sequence
-from typing import Any, Literal, TypedDict, NamedTuple
+from typing import Any, Literal, NamedTuple, TypedDict
 
 import npc_session
 import requests
@@ -18,10 +18,6 @@ from aind_codeocean_api.models.computations_requests import (
     ComputationDataAsset,
     RunCapsuleRequest,
 )
-from aind_codeocean_api.models.data_assets_requests import (
-    CreateDataAssetRequest
-)
-
 from typing_extensions import TypeAlias
 
 import npc_lims.exceptions as exceptions
@@ -51,10 +47,12 @@ RunCapsuleResponseAPI: TypeAlias = dict[
     Literal["created", "has_results", "id", "name", "run_time", "state"], Any
 ]
 
+
 class CapsulePipelineInfo(NamedTuple):
     id: str
     process_name: str
     is_pipeline: bool
+
 
 class CapsuleComputationAPI(TypedDict):
     """Result from CodeOceanAPI when querying for computations for a capsule"""
@@ -371,10 +369,9 @@ def get_path_from_data_asset(asset: DataAssetAPI) -> upath.UPath:
         f"{roots[bucket_info['origin']]}://{bucket_info['bucket']}/{bucket_info['prefix']}"
     )
 
+
 def run_capsule_or_pipeline(
-    data_assets: list[ComputationDataAsset],
-    id: str,
-    is_pipeline:bool=False
+    data_assets: list[ComputationDataAsset], id: str, is_pipeline: bool = False
 ) -> CapsuleComputationAPI:
     if is_pipeline:
         run_capsule_request = RunCapsuleRequest(
@@ -421,19 +418,23 @@ def create_session_data_asset(
 ) -> requests.models.Response | None:
     session = npc_session.SessionRecord(session)
 
-    if is_computation_errorred(computation_id) or not is_computation_finished(computation_id):
+    if is_computation_errorred(computation_id) or not is_computation_finished(
+        computation_id
+    ):
         return None
 
     source = aind_codeocean_requests.Source(
         computation=aind_codeocean_requests.Sources.Computation(id=computation_id)
     )
-    tags=[str(session.subject), "derived", "ephys", "results"],
-    custom_metadata={
-        "data level": "derived data",
-        "experiment type": "ecephys",
-        "modality": "Extracellular electrophysiology",
-        "subject id": str(session.subject),
-    },
+    tags = ([str(session.subject), "derived", "ephys", "results"],)
+    custom_metadata = (
+        {
+            "data level": "derived data",
+            "experiment type": "ecephys",
+            "modality": "Extracellular electrophysiology",
+            "subject id": str(session.subject),
+        },
+    )
     create_data_asset_request = aind_codeocean_requests.CreateDataAssetRequest(
         name=data_asset_name,
         mount=data_asset_name,
@@ -442,9 +443,7 @@ def create_session_data_asset(
         custom_metadata=custom_metadata,
     )
 
-    asset = get_codeocean_client().create_data_asset(
-        create_data_asset_request
-    )
+    asset = get_codeocean_client().create_data_asset(create_data_asset_request)
     asset.raise_for_status()
     return asset
 

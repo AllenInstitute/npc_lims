@@ -8,13 +8,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.128...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.129...HEAD)</small>
+
+### Fixed
+
+- fix type error ([a288212](https://github.com/AllenInstitute/npc_lims/commit/a288212976b49094eaccd654eacafca1902651cc) by arjun.sridhar12345).
+- Fix session ([61f84f2](https://github.com/AllenInstitute/npc_lims/commit/61f84f22d2e560f97b92a86cb7e8c5f0cc1285fe) by bjhardcastle).
+
+### Removed
+
+- remove old function in scripts ([eb2e6c0](https://github.com/AllenInstitute/npc_lims/commit/eb2e6c0d48bec4e68295dabfc2398ff38b69511d) by arjun.sridhar12345).
+
+<!-- insertion marker -->
+## [v0.1.129](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.129) - 2024-03-05
+
+<small>[Compare with v0.1.128](https://github.com/AllenInstitute/npc_lims/compare/v0.1.128...v0.1.129)</small>
 
 ### Fixed
 
 - Fix broken tests ([63e4d4a](https://github.com/AllenInstitute/npc_lims/commit/63e4d4ae4e004cf16f670a36b0c527c4f20d9e46) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.128](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.128) - 2024-03-05
 
 <small>[Compare with v0.1.127](https://github.com/AllenInstitute/npc_lims/compare/v0.1.127...v0.1.128)</small>

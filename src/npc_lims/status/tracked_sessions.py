@@ -129,7 +129,9 @@ class SessionInfo:
             return False
 
         try:
-            return bool(codeocean.get_session_capsule_pipeline_data_asset(self.id, "dlc_eye"))
+            return bool(
+                codeocean.get_session_capsule_pipeline_data_asset(self.id, "dlc_eye")
+            )
         except (FileNotFoundError, ValueError):
             return False
 
@@ -145,7 +147,9 @@ class SessionInfo:
             return False
 
         try:
-            return bool(codeocean.get_session_capsule_pipeline_data_asset(self.id, "dlc_side"))
+            return bool(
+                codeocean.get_session_capsule_pipeline_data_asset(self.id, "dlc_side")
+            )
         except (FileNotFoundError, ValueError):
             return False
 
@@ -161,7 +165,9 @@ class SessionInfo:
             return False
 
         try:
-            return bool(codeocean.get_session_capsule_pipeline_data_asset(self.id, "dlc_face"))
+            return bool(
+                codeocean.get_session_capsule_pipeline_data_asset(self.id, "dlc_face")
+            )
         except (FileNotFoundError, ValueError):
             return False
 
@@ -177,7 +183,9 @@ class SessionInfo:
             return False
 
         try:
-            return bool(codeocean.get_session_capsule_pipeline_data_asset(self.id, "facemap"))
+            return bool(
+                codeocean.get_session_capsule_pipeline_data_asset(self.id, "facemap")
+            )
         except (FileNotFoundError, ValueError):
             return False
 
