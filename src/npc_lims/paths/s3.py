@@ -150,9 +150,9 @@ def get_facemap_s3_paths(
     session: str | npc_session.SessionRecord,
 ) -> tuple[upath.UPath, ...]:
     """
-    >>> paths = get_facemap_s3_paths('676909_2023-12-13')
+    >>> paths = get_facemap_s3_paths('646318_2023-01-17')
     >>> len(paths)
-    4
+    6
     """
     session = npc_session.SessionRecord(session)
     facemap_data_asset = codeocean.get_session_capsule_pipeline_data_asset(

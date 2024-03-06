@@ -119,6 +119,7 @@ def create_data_asset(session_id: SessionID, job_id: str, process_name: str) -> 
     asset = codeocean.create_session_data_asset(session_id, job_id, process_name)
 
     if asset is None:
+        logger.info(f"Failed to create data asset for {session_id}")
         return
 
     asset.raise_for_status()
@@ -135,7 +136,7 @@ def asset_exists(session_id: SessionID, process_name: str) -> bool:
     )
 
 
-def create_all_data_assets(process_name: str) -> None:
+def create_all_data_assets(process_name: str, overwrite_existing_assets:bool) -> None:
     sync_json(process_name)
 
     for session_id in read_json(process_name):
@@ -144,7 +145,7 @@ def create_all_data_assets(process_name: str) -> None:
             job_status
         ) or not npc_lims.is_computation_finished(job_status):
             continue
-        if asset_exists(session_id, process_name):
+        if asset_exists(session_id, process_name) and not overwrite_existing_assets:
             continue
         create_data_asset(session_id, job_status["id"], process_name)
 
@@ -189,6 +190,7 @@ def process_capsule_or_pipeline_queue(
     process_name: str,
     is_pipeline: bool = False,
     rerun_errorred_jobs: bool = False,
+    overwrite_existing_assets:bool=False
 ) -> None:
     """
     adds jobs to queue for capsule/pipeline, then processes them - run capsule/pipeline and then create data asset
@@ -220,7 +222,7 @@ def process_capsule_or_pipeline_queue(
 
     while sync_and_get_num_running_jobs(capsule_pipeline_info.process_name) > 0:
         time.sleep(600)
-    create_all_data_assets(capsule_pipeline_info.process_name)
+    create_all_data_assets(capsule_pipeline_info.process_name, overwrite_existing_assets)
 
 
 if __name__ == "__main__":
