@@ -8,7 +8,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.129...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.130...HEAD)</small>
+
+### Fixed
+
+- fix test for facemap zarr and add overwrite asset parameter to queue ([345a2f0](https://github.com/AllenInstitute/npc_lims/commit/345a2f00056dadfbc168c8370f729f6d9215cd50) by arjun.sridhar12345).
+
+<!-- insertion marker -->
+## [v0.1.130](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.130) - 2024-03-06
+
+<small>[Compare with v0.1.129](https://github.com/AllenInstitute/npc_lims/compare/v0.1.129...v0.1.130)</small>
 
 ### Fixed
 
@@ -19,7 +28,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - remove old function in scripts ([eb2e6c0](https://github.com/AllenInstitute/npc_lims/commit/eb2e6c0d48bec4e68295dabfc2398ff38b69511d) by arjun.sridhar12345).
 
-<!-- insertion marker -->
 ## [v0.1.129](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.129) - 2024-03-05
 
 <small>[Compare with v0.1.128](https://github.com/AllenInstitute/npc_lims/compare/v0.1.128...v0.1.129)</small>

@@ -136,7 +136,7 @@ def asset_exists(session_id: SessionID, process_name: str) -> bool:
     )
 
 
-def create_all_data_assets(process_name: str, overwrite_existing_assets:bool) -> None:
+def create_all_data_assets(process_name: str, overwrite_existing_assets: bool) -> None:
     sync_json(process_name)
 
     for session_id in read_json(process_name):
@@ -190,7 +190,7 @@ def process_capsule_or_pipeline_queue(
     process_name: str,
     is_pipeline: bool = False,
     rerun_errorred_jobs: bool = False,
-    overwrite_existing_assets:bool=False
+    overwrite_existing_assets: bool = False,
 ) -> None:
     """
     adds jobs to queue for capsule/pipeline, then processes them - run capsule/pipeline and then create data asset
@@ -222,7 +222,9 @@ def process_capsule_or_pipeline_queue(
 
     while sync_and_get_num_running_jobs(capsule_pipeline_info.process_name) > 0:
         time.sleep(600)
-    create_all_data_assets(capsule_pipeline_info.process_name, overwrite_existing_assets)
+    create_all_data_assets(
+        capsule_pipeline_info.process_name, overwrite_existing_assets
+    )
 
 
 if __name__ == "__main__":
