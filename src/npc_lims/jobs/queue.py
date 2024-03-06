@@ -6,6 +6,7 @@ import npc_lims.status as status
 import time
 import upath
 import json
+from typing import Union
 from typing_extensions import TypeAlias
 import logging
 import npc_lims
@@ -17,7 +18,7 @@ from aind_codeocean_api.models.computations_requests import (
 
 logger = logging.getLogger()
 
-SessionID: TypeAlias = str | npc_session.SessionRecord
+SessionID: TypeAlias = Union[str, npc_session.SessionRecord]
 JobID: TypeAlias = str
 
 QUEUE_JSON_DIR = upath.UPath('s3://aind-scratch-data/arjun.sridhar/queue') # TODO figure out path
