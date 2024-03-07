@@ -150,7 +150,7 @@ def get_cache_path(
         )
     if (
         not consolidated
-        and (extension == ".zarr" and nwb_component == "spike_times")
+        and (extension == ".zarr" and nwb_component != "spike_times")
         and session_id is not None
     ):
         raise ValueError(
