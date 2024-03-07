@@ -9,7 +9,7 @@ content_hash = "sha256:6fba5efd3ab978276577e985d3f90b4546b5bb719b044bf4967e4da9a
 
 [[package]]
 name = "aind-codeocean-api"
-version = "0.4.1"
+version = "0.4.2"
 requires_python = ">=3.7"
 summary = "CodeOcean API manager in Python"
 dependencies = [
@@ -19,8 +19,8 @@ dependencies = [
     "requests",
 ]
 files = [
-    {file = "aind_codeocean_api-0.4.1-py3-none-any.whl", hash = "sha256:d61e898066ae4b28f8a0c5f3b797a419f7397b2a01f458e605525a535abbaa97"},
-    {file = "aind_codeocean_api-0.4.1.tar.gz", hash = "sha256:f0d4349a5f2c3560b9ecee182590da0d0d11faac96e93592cb5af8d71b7e13d9"},
+    {file = "aind_codeocean_api-0.4.2-py3-none-any.whl", hash = "sha256:d188f81379b13f22f3fb0877a214a2de511713d489998e45dbf11a8ec578a05d"},
+    {file = "aind_codeocean_api-0.4.2.tar.gz", hash = "sha256:9979cdff0742bc27b286899536927cc7de1bd116baeb62b54dc57c6656007c97"},
 ]
 
 [[package]]
