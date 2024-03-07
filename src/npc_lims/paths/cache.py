@@ -33,7 +33,7 @@ NWBComponentStr: TypeAlias = Literal[
     "spike_times",
     "licks",
     "running_speed",
-    # TODO licks, pupil area, xy pos, running speed (zarr?)
+    # TODO pupil area, xy pos
 ]
 
 CACHED_FILE_EXTENSIONS: dict[str, str] = dict.fromkeys(
@@ -148,7 +148,7 @@ def get_cache_path(
         logger.debug(
             "Consolidated files don't exist for individual sessions: setting consolidated=False"
         )
-    if not consolidated and extension == ".zarr" and session_id is not None:
+    if not consolidated and (extension == ".zarr" and nwb_component == "spike_times") and session_id is not None:
         raise ValueError(
             f"Individual Zarr files for sessions don't exist: {nwb_component=} {consolidated=} {session_id=}"
         )
