@@ -210,20 +210,25 @@ def create_all_data_assets() -> None:
 
 def main(rerun_errorred_jobs: bool = False) -> None:
     for session_info in npc_lims.get_session_info(is_ephys=True, is_uploaded=True):
-        session_id = session_info.id
+        
+        session_ids = [session_info.id]
+        
+        if session_info.is_surface_channels:
+            session_ids.append(session_info.id.with_idx(1))
 
-        if is_started(session_id):
-            logger.debug(f"Already started: {session_id}")
-            if not rerun_errorred_jobs or not npc_lims.is_computation_errorred(
-                get_current_job_status(session_id)
-            ):
-                continue
+        for session_id in session_ids:
+            if is_started(session_id):
+                logger.debug(f"Already started: {session_id}")
+                if not rerun_errorred_jobs or not npc_lims.is_computation_errorred(
+                    get_current_job_status(session_id)
+                ):
+                    continue
 
-        # to avoid overloading CodeOcean
-        while sync_and_get_num_running_jobs() >= MAX_RUNNING_JOBS:
-            time.sleep(600)
-        start(session_id)
-
+            # to avoid overloading CodeOcean
+            while sync_and_get_num_running_jobs() >= MAX_RUNNING_JOBS:
+                time.sleep(600)
+            start(session_id)
+        
     while sync_and_get_num_running_jobs() > 0:
         time.sleep(600)
     create_all_data_assets()
