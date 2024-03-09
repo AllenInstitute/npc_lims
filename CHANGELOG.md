@@ -8,9 +8,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.132...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.133...HEAD)</small>
+
+### Added
+
+- Add surface channels to re-sorting script ([3d6fb4f](https://github.com/AllenInstitute/npc_lims/commit/3d6fb4f70f5c9c515de6ea1f41112c7e1f8d01f5) by bjhardcastle).
+- Add get surface channel asset fn ([b37e529](https://github.com/AllenInstitute/npc_lims/commit/b37e529fbaf72558f730de98b469431fc2f72f41) by bjhardcastle).
 
 <!-- insertion marker -->
+## [v0.1.133](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.133) - 2024-03-07
+
+<small>[Compare with v0.1.132](https://github.com/AllenInstitute/npc_lims/compare/v0.1.132...v0.1.133)</small>
+
 ## [v0.1.132](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.132) - 2024-03-07
 
 <small>[Compare with v0.1.131](https://github.com/AllenInstitute/npc_lims/compare/v0.1.131...v0.1.132)</small>

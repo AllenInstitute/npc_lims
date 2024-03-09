@@ -210,9 +210,9 @@ def create_all_data_assets() -> None:
 
 def main(rerun_errorred_jobs: bool = False) -> None:
     for session_info in npc_lims.get_session_info(is_ephys=True, is_uploaded=True):
-        
+
         session_ids = [session_info.id]
-        
+
         if session_info.is_surface_channels:
             session_ids.append(session_info.id.with_idx(1))
 
@@ -228,7 +228,7 @@ def main(rerun_errorred_jobs: bool = False) -> None:
             while sync_and_get_num_running_jobs() >= MAX_RUNNING_JOBS:
                 time.sleep(600)
             start(session_id)
-        
+
     while sync_and_get_num_running_jobs() > 0:
         time.sleep(600)
     create_all_data_assets()
