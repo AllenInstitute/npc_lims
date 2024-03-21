@@ -1,12 +1,14 @@
 from __future__ import annotations
 
+import concurrent.futures
 import datetime
 import functools
 import json
 import logging
 import time
-from typing import TypedDict, Union
+from typing import Iterable, TypedDict, Union
 
+from attr import s
 import npc_session
 import requests
 import upath
@@ -45,7 +47,7 @@ JobID: TypeAlias = str
 
 SORTING_PIPELINE_ID = "1f8f159a-7670-47a9-baf1-078905fc9c2e"
 JSON_PATH = upath.UPath("sorting_jobs.json")
-MAX_RUNNING_JOBS = 8
+MAX_RUNNING_JOBS = 10
 
 EXAMPLE_JOB_STATUS = {
     "created": 1708570920,
@@ -96,14 +98,24 @@ def is_in_json(session_id: SessionID) -> bool:
 def is_started(session_id: SessionID) -> bool:
     return is_in_json(session_id)
 
+def is_bad_docker_run(session_id: SessionID) -> bool:
+    session_id = npc_session.SessionRecord(session_id).id
+    created: int = read_json()[session_id]["created"]
+    dt = datetime.datetime.fromtimestamp(created)
+    return datetime.datetime(2024, 3, 12) <= dt < datetime.datetime(2024, 3, 20)
 
+def has_bad_docker_asset(session_id: SessionID) -> bool:
+    sorted_asset = npc_lims.get_session_sorted_data_asset(session_id)
+    dt: datetime.date = npc_session.DateRecord(sorted_asset["name"].split('sorted_')[-1]).dt
+    return datetime.date(2024, 3, 12) <= dt < datetime.date(2024, 3, 20)
+        
 @functools.lru_cache(maxsize=1)
 def get_current_job_status(
     job_or_session_id: str,
 ) -> JobStatus | npc_lims.CapsuleComputationAPI:
     """
     >>> get_current_job_status("633d9d0d-511a-4601-884c-5a7f4a63365f")
-    {'created': 1709241133, 'end_status': 'succeeded', 'has_results': True, 'id': '633d9d0d-511a-4601-884c-5a7f4a63365f', 'name': 'Run 9241133', 'run_time': 86398, 'state': 'completed'}
+    {'created': 1709241133, 'data_assets': [{'id': '7daf6149-88d2-44ba-8218-b519b4fba45f', 'mount': 'unit_classifier_models_v1.0'}, {'id': 'b37ea55d-07f7-43a4-9c05-9f32837bd8b9', 'mount': 'ecephys'}], 'end_status': 'succeeded', 'has_results': True, 'id': '633d9d0d-511a-4601-884c-5a7f4a63365f', 'name': 'Run 9241133', 'run_time': 86398, 'state': 'completed'}
     """
     try:
         session_id = npc_session.SessionRecord(job_or_session_id).id
@@ -111,15 +123,22 @@ def get_current_job_status(
         job_id = job_or_session_id
     else:
         job_id = read_json()[session_id]["id"]
+        
     job_status = npc_lims.get_job_status(job_id, check_files=True)
-
+    if (assets := job_status.get('data_assets', [])):
+        assets.sort(key=lambda asset: asset['id'])
     return job_status
 
 
 def sync_json() -> None:
     current = read_json()
-    for session_id in current:
-        current[session_id] = get_current_job_status(session_id)
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        session_to_future = {
+            session_id: executor.submit(get_current_job_status, session_id)
+            for session_id in current
+        }
+    for session_id, future in session_to_future.items():
+        current[session_id] = future.result()
         logger.info(f"Updated {session_id} status")
 
     JSON_PATH.write_text(json.dumps(current, indent=4))
@@ -208,18 +227,31 @@ def create_all_data_assets() -> None:
         create_data_asset(session_id)
 
 
-def main(rerun_errorred_jobs: bool = False) -> None:
+def main(
+    rerun_errorred_jobs: bool = False,
+    reverse: bool = False,
+    ) -> None:
+    sessions = npc_lims.get_session_info(is_ephys=True, is_uploaded=True)
+    if reverse:
+        sessions = tuple(reversed(sessions))
     for session_info in npc_lims.get_session_info(is_ephys=True, is_uploaded=True):
-
+        
         session_ids = [session_info.id]
-
         if session_info.is_surface_channels:
             session_ids.append(session_info.id.with_idx(1))
 
         for session_id in session_ids:
-            if is_started(session_id):
+            is_skippable = (
+                is_started(session_id) 
+                and not is_bad_docker_run(session_id) 
+                and not has_bad_docker_asset(session_id)
+            )
+            if is_skippable:
                 logger.debug(f"Already started: {session_id}")
-                if not rerun_errorred_jobs or not npc_lims.is_computation_errorred(
+
+                if not rerun_errorred_jobs:
+                    continue
+                if not npc_lims.is_computation_errorred(
                     get_current_job_status(session_id)
                 ):
                     continue
@@ -233,10 +265,11 @@ def main(rerun_errorred_jobs: bool = False) -> None:
         time.sleep(600)
     create_all_data_assets()
 
-
 if __name__ == "__main__":
     import doctest
 
     doctest.testmod(raise_on_error=True)
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
-    main(rerun_errorred_jobs=False)
+    create_all_data_assets()
+    main(rerun_errorred_jobs=True, reverse=True)
+    # sync_json()
