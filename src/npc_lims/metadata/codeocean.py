@@ -225,7 +225,7 @@ def get_session_sorted_data_asset(
     sorted_data_assets = tuple(
         data_asset
         for data_asset in session_result_data_assets
-        if is_sorted_data_asset(data_asset) and data_asset["files"] > 2
+        if is_sorted_data_asset(data_asset) and data_asset.get("files", -1) > 2
     )
 
     if not sorted_data_assets:
