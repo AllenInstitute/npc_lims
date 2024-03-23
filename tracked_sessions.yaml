@@ -278,8 +278,16 @@ ephys:
         
 behavior_with_sync: # hab sessions with sync + video, or sync + opto, etc.
   DynamicRouting:
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708019_20240322:
+        # pupil test
+        session_kwargs:
+            is_sync: True
+            is_video: True
+            is_task: False
 behavior:
   DynamicRouting:
+    # all sessions with a DynamicRouting*.hdf5 in the data folder below will be
+    # available implicitly: only add sessions here that need configuration or have issues
     - "//allen/programs/mindscope/workgroups/dynamicrouting/DynamicRoutingTask/Data/677352/DynamicRouting1_677352_20231013_155330.hdf5":
         issues:
           - https://github.com/AllenInstitute/npc_sessions/issues/78
