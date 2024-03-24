@@ -93,8 +93,6 @@ class SessionInfo:
             >>> next(session.is_uploaded for session in get_session_info() if session.is_uploaded)
             True
         """
-        if not self.is_ephys:
-            return False  # currently only ephys sessions are uploaded to AIND-codeocean
         with contextlib.suppress(FileNotFoundError, ValueError):
             return bool(codeocean.get_raw_data_root(self.id))
         return False
