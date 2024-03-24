@@ -101,7 +101,7 @@ def get_dlc_eye_s3_paths(
     """
     >>> paths = get_dlc_eye_s3_paths('676909_2023-12-13')
     >>> len(paths)
-    7
+    8
     """
     session = npc_session.SessionRecord(session)
     dlc_eye_data_asset = codeocean.get_session_capsule_pipeline_data_asset(
