@@ -126,7 +126,7 @@ def get_current_job_status(
         
     job_status = npc_lims.get_job_status(job_id, check_files=True)
     if (assets := job_status.get('data_assets', [])):
-        assets.sort(key=lambda asset: asset['id'])
+        assets.sort(key=lambda asset: asset['id']) # type: ignore
     return job_status
 
 
