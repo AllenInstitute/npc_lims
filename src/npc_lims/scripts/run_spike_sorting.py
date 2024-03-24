@@ -6,9 +6,8 @@ import functools
 import json
 import logging
 import time
-from typing import Iterable, TypedDict, Union
+from typing import TypedDict, Union
 
-from attr import s
 import npc_session
 import requests
 import upath
@@ -98,17 +97,22 @@ def is_in_json(session_id: SessionID) -> bool:
 def is_started(session_id: SessionID) -> bool:
     return is_in_json(session_id)
 
+
 def is_bad_docker_run(session_id: SessionID) -> bool:
     session_id = npc_session.SessionRecord(session_id).id
     created: int = read_json()[session_id]["created"]
     dt = datetime.datetime.fromtimestamp(created)
     return datetime.datetime(2024, 3, 12) <= dt < datetime.datetime(2024, 3, 20)
 
+
 def has_bad_docker_asset(session_id: SessionID) -> bool:
     sorted_asset = npc_lims.get_session_sorted_data_asset(session_id)
-    dt: datetime.date = npc_session.DateRecord(sorted_asset["name"].split('sorted_')[-1]).dt
+    dt: datetime.date = npc_session.DateRecord(
+        sorted_asset["name"].split("sorted_")[-1]
+    ).dt
     return datetime.date(2024, 3, 12) <= dt < datetime.date(2024, 3, 20)
-        
+
+
 @functools.lru_cache(maxsize=1)
 def get_current_job_status(
     job_or_session_id: str,
@@ -123,10 +127,10 @@ def get_current_job_status(
         job_id = job_or_session_id
     else:
         job_id = read_json()[session_id]["id"]
-        
+
     job_status = npc_lims.get_job_status(job_id, check_files=True)
-    if (assets := job_status.get('data_assets', [])):
-        assets.sort(key=lambda asset: asset['id']) # type: ignore
+    if assets := job_status.get("data_assets", []):
+        assets.sort(key=lambda asset: asset["id"])  # type: ignore
     return job_status
 
 
@@ -230,20 +234,20 @@ def create_all_data_assets() -> None:
 def main(
     rerun_errorred_jobs: bool = False,
     reverse: bool = False,
-    ) -> None:
+) -> None:
     sessions = npc_lims.get_session_info(is_ephys=True, is_uploaded=True)
     if reverse:
         sessions = tuple(reversed(sessions))
     for session_info in npc_lims.get_session_info(is_ephys=True, is_uploaded=True):
-        
+
         session_ids = [session_info.id]
         if session_info.is_surface_channels:
             session_ids.append(session_info.id.with_idx(1))
 
         for session_id in session_ids:
             is_skippable = (
-                is_started(session_id) 
-                and not is_bad_docker_run(session_id) 
+                is_started(session_id)
+                and not is_bad_docker_run(session_id)
                 and not has_bad_docker_asset(session_id)
             )
             if is_skippable:
@@ -264,6 +268,7 @@ def main(
     while sync_and_get_num_running_jobs() > 0:
         time.sleep(600)
     create_all_data_assets()
+
 
 if __name__ == "__main__":
     import doctest

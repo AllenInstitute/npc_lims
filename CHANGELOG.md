@@ -8,14 +8,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.133...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.134...HEAD)</small>
+
+### Added
+
+- Add pupil test session ([a0328e4](https://github.com/AllenInstitute/npc_lims/commit/a0328e42bc86fea9627f55e0ec7a9815142dcd94) by bjhardcastle).
+- Add sessions ([3162884](https://github.com/AllenInstitute/npc_lims/commit/316288406001512eed9441179cbf4d708383f180) by bjhardcastle).
+
+### Fixed
+
+- Fix test ([6716629](https://github.com/AllenInstitute/npc_lims/commit/6716629b754ea81aaf754b85c72c921f7e30e73f) by bjhardcastle).
+- Fix checking number of available files [skip CI] ([0e9d6e7](https://github.com/AllenInstitute/npc_lims/commit/0e9d6e73f7e3ab09f5bded27dd2338fd33e7c7aa) by bjhardcastle).
+- Fix test [skip CI] ([c0ded28](https://github.com/AllenInstitute/npc_lims/commit/c0ded28b0e21f81ce45e63b87c1b90273b0d6992) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.134](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.134) - 2024-03-09
+
+<small>[Compare with v0.1.133](https://github.com/AllenInstitute/npc_lims/compare/v0.1.133...v0.1.134)</small>
 
 ### Added
 
 - Add surface channels to re-sorting script ([3d6fb4f](https://github.com/AllenInstitute/npc_lims/commit/3d6fb4f70f5c9c515de6ea1f41112c7e1f8d01f5) by bjhardcastle).
 - Add get surface channel asset fn ([b37e529](https://github.com/AllenInstitute/npc_lims/commit/b37e529fbaf72558f730de98b469431fc2f72f41) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.133](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.133) - 2024-03-07
 
 <small>[Compare with v0.1.132](https://github.com/AllenInstitute/npc_lims/compare/v0.1.132...v0.1.133)</small>

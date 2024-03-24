@@ -511,7 +511,7 @@ def get_result_names(job_id: str) -> list[str]:
 def is_computation_errorred(job_id_or_response: str | CapsuleComputationAPI) -> bool:
     """Job status may say `completed` but the pipeline still errorred: check the
     output folder for indications of error.
-    
+
     - no files (or only `nextflow` and `output` files for pipeline runs)
     - `end_status` == `failed`
     - `has_results` == False
@@ -555,9 +555,15 @@ def is_computation_errorred(job_id_or_response: str | CapsuleComputationAPI) -> 
             )
             return True
         if "output" in result_item_names:
-            output = requests.get(get_codeocean_client().get_result_file_download_url(job_id, "output").json()['url']).text
+            output = requests.get(
+                get_codeocean_client()
+                .get_result_file_download_url(job_id, "output")
+                .json()["url"]
+            ).text
             if "Out of memory." in output:
-                logger.debug(f"Job {job_id} output file includes 'Out of memory.' in text")
+                logger.debug(
+                    f"Job {job_id} output file includes 'Out of memory.' in text"
+                )
                 return True
     return False
 
