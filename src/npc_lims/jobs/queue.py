@@ -20,9 +20,7 @@ logger = logging.getLogger()
 SessionID: TypeAlias = Union[str, npc_session.SessionRecord]
 JobID: TypeAlias = str
 
-QUEUE_JSON_DIR = upath.UPath(
-    "./"
-)  # TODO figure out path
+QUEUE_JSON_DIR = upath.UPath("./")  # TODO figure out path
 INITIAL_VALUE = "Added to Queue"
 INITIAL_INT_VALUE = -1
 
@@ -30,7 +28,7 @@ MAX_RUNNING_JOBS = 8
 
 
 def read_json(process_name: str) -> dict[str, npc_lims.CapsuleComputationAPI]:
-    with open((QUEUE_JSON_DIR / f'{process_name}.json'), 'r') as f:
+    with open(QUEUE_JSON_DIR / f"{process_name}.json") as f:
         return json.load(f)
 
 
@@ -88,7 +86,7 @@ def get_current_job_status(
         job_id = job_or_session_id
     else:
         job_id = read_json(process_name)[session_id]["id"]
-    
+
     if job_id != INITIAL_VALUE:
         job_status = npc_lims.get_job_status(job_id, check_files=True)
     else:
@@ -166,7 +164,11 @@ def sync_and_get_num_running_jobs(process_name: str) -> int:
 
 
 def is_started_or_completed(session_id: SessionID, process_name: str) -> bool:
-    return read_json(process_name)[session_id]["state"] in ("running", "initializing", "completed")
+    return read_json(process_name)[session_id]["state"] in (
+        "running",
+        "initializing",
+        "completed",
+    )
 
 
 def add_sessions_to_queue(process_name: str) -> None:
@@ -194,7 +196,7 @@ def start(
 def process_capsule_or_pipeline_queue(
     capsule_or_pipeline_id: str,
     process_name: str,
-    create_data_assets_from_results: bool=True,
+    create_data_assets_from_results: bool = True,
     rerun_all_jobs: bool = False,
     is_pipeline: bool = False,
     rerun_errorred_jobs: bool = False,
@@ -208,11 +210,13 @@ def process_capsule_or_pipeline_queue(
     capsule_pipeline_info = codeocean.CapsulePipelineInfo(
         capsule_or_pipeline_id, process_name, is_pipeline
     )
-    
+
     add_sessions_to_queue(capsule_pipeline_info.process_name)
 
     for session_id in read_json(process_name):
-        if not rerun_all_jobs and is_started_or_completed(session_id, capsule_pipeline_info.process_name):
+        if not rerun_all_jobs and is_started_or_completed(
+            session_id, capsule_pipeline_info.process_name
+        ):
             logger.debug(f"Already started: {session_id}")
             job_status = get_current_job_status(session_id)
             if not rerun_errorred_jobs or not npc_lims.is_computation_errorred(
@@ -226,12 +230,12 @@ def process_capsule_or_pipeline_queue(
             >= MAX_RUNNING_JOBS
         ):
             time.sleep(600)
-        
+
         start(session_id, capsule_pipeline_info)
 
     while sync_and_get_num_running_jobs(capsule_pipeline_info.process_name) > 0:
         time.sleep(600)
-    
+
     if create_data_assets_from_results:
         create_all_data_assets(
             capsule_pipeline_info.process_name, overwrite_existing_assets

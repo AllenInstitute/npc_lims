@@ -437,14 +437,13 @@ def create_session_data_asset(
         computation=aind_codeocean_requests.Sources.Computation(id=computation_id)
     )
     tags = [str(session.subject), "derived", "ephys", "results"]
-    custom_metadata = \
-    {
+    custom_metadata = {
         "data level": "derived data",
         "experiment type": "ecephys",
         "modality": "Extracellular electrophysiology",
         "subject id": str(session.subject),
     }
-    
+
     create_data_asset_request = aind_codeocean_requests.CreateDataAssetRequest(
         name=data_asset_name,
         mount=data_asset_name,

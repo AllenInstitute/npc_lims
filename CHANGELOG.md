@@ -8,7 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.134...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.135...HEAD)</small>
+
+<!-- insertion marker -->
+## [v0.1.135](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.135) - 2024-03-24
+
+<small>[Compare with v0.1.134](https://github.com/AllenInstitute/npc_lims/compare/v0.1.134...v0.1.135)</small>
 
 ### Added
 
@@ -21,7 +26,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Fix checking number of available files [skip CI] ([0e9d6e7](https://github.com/AllenInstitute/npc_lims/commit/0e9d6e73f7e3ab09f5bded27dd2338fd33e7c7aa) by bjhardcastle).
 - Fix test [skip CI] ([c0ded28](https://github.com/AllenInstitute/npc_lims/commit/c0ded28b0e21f81ce45e63b87c1b90273b0d6992) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.134](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.134) - 2024-03-09
 
 <small>[Compare with v0.1.133](https://github.com/AllenInstitute/npc_lims/compare/v0.1.133...v0.1.134)</small>
