@@ -107,6 +107,8 @@ class SessionInfo:
             >>> get_session_info("DRpilot_660023_20230808").is_surface_channels
             True
         """
+        if not self.is_ephys:
+            return False
         if self.session_kwargs.get("probe_letters_with_surface_channel_recording"):
             return True
         try:
@@ -123,7 +125,7 @@ class SessionInfo:
         True
         """
 
-        if not self.is_ephys:
+        if not self.is_sync:
             return False
 
         try:
@@ -140,8 +142,7 @@ class SessionInfo:
         >>> get_session_info("676909_2023-12-13").is_dlc_side
         True
         """
-
-        if not self.is_ephys:
+        if not self.is_sync:
             return False
 
         try:
@@ -158,8 +159,7 @@ class SessionInfo:
         >>> get_session_info("676909_2023-12-13").is_dlc_face
         True
         """
-
-        if not self.is_ephys:
+        if not self.is_sync:
             return False
 
         try:
@@ -177,7 +177,7 @@ class SessionInfo:
         True
         """
 
-        if not self.is_ephys:
+        if not self.is_sync:
             return False
 
         try:
