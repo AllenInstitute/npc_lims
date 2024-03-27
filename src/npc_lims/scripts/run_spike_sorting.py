@@ -275,6 +275,6 @@ if __name__ == "__main__":
 
     doctest.testmod(raise_on_error=True)
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
-    create_all_data_assets()
+    sync_json()
     main(rerun_errorred_jobs=True, reverse=True)
-    # sync_json()
+    create_all_data_assets()
