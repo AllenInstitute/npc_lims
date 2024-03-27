@@ -46,7 +46,7 @@ JobID: TypeAlias = str
 
 SORTING_PIPELINE_ID = "1f8f159a-7670-47a9-baf1-078905fc9c2e"
 JSON_PATH = upath.UPath("sorting_jobs.json")
-MAX_RUNNING_JOBS = 10
+MAX_RUNNING_JOBS = 6
 
 EXAMPLE_JOB_STATUS = {
     "created": 1708570920,
