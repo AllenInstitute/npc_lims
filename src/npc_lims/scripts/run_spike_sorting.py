@@ -106,12 +106,12 @@ def is_bad_docker_run(session_id: SessionID) -> bool:
 
 
 def has_bad_docker_asset(session_id: SessionID) -> bool:
-    sorted_asset = npc_lims.get_session_sorted_data_asset(session_id)
-    dt: datetime.date = npc_session.DateRecord(
-        sorted_asset["name"].split("sorted_")[-1]
-    ).dt
+    try:
+        sorted_asset = npc_lims.get_session_sorted_data_asset(session_id)
+    except ValueError:
+        return False
+    dt: datetime.date = npc_session.DateRecord(sorted_asset["name"].split('sorted_')[-1]).dt
     return datetime.date(2024, 3, 12) <= dt < datetime.date(2024, 3, 20)
-
 
 @functools.lru_cache(maxsize=1)
 def get_current_job_status(
