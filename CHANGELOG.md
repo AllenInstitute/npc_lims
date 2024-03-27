@@ -8,9 +8,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.135...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.136...HEAD)</small>
+
+### Fixed
+
+- Fix bad asset check ([d65abb1](https://github.com/AllenInstitute/npc_lims/commit/d65abb1b4e8ceac232fe95c11fca80f27642f534) by bjhardcastle).
+- Fix session status bools ([7f7163a](https://github.com/AllenInstitute/npc_lims/commit/7f7163a58384de53ad7734f65c19aa213e714f18) by bjhardcastle).
+
+### Changed
+
+- Change order of jobs in resorting queue ([71a4cab](https://github.com/AllenInstitute/npc_lims/commit/71a4cab970a0065f42bdac89adc338ca1b77b7ec) by bjhardcastle).
 
 <!-- insertion marker -->
+## [v0.1.136](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.136) - 2024-03-26
+
+<small>[Compare with v0.1.135](https://github.com/AllenInstitute/npc_lims/compare/v0.1.135...v0.1.136)</small>
+
 ## [v0.1.135](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.135) - 2024-03-24
 
 <small>[Compare with v0.1.134](https://github.com/AllenInstitute/npc_lims/compare/v0.1.134...v0.1.135)</small>
