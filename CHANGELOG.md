@@ -8,7 +8,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.136...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.137...HEAD)</small>
+
+### Added
+
+- Add skipped probes and check for missing nwb error ([86c4d38](https://github.com/AllenInstitute/npc_lims/commit/86c4d381ba7fb8b76be2f271f2efca7b51b83d94) by bjhardcastle).
+- Add session ([30c80b8](https://github.com/AllenInstitute/npc_lims/commit/30c80b8be1c81e9291edfd8f467d16ce0c70d3cb) by bjhardcastle).
+
+### Fixed
+
+- Fix session ([b781e64](https://github.com/AllenInstitute/npc_lims/commit/b781e643690f9d7dfc99cd64810be327de12fd23) by bjhardcastle).
+
+### Removed
+
+- Remove issues from re-sorted sessions ([9c0c1f6](https://github.com/AllenInstitute/npc_lims/commit/9c0c1f688ddc606ddecbd4f8730aa5aed95dd2de) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.137](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.137) - 2024-03-27
+
+<small>[Compare with v0.1.136](https://github.com/AllenInstitute/npc_lims/compare/v0.1.136...v0.1.137)</small>
 
 ### Fixed
 
@@ -19,7 +37,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Change order of jobs in resorting queue ([71a4cab](https://github.com/AllenInstitute/npc_lims/commit/71a4cab970a0065f42bdac89adc338ca1b77b7ec) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.136](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.136) - 2024-03-26
 
 <small>[Compare with v0.1.135](https://github.com/AllenInstitute/npc_lims/compare/v0.1.135...v0.1.136)</small>
