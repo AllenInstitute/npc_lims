@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import concurrent.futures
+import contextlib
 import datetime
 import functools
 import json
@@ -46,7 +47,7 @@ JobID: TypeAlias = str
 
 SORTING_PIPELINE_ID = "1f8f159a-7670-47a9-baf1-078905fc9c2e"
 JSON_PATH = upath.UPath("sorting_jobs.json")
-MAX_RUNNING_JOBS = 6
+MAX_RUNNING_JOBS = 8
 
 EXAMPLE_JOB_STATUS = {
     "created": 1708570920,
@@ -242,7 +243,6 @@ def main(
     if reverse:
         sessions = tuple(reversed(sessions))
     for session_info in npc_lims.get_session_info(is_ephys=True, is_uploaded=True):
-
         session_ids = [session_info.id]
         if session_info.is_surface_channels:
             session_ids.append(session_info.id.with_idx(1))
@@ -274,10 +274,11 @@ def main(
 
 
 if __name__ == "__main__":
+    npc_lims.get_surface_channel_root('DRpilot_702136_20240307')
     import doctest
 
     doctest.testmod(raise_on_error=True)
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
-    sync_json()
-    main(rerun_errorred_jobs=True, reverse=True)
+    # create_all_data_assets()
+    main(rerun_errorred_jobs=True, reverse=False)
     create_all_data_assets()

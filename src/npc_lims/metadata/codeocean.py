@@ -13,14 +13,14 @@ import npc_session
 import requests
 import upath
 from aind_codeocean_api import codeocean as aind_codeocean_api
-from aind_codeocean_api.models import data_assets_requests as aind_codeocean_requests
+from aind_codeocean_api.models import \
+    data_assets_requests as aind_codeocean_requests
 from aind_codeocean_api.models.computations_requests import (
-    ComputationDataAsset,
-    RunCapsuleRequest,
-)
+    ComputationDataAsset, RunCapsuleRequest)
 from typing_extensions import TypeAlias
 
 import npc_lims.exceptions as exceptions
+import npc_lims.paths.s3 as s3
 
 logger = logging.getLogger(__name__)
 
@@ -564,10 +564,54 @@ def is_computation_errorred(job_id_or_response: str | CapsuleComputationAPI) -> 
                     f"Job {job_id} output file includes 'Out of memory.' in text"
                 )
                 return True
+            if "Traceback (most recent call last)" in output.lower():
+                logger.debug(
+                    f"Job {job_id} suspected error based on python traceback in output"
+                )
+                return True
+            if "Command error:" in output.lower():
+                logger.debug(
+                    f"Job {job_id} suspected error based on pipeline error message"
+                )
+                return True
+            if all(text in output.lower() for text in ("sorting", "kilosort", "N E X T F L O W".lower())):
+                if "nwb" not in result_item_names:
+                    logger.debug(
+                        f"Job {job_id} suspected error based on missing NWB file"
+                    )
+                    return True
     return False
 
+def get_skipped_probes(session_id: str | npc_session.SessionRecord) -> str:
+    """Only works with new pipeline output
+    
+    Examples:
+        >>> get_skipped_probes('702136_2024-03-05')
+        'E'
+        >>> get_skipped_probes('666986_2023-08-14')
+        'B'
+        >>> get_skipped_probes('668755_2023-08-28')
+        ''
+    """
+    output = get_sorting_output_text(session_id)
+    skipped_probes = ''
+    if "skip" not in output.lower():
+        return skipped_probes
+    for text in output.split("Skipping further processing for this recording")[:-1]:
+        preprocessing = text.split("Preprocessing".upper())[-1]
+        skipped_probes += npc_session.ProbeRecord(preprocessing)
+    return skipped_probes
+
+def get_sorting_output_text(session_id: str | npc_session.SessionRecord) -> str:
+    """Contents of the sorting pipeline `output` file (log)"""
+    session = npc_session.SessionRecord(session_id)
+    output_path = next((p for p in s3.get_sorted_data_paths_from_s3(session) if p.name == "output"), None)
+    if output_path is None:
+        raise FileNotFoundError(f"No output file found for {session}")
+    return output_path.read_text()
 
 if __name__ == "__main__":
+    get_skipped_probes('2024-03-04 702134')
     import doctest
 
     doctest.testmod(
