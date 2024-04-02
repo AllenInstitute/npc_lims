@@ -291,6 +291,13 @@ behavior_with_sync: # hab sessions with sync + video, or sync + opto, etc.
             is_sync: True
             is_video: True
             is_task: False
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_689663_20240401:
+        # pupil test
+        day: 1
+        session_kwargs:
+            is_sync: True
+            is_video: True
+            is_task: False
 behavior:
   DynamicRouting:
     # all sessions with a DynamicRouting*.hdf5 in the data folder below will be
