@@ -266,9 +266,10 @@ ephys:
         issues:
             - https://github.com/AllenInstitute/npc_sessions/issues/66
         notes: recording truncated ~5 mins before end - needs obs intervals
-  OpenScopeVippo:
-    - //allen/programs/mindscope/workgroups/np-exp/1330689294_716465_20240214:
-        day: 1
+  
+#   OpenScopeVippo: # currently no way to filter on project, so this is excluded
+#     - //allen/programs/mindscope/workgroups/np-exp/1330689294_716465_20240214:
+#         day: 1
         
 behavior_with_sync: # hab sessions with sync + video, or sync + opto, etc.
   DynamicRouting:
