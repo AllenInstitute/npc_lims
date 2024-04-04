@@ -429,7 +429,7 @@ def create_session_data_asset(
 ) -> requests.models.Response | None:
     session = npc_session.SessionRecord(session)
 
-    if is_computation_errorred(computation_id) or not is_computation_finished(
+    if is_computation_errored(computation_id) or not is_computation_finished(
         computation_id
     ):
         return None
@@ -472,8 +472,8 @@ def get_job_status(job_id: str, check_files: bool = False) -> CapsuleComputation
     response = get_codeocean_client().get_computation(job_id)
     response.raise_for_status()
     job_status = response.json()
-    if check_files and is_computation_errorred(job_status):
-        logger.info(f"Job {job_status['id']} errorred, updating status")
+    if check_files and is_computation_errored(job_status):
+        logger.info(f"Job {job_status['id']} errored, updating status")
         job_status["end_status"] = "failed"
     return job_status
 
@@ -508,8 +508,8 @@ def get_result_names(job_id: str) -> list[str]:
     return result_item_names
 
 
-def is_computation_errorred(job_id_or_response: str | CapsuleComputationAPI) -> bool:
-    """Job status may say `completed` but the pipeline still errorred: check the
+def is_computation_errored(job_id_or_response: str | CapsuleComputationAPI) -> bool:
+    """Job status may say `completed` but the pipeline still errored: check the
     output folder for indications of error.
 
     - no files (or only `nextflow` and `output` files for pipeline runs)
@@ -517,13 +517,13 @@ def is_computation_errorred(job_id_or_response: str | CapsuleComputationAPI) -> 
     - `has_results` == False
     - `output` file contains `Out of memory.`
 
-    >>> is_computation_errorred(EXAMPLE_JOB_STATUS)
+    >>> is_computation_errored(EXAMPLE_JOB_STATUS)
     False
-    >>> is_computation_errorred(EXAMPLE_JOB_STATUS | {"end_status": "failed"})
+    >>> is_computation_errored(EXAMPLE_JOB_STATUS | {"end_status": "failed"})
     True
-    >>> is_computation_errorred(EXAMPLE_JOB_STATUS | {"has_results": False})
+    >>> is_computation_errored(EXAMPLE_JOB_STATUS | {"has_results": False})
     True
-    >>> is_computation_errorred(EXAMPLE_JOB_STATUS | {"id": "d5444fc9-9c0f-4c91-90c0-8d17969971b8"})
+    >>> is_computation_errored(EXAMPLE_JOB_STATUS | {"id": "d5444fc9-9c0f-4c91-90c0-8d17969971b8"})
     True
     """
     job_status = _parse_job_id_and_response(job_id_or_response)
@@ -539,7 +539,7 @@ def is_computation_errorred(job_id_or_response: str | CapsuleComputationAPI) -> 
         return True
 
     if job_status["state"] == "completed":
-        # check if errorred based on files in result
+        # check if errored based on files in result
         result_item_names = get_result_names(job_id)
         is_no_files = len(result_item_names) == 0
         is_pipeline_error = len(result_item_names) == 2 and result_item_names == [

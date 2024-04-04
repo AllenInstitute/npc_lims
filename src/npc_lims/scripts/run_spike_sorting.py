@@ -225,7 +225,7 @@ def create_all_data_assets() -> None:
     sync_json()
     for session_id in read_json():
         job_status = get_current_job_status(session_id)
-        if npc_lims.is_computation_errorred(
+        if npc_lims.is_computation_errored(
             job_status
         ) or not npc_lims.is_computation_finished(job_status):
             continue
@@ -235,7 +235,7 @@ def create_all_data_assets() -> None:
 
 
 def main(
-    rerun_errorred_jobs: bool = False,
+    rerun_errored_jobs: bool = False,
     reverse: bool = False,
 ) -> None:
     sessions = npc_lims.get_session_info(is_ephys=True, is_uploaded=True)
@@ -256,9 +256,9 @@ def main(
             if is_skippable:
                 logger.debug(f"Already started: {session_id}")
 
-                if not rerun_errorred_jobs:
+                if not rerun_errored_jobs:
                     continue
-                if not npc_lims.is_computation_errorred(
+                if not npc_lims.is_computation_errored(
                     get_current_job_status(session_id)
                 ):
                     continue
@@ -279,5 +279,5 @@ if __name__ == "__main__":
     doctest.testmod(raise_on_error=True)
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
     sync_json()
-    main(rerun_errorred_jobs=True, reverse=True)
+    main(rerun_errored_jobs=True, reverse=False)
     create_all_data_assets()

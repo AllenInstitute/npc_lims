@@ -145,7 +145,7 @@ def create_all_data_assets(process_name: str, overwrite_existing_assets: bool) -
 
     for session_id in read_json(process_name):
         job_status = get_current_job_status(session_id, process_name)
-        if npc_lims.is_computation_errorred(
+        if npc_lims.is_computation_errored(
             job_status
         ) or not npc_lims.is_computation_finished(job_status):
             continue
@@ -199,7 +199,7 @@ def process_capsule_or_pipeline_queue(
     create_data_assets_from_results: bool = True,
     rerun_all_jobs: bool = False,
     is_pipeline: bool = False,
-    rerun_errorred_jobs: bool = False,
+    rerun_errored_jobs: bool = False,
     overwrite_existing_assets: bool = False,
 ) -> None:
     # TODO review and simplify this, right now adding all sessions and then processing,
@@ -219,7 +219,7 @@ def process_capsule_or_pipeline_queue(
         ):
             logger.debug(f"Already started: {session_id}")
             job_status = get_current_job_status(session_id)
-            if not rerun_errorred_jobs or not npc_lims.is_computation_errorred(
+            if not rerun_errored_jobs or not npc_lims.is_computation_errored(
                 job_status
             ):
                 continue
