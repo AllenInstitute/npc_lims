@@ -565,14 +565,19 @@ def is_computation_errored(job_id_or_response: str | CapsuleComputationAPI) -> b
                     f"Job {job_id} output file includes 'Out of memory.' in text"
                 )
                 return True
-            if "Traceback (most recent call last)" in output.lower():
+            if "Traceback (most recent call last)" in output:
                 logger.debug(
                     f"Job {job_id} suspected error based on python traceback in output"
                 )
                 return True
-            if "Command error:" in output.lower():
+            if "Command error:" in output:
                 logger.debug(
                     f"Job {job_id} suspected error based on pipeline error message"
+                )
+                return True
+            if "The CUDA error was:" in output:
+                logger.debug(
+                    f"Job {job_id} suspected error based on CUDA error message"
                 )
                 return True
             if all(
