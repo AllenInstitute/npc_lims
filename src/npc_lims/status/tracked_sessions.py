@@ -49,7 +49,7 @@ class SessionInfo:
     experiment_day: int | None = None
     """Experiment day (ephys recording, or opto experiment), starting from 1 for
     each subject. `None` for training behavior-only sessions."""
-    session_kwargs: dict[str, str] = dataclasses.field(default_factory=dict)
+    session_kwargs: dict[str, Any] = dataclasses.field(default_factory=dict)
     notes: str = dataclasses.field(default="")
     issues: list[str] = dataclasses.field(default_factory=list)
 
@@ -98,6 +98,23 @@ class SessionInfo:
         return False
 
     @functools.cached_property
+    def is_video(self) -> bool:
+        """
+        >>> get_session_info('2022-09-20_13-21-35_628801').is_video
+        False
+        >>> get_session_info('676909_20231212').is_video
+        True
+        """
+        if not self.is_sync: 
+            return False
+        
+        if (v:=self.session_kwargs.get('is_video')) is not None:
+            return v
+        
+        # if ephys, we assume there is video
+        return self.is_ephys
+    
+    @functools.cached_property
     def is_surface_channels(self) -> bool:
         """The session has ephys data collected separately to record surface
         channel.
@@ -125,7 +142,7 @@ class SessionInfo:
         True
         """
 
-        if not self.is_sync:
+        if not self.is_video:
             return False
 
         try:
@@ -142,7 +159,7 @@ class SessionInfo:
         >>> get_session_info("676909_2023-12-13").is_dlc_side
         True
         """
-        if not self.is_sync:
+        if not self.is_video:
             return False
 
         try:
@@ -159,7 +176,7 @@ class SessionInfo:
         >>> get_session_info("676909_2023-12-13").is_dlc_face
         True
         """
-        if not self.is_sync:
+        if not self.is_video:
             return False
 
         try:
@@ -177,7 +194,7 @@ class SessionInfo:
         True
         """
 
-        if not self.is_sync:
+        if not self.is_video:
             return False
 
         try:
