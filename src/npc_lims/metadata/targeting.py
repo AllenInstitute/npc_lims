@@ -50,9 +50,13 @@ def get_probe_insertion_info(
     probe_insertion_default["probe_insertions"]["implant"] = metadata["implant"]
     return probe_insertion_default
 
+
 @functools.cache
 def _get_shield_definition_text() -> str:
-    return upath.UPath("https://raw.githubusercontent.com/AllenInstitute/npc_shields/main/src/npc_shields/shields.py").read_text()
+    return upath.UPath(
+        "https://raw.githubusercontent.com/AllenInstitute/npc_shields/main/src/npc_shields/shields.py"
+    ).read_text()
+
 
 def _get_shield_drawing_id(
     shield_id: str,
@@ -65,10 +69,13 @@ def _get_shield_drawing_id(
     '0283-200-002'
     """
     txt = _get_shield_definition_text()
-    definition = f'name=\"{shield_id}\",'
+    definition = f'name="{shield_id}",'
     if definition not in txt:
-        raise ValueError(f"Shield {shield_id} not found in shield definitions - needs adding to `npc_shields`")
-    return str(txt.split(definition)[1].split('drawing_id=\"')[1].split("\",")[0])
+        raise ValueError(
+            f"Shield {shield_id} not found in shield definitions - needs adding to `npc_shields`"
+        )
+    return str(txt.split(definition)[1].split('drawing_id="')[1].split('",')[0])
+
 
 @functools.cache
 def get_probe_insertion_metadata(
@@ -88,14 +95,13 @@ def get_probe_insertion_metadata(
     metadata = cursor.fetchall()
 
     if len(metadata) == 0:
-        raise ValueError(f"{session=} has no implant hole information in targeting database")
+        raise ValueError(
+            f"{session=} has no implant hole information in targeting database"
+        )
 
     from_db = metadata[0]
     insertions: dict[str, Any] = {
-        "shield": {
-            "name": None,
-            "drawing_id": None
-        },
+        "shield": {"name": None, "drawing_id": None},
         "probes": {
             "A": None,
             "B": None,
@@ -104,16 +110,9 @@ def get_probe_insertion_metadata(
             "E": None,
             "F": None,
         },
-        "notes": {
-            "A": None,
-            "B": None,
-            "C": None,
-            "D": None,
-            "E": None,
-            "F": None
-        },
+        "notes": {"A": None, "B": None, "C": None, "D": None, "E": None, "F": None},
         "session": None,
-        "experiment_day": None
+        "experiment_day": None,
     }
     for k in from_db:
         with contextlib.suppress(ValueError):
@@ -125,6 +124,7 @@ def get_probe_insertion_metadata(
     insertions["session"] = session.id
     insertions["experiment_day"] = from_db["day"]
     return insertions
+
 
 if __name__ == "__main__":
     import doctest

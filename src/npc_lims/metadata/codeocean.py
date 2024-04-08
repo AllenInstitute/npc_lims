@@ -90,6 +90,7 @@ EXAMPLE_JOB_STATUS = {
     "end_status": "succeeded",
 }
 
+
 class SessionIndexError(IndexError):
     pass
 

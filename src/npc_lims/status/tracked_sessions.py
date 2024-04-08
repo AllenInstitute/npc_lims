@@ -105,15 +105,15 @@ class SessionInfo:
         >>> get_session_info('676909_20231212').is_video
         True
         """
-        if not self.is_sync: 
+        if not self.is_sync:
             return False
-        
-        if (v:=self.session_kwargs.get('is_video')) is not None:
+
+        if (v := self.session_kwargs.get("is_video")) is not None:
             return v
-        
+
         # if ephys, we assume there is video
         return self.is_ephys
-    
+
     @functools.cached_property
     def is_surface_channels(self) -> bool:
         """The session has ephys data collected separately to record surface

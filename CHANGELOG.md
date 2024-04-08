@@ -8,7 +8,28 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.137...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.138...HEAD)</small>
+
+### Added
+
+- add is_video to session info ([9300f05](https://github.com/AllenInstitute/npc_lims/commit/9300f05569b1128d6ba6d7aa8bf48af7dd96a4eb) by arjun.sridhar12345).
+- Add new sorting pipeline error cases ([f9ccb95](https://github.com/AllenInstitute/npc_lims/commit/f9ccb9512bf024fb5e010f02a091bdf33480e9b4) by bjhardcastle).
+- Add opto session ([399226e](https://github.com/AllenInstitute/npc_lims/commit/399226e887440db12a2833eb9c2028acd89310df) by bjhardcastle).
+- Add session ([9c408c7](https://github.com/AllenInstitute/npc_lims/commit/9c408c7690b9d1c62061fffad52380a6f87746c1) by bjhardcastle).
+
+### Fixed
+
+- Fix tests ([6e115d8](https://github.com/AllenInstitute/npc_lims/commit/6e115d8991f47d89804ff974862cf971a6df79e7) by bjhardcastle).
+- Fix spelling ([4acceb6](https://github.com/AllenInstitute/npc_lims/commit/4acceb6f3df70f5b475d39ac4a700b736c99db76) by bjhardcastle).
+
+### Removed
+
+- Remove openscope session ([93552e3](https://github.com/AllenInstitute/npc_lims/commit/93552e3552bb85099cdbfe0f7f64016263d7ab33) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.138](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.138) - 2024-03-30
+
+<small>[Compare with v0.1.137](https://github.com/AllenInstitute/npc_lims/compare/v0.1.137...v0.1.138)</small>
 
 ### Added
 
@@ -23,7 +44,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Remove issues from re-sorted sessions ([9c0c1f6](https://github.com/AllenInstitute/npc_lims/commit/9c0c1f688ddc606ddecbd4f8730aa5aed95dd2de) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.137](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.137) - 2024-03-27
 
 <small>[Compare with v0.1.136](https://github.com/AllenInstitute/npc_lims/compare/v0.1.136...v0.1.137)</small>
