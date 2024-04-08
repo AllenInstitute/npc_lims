@@ -626,7 +626,6 @@ def get_sorting_output_text(session_id: str | npc_session.SessionRecord) -> str:
 
 
 if __name__ == "__main__":
-    get_skipped_probes("2024-03-04 702134")
     import doctest
 
     doctest.testmod(
