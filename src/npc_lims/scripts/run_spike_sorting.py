@@ -12,14 +12,9 @@ import npc_session
 import requests
 import upath
 from aind_codeocean_api.models.computations_requests import (
-    ComputationDataAsset,
-    RunCapsuleRequest,
-)
+    ComputationDataAsset, RunCapsuleRequest)
 from aind_codeocean_api.models.data_assets_requests import (
-    CreateDataAssetRequest,
-    Source,
-    Sources,
-)
+    CreateDataAssetRequest, Source, Sources)
 from typing_extensions import TypeAlias
 
 import npc_lims
@@ -46,7 +41,7 @@ JobID: TypeAlias = str
 
 SORTING_PIPELINE_ID = "1f8f159a-7670-47a9-baf1-078905fc9c2e"
 JSON_PATH = upath.UPath("sorting_jobs.json")
-MAX_RUNNING_JOBS = 6
+MAX_RUNNING_JOBS = 4
 
 EXAMPLE_JOB_STATUS = {
     "created": 1708570920,
@@ -241,8 +236,7 @@ def main(
     sessions = npc_lims.get_session_info(is_ephys=True, is_uploaded=True)
     if reverse:
         sessions = tuple(reversed(sessions))
-    for session_info in npc_lims.get_session_info(is_ephys=True, is_uploaded=True):
-
+    for session_info in sessions:
         session_ids = [session_info.id]
         if session_info.is_surface_channels:
             session_ids.append(session_info.id.with_idx(1))
@@ -281,3 +275,4 @@ if __name__ == "__main__":
     sync_json()
     main(rerun_errored_jobs=True, reverse=False)
     create_all_data_assets()
+    sync_json()
