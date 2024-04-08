@@ -76,7 +76,7 @@ def get_probe_insertion_metadata(
 ) -> dict[str, Any]:
     """
     >>> probe_insertion = get_probe_insertion_metadata('676909_2023-12-12')
-    >>> probe_insertion['probe_insertions']['probeA']['hole']
+    >>> probe_insertion['probes']['A']
     'F1'
     """
     session = npc_session.SessionRecord(session)

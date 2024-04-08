@@ -81,15 +81,14 @@ MODEL_CAPSULE_PIPELINE_MAPPING: dict[str, str] = {
 }
 
 EXAMPLE_JOB_STATUS = {
-    "created": 1708570920,
+    "created": 1710962969,
     "has_results": True,
-    "id": "eadd2f5e-6f3b-4179-8788-5d6e798b1f92",
-    "name": "Run 8570920",
-    "run_time": 92774,
+    "id": "1c900aa5-dde4-475d-bf50-cc96aff9db39",
+    "name": "Run With Parameters 962969",
+    "run_time": 84184,
     "state": "completed",
     "end_status": "succeeded",
 }
-
 
 class SessionIndexError(IndexError):
     pass
