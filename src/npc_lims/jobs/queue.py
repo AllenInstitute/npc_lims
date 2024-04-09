@@ -13,6 +13,7 @@ from aind_codeocean_api.models.computations_requests import ComputationDataAsset
 from typing_extensions import TypeAlias
 
 import npc_lims
+import npc_lims.paths.s3 as s3
 import npc_lims.metadata.codeocean as codeocean
 
 logger = logging.getLogger()
@@ -20,7 +21,6 @@ logger = logging.getLogger()
 SessionID: TypeAlias = Union[str, npc_session.SessionRecord]
 JobID: TypeAlias = str
 
-QUEUE_JSON_DIR = upath.UPath("./")  # TODO figure out path
 INITIAL_VALUE = "Added to Queue"
 INITIAL_INT_VALUE = -1
 
@@ -28,15 +28,32 @@ MAX_RUNNING_JOBS = 8
 
 
 def read_json(process_name: str) -> dict[str, npc_lims.CapsuleComputationAPI]:
-    with open(QUEUE_JSON_DIR / f"{process_name}.json") as f:
+    """
+    >>> dlc_eye_queue = read_json('dlc_eye')
+    >>> len(dlc_eye_queue) > 0
+    True
+    >>> dlc_side_queue = read_json('dlc_side')
+    >>> len(dlc_side_queue) > 0
+    True
+    >>> dlc_face_queue = read_json('dlc_face')
+    >>> len(dlc_face_queue) > 0
+    True
+    >>> facemap_queue = read_json('facemap')
+    >>> len(facemap_queue) > 0
+    True
+    """
+    with (s3.S3_SCRATCH_ROOT / f"{process_name}.json").open() as f:
         return json.load(f)
 
 
 def is_session_in_queue(
-    session: str | npc_session.SessionRecord, process_name: str
+    session: SessionID, process_name: str
 ) -> bool:
-
-    if not (QUEUE_JSON_DIR / f"{process_name}.json").exists():
+    """
+    >>> is_session_in_queue(npc_session.SessionRecord('676909_2023-12-13'), 'dlc_eye')
+    True
+    """
+    if not (s3.S3_SCRATCH_ROOT / f"{process_name}.json").exists():
         return False
 
     return session in read_json(process_name)
@@ -45,14 +62,14 @@ def is_session_in_queue(
 def add_to_json(
     session_id: SessionID, process_name: str, response: npc_lims.CapsuleComputationAPI
 ) -> None:
-    if not (QUEUE_JSON_DIR / f"{process_name}.json").exists():
+    if not (s3.S3_SCRATCH_ROOT / f"{process_name}.json").exists():
         current = {}
     else:
         current = read_json(process_name)
 
     is_new = session_id not in current
     current.update({session_id: response})
-    (QUEUE_JSON_DIR / f"{process_name}.json").write_text(json.dumps(current, indent=4))
+    (s3.S3_SCRATCH_ROOT / f"{process_name}.json").write_text(json.dumps(current, indent=4))
     logger.info(
         f"{'Added' if is_new else 'Updated'} {session_id} {'to' if is_new else 'in'} json"
     )
@@ -80,6 +97,11 @@ def add_to_queue(
 def get_current_job_status(
     job_or_session_id: str, process_name: str
 ) -> npc_lims.CapsuleComputationAPI:
+    """
+    >>> get_current_job_status('676909_2023-12-13', 'dlc_eye')
+    {'created': 1710260631, 'data_assets': [{'id': '05529cfc-23fe-4ead-9490-71763e9f7c01', 'mount': 'universal_eye_tracking-peterl-2019-07-10'}, {'id': 
+    '16d46411-540a-4122-b47f-8cb2a15d593a', 'mount': 'ecephys_676909_2023-12-13_13-43-40'}], 'end_status': 'succeeded', 'has_results': True, 'id': '9f062861-cbb8-4517-9b6c-6320f4b77d6e', 'name': 'Run 260631', 'run_time': 11876, 'state': 'completed'}
+    """
     try:
         session_id = npc_session.SessionRecord(job_or_session_id).id
     except ValueError:
@@ -101,11 +123,15 @@ def sync_json(process_name: str) -> None:
         current[session_id] = get_current_job_status(session_id, process_name)
         logger.info(f"Updated {session_id} status")
 
-    (QUEUE_JSON_DIR / f"{process_name}.json").write_text(json.dumps(current, indent=4))
+    (s3.S3_SCRATCH_ROOT / f"{process_name}.json").write_text(json.dumps(current, indent=4))
     logger.info("Wrote updated json")
 
 
 def get_data_asset_name(session_id: SessionID, process_name: str) -> str:
+    """
+    >>> get_data_asset_name(npc_session.SessionRecord('676909_2023-12-14'), 'facemap')
+    'ecephys_676909_2023-12-14_12-43-11_facemap_2024-04-02_11-50-48'
+    """
     created_dt = (
         npc_session.DatetimeRecord(
             datetime.datetime.fromtimestamp(
@@ -134,6 +160,10 @@ def create_data_asset(session_id: SessionID, job_id: str, process_name: str) -> 
 
 
 def asset_exists(session_id: SessionID, process_name: str) -> bool:
+    """
+    >>> asset_exists(npc_session.SessionRecord('676909_2023-12-12'), 'dlc_face')
+    True
+    """
     name = get_data_asset_name(session_id, process_name)
     return any(
         asset["name"] == name for asset in npc_lims.get_session_data_assets(session_id)
@@ -164,6 +194,10 @@ def sync_and_get_num_running_jobs(process_name: str) -> int:
 
 
 def is_started_or_completed(session_id: SessionID, process_name: str) -> bool:
+    """
+    >>> is_started_or_completed(npc_session.SessionRecord('664851_2023-11-14'), 'dlc_side')
+    True
+    """
     return read_json(process_name)[session_id]["state"] in (
         "running",
         "initializing",
@@ -171,8 +205,11 @@ def is_started_or_completed(session_id: SessionID, process_name: str) -> bool:
     )
 
 
-def add_sessions_to_queue(process_name: str) -> None:
+def add_sessions_to_queue(process_name: str, overwrite_exisitng_assets:bool=False) -> None:
     for session_info in npc_lims.get_session_info(is_ephys=True, is_uploaded=True):
+        if getattr(session_info, f'is_{process_name}') and not overwrite_exisitng_assets: # asset exists already
+            continue
+
         session_id = session_info.id
         add_to_queue(session_id, process_name)
 
@@ -202,23 +239,22 @@ def process_capsule_or_pipeline_queue(
     rerun_errored_jobs: bool = False,
     overwrite_existing_assets: bool = False,
 ) -> None:
-    # TODO review and simplify this, right now adding all sessions and then processing,
     """
-    adds jobs to queue for capsule/pipeline, then processes them - run capsule/pipeline and then create data asset
+    adds jobs to queue for capsule/pipeline, then processes them
     example: process_capsule_or_pipeline_queue('1f8f159a-7670-47a9-baf1-078905fc9c2e', 'sorted', is_pipeline=True)
     """
     capsule_pipeline_info = codeocean.CapsulePipelineInfo(
         capsule_or_pipeline_id, process_name, is_pipeline
     )
 
-    add_sessions_to_queue(capsule_pipeline_info.process_name)
+    add_sessions_to_queue(capsule_pipeline_info.process_name, overwrite_exisitng_assets=overwrite_existing_assets)
 
     for session_id in read_json(process_name):
         if not rerun_all_jobs and is_started_or_completed(
             session_id, capsule_pipeline_info.process_name
         ):
             logger.debug(f"Already started: {session_id}")
-            job_status = get_current_job_status(session_id)
+            job_status = get_current_job_status(session_id, capsule_pipeline_info.process_name)
             if not rerun_errored_jobs or not npc_lims.is_computation_errored(
                 job_status
             ):

@@ -42,9 +42,7 @@ Issues = "https://github.com/AllenInstitute/npc_lims/issues"
 update_session_status = "npc_lims.scripts.update_session_status:main"
 regenerate_nwb_files = "npc_lims.scripts.regenerate_nwb_files:main"
 run_session_cache_capsule = "npc_lims.scripts.run_session_cache_capsule:main"
-run_video_tracking = "npc_lims.scripts.run_video_processing:main"
-generate_video_assets = "npc_lims.scripts.generate_session_video_data_assets:main"
-update_video_permissions = "npc_lims.scripts.update_session_video_data_asset_permissions:main"
+run_queue = "npc_lims.scripts.process_queue:main"
 
 [tool.pdm]
 plugins = [
