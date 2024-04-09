@@ -24,7 +24,7 @@ JobID: TypeAlias = str
 INITIAL_VALUE = "Added to Queue"
 INITIAL_INT_VALUE = -1
 
-MAX_RUNNING_JOBS = 8
+MAX_RUNNING_JOBS = 6
 
 
 def read_json(process_name: str) -> dict[str, npc_lims.CapsuleComputationAPI]:
