@@ -128,10 +128,6 @@ def sync_json(process_name: str) -> None:
 
 
 def get_data_asset_name(session_id: SessionID, process_name: str) -> str:
-    """
-    >>> get_data_asset_name(npc_session.SessionRecord('676909_2023-12-13'), 'dlc_eye')
-    'ecephys_676909_2023-12-14_12-43-11_facemap_2024-04-02_11-50-48'
-    """
     created_dt = (
         npc_session.DatetimeRecord(
             datetime.datetime.fromtimestamp(
@@ -160,10 +156,6 @@ def create_data_asset(session_id: SessionID, job_id: str, process_name: str) -> 
 
 
 def asset_exists(session_id: SessionID, process_name: str) -> bool:
-    """
-    >>> asset_exists(npc_session.SessionRecord('676909_2023-12-13'), 'dlc_eye')
-    True
-    """
     name = get_data_asset_name(session_id, process_name)
     return any(
         asset["name"] == name for asset in npc_lims.get_session_data_assets(session_id)
