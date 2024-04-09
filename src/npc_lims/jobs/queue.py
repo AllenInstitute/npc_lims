@@ -161,7 +161,7 @@ def create_data_asset(session_id: SessionID, job_id: str, process_name: str) -> 
 
 def asset_exists(session_id: SessionID, process_name: str) -> bool:
     """
-    >>> asset_exists(npc_session.SessionRecord('676909_2023-12-12'), 'dlc_face')
+    >>> asset_exists(npc_session.SessionRecord('664851_2023-11-15'), 'dlc_face')
     True
     """
     name = get_data_asset_name(session_id, process_name)
