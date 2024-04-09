@@ -93,14 +93,12 @@ def add_to_queue(
         add_to_json(session, process_name, request_dict)
 
 
-@functools.lru_cache(maxsize=1)
 def get_current_job_status(
     job_or_session_id: str, process_name: str
 ) -> npc_lims.CapsuleComputationAPI:
     """
     >>> get_current_job_status('676909_2023-12-13', 'dlc_eye')
-    {'created': 1710260631, 'data_assets': [{'id': '05529cfc-23fe-4ead-9490-71763e9f7c01', 'mount': 'universal_eye_tracking-peterl-2019-07-10'}, {'id': 
-    '16d46411-540a-4122-b47f-8cb2a15d593a', 'mount': 'ecephys_676909_2023-12-13_13-43-40'}], 'end_status': 'succeeded', 'has_results': True, 'id': '9f062861-cbb8-4517-9b6c-6320f4b77d6e', 'name': 'Run 260631', 'run_time': 11876, 'state': 'completed'}
+    {'created': 1710260631, 'data_assets': [{'id': '16d46411-540a-4122-b47f-8cb2a15d593a', 'mount': 'ecephys_676909_2023-12-13_13-43-40'}, {'id': '05529cfc-23fe-4ead-9490-71763e9f7c01', 'mount': 'universal_eye_tracking-peterl-2019-07-10'}], 'end_status': 'succeeded', 'has_results': True, 'id': '9f062861-cbb8-4517-9b6c-6320f4b77d6e', 'name': 'Run 260631', 'run_time': 11876, 'state': 'completed'}
     """
     try:
         session_id = npc_session.SessionRecord(job_or_session_id).id
