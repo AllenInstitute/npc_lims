@@ -1,0 +1,45 @@
+name: Run facemap tracking
+
+on: 
+  schedule:
+    # every 6 hours
+    - cron: '0 */6 * * *'
+  push:
+      tags:
+        - '*'
+  workflow_dispatch:
+  
+jobs:
+  package:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        python-version: ["3.9"]
+    permissions: write-all
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+        
+    - name: Install package
+      run: |
+        pip install -e .
+    
+    - name: Run facemap tracking
+      env:
+        DBHUB_API_KEY: ${{ secrets.DBHUB_API_KEY }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        CODE_OCEAN_API_TOKEN: ${{ secrets.CODE_OCEAN_API_TOKEN }}
+        CODE_OCEAN_DOMAIN: ${{ secrets.CODE_OCEAN_DOMAIN }}
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        REDIS_DEFAULT_USER_PASSWORD: ${{ secrets.REDIS_DEFAULT_USER_PASSWORD }}
+      run: |
+        run_queue --capsule_id 670de0b3-f73d-4d22-afe6-6449c45fada4 --process_name facemap
