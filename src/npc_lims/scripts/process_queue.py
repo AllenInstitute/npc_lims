@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import npc_lims
 import argparse
 from typing import Literal
