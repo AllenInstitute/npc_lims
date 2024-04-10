@@ -42,4 +42,4 @@ jobs:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         REDIS_DEFAULT_USER_PASSWORD: ${{ secrets.REDIS_DEFAULT_USER_PASSWORD }}
       run: |
-        run_queue --capsule_id 670de0b3-f73d-4d22-afe6-6449c45fada4 --process_name facemap
+        run_queue --capsule_or_pipeline_id 670de0b3-f73d-4d22-afe6-6449c45fada4 --process_name facemap

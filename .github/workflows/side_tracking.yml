@@ -42,4 +42,4 @@ jobs:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         REDIS_DEFAULT_USER_PASSWORD: ${{ secrets.REDIS_DEFAULT_USER_PASSWORD }}
       run: |
-        run_queue --capsule_id facff99f-d3aa-4ecd-8ef8-a343c38197aa --process_name dlc_side
+        run_queue --capsule_or_pipeline_id facff99f-d3aa-4ecd-8ef8-a343c38197aa --process_name dlc_side
