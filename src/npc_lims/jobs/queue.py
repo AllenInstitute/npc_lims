@@ -1,20 +1,18 @@
 from __future__ import annotations
 
 import datetime
-import functools
 import json
 import logging
 import time
 from typing import Union
 
 import npc_session
-import upath
 from aind_codeocean_api.models.computations_requests import ComputationDataAsset
 from typing_extensions import TypeAlias
 
 import npc_lims
-import npc_lims.paths.s3 as s3
 import npc_lims.metadata.codeocean as codeocean
+import npc_lims.paths.s3 as s3
 
 logger = logging.getLogger()
 
@@ -46,9 +44,7 @@ def read_json(process_name: str) -> dict[str, npc_lims.CapsuleComputationAPI]:
         return json.load(f)
 
 
-def is_session_in_queue(
-    session: SessionID, process_name: str
-) -> bool:
+def is_session_in_queue(session: SessionID, process_name: str) -> bool:
     """
     >>> is_session_in_queue(npc_session.SessionRecord('676909_2023-12-13'), 'dlc_eye')
     True
@@ -69,7 +65,9 @@ def add_to_json(
 
     is_new = session_id not in current
     current.update({session_id: response})
-    (s3.S3_SCRATCH_ROOT / f"{process_name}.json").write_text(json.dumps(current, indent=4))
+    (s3.S3_SCRATCH_ROOT / f"{process_name}.json").write_text(
+        json.dumps(current, indent=4)
+    )
     logger.info(
         f"{'Added' if is_new else 'Updated'} {session_id} {'to' if is_new else 'in'} json"
     )
@@ -122,7 +120,9 @@ def sync_json(process_name: str) -> None:
         current[session_id] = get_current_job_status(session_id, process_name)
         logger.info(f"Updated {session_id} status")
 
-    (s3.S3_SCRATCH_ROOT / f"{process_name}.json").write_text(json.dumps(current, indent=4))
+    (s3.S3_SCRATCH_ROOT / f"{process_name}.json").write_text(
+        json.dumps(current, indent=4)
+    )
     logger.info("Wrote updated json")
 
 
@@ -196,9 +196,14 @@ def is_started_or_completed(session_id: SessionID, process_name: str) -> bool:
     )
 
 
-def add_sessions_to_queue(process_name: str, overwrite_exisitng_assets:bool=False) -> None:
+def add_sessions_to_queue(
+    process_name: str, overwrite_exisitng_assets: bool = False
+) -> None:
     for session_info in npc_lims.get_session_info(is_ephys=True, is_uploaded=True):
-        if getattr(session_info, f'is_{process_name}') and not overwrite_exisitng_assets: # asset exists already
+        if (
+            getattr(session_info, f"is_{process_name}")
+            and not overwrite_exisitng_assets
+        ):  # asset exists already
             continue
 
         session_id = session_info.id
@@ -238,14 +243,19 @@ def process_capsule_or_pipeline_queue(
         capsule_or_pipeline_id, process_name, is_pipeline
     )
 
-    add_sessions_to_queue(capsule_pipeline_info.process_name, overwrite_exisitng_assets=overwrite_existing_assets)
+    add_sessions_to_queue(
+        capsule_pipeline_info.process_name,
+        overwrite_exisitng_assets=overwrite_existing_assets,
+    )
 
     for session_id in read_json(process_name):
         if not rerun_all_jobs and is_started_or_completed(
             session_id, capsule_pipeline_info.process_name
         ):
             logger.debug(f"Already started: {session_id}")
-            job_status = get_current_job_status(session_id, capsule_pipeline_info.process_name)
+            job_status = get_current_job_status(
+                session_id, capsule_pipeline_info.process_name
+            )
             if not rerun_errored_jobs or not npc_lims.is_computation_errored(
                 job_status
             ):

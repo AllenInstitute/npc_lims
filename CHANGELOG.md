@@ -8,7 +8,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.138...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.139...HEAD)</small>
+
+### Added
+
+- add workflows for video tracking ([cbb6e9c](https://github.com/AllenInstitute/npc_lims/commit/cbb6e9c5f4e15dbd6a1f2125eff8ac2127ee2621) by arjun.sridhar12345).
+
+### Fixed
+
+- Fix empty rows bug with training spreadsheet ([4738d88](https://github.com/AllenInstitute/npc_lims/commit/4738d888f76c8e538cada6171f38b81c07df82cb) by bjhardcastle).
+
+### Removed
+
+- remove test with old account token ([0963768](https://github.com/AllenInstitute/npc_lims/commit/09637688bf6530c052ee9ab325c2232f1de43749) by arjun.sridhar12345).
+
+<!-- insertion marker -->
+## [v0.1.139](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.139) - 2024-04-08
+
+<small>[Compare with v0.1.138](https://github.com/AllenInstitute/npc_lims/compare/v0.1.138...v0.1.139)</small>
 
 ### Added
 
@@ -26,7 +43,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Remove openscope session ([93552e3](https://github.com/AllenInstitute/npc_lims/commit/93552e3552bb85099cdbfe0f7f64016263d7ab33) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.138](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.138) - 2024-03-30
 
 <small>[Compare with v0.1.137](https://github.com/AllenInstitute/npc_lims/compare/v0.1.137...v0.1.138)</small>
@@ -1022,6 +1038,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 <small>[Compare with v0.1.20](https://github.com/AllenInstitute/npc_lims/compare/v0.1.20...v0.1.21)</small>
 
+### Added
+
+- add functions for codeocean sorted data retrieval ([586845c](https://github.com/AllenInstitute/npc_lims/commit/586845cd7b2f7e33ed91772ba358e29380a2584b) by arjun.sridhar12345).
+
 ## [v0.1.20](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.20) - 2023-08-14
 
 <small>[Compare with v0.1.19](https://github.com/AllenInstitute/npc_lims/compare/v0.1.19...v0.1.20)</small>
@@ -1033,7 +1053,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 - Add NWB getter from s3 ([ee218e6](https://github.com/AllenInstitute/npc_lims/commit/ee218e612399ed3345ec09847121d0988ab098c9) by bjhardcastle).
-- add functions for codeocean sorted data retrieval ([586845c](https://github.com/AllenInstitute/npc_lims/commit/586845cd7b2f7e33ed91772ba358e29380a2584b) by arjun.sridhar12345).
 - Add secrets [skip ci] ([dbfd93b](https://github.com/AllenInstitute/npc_lims/commit/dbfd93b94d1174264d003a03df4e9e9aaa35737e) by bjhardcastle).
 - Add secret [skip ci] ([fa6c9a3](https://github.com/AllenInstitute/npc_lims/commit/fa6c9a3e7bc2ef424e3cf0f34b713dd2ac7c56e9) by bjhardcastle).
 

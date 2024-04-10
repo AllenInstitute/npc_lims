@@ -100,7 +100,7 @@ def get_sessions_from_training_db() -> dict[int, tuple[dict[str, Any], ...]]:
                 for row in db.execute(
                     f"SELECT * FROM '{subject}' WHERE ignore != 1"
                 ).fetchall()
-                if row['start_time'] # ie not empty
+                if row["start_time"]  # ie not empty
             )
     return sessions
 
