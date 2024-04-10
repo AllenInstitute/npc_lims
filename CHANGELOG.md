@@ -8,7 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.139...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.141...HEAD)</small>
+
+### Fixed
+
+- fix more command arguments ([36ada4f](https://github.com/AllenInstitute/npc_lims/commit/36ada4f7ec31f83894ddf55716d45ecc12eef79d) by arjun.sridhar12345).
+- fix command line argument ([0f0162e](https://github.com/AllenInstitute/npc_lims/commit/0f0162ea50ac68f19a4126dfa867d4b0358ec3d2) by arjun.sridhar12345).
+
+<!-- insertion marker -->
+## [v0.1.141](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.141) - 2024-04-10
+
+<small>[Compare with v0.1.139](https://github.com/AllenInstitute/npc_lims/compare/v0.1.139...v0.1.141)</small>
 
 ### Added
 
@@ -22,7 +32,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - remove test with old account token ([0963768](https://github.com/AllenInstitute/npc_lims/commit/09637688bf6530c052ee9ab325c2232f1de43749) by arjun.sridhar12345).
 
-<!-- insertion marker -->
 ## [v0.1.139](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.139) - 2024-04-08
 
 <small>[Compare with v0.1.138](https://github.com/AllenInstitute/npc_lims/compare/v0.1.138...v0.1.139)</small>
