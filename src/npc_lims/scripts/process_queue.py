@@ -37,7 +37,7 @@ def parse_args() -> argparse.Namespace:
         help="Process name of capsule or pipeline",
     )
     parser.add_argument(
-        "--create_data_asset_from_results",
+        "--create_data_assets_from_results",
         type=bool,
         default=True,
         help="Whether or not to create data assets from results",
