@@ -41,7 +41,7 @@ def parse_args() -> argparse.Namespace:
         "--max_running_jobs",
         type=int,
         default=6,
-        help='Maximum number of jobs to run to not overload'
+        help="Maximum number of jobs to run to not overload",
     )
     parser.add_argument(
         "--create_data_assets_from_results",

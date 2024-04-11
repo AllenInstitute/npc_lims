@@ -8,14 +8,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.141...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.142...HEAD)</small>
+
+### Added
+
+- add argument for max number of jobs ([dd181f4](https://github.com/AllenInstitute/npc_lims/commit/dd181f4090112c332fe7e15f35f29b00ab252acf) by arjun.sridhar12345).
+
+<!-- insertion marker -->
+## [v0.1.142](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.142) - 2024-04-10
+
+<small>[Compare with v0.1.141](https://github.com/AllenInstitute/npc_lims/compare/v0.1.141...v0.1.142)</small>
 
 ### Fixed
 
 - fix more command arguments ([36ada4f](https://github.com/AllenInstitute/npc_lims/commit/36ada4f7ec31f83894ddf55716d45ecc12eef79d) by arjun.sridhar12345).
 - fix command line argument ([0f0162e](https://github.com/AllenInstitute/npc_lims/commit/0f0162ea50ac68f19a4126dfa867d4b0358ec3d2) by arjun.sridhar12345).
 
-<!-- insertion marker -->
 ## [v0.1.141](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.141) - 2024-04-10
 
 <small>[Compare with v0.1.139](https://github.com/AllenInstitute/npc_lims/compare/v0.1.139...v0.1.141)</small>

@@ -22,6 +22,7 @@ JobID: TypeAlias = str
 INITIAL_VALUE = "Added to Queue"
 INITIAL_INT_VALUE = -1
 
+
 def read_json(process_name: str) -> dict[str, npc_lims.CapsuleComputationAPI]:
     """
     >>> dlc_eye_queue = read_json('dlc_eye')
@@ -158,7 +159,7 @@ def asset_exists(session_id: SessionID, process_name: str) -> bool:
     """
     session_info = npc_lims.get_session_info(session_id)
 
-    return getattr(session_info, f'is_{process_name}')
+    return getattr(session_info, f"is_{process_name}")
 
 
 def create_all_data_assets(process_name: str, overwrite_existing_assets: bool) -> None:
@@ -229,7 +230,7 @@ def start(
 def process_capsule_or_pipeline_queue(
     capsule_or_pipeline_id: str,
     process_name: str,
-    max_running_jobs:int=6,
+    max_running_jobs: int = 6,
     create_data_assets_from_results: bool = True,
     rerun_all_jobs: bool = False,
     is_pipeline: bool = False,
