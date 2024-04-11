@@ -22,9 +22,6 @@ JobID: TypeAlias = str
 INITIAL_VALUE = "Added to Queue"
 INITIAL_INT_VALUE = -1
 
-MAX_RUNNING_JOBS = 6
-
-
 def read_json(process_name: str) -> dict[str, npc_lims.CapsuleComputationAPI]:
     """
     >>> dlc_eye_queue = read_json('dlc_eye')
@@ -155,10 +152,13 @@ def create_data_asset(session_id: SessionID, job_id: str, process_name: str) -> 
 
 
 def asset_exists(session_id: SessionID, process_name: str) -> bool:
-    name = get_data_asset_name(session_id, process_name)
-    return any(
-        asset["name"] == name for asset in npc_lims.get_session_data_assets(session_id)
-    )
+    """
+    >>> asset_exists('703333_2024-04-09', 'dlc_eye')
+    True
+    """
+    session_info = npc_lims.get_session_info(session_id)
+
+    return getattr(session_info, f'is_{process_name}')
 
 
 def create_all_data_assets(process_name: str, overwrite_existing_assets: bool) -> None:
@@ -229,6 +229,7 @@ def start(
 def process_capsule_or_pipeline_queue(
     capsule_or_pipeline_id: str,
     process_name: str,
+    max_running_jobs:int=6,
     create_data_assets_from_results: bool = True,
     rerun_all_jobs: bool = False,
     is_pipeline: bool = False,
@@ -264,7 +265,7 @@ def process_capsule_or_pipeline_queue(
         # to avoid overloading CodeOcean
         while (
             sync_and_get_num_running_jobs(capsule_pipeline_info.process_name)
-            >= MAX_RUNNING_JOBS
+            >= max_running_jobs
         ):
             time.sleep(600)
 

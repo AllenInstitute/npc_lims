@@ -36,6 +36,13 @@ def parse_args() -> argparse.Namespace:
         required=True,
         help="Process name of capsule or pipeline",
     )
+
+    parser.add_argument(
+        "--max_running_jobs",
+        type=int,
+        default=6,
+        help='Maximum number of jobs to run to not overload'
+    )
     parser.add_argument(
         "--create_data_assets_from_results",
         type=bool,
