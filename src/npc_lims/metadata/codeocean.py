@@ -410,7 +410,7 @@ def get_session_capsule_pipeline_data_asset(
     'ecephys_676909_2023-12-13_13-43-40_sorted_2024-03-01_16-02-45'
     >>> asset = get_session_capsule_pipeline_data_asset('676909_2023-12-13', 'dlc_eye')
     >>> asset['name']
-    'ecephys_676909_2023-12-13_13-43-40_dlc_eye_2024-03-12_09-23-51'
+    'ecephys_676909_2023-12-13_13-43-40_dlc_eye_2024-03-12_16-23-51'
     """
     session = npc_session.SessionRecord(session)
 
