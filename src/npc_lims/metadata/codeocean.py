@@ -140,11 +140,15 @@ def get_session_data_assets(
 ) -> tuple[DataAssetAPI, ...]:
     session = npc_session.SessionRecord(session)
     assets = get_subject_data_assets(session.subject)
+    try: 
+        pattern = get_codoecean_session_id(session)
+    except ValueError: # no raw data uploaded
+        pattern = f"ecephys_{session.subject}_{session.date}_{npc_session.PARSE_TIME}"
     return tuple(
         asset
         for asset in assets
         if re.match(
-            f"ecephys_{session.subject}_{session.date}_{npc_session.PARSE_TIME}(_[a-z]*_[a-z]*)*",
+            f"{pattern}(_[a-z]*_[a-z]*)*",
             asset["name"],
         )
     )
@@ -168,50 +172,10 @@ def get_session_result_data_assets(
     return result_data_assets
 
 
-def get_single_data_asset(
-    session: str | npc_session.SessionRecord,
+def get_latest_data_asset(
     data_assets: Sequence[DataAssetAPI],
-    data_asset_type: str,
 ) -> DataAssetAPI:
-    if not data_assets:
-        raise ValueError(
-            f"No {data_asset_type} data assets found for session {session}"
-        )
-
-    session = npc_session.SessionRecord(session)
-
-    if len(data_assets) == 1 and session.idx == 0:
-        return data_assets[0]
-
-    asset_names = tuple(asset["name"] for asset in data_assets)
-    session_times = sorted(
-        {
-            time
-            for time in map(npc_session.extract_isoformat_time, asset_names)
-            if time is not None
-        }
-    )
-    sessions_times_to_assets = {
-        session_time: tuple(
-            asset
-            for asset in data_assets
-            if npc_session.extract_isoformat_time(asset["name"]) == session_time
-        )
-        for session_time in session_times
-    }
-    if 0 < len(session_times) < session.idx + 1:  # 0-indexed
-        raise SessionIndexError(
-            f"Number of assets is less than expected: cannot extract asset for session idx = {session.idx} from {asset_names = }"
-        )
-    data_assets = sessions_times_to_assets[session_times[session.idx]]
-    if len(data_assets) > 1:
-        warnings.warn(
-            f"There is more than one asset for {session = }. Defaulting to most recent: {asset_names}"
-        )
-        created_timestamps = [data_asset["created"] for data_asset in data_assets]
-        most_recent_index = created_timestamps.index(max(created_timestamps))
-        return data_assets[most_recent_index]
-    return data_assets[0]
+    return sorted(data_assets, key=lambda asset: asset["created"])[-1]
 
 
 def get_session_sorted_data_asset(
@@ -219,8 +183,9 @@ def get_session_sorted_data_asset(
 ) -> DataAssetAPI:
     """
     Examples:
-        >>> sorted_data_asset = get_session_sorted_data_asset('668759_20230711')
-        >>> assert isinstance(sorted_data_asset, dict)
+        >>> asset = get_session_sorted_data_asset('ecephys_703333_2024-04-09_1')
+        >>> asset = get_session_sorted_data_asset('668759_20230711')
+        >>> assert isinstance(asset, dict)
     """
     session_result_data_assets = get_session_data_assets(session)
     sorted_data_assets = tuple(
@@ -232,7 +197,7 @@ def get_session_sorted_data_asset(
     if not sorted_data_assets:
         raise ValueError(f"Session {session} has no sorted data assets")
 
-    return get_single_data_asset(session, sorted_data_assets, "sorted")
+    return get_latest_data_asset(sorted_data_assets)
 
 
 @functools.cache
@@ -311,7 +276,7 @@ def get_session_raw_data_asset(
     if not raw_assets:
         raise ValueError(f"Session {session} has no raw data assets")
 
-    return get_single_data_asset(session, raw_assets, "raw")
+    return get_latest_data_asset(raw_assets)
 
 
 def get_surface_channel_root(session: str | npc_session.SessionRecord) -> upath.UPath:
@@ -337,18 +302,74 @@ def get_surface_channel_raw_data_asset(
     """For a main ephys session (implict idx=0), find a raw asset corresponding to
     the second session on the same day (idx=1).
     """
-    session = npc_session.SessionRecord(session)
-    raw_assets = tuple(
-        asset for asset in get_session_data_assets(session) if is_raw_data_asset(asset)
-    )
+    session = npc_session.SessionRecord(session).with_idx(1)
     try:
-        raw_asset = get_single_data_asset(session.with_idx(1), raw_assets, "raw")
+        raw_assets = tuple(
+            asset for asset in get_session_data_assets(session) if is_raw_data_asset(asset)
+        )
     except SessionIndexError:
         raise FileNotFoundError(
             f"{session} has no surface channel data assets"
         ) from None
-    return raw_asset
+    return get_latest_data_asset(raw_assets)
 
+
+@functools.cache
+def get_codoecean_session_id(
+    session: str | npc_session.SessionRecord,
+) -> str:
+    """Get the Code Ocean session ID for a given session, which includes session
+    start time.
+    
+    Examples:
+        >>> get_codoecean_session_id('703333_2024-04-09')
+        'ecephys_703333_2024-04-09_13-06-44'
+        >>> get_codoecean_session_id('703333_2024-04-09_1')
+        'ecephys_703333_2024-04-09_15-14-46'
+    """
+    session = npc_session.SessionRecord(session)
+    data_assets = [
+        asset for asset in 
+        get_subject_data_assets(session.subject)
+        if asset['name'].startswith(f"ecephys_{session.subject}_{session.date}")
+    ]
+    def parse_session_id(s: str) -> str:
+        """
+        >>> parse_session_id('ecephys_703333_2024-04-09_13-06-44_sorted_2024-04-12_12-12-12')
+        'ecephys_703333_2024-04-09_13-06-44'
+        """
+        pattern: str = f"^(?P<id>ecephys_{session.subject}_{session.date}_{npc_session.PARSE_TIME}).*"
+        if (m := re.match(
+            f"{pattern}",
+            s,
+        )):
+           return m.group("id")
+        raise ValueError(f"Could not extract session ID from {s!r}")
+    
+    asset_names = tuple(asset["name"] for asset in data_assets)
+    session_times = sorted(
+        {
+            time
+            for time in map(npc_session.extract_isoformat_time, asset_names)
+            if time is not None
+        }
+    )
+    session_times_to_assets = {
+        session_time: tuple(
+            asset
+            for asset in data_assets
+            if npc_session.extract_isoformat_time(asset["name"]) == session_time
+        )
+        for session_time in session_times
+    }
+    if 0 < len(session_times) < session.idx + 1:  # 0-indexed
+        raise SessionIndexError(
+            f"Number of assets is less than expected: cannot extract asset for session idx = {session.idx} from {asset_names = }"
+        )
+    session_assets = session_times_to_assets[session_times[session.idx]]
+    session_id = parse_session_id(session_assets[0]["name"])
+    assert all(parse_session_id(asset["name"]) == session_id for asset in session_assets)
+    return session_id
 
 @functools.cache
 def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath:
@@ -405,12 +426,10 @@ def get_session_capsule_pipeline_data_asset(
 ) -> DataAssetAPI:
     """
     Returns the data asset for a given model
+    >>> asset = get_session_capsule_pipeline_data_asset('676909_2023-12-13', 'dlc_eye')
     >>> asset = get_session_capsule_pipeline_data_asset('676909_2023-12-13', 'sorted')
     >>> asset['name']
     'ecephys_676909_2023-12-13_13-43-40_sorted_2024-03-01_16-02-45'
-    >>> asset = get_session_capsule_pipeline_data_asset('676909_2023-12-13', 'dlc_eye')
-    >>> asset['name']
-    'ecephys_676909_2023-12-13_13-43-40_dlc_eye_2024-03-12_16-23-51'
     """
     session = npc_session.SessionRecord(session)
 
@@ -421,7 +440,7 @@ def get_session_capsule_pipeline_data_asset(
     if not session_model_asset:
         raise FileNotFoundError(f"{session} has no {process_name} results")
 
-    return get_single_data_asset(session, session_model_asset, process_name)
+    return get_latest_data_asset(session_model_asset)
 
 
 def create_session_data_asset(
