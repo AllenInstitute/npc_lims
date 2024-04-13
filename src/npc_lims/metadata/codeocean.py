@@ -576,10 +576,12 @@ def is_computation_errored(job_id_or_response: str | CapsuleComputationAPI) -> b
                 )
                 return True
             if "The CUDA error was:" in output:
-                logger.debug(
-                    f"Job {job_id} suspected error based on CUDA error message"
+                logger.warning(
+                    f"Job {job_id} suspected failure based on CUDA error message"
                 )
-                return True
+                # return True - currently (Apr 2024) this results from single
+                # probes not sorting (due to artefacts or other issues), but other
+                # probes still usable 
             if all(
                 text in output.lower()
                 for text in ("sorting", "kilosort", "N E X T F L O W".lower())
