@@ -546,6 +546,7 @@ def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInf
 
 
 if __name__ == "__main__":
+    get_session_info(is_uploaded=True)
     import doctest
 
     import dotenv

@@ -121,8 +121,8 @@ def get_current_job_status(
     job_or_session_id: str,
 ) -> JobStatus | npc_lims.CapsuleComputationAPI:
     """
-    >>> get_current_job_status("633d9d0d-511a-4601-884c-5a7f4a63365f")
-    {'created': 1709241133, 'data_assets': [{'id': '7daf6149-88d2-44ba-8218-b519b4fba45f', 'mount': 'unit_classifier_models_v1.0'}, {'id': 'b37ea55d-07f7-43a4-9c05-9f32837bd8b9', 'mount': 'ecephys'}], 'end_status': 'succeeded', 'has_results': True, 'id': '633d9d0d-511a-4601-884c-5a7f4a63365f', 'name': 'Run 9241133', 'run_time': 86398, 'state': 'completed'}
+    >>> get_current_job_status("633d9d0d-511a-4601-884c-5a7f4a63365f").keys()
+    dict_keys(['created', 'data_assets', 'end_status', 'has_results', 'id', 'name', 'processes', 'run_time', 'state'])
     """
     try:
         session_id = npc_session.SessionRecord(job_or_session_id).id
@@ -276,8 +276,8 @@ if __name__ == "__main__":
     import doctest
 
     doctest.testmod(raise_on_error=True)
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
-    sync_json()
-    main(rerun_errored_jobs=True, reverse=False)
-    create_all_data_assets()
-    sync_json()
+    # logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
+    # sync_json()
+    # main(rerun_errored_jobs=True, reverse=False)
+    # create_all_data_assets()
+    # sync_json()

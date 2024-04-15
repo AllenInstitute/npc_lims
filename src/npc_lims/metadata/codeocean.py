@@ -362,7 +362,9 @@ def get_codoecean_session_id(
         )
         for session_time in session_times
     }
-    if 0 < len(session_times) < session.idx + 1:  # 0-indexed
+    if not session_times_to_assets:
+        raise ValueError(f"No assets found on codeocean for {session=} - cannot deduce session ID")
+    if len(session_times) < session.idx + 1:  # 0-indexed
         raise SessionIndexError(
             f"Number of assets is less than expected: cannot extract asset for session idx = {session.idx} from {asset_names = }"
         )
