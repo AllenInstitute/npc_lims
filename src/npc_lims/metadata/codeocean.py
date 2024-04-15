@@ -35,7 +35,7 @@ DataAssetAPI: TypeAlias = dict[
         "last_used",
         "name",
         "size",
-        "sourceBucket",
+        "source_bucket",
         "state",
         "tags",
         "type",
@@ -387,11 +387,11 @@ def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath:
 def get_path_from_data_asset(asset: DataAssetAPI) -> upath.UPath:
     """Reconstruct path to raw data in bucket (e.g. on s3) using data asset
     uuid or dict of info from Code Ocean API."""
-    if "sourceBucket" not in asset:
+    if "source_bucket" not in asset:
         raise ValueError(
-            f"Asset {asset['id']} has no `sourceBucket` info - not sure how to create UPath:\n{asset!r}"
+            f"Asset {asset['id']} has no `source_bucket` info - not sure how to create UPath:\n{asset!r}"
         )
-    bucket_info = asset["sourceBucket"]
+    bucket_info = asset["source_bucket"]
     roots = {"aws": "s3", "gcs": "gs"}
     if bucket_info["origin"] not in roots:
         raise RuntimeError(
