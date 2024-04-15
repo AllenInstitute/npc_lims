@@ -8,13 +8,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.142...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.143...HEAD)</small>
+
+### Fixed
+
+- Fix tests ([6b617c4](https://github.com/AllenInstitute/npc_lims/commit/6b617c444e501df256cce858c521a5d5de19aec5) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.143](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.143) - 2024-04-11
+
+<small>[Compare with v0.1.142](https://github.com/AllenInstitute/npc_lims/compare/v0.1.142...v0.1.143)</small>
 
 ### Added
 
 - add argument for max number of jobs ([dd181f4](https://github.com/AllenInstitute/npc_lims/commit/dd181f4090112c332fe7e15f35f29b00ab252acf) by arjun.sridhar12345).
 
-<!-- insertion marker -->
 ## [v0.1.142](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.142) - 2024-04-10
 
 <small>[Compare with v0.1.141](https://github.com/AllenInstitute/npc_lims/compare/v0.1.141...v0.1.142)</small>

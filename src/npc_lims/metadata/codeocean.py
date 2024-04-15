@@ -5,7 +5,6 @@ import logging
 import os
 import re
 import uuid
-import warnings
 from collections.abc import Mapping, Sequence
 from typing import Any, Literal, NamedTuple, TypedDict
 
@@ -140,9 +139,9 @@ def get_session_data_assets(
 ) -> tuple[DataAssetAPI, ...]:
     session = npc_session.SessionRecord(session)
     assets = get_subject_data_assets(session.subject)
-    try: 
+    try:
         pattern = get_codoecean_session_id(session)
-    except ValueError: # no raw data uploaded
+    except ValueError:  # no raw data uploaded
         pattern = f"ecephys_{session.subject}_{session.date}_{npc_session.PARSE_TIME}"
     return tuple(
         asset
@@ -305,7 +304,9 @@ def get_surface_channel_raw_data_asset(
     session = npc_session.SessionRecord(session).with_idx(1)
     try:
         raw_assets = tuple(
-            asset for asset in get_session_data_assets(session) if is_raw_data_asset(asset)
+            asset
+            for asset in get_session_data_assets(session)
+            if is_raw_data_asset(asset)
         )
     except SessionIndexError:
         raise FileNotFoundError(
@@ -320,7 +321,7 @@ def get_codoecean_session_id(
 ) -> str:
     """Get the Code Ocean session ID for a given session, which includes session
     start time.
-    
+
     Examples:
         >>> get_codoecean_session_id('703333_2024-04-09')
         'ecephys_703333_2024-04-09_13-06-44'
@@ -329,23 +330,26 @@ def get_codoecean_session_id(
     """
     session = npc_session.SessionRecord(session)
     data_assets = [
-        asset for asset in 
-        get_subject_data_assets(session.subject)
-        if asset['name'].startswith(f"ecephys_{session.subject}_{session.date}")
+        asset
+        for asset in get_subject_data_assets(session.subject)
+        if asset["name"].startswith(f"ecephys_{session.subject}_{session.date}")
     ]
+
     def parse_session_id(s: str) -> str:
         """
         >>> parse_session_id('ecephys_703333_2024-04-09_13-06-44_sorted_2024-04-12_12-12-12')
         'ecephys_703333_2024-04-09_13-06-44'
         """
-        pattern: str = f"^(?P<id>ecephys_{session.subject}_{session.date}_{npc_session.PARSE_TIME}).*"
-        if (m := re.match(
+        pattern: str = (
+            f"^(?P<id>ecephys_{session.subject}_{session.date}_{npc_session.PARSE_TIME}).*"
+        )
+        if m := re.match(
             f"{pattern}",
             s,
-        )):
-           return m.group("id")
+        ):
+            return m.group("id")
         raise ValueError(f"Could not extract session ID from {s!r}")
-    
+
     asset_names = tuple(asset["name"] for asset in data_assets)
     session_times = sorted(
         {
@@ -363,15 +367,20 @@ def get_codoecean_session_id(
         for session_time in session_times
     }
     if not session_times_to_assets:
-        raise ValueError(f"No assets found on codeocean for {session=} - cannot deduce session ID")
+        raise ValueError(
+            f"No assets found on codeocean for {session=} - cannot deduce session ID"
+        )
     if len(session_times) < session.idx + 1:  # 0-indexed
         raise SessionIndexError(
             f"Number of assets is less than expected: cannot extract asset for session idx = {session.idx} from {asset_names = }"
         )
     session_assets = session_times_to_assets[session_times[session.idx]]
     session_id = parse_session_id(session_assets[0]["name"])
-    assert all(parse_session_id(asset["name"]) == session_id for asset in session_assets)
+    assert all(
+        parse_session_id(asset["name"]) == session_id for asset in session_assets
+    )
     return session_id
+
 
 @functools.cache
 def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath:
@@ -602,7 +611,7 @@ def is_computation_errored(job_id_or_response: str | CapsuleComputationAPI) -> b
                 )
                 # return True - currently (Apr 2024) this results from single
                 # probes not sorting (due to artefacts or other issues), but other
-                # probes still usable 
+                # probes still usable
             if all(
                 text in output.lower()
                 for text in ("sorting", "kilosort", "N E X T F L O W".lower())
