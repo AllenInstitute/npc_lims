@@ -48,10 +48,11 @@ assert all(
     v.startswith(".") for v in CACHED_FILE_EXTENSIONS.values()
 ), "CACHED_FILE_EXTENSIONS must have values that start with a period"
 
+
 def get_nwb_path(
     session_id: str | npc_session.SessionRecord,
     version: str | None = None,
-    ) -> upath.UPath:
+) -> upath.UPath:
     """
     >>> get_nwb_path("366122_2023-12-31")   # doctest: +SKIP
     S3Path('s3://aind-scratch-data/ben.hardcastle/nwb/v0.0.210/366122_2023-12-31.nwb.zarr')
@@ -65,7 +66,13 @@ def get_nwb_path(
             version = version
     else:
         version = get_current_cache_version()
-    return S3_SCRATCH_ROOT / "nwb" / version / f"{npc_session.SessionRecord(session_id)}.nwb.zarr"
+    return (
+        S3_SCRATCH_ROOT
+        / "nwb"
+        / version
+        / f"{npc_session.SessionRecord(session_id)}.nwb.zarr"
+    )
+
 
 def get_cache_file_suffix(nwb_component: NWBComponentStr) -> str:
     """
