@@ -8,13 +8,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.144...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.145...HEAD)</small>
+
+### Added
+
+- Add sessions ([477c330](https://github.com/AllenInstitute/npc_lims/commit/477c330677a18b49e16f29f10005689fadad3fe7) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.145](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.145) - 2024-04-18
+
+<small>[Compare with v0.1.144](https://github.com/AllenInstitute/npc_lims/compare/v0.1.144...v0.1.145)</small>
 
 ### Added
 
 - Add nwb path in cache ([58c9a06](https://github.com/AllenInstitute/npc_lims/commit/58c9a065e99c811dcdc4732d8367ed9a8d448f2c) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.144](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.144) - 2024-04-15
 
 <small>[Compare with v0.1.143](https://github.com/AllenInstitute/npc_lims/compare/v0.1.143...v0.1.144)</small>
