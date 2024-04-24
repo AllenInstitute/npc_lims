@@ -291,7 +291,7 @@ def get_tissuecyte_annotation_files_from_s3(
         >>> electrode_files = get_tissuecyte_annotation_files_from_s3('626791_2022-08-16')
         >>> assert len(electrode_files) > 0
         >>> electrode_files[0].name
-        'Probe_A2_channels_626791_warped_processed.csv'
+        'Probe_A2_channels_626791_warped_processed_new_sorting.csv'
     """
     session = npc_session.SessionRecord(session)
     day = tracked_sessions.get_session_info(session).experiment_day
@@ -304,7 +304,7 @@ def get_tissuecyte_annotation_files_from_s3(
 
     electrode_files = tuple(
         subject_electrode_network_path.glob(
-            f"Probe_*{day}_channels_{str(session.subject.id)}_warped_processed.csv"
+            f"Probe_*{day}_channels_{str(session.subject.id)}_warped_processed_new_sorting.csv"
         )
     )
     if not electrode_files:
