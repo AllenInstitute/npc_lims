@@ -227,12 +227,20 @@ ephys:
         day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703882_20240422:
         day: 1
-    # - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703882_20240423:
-    #     day: 2
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703882_20240423:
+        day: 2
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703882_20240424:
+        day: 3
+    # - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703882_20240425:
+    #     day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_706401_20240422:
         day: 1
-    # - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_706401_20240423:
-    #     day: 2
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_706401_20240423:
+        day: 2
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_706401_20240424:
+        day: 3
+    # - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_706401_20240425:
+    #     day: 4
             
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-07-26_14-09-36_620263
