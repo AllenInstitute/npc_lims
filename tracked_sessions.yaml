@@ -65,8 +65,6 @@ ephys:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230814:
         day: 1
-        issues:
-          - https://github.com/AllenInstitute/npc_sessions/issues/24
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230815:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230816:
@@ -189,7 +187,6 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702131_20240227:
         day: 2
         issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/82
             - https://github.com/AllenInstitute/npc_sessions/issues/83
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240304:
         day: 1
@@ -227,36 +224,20 @@ ephys:
         day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703882_20240422:
         day: 1
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/88
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703882_20240423:
         day: 2
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/87
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703882_20240424:
         day: 3
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/88
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703882_20240425:
         day: 4
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/88
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_706401_20240422:
         day: 1
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/88
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_706401_20240423:
         day: 2
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/87
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_706401_20240424:
         day: 3
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/87
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_706401_20240425:
         day: 4
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/88
             
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-07-26_14-09-36_620263
@@ -289,9 +270,7 @@ ephys:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-05-16_10-25-25_662983
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-11_10-07-43_668759
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-12_10-50-07_668759
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-13_09-35-31_668759:
-        issues:
-          - https://github.com/AllenInstitute/npc_sessions/issues/25
+    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-13_09-35-31_668759
     - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-18_10-05-51_670181
     # - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-19_10-00-22_670181:
     #   # no behavior task hdf5
