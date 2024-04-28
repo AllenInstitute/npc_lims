@@ -221,7 +221,8 @@ class SessionInfo:
                 asset
                 for asset in codeocean.get_session_data_assets(self.id)
                 if "sorted" in asset["name"]
-                and asset['files'] > 6 # number of files produced by sorting pipeline when errorred
+                and asset["files"]
+                > 6  # number of files produced by sorting pipeline when errorred
             )
         except (FileNotFoundError, ValueError):
             return False

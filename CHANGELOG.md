@@ -8,13 +8,30 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.145...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.146...HEAD)</small>
+
+### Added
+
+- Add a basic check for errorred sorting runs with info from data asset API ([074430c](https://github.com/AllenInstitute/npc_lims/commit/074430ca1727595ca5a34f05ee84bc34c4beaabd) by bjhardcastle).
+- Add session kwargs for missing probes ([2da4496](https://github.com/AllenInstitute/npc_lims/commit/2da4496de7cbab8af1194a5e723dc3c1a5e5605c) by bjhardcastle).
+- Add session issues ([ba74898](https://github.com/AllenInstitute/npc_lims/commit/ba74898c50b7a8ed692ea564760b3a9a4142a8fc) by bjhardcastle).
+- Add session issue ([fede7cb](https://github.com/AllenInstitute/npc_lims/commit/fede7cb81f0889053e74928407bd9fbac63714fe) by bjhardcastle).
+- Add sessions ([cb952fd](https://github.com/AllenInstitute/npc_lims/commit/cb952fd8be996f7c2a64c684217b1fc4cea93d3d) by bjhardcastle).
+- add issue for 703333_20240409 with missing xml ([c5c12fe](https://github.com/AllenInstitute/npc_lims/commit/c5c12fe95afbee7d58ed76ba2d4fd30a044008a1) by arjun.sridhar12345).
+
+### Removed
+
+- Remove sync-related issues Fixed by https://github.com/AllenInstitute/npc_sync/commit/70b0b98cd2b21a93c4798bdfa11e4b2d60b0e371 ([51eb21f](https://github.com/AllenInstitute/npc_lims/commit/51eb21f6d620aca307e304bbc5b554fcd3abfb93) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.146](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.146) - 2024-04-24
+
+<small>[Compare with v0.1.145](https://github.com/AllenInstitute/npc_lims/compare/v0.1.145...v0.1.146)</small>
 
 ### Added
 
 - Add sessions ([477c330](https://github.com/AllenInstitute/npc_lims/commit/477c330677a18b49e16f29f10005689fadad3fe7) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.145](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.145) - 2024-04-18
 
 <small>[Compare with v0.1.144](https://github.com/AllenInstitute/npc_lims/compare/v0.1.144...v0.1.145)</small>
