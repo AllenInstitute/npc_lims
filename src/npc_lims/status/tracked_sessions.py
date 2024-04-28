@@ -134,57 +134,42 @@ class SessionInfo:
             return False
         return True
 
+    def is_dlc(self, camera: Literal['eye', 'side', 'face']) -> bool:
+        if not self.is_video:
+            return False
+        try:
+           return bool(
+               codeocean.get_session_capsule_pipeline_data_asset(self.id, f"dlc_{camera}")
+           )
+        except (FileNotFoundError, ValueError):
+            return False
+    
     @functools.cached_property
     def is_dlc_eye(self) -> bool:
         """
-        The dlc eye capsule has yield a result for this session
+        The dlc eye capsule has yielded a result for this session.
         >>> get_session_info("676909_2023-12-13").is_dlc_eye
         True
         """
-
-        if not self.is_video:
-            return False
-
-        try:
-            return bool(
-                codeocean.get_session_capsule_pipeline_data_asset(self.id, "dlc_eye")
-            )
-        except (FileNotFoundError, ValueError):
-            return False
+        return self.is_dlc('eye')
 
     @functools.cached_property
     def is_dlc_side(self) -> bool:
         """
-        The dlc side capsule has yield a result for this session
+        The dlc side capsule has yielded a result for this session
         >>> get_session_info("676909_2023-12-13").is_dlc_side
         True
         """
-        if not self.is_video:
-            return False
-
-        try:
-            return bool(
-                codeocean.get_session_capsule_pipeline_data_asset(self.id, "dlc_side")
-            )
-        except (FileNotFoundError, ValueError):
-            return False
+        return self.is_dlc('side')
 
     @functools.cached_property
     def is_dlc_face(self) -> bool:
         """
-        The dlc face capsule has yield a result for this session
+        The dlc face capsule has yielded a result for this session
         >>> get_session_info("676909_2023-12-13").is_dlc_face
         True
         """
-        if not self.is_video:
-            return False
-
-        try:
-            return bool(
-                codeocean.get_session_capsule_pipeline_data_asset(self.id, "dlc_face")
-            )
-        except (FileNotFoundError, ValueError):
-            return False
+        return self.is_dlc('face')
 
     @functools.cached_property
     def is_facemap(self) -> bool:
@@ -193,17 +178,20 @@ class SessionInfo:
         >>> get_session_info("676909_2023-12-13").is_facemap
         True
         """
-
         if not self.is_video:
             return False
-
         try:
-            return bool(
+            asset = (
                 codeocean.get_session_capsule_pipeline_data_asset(self.id, "facemap")
             )
         except (FileNotFoundError, ValueError):
             return False
-
+        if '83636983-f80d-42d6-a075-09b60c6abd5e' in asset['provenance']['data_assets']: #type: ignore
+            # the capsule had this asset permanently attached until April '24: 
+            # the resulting data are only saved for the wrong asset
+            return False
+        return bool(asset)
+    
     @functools.cached_property
     def is_sorted(self) -> bool:
         """The AIND sorting pipeline has yielded a Result asset for this
@@ -548,7 +536,6 @@ def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInf
 
 
 if __name__ == "__main__":
-    get_session_info(is_uploaded=True)
     import doctest
 
     import dotenv
