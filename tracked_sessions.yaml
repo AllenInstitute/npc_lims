@@ -214,8 +214,6 @@ ephys:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703880_20240418:
         day: 4
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/91
         session_kwargs:
             suppress_errors: True # stim_data[1:4] have number of frames mismatch in sync
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_699847_20240415:
