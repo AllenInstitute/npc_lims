@@ -22,6 +22,8 @@ JobID: TypeAlias = str
 INITIAL_VALUE = "Added to Queue"
 INITIAL_INT_VALUE = -1
 
+VIDEO_MODELS = ("dlc_eye", "dlc_side", "dlc_face", "facemap")
+
 
 def read_json(process_name: str) -> dict[str, npc_lims.CapsuleComputationAPI]:
     """
@@ -205,6 +207,10 @@ def add_sessions_to_queue(
             getattr(session_info, f"is_{process_name}")
             and not overwrite_exisitng_assets
         ):  # asset exists already
+            continue
+        
+        # if video capsule to run and surface recording gets uploaded first, no video so skip
+        if process_name in VIDEO_MODELS and not session_info.is_video: 
             continue
 
         session_id = session_info.id
