@@ -8,7 +8,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.146...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.147...HEAD)</small>
+
+### Fixed
+
+- Fix `is_facemap` property to identify problematic data ([c9fa277](https://github.com/AllenInstitute/npc_lims/commit/c9fa277526c3a3f5dec6fceabc15aef38f1e17b4) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.147](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.147) - 2024-04-28
+
+<small>[Compare with v0.1.146](https://github.com/AllenInstitute/npc_lims/compare/v0.1.146...v0.1.147)</small>
 
 ### Added
 
@@ -23,7 +32,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Remove sync-related issues Fixed by https://github.com/AllenInstitute/npc_sync/commit/70b0b98cd2b21a93c4798bdfa11e4b2d60b0e371 ([51eb21f](https://github.com/AllenInstitute/npc_lims/commit/51eb21f6d620aca307e304bbc5b554fcd3abfb93) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.146](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.146) - 2024-04-24
 
 <small>[Compare with v0.1.145](https://github.com/AllenInstitute/npc_lims/compare/v0.1.145...v0.1.146)</small>

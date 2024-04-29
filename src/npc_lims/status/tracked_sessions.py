@@ -134,16 +134,18 @@ class SessionInfo:
             return False
         return True
 
-    def is_dlc(self, camera: Literal['eye', 'side', 'face']) -> bool:
+    def is_dlc(self, camera: Literal["eye", "side", "face"]) -> bool:
         if not self.is_video:
             return False
         try:
-           return bool(
-               codeocean.get_session_capsule_pipeline_data_asset(self.id, f"dlc_{camera}")
-           )
+            return bool(
+                codeocean.get_session_capsule_pipeline_data_asset(
+                    self.id, f"dlc_{camera}"
+                )
+            )
         except (FileNotFoundError, ValueError):
             return False
-    
+
     @functools.cached_property
     def is_dlc_eye(self) -> bool:
         """
@@ -151,7 +153,7 @@ class SessionInfo:
         >>> get_session_info("676909_2023-12-13").is_dlc_eye
         True
         """
-        return self.is_dlc('eye')
+        return self.is_dlc("eye")
 
     @functools.cached_property
     def is_dlc_side(self) -> bool:
@@ -160,7 +162,7 @@ class SessionInfo:
         >>> get_session_info("676909_2023-12-13").is_dlc_side
         True
         """
-        return self.is_dlc('side')
+        return self.is_dlc("side")
 
     @functools.cached_property
     def is_dlc_face(self) -> bool:
@@ -169,7 +171,7 @@ class SessionInfo:
         >>> get_session_info("676909_2023-12-13").is_dlc_face
         True
         """
-        return self.is_dlc('face')
+        return self.is_dlc("face")
 
     @functools.cached_property
     def is_facemap(self) -> bool:
@@ -181,17 +183,17 @@ class SessionInfo:
         if not self.is_video:
             return False
         try:
-            asset = (
-                codeocean.get_session_capsule_pipeline_data_asset(self.id, "facemap")
+            asset = codeocean.get_session_capsule_pipeline_data_asset(
+                self.id, "facemap"
             )
         except (FileNotFoundError, ValueError):
             return False
-        if '83636983-f80d-42d6-a075-09b60c6abd5e' in asset['provenance']['data_assets']: #type: ignore
-            # the capsule had this asset permanently attached until April '24: 
+        if "83636983-f80d-42d6-a075-09b60c6abd5e" in asset["provenance"]["data_assets"]:  # type: ignore
+            # the capsule had this asset permanently attached until April '24:
             # the resulting data are only saved for the wrong asset
             return False
         return bool(asset)
-    
+
     @functools.cached_property
     def is_sorted(self) -> bool:
         """The AIND sorting pipeline has yielded a Result asset for this
