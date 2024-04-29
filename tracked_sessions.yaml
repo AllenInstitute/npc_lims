@@ -200,8 +200,6 @@ ephys:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703333_20240409:
         day: 2
-        issues:
-            - needs xml which will be on s3 eventually
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703333_20240410:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703333_20240411:
@@ -216,6 +214,8 @@ ephys:
         day: 4
         session_kwargs:
             suppress_errors: True # stim_data[1:4] have number of frames mismatch in sync
+            issues:
+                - https://github.com/AllenInstitute/npc_sessions/issues/92
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_699847_20240415:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_699847_20240416:
