@@ -216,8 +216,8 @@ ephys:
         day: 4
         session_kwargs:
             suppress_errors: True # stim_data[1:4] have number of frames mismatch in sync
-            issues:
-                - https://github.com/AllenInstitute/npc_sessions/issues/92
+        issues:
+            - https://github.com/AllenInstitute/npc_sessions/issues/92
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_699847_20240415:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_699847_20240416:
