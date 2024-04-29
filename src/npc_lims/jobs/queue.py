@@ -208,9 +208,9 @@ def add_sessions_to_queue(
             and not overwrite_exisitng_assets
         ):  # asset exists already
             continue
-        
+
         # if video capsule to run and surface recording gets uploaded first, no video so skip
-        if process_name in VIDEO_MODELS and not session_info.is_video: 
+        if process_name in VIDEO_MODELS and not session_info.is_video:
             continue
 
         session_id = session_info.id

@@ -8,13 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.147...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.148...HEAD)</small>
+
+<!-- insertion marker -->
+## [v0.1.148](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.148) - 2024-04-29
+
+<small>[Compare with v0.1.147](https://github.com/AllenInstitute/npc_lims/compare/v0.1.147...v0.1.148)</small>
 
 ### Fixed
 
 - Fix `is_facemap` property to identify problematic data ([c9fa277](https://github.com/AllenInstitute/npc_lims/commit/c9fa277526c3a3f5dec6fceabc15aef38f1e17b4) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.147](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.147) - 2024-04-28
 
 <small>[Compare with v0.1.146](https://github.com/AllenInstitute/npc_lims/compare/v0.1.146...v0.1.147)</small>
