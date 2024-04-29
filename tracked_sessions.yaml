@@ -190,6 +190,8 @@ ephys:
             - https://github.com/AllenInstitute/npc_sessions/issues/83
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240304:
         day: 1
+        issues:
+            - https://github.com/AllenInstitute/npc_sessions/issues/96
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240305:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240306:
