@@ -52,27 +52,18 @@ assert all(
 def get_nwb_path(
     session_id: str | npc_session.SessionRecord,
     version: str | None = None,
+    zarr: bool = True,
 ) -> upath.UPath:
     """
     >>> get_nwb_path("366122_2023-12-31")   # doctest: +SKIP
-    S3Path('s3://aind-scratch-data/ben.hardcastle/nwb/v0.0.210/366122_2023-12-31.nwb.zarr')
+    S3Path('s3://aind-scratch-data/ben.hardcastle/cache/nwb/v0.0.210/366122_2023-12-31.nwb.zarr')
     >>> get_nwb_path("366122_2023-12-31", version="v0.0.0")
-    S3Path('s3://aind-scratch-data/ben.hardcastle/nwb/v0.0.0/366122_2023-12-31.nwb.zarr')
+    S3Path('s3://aind-scratch-data/ben.hardcastle/cache/nwb/v0.0.0/366122_2023-12-31.nwb.zarr')
+    >>> get_nwb_path("366122_2023-12-31", version="v0.0.0", zarr=False)
+    S3Path('s3://aind-scratch-data/ben.hardcastle/cache/nwb/v0.0.0/366122_2023-12-31.nwb')
     """
-    if version is not None:
-        try:
-            version = _parse_version(version)
-        except ValueError:
-            version = version
-    else:
-        version = get_current_cache_version()
-    return (
-        S3_SCRATCH_ROOT
-        / "nwb"
-        / version
-        / f"{npc_session.SessionRecord(session_id)}.nwb.zarr"
-    )
-
+    components_path = get_cache_path("session", session_id=session_id, version=version, consolidated=False).parent.parent
+    return upath.UPath(components_path.as_posix().replace('nwb_components', 'nwb')) / f"{npc_session.SessionRecord(session_id)}.nwb{'.zarr' if zarr else ''}"
 
 def get_cache_file_suffix(nwb_component: NWBComponentStr) -> str:
     """
