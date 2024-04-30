@@ -62,8 +62,14 @@ def get_nwb_path(
     >>> get_nwb_path("366122_2023-12-31", version="v0.0.0", zarr=False)
     S3Path('s3://aind-scratch-data/ben.hardcastle/cache/nwb/v0.0.0/366122_2023-12-31.nwb')
     """
-    components_path = get_cache_path("session", session_id=session_id, version=version, consolidated=False).parent.parent
-    return upath.UPath(components_path.as_posix().replace('nwb_components', 'nwb')) / f"{npc_session.SessionRecord(session_id)}.nwb{'.zarr' if zarr else ''}"
+    components_path = get_cache_path(
+        "session", session_id=session_id, version=version, consolidated=False
+    ).parent.parent
+    return (
+        upath.UPath(components_path.as_posix().replace("nwb_components", "nwb"))
+        / f"{npc_session.SessionRecord(session_id)}.nwb{'.zarr' if zarr else ''}"
+    )
+
 
 def get_cache_file_suffix(nwb_component: NWBComponentStr) -> str:
     """
