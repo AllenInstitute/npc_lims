@@ -179,6 +179,10 @@ class SessionInfo:
         The facemap capsule has yield a result for this session
         >>> get_session_info("676909_2023-12-13").is_facemap
         True
+        >>> get_session_info('668759_2023-07-11').is_facemap
+        True
+        >>> get_session_info('706401_2024-04-22').is_facemap
+        True
         """
         if not self.is_video:
             return False
@@ -188,8 +192,8 @@ class SessionInfo:
             )
         except (FileNotFoundError, ValueError):
             return False
-        if "83636983-f80d-42d6-a075-09b60c6abd5e" in asset["provenance"]["data_assets"]:  # type: ignore
-            # the capsule had this asset permanently attached until April '24:
+        if "83636983-f80d-42d6-a075-09b60c6abd5e" in asset["provenance"]["data_assets"] and self.id != npc_session.SessionRecord('668759_2023-07-11'):  # type: ignore
+            # the capsule had this asset permanently attached for assets made on April 24th/25th. should be resolved
             # the resulting data are only saved for the wrong asset
             return False
         return bool(asset)
