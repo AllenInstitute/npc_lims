@@ -192,7 +192,7 @@ class SessionInfo:
             )
         except (FileNotFoundError, ValueError):
             return False
-        if "83636983-f80d-42d6-a075-09b60c6abd5e" in asset["provenance"]["data_assets"] and self.id != npc_session.SessionRecord('668759_2023-07-11'):  # type: ignore
+        if "83636983-f80d-42d6-a075-09b60c6abd5e" in asset["provenance"]["data_assets"] and self.id != npc_session.SessionRecord("668759_2023-07-11"):  # type: ignore
             # the capsule had this asset permanently attached for assets made on April 24th/25th. should be resolved
             # the resulting data are only saved for the wrong asset
             return False
