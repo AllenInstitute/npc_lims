@@ -98,6 +98,24 @@ class SessionInfo:
         return False
 
     @functools.cached_property
+    def raw_data_paths(self) -> tuple[upath.UPath, ...] | None:
+        with contextlib.suppress(FileNotFoundError):
+            return s3.get_raw_data_paths_from_s3(self.id) 
+        return None
+        
+    @functools.cached_property
+    def is_session_json(self) -> bool:
+        if self.raw_data_paths is None:
+            return False
+        return any(p for p in self.raw_data_paths if p.name == "session.json")
+    
+    @functools.cached_property
+    def is_rig_json(self) -> bool:
+        if self.raw_data_paths is None:
+            return False
+        return any(p for p in self.raw_data_paths if p.name == "rig.json")
+        
+    @functools.cached_property
     def is_video(self) -> bool:
         """
         >>> get_session_info('2022-09-20_13-21-35_628801').is_video

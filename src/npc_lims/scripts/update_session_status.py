@@ -37,14 +37,16 @@ def main() -> None:
             is_dlc_side BOOLEAN DEFAULT NULL,
             is_dlc_face BOOLEAN DEFAULT NULL,
             is_facemap BOOLEAN DEFAULT NULL
+            is_session_json BOOLEAN DEFAULT NULL,
+            is_rig_json BOOLEAN DEFAULT NULL,
         );
         """
     )
-    statement = "INSERT INTO status (date, subject_id, project, is_uploaded, is_sorted, is_annotated, is_dlc_eye, is_dlc_side, is_dlc_face, is_facemap) VALUES "
+    statement = "INSERT INTO status (date, subject_id, project, is_uploaded, is_sorted, is_annotated, is_dlc_eye, is_dlc_side, is_dlc_face, is_facemap, is_session_json, is_rig_json) VALUES "
     for s in sorted(npc_lims.get_session_info(), key=lambda s: s.date, reverse=True):
         if not s.is_ephys:
             continue
-        statement += f"\n\t('{s.date}', '{s.subject}', '{s.project}', {int(s.is_uploaded)}, {int(s.is_sorted)}, {int(s.is_annotated)}, {int(s.is_dlc_eye)}, {int(s.is_dlc_side)}, {int(s.is_dlc_face)}, {int(s.is_facemap)}),"
+        statement += f"\n\t('{s.date}', '{s.subject}', '{s.project}', {int(s.is_uploaded)}, {int(s.is_sorted)}, {int(s.is_annotated)}, {int(s.is_dlc_eye)}, {int(s.is_dlc_side)}, {int(s.is_dlc_face)}, {int(s.is_facemap)}, {int(s.is_session_json)}, {int(s.is_rig_json)}),"
     statement = statement[:-1] + ";"
     response = connection.Execute(statement)
     if response[1]:
