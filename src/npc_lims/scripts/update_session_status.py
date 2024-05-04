@@ -36,9 +36,9 @@ def main() -> None:
             is_dlc_eye BOOLEAN DEFAULT NULL,
             is_dlc_side BOOLEAN DEFAULT NULL,
             is_dlc_face BOOLEAN DEFAULT NULL,
-            is_facemap BOOLEAN DEFAULT NULL
+            is_facemap BOOLEAN DEFAULT NULL, 
             is_session_json BOOLEAN DEFAULT NULL,
-            is_rig_json BOOLEAN DEFAULT NULL,
+            is_rig_json BOOLEAN DEFAULT NULL
         );
         """
     )
