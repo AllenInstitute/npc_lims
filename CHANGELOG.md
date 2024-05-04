@@ -8,13 +8,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.151...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.152...HEAD)</small>
+
+### Added
+
+- Add top-level paths to raw data function ([bdfdc13](https://github.com/AllenInstitute/npc_lims/commit/bdfdc13cfb6c644a3eb830727ae6ab948ce881c9) by bjhardcastle).
+- Add tracking for metadata jsons ([7514a02](https://github.com/AllenInstitute/npc_lims/commit/7514a026f2830c7330c8b33dc69552189594d1a4) by bjhardcastle).
+
+### Fixed
+
+- Fix json info for sessions without raw assets ([b1bb0cc](https://github.com/AllenInstitute/npc_lims/commit/b1bb0ccd04ddba21ebbaa3abadd1398698d02e33) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.152](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.152) - 2024-05-04
+
+<small>[Compare with v0.1.151](https://github.com/AllenInstitute/npc_lims/compare/v0.1.151...v0.1.152)</small>
 
 ### Added
 
 - Add sessions ([33a9ad8](https://github.com/AllenInstitute/npc_lims/commit/33a9ad80f9114d77a7f0650b6aa428b8f8457703) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.151](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.151) - 2024-05-01
 
 <small>[Compare with v0.1.150](https://github.com/AllenInstitute/npc_lims/compare/v0.1.150...v0.1.151)</small>

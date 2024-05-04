@@ -66,7 +66,10 @@ def get_raw_data_paths_from_s3(
     top_level_files_directories: tuple = tuple(
         file for file in raw_data_root.iterdir() if not file.is_dir()
     )
-    paths = functools.reduce(operator.add, first_level_files_directories) + top_level_files_directories
+    paths = (
+        functools.reduce(operator.add, first_level_files_directories)
+        + top_level_files_directories
+    )
 
     if not paths:
         raise FileNotFoundError(
