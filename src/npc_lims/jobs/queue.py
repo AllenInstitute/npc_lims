@@ -205,8 +205,7 @@ def add_sessions_to_queue(
     for session_info in npc_lims.get_session_info(is_ephys=True, is_uploaded=True):
         if (
             hasattr(session_info, f"is_{process_name}")
-            and
-            getattr(session_info, f"is_{process_name}")
+            and getattr(session_info, f"is_{process_name}")
             and not overwrite_exisitng_assets
         ):  # asset exists already
             continue
@@ -214,7 +213,9 @@ def add_sessions_to_queue(
         # if video capsule to run and surface recording gets uploaded first, no video so skip
         if process_name in VIDEO_MODELS:
             try:
-                s3.get_behavior_video_path_from_s3(session_info.id) # check if there is a video on s3
+                s3.get_behavior_video_path_from_s3(
+                    session_info.id
+                )  # check if there is a video on s3
             except FileNotFoundError:
                 continue
 
