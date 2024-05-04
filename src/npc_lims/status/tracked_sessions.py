@@ -99,7 +99,7 @@ class SessionInfo:
 
     @functools.cached_property
     def raw_data_paths(self) -> tuple[upath.UPath, ...] | None:
-        with contextlib.suppress(FileNotFoundError):
+        with contextlib.suppress(FileNotFoundError, ValueError):
             return s3.get_raw_data_paths_from_s3(self.id) 
         return None
         
