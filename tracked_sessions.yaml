@@ -1,385 +1,387 @@
 ephys:
-  DynamicRouting:
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_626791_20220815:
-        day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_626791_20220816:
-        day: 2
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_626791_20220817:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_636766_20230123:
-        day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_636766_20230124:
-        day: 2
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_636766_20230125:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_636766_20230126:
-        day: 4
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644864_20230130:
-        day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644864_20230131:
-        day: 2
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644864_20230201:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644864_20230202:
-        day: 4
-        session_kwargs:
-            probe_letters_to_skip: [F] # spikeinterface skipped
-            sorted_data_asset_id: d24daced-4973-466a-9b23-275c7bb64c3e
-            # was reuploaded, but asset still exists with 00-00-00 time
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644866_20230207:
-        day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644866_20230208:
-        day: 2
-        session_kwargs:
-            probe_letters_to_skip: [E] # no dye track, see https://github.com/AllenInstitute/npc_sessions/issues/63
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644866_20230209:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644866_20230210:
-        day: 4
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644867_20230220:
-        day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644867_20230221:
-        day: 2
-        issues:
-          - https://github.com/AllenInstitute/npc_sessions/issues/28
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644867_20230222:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644867_20230223:
-        day: 4
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_649943_20230213:
-        day: 1
-        issues:
-          - https://github.com/AllenNeuralDynamics/aind-ephys-pipeline-kilosort25/issues/10
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_649943_20230214:
-        day: 2
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_649943_20230215:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_649943_20230216:
-        day: 4
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_660023_20230808:
-        day: 1
-        notes: "sync stopped 17 mins into task, so it is completely discarded: set `is_sync=False` to access task data"
-        issues:
-          - https://github.com/AllenInstitute/npc_sessions/issues/26
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_660023_20230809:
-        day: 2
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230814:
-        day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230815:
-        day: 2
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230816:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230817:
-        day: 4
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_662892_20230821:
-        day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_662892_20230822:
-        day: 2
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_662892_20230823:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_662892_20230824:
-        day: 4
-        session_kwargs:
-            surface_recording_probe_letters_to_skip: BDE
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230828:
-        day: 1
-        session_kwargs:
-            surface_recording_probe_letters_to_skip: BCDE
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230829:
-        day: 2
-        session_kwargs:
-            surface_recording_probe_letters_to_skip: BCDE
-        issues:
-          - https://github.com/AllenInstitute/npc_lims/issues/15 
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230830:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230831:
-        day: 4
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230925:
-        day: 1
-        session_kwargs:
-          invalid_times:
-            - start_time: 4996
-              stop_time: -1
-              reason: auditory stimulus not presented (amplifier power issue)
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230926:
-        day: 2
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230927:
-        day: 3
-        issues:
-          - https://github.com/AllenInstitute/npc_sessions/issues/55
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230928:
-        day: 4
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_674562_20231002:
-        day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_674562_20231003:
-        day: 2
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_674562_20231004:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_674562_20231005:
-        day: 4
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_681532_20231016:
-        day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_681532_20231017:
-        day: 2
-        session_kwargs:
-            probe_letters_to_skip: [E]
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_681532_20231018:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_681532_20231019:
-        day: 4
-        notes: recording stopped on first SpontaneousRewards for ~5 mins
-        # TODO add obs intervals
-        # TODO upload split recording
-        issues:
-          - https://github.com/AllenInstitute/npc_lims/issues/5
-        session_kwargs:
-            concatenate_recordings: [recording1, recording2]
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686740_20231023:
-        day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686740_20231024:
-        day: 2
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686740_20231025:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686740_20231026:
-        day: 4
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_664851_20231113:
-        day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_664851_20231114:
-        day: 2
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_664851_20231115:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_664851_20231116:
-        day: 4
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_690706_20231127:
-        day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_690706_20231128:
-        day: 2
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/97
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_690706_20231129:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_690706_20231130:
-        day: 4
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686176_20231204:
-        day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686176_20231205:
-        day: 2
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686176_20231206:
-        day: 3
-        issues:
-          - https://github.com/AllenInstitute/npc_lims/issues/5
-        session_kwargs:
-            concatenate_recordings: [recording1, recording2]
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686176_20231207:
-        day: 4
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231211:
-        day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231212:
-        day: 2
-        notes: post-task Spontaneous & OptoTagging ran twice - ephys stopped halfway through final OptoTagging
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231212:
-        day: 2
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231213:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231214:
-        day: 4
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702131_20240226:
-        day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702131_20240227:
-        day: 2
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/83
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240304:
-        day: 1
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/96
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240305:
-        day: 2
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240306:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240307:
-        day: 4
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/95
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703333_20240408:
-        day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703333_20240409:
-        day: 2
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703333_20240410:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703333_20240411:
-        day: 4
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703880_20240415:
-        day: 1
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/94
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703880_20240416:
-        day: 2
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/92
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703880_20240417:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703880_20240418:
-        day: 4
-        session_kwargs:
-            suppress_errors: True # stim_data[1:4] have number of frames mismatch in sync
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/92
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_699847_20240415:
-        day: 1
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/93
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_699847_20240416:
-        day: 2
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_699847_20240417:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_699847_20240418:
-        day: 4
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703882_20240422:
-        day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703882_20240423:
-        day: 2
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703882_20240424:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703882_20240425:
-        day: 4
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_706401_20240422:
-        day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_706401_20240423:
-        day: 2
-        session_kwargs:
-            probe_letters_to_skip: BE
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_706401_20240424:
-        day: 3
-        session_kwargs:
-            probe_letters_to_skip: BE
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_706401_20240425:
-        day: 4
-        session_kwargs:
-            probe_letters_to_skip: BE
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708016_20240429:
-        day: 1
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/101
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708016_20240430:
-        day: 2
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/100
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708016_20240501:
-        day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708016_20240502:
-        day: 4
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/92
-            
-  TempletonPilotSession:
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-07-26_14-09-36_620263
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-07-27_13-57-17_620263
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-08-02_15-40-19_620264
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-09-19_13-48-26_628801
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-09-20_13-21-35_628801:
-        session_kwargs:
-          is_video: false
-        issues:
-          - https://github.com/AllenInstitute/npc_sessions/issues/27
-          - https://github.com/AllenInstitute/npc_lims/issues/5
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-09-20_14-10-18_628801:
-        session_kwargs:
-          is_video: false
-        issues:
-          - https://github.com/AllenInstitute/npc_lims/issues/5
-    # ^ two sessions for this mouse - split recording?
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-09-26_12-48-09_636397
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-09-27_11-37-08_636397
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-12-05_13-08-02_644547
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-12-06_12-35-35_644547
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-01-17_11-39-17_646318
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-01-18_10-44-55_646318
-    # //allen/programs/mindscope/workgroups/templeton/TTOC/2023-02-13_08-29-45_649943
-    #   ^ doesn't exist
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-02-27_08-14-30_649944
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-02-28_09-33-43_649944
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-05-15_09-50-06_662983
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-05-16_10-25-25_662983
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-11_10-07-43_668759
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-12_10-50-07_668759
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-13_09-35-31_668759
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-18_10-05-51_670181
-    # - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-19_10-00-22_670181:
-    #   # no behavior task hdf5
-    #   # can't find ephys data
-    #     session_kwargs:
-    #         is_task: false
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-20_12-21-41_670181:
-        notes: task only, mapping recording is in `stopped_early` subfolder
-        issues:
-          - https://github.com/AllenInstitute/npc_lims/issues/5
-        session_kwargs:
-          concatenate_recordings: [recording1, recording2]
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-25_09-47-29_670180:
-    # ^ recording stops mid-task: main recording incls mapping and some of task.
-    # subfolder has rest of task. could be stitched together, add 'unobserved interval'
-    # - hasn't been uploaded yet (need to rearrange folders & spike-sort with CONCAT=True)
-        session_kwargs:
-          concatenate_recordings: [recording1, recording2]
-        issues:
-            - https://github.com/AllenInstitute/npc_lims/issues/5
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-26_09-55-57_670180
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-27_09-36-37_670180
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-08-01_09-28-08_670248
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-08-02_09-58-44_670248:
-        session_kwargs:
-            is_task: false
-            rig: NP3
-        notes: no behavior, DynamicRouting1_670248_20230802_120703.hdf5 not written correctly by task script
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-08-03_09-39-59_670248:
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/66
-        notes: recording truncated ~5 mins before end - needs obs intervals
-  
+    DynamicRouting:
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_626791_20220815
+          : day: 1
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_626791_20220816
+          : day: 2
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_626791_20220817
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_636766_20230123
+          : day: 1
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_636766_20230124
+          : day: 2
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_636766_20230125
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_636766_20230126
+          : day: 4
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644864_20230130
+          : day: 1
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644864_20230131
+          : day: 2
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644864_20230201
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644864_20230202
+          : day: 4
+            session_kwargs:
+                probe_letters_to_skip: [F] # spikeinterface skipped
+                sorted_data_asset_id: d24daced-4973-466a-9b23-275c7bb64c3e
+                # was reuploaded, but asset still exists with 00-00-00 time
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644866_20230207
+          : day: 1
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644866_20230208
+          : day: 2
+            session_kwargs:
+                probe_letters_to_skip: [E] # no dye track, see https://github.com/AllenInstitute/npc_sessions/issues/63
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644866_20230209
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644866_20230210
+          : day: 4
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644867_20230220
+          : day: 1
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644867_20230221
+          : day: 2
+            issues:
+                - https://github.com/AllenInstitute/npc_sessions/issues/28
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644867_20230222
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644867_20230223
+          : day: 4
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_649943_20230213
+          : day: 1
+            issues:
+                - https://github.com/AllenNeuralDynamics/aind-ephys-pipeline-kilosort25/issues/10
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_649943_20230214
+          : day: 2
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_649943_20230215
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_649943_20230216
+          : day: 4
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_660023_20230808
+          : day: 1
+            notes: "sync stopped 17 mins into task, so it is completely discarded: set `is_sync=False` to access task data"
+            issues:
+                - https://github.com/AllenInstitute/npc_sessions/issues/26
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_660023_20230809
+          : day: 2
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230814
+          : day: 1
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230815
+          : day: 2
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230816
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230817
+          : day: 4
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_662892_20230821
+          : day: 1
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_662892_20230822
+          : day: 2
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_662892_20230823
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_662892_20230824
+          : day: 4
+            session_kwargs:
+                surface_recording_probe_letters_to_skip: BDE
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230828
+          : day: 1
+            session_kwargs:
+                surface_recording_probe_letters_to_skip: BCDE
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230829
+          : day: 2
+            session_kwargs:
+                issues:
+                    - https://github.com/AllenInstitute/npc_sessions/issues/102
+                surface_recording_probe_letters_to_skip: BCDE
+            issues:
+                - https://github.com/AllenInstitute/npc_lims/issues/15
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230830
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230831
+          : day: 4
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230925
+          : day: 1
+            session_kwargs:
+                invalid_times:
+                    - start_time: 4996
+                      stop_time: -1
+                      reason: auditory stimulus not presented (amplifier power issue)
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230926
+          : day: 2
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230927
+          : day: 3
+            issues:
+                - https://github.com/AllenInstitute/npc_sessions/issues/55
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230928
+          : day: 4
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_674562_20231002
+          : day: 1
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_674562_20231003
+          : day: 2
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_674562_20231004
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_674562_20231005
+          : day: 4
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_681532_20231016
+          : day: 1
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_681532_20231017
+          : day: 2
+            session_kwargs:
+                probe_letters_to_skip: [E]
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_681532_20231018
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_681532_20231019
+          : day: 4
+            notes: recording stopped on first SpontaneousRewards for ~5 mins
+            # TODO add obs intervals
+            # TODO upload split recording
+            issues:
+                - https://github.com/AllenInstitute/npc_lims/issues/5
+            session_kwargs:
+                concatenate_recordings: [recording1, recording2]
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686740_20231023
+          : day: 1
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686740_20231024
+          : day: 2
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686740_20231025
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686740_20231026
+          : day: 4
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_664851_20231113
+          : day: 1
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_664851_20231114
+          : day: 2
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_664851_20231115
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_664851_20231116
+          : day: 4
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_690706_20231127
+          : day: 1
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_690706_20231128
+          : day: 2
+            issues:
+                - https://github.com/AllenInstitute/npc_sessions/issues/97
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_690706_20231129
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_690706_20231130
+          : day: 4
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686176_20231204
+          : day: 1
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686176_20231205
+          : day: 2
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686176_20231206
+          : day: 3
+            issues:
+                - https://github.com/AllenInstitute/npc_lims/issues/5
+            session_kwargs:
+                concatenate_recordings: [recording1, recording2]
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686176_20231207
+          : day: 4
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231211
+          : day: 1
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231212
+          : day: 2
+            notes: post-task Spontaneous & OptoTagging ran twice - ephys stopped halfway through final OptoTagging
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231212
+          : day: 2
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231213
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231214
+          : day: 4
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702131_20240226
+          : day: 1
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702131_20240227
+          : day: 2
+            issues:
+                - https://github.com/AllenInstitute/npc_sessions/issues/83
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240304
+          : day: 1
+            issues:
+                - https://github.com/AllenInstitute/npc_sessions/issues/96
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240305
+          : day: 2
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240306
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240307
+          : day: 4
+            issues:
+                - https://github.com/AllenInstitute/npc_sessions/issues/95
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703333_20240408
+          : day: 1
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703333_20240409
+          : day: 2
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703333_20240410
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703333_20240411
+          : day: 4
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703880_20240415
+          : day: 1
+            issues:
+                - https://github.com/AllenInstitute/npc_sessions/issues/94
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703880_20240416
+          : day: 2
+            issues:
+                - https://github.com/AllenInstitute/npc_sessions/issues/92
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703880_20240417
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703880_20240418
+          : day: 4
+            session_kwargs:
+                suppress_errors: True # stim_data[1:4] have number of frames mismatch in sync
+            issues:
+                - https://github.com/AllenInstitute/npc_sessions/issues/92
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_699847_20240415
+          : day: 1
+            issues:
+                - https://github.com/AllenInstitute/npc_sessions/issues/93
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_699847_20240416
+          : day: 2
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_699847_20240417
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_699847_20240418
+          : day: 4
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703882_20240422
+          : day: 1
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703882_20240423
+          : day: 2
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703882_20240424
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703882_20240425
+          : day: 4
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_706401_20240422
+          : day: 1
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_706401_20240423
+          : day: 2
+            session_kwargs:
+                probe_letters_to_skip: BE
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_706401_20240424
+          : day: 3
+            session_kwargs:
+                probe_letters_to_skip: BE
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_706401_20240425
+          : day: 4
+            session_kwargs:
+                probe_letters_to_skip: BE
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708016_20240429
+          : day: 1
+            issues:
+                - https://github.com/AllenInstitute/npc_sessions/issues/101
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708016_20240430
+          : day: 2
+            issues:
+                - https://github.com/AllenInstitute/npc_sessions/issues/100
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708016_20240501
+          : day: 3
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708016_20240502
+          : day: 4
+            issues:
+                - https://github.com/AllenInstitute/npc_sessions/issues/92
+
+    TempletonPilotSession:
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-07-26_14-09-36_620263
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-07-27_13-57-17_620263
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-08-02_15-40-19_620264
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-09-19_13-48-26_628801
+        - ? //allen/programs/mindscope/workgroups/templeton/TTOC/2022-09-20_13-21-35_628801
+          : session_kwargs:
+                is_video: false
+            issues:
+                - https://github.com/AllenInstitute/npc_sessions/issues/27
+                - https://github.com/AllenInstitute/npc_lims/issues/5
+        - ? //allen/programs/mindscope/workgroups/templeton/TTOC/2022-09-20_14-10-18_628801
+          : session_kwargs:
+                is_video: false
+            issues:
+                - https://github.com/AllenInstitute/npc_lims/issues/5
+        # ^ two sessions for this mouse - split recording?
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-09-26_12-48-09_636397
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-09-27_11-37-08_636397
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-12-05_13-08-02_644547
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2022-12-06_12-35-35_644547
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-01-17_11-39-17_646318
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-01-18_10-44-55_646318
+        # //allen/programs/mindscope/workgroups/templeton/TTOC/2023-02-13_08-29-45_649943
+        #   ^ doesn't exist
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-02-27_08-14-30_649944
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-02-28_09-33-43_649944
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-05-15_09-50-06_662983
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-05-16_10-25-25_662983
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-11_10-07-43_668759
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-12_10-50-07_668759
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-13_09-35-31_668759
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-18_10-05-51_670181
+        # - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-19_10-00-22_670181:
+        #   # no behavior task hdf5
+        #   # can't find ephys data
+        #     session_kwargs:
+        #         is_task: false
+        - ? //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-20_12-21-41_670181
+          : notes: task only, mapping recording is in `stopped_early` subfolder
+            issues:
+                - https://github.com/AllenInstitute/npc_lims/issues/5
+            session_kwargs:
+                concatenate_recordings: [recording1, recording2]
+        - ? //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-25_09-47-29_670180
+          : # ^ recording stops mid-task: main recording incls mapping and some of task.
+            # subfolder has rest of task. could be stitched together, add 'unobserved interval'
+            # - hasn't been uploaded yet (need to rearrange folders & spike-sort with CONCAT=True)
+            session_kwargs:
+                concatenate_recordings: [recording1, recording2]
+            issues:
+                - https://github.com/AllenInstitute/npc_lims/issues/5
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-26_09-55-57_670180
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-07-27_09-36-37_670180
+        - //allen/programs/mindscope/workgroups/templeton/TTOC/2023-08-01_09-28-08_670248
+        - ? //allen/programs/mindscope/workgroups/templeton/TTOC/2023-08-02_09-58-44_670248
+          : session_kwargs:
+                is_task: false
+                rig: NP3
+            notes: no behavior, DynamicRouting1_670248_20230802_120703.hdf5 not written correctly by task script
+        - ? //allen/programs/mindscope/workgroups/templeton/TTOC/2023-08-03_09-39-59_670248
+          : issues:
+                - https://github.com/AllenInstitute/npc_sessions/issues/66
+            notes: recording truncated ~5 mins before end - needs obs intervals
+
 #   OpenScopeVippo: # currently no way to filter on project, so this is excluded
 #     - //allen/programs/mindscope/workgroups/np-exp/1330689294_716465_20240214:
 #         day: 1
-        
+
 behavior_with_sync: # hab sessions with sync + video, or sync + opto, etc.
-  DynamicRouting:
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708019_20240322:
-        # pupil test
-        day: 1
-        session_kwargs:
-            is_sync: True
-            is_video: True
-            is_task: False
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708019_20240327:
-        # pupil test
-        day: 2
-        session_kwargs:
-            is_sync: True
-            is_video: True
-            is_task: False
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_709929_20240329:
-        # pupil test
-        day: 1
-        session_kwargs:
-            is_sync: True
-            is_video: True
-            is_task: False
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_689663_20240401:
-        # pupil test
-        day: 1
-        session_kwargs:
-            is_sync: True
-            is_video: True
-            is_task: False
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_689663_20240403:
-        # opto
-        day: 1
+    DynamicRouting:
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708019_20240322
+          : # pupil test
+            day: 1
+            session_kwargs:
+                is_sync: True
+                is_video: True
+                is_task: False
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708019_20240327
+          : # pupil test
+            day: 2
+            session_kwargs:
+                is_sync: True
+                is_video: True
+                is_task: False
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_709929_20240329
+          : # pupil test
+            day: 1
+            session_kwargs:
+                is_sync: True
+                is_video: True
+                is_task: False
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_689663_20240401
+          : # pupil test
+            day: 1
+            session_kwargs:
+                is_sync: True
+                is_video: True
+                is_task: False
+        - ? //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_689663_20240403
+          : # opto
+            day: 1
 behavior:
-  DynamicRouting:
-    # all sessions with a DynamicRouting*.hdf5 in the data folder below will be
-    # available implicitly: only add sessions here that need configuration or have issues
-    - "//allen/programs/mindscope/workgroups/dynamicrouting/DynamicRoutingTask/Data/677352/DynamicRouting1_677352_20231013_155330.hdf5":
-        issues:
-          - https://github.com/AllenInstitute/npc_sessions/issues/78
-  TempletonPilotSession:
+    DynamicRouting:
+        # all sessions with a DynamicRouting*.hdf5 in the data folder below will be
+        # available implicitly: only add sessions here that need configuration or have issues
+        - ? "//allen/programs/mindscope/workgroups/dynamicrouting/DynamicRoutingTask/Data/677352/DynamicRouting1_677352_20231013_155330.hdf5"
+          : issues:
+                - https://github.com/AllenInstitute/npc_sessions/issues/78
+    TempletonPilotSession:
