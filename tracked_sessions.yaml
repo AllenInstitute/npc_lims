@@ -260,6 +260,8 @@ ephys:
             probe_letters_to_skip: BE
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708016_20240429:
         day: 1
+        issues:
+            - https://github.com/AllenInstitute/npc_sessions/issues/101
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708016_20240430:
         day: 2
         issues:
