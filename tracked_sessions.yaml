@@ -91,8 +91,6 @@ ephys:
         day: 2
         session_kwargs:
             surface_recording_probe_letters_to_skip: BCDE
-        issues:
-          - https://github.com/AllenInstitute/npc_lims/issues/15 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230830:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230831:
