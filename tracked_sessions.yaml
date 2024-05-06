@@ -85,12 +85,13 @@ ephys:
         day: 1
         session_kwargs:
             surface_recording_probe_letters_to_skip: BCDE
-            probe_letters_to_skip: E # https://github.com/AllenInstitute/npc_sessions/issues/102
+            is_sorted: False
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230829:
         day: 2
         session_kwargs:
-            issues: 
-                - https://github.com/AllenInstitute/npc_sessions/issues/102
+            probe_letters_to_skip: E # https://github.com/AllenInstitute/npc_sessions/issues/102
+            # issues: 
+            #     - https://github.com/AllenInstitute/npc_sessions/issues/102
             surface_recording_probe_letters_to_skip: BCDE
         issues:
           - https://github.com/AllenInstitute/npc_lims/issues/15 
