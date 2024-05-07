@@ -56,9 +56,12 @@ ephys:
         day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_660023_20230808:
         day: 1
-        notes: "sync stopped 17 mins into task, so it is completely discarded: set `is_sync=False` to access task data"
-        issues:
-          - https://github.com/AllenInstitute/npc_sessions/issues/26
+        notes: "sync was already running for ~5 hrs before session, then stopped 17 mins into task (6 hr limit)"
+        session_kwargs:
+            invalid_times:
+                - start_time: 21900
+                  stop_time: -1
+                  reason: sync stopped
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_660023_20230809:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230814:
