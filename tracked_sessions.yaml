@@ -48,8 +48,6 @@ ephys:
         day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_649943_20230213:
         day: 1
-        issues:
-          - https://github.com/AllenNeuralDynamics/aind-ephys-pipeline-kilosort25/issues/10
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_649943_20230214:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_649943_20230215:
