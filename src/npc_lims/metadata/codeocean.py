@@ -275,6 +275,21 @@ def get_session_raw_data_asset(
     if not raw_assets:
         raise ValueError(f"Session {session} has no raw data assets")
 
+    platforms = tuple(asset["name"].split("_")[0] for asset in raw_assets)
+    if len(set(platforms)) > 1:
+        logger.debug(f"Raw data assets for multiple platforms found for {session}")
+        # if a session has both an ecephys platform raw asset and a behavior platform 
+        # asset (which necessarily contains a subset of the ecephys data), we'll take the ecephys asset
+        for platform in ("ecephys", "behavior"):
+            if any(platform in asset["name"] for asset in raw_assets):
+                raw_assets = tuple(
+                    asset for asset in raw_assets if platform in asset["name"]
+                )
+                break
+        else:
+            raise NotImplementedError(
+                f"Raw data assets from multiple platforms found for {session}, which we don't know how to handle: {platforms}"
+            )
     return get_latest_data_asset(raw_assets)
 
 
