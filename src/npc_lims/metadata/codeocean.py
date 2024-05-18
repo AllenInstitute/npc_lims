@@ -278,7 +278,7 @@ def get_session_raw_data_asset(
     platforms = tuple(asset["name"].split("_")[0] for asset in raw_assets)
     if len(set(platforms)) > 1:
         logger.debug(f"Raw data assets for multiple platforms found for {session}")
-        # if a session has both an ecephys platform raw asset and a behavior platform 
+        # if a session has both an ecephys platform raw asset and a behavior platform
         # asset (which necessarily contains a subset of the ecephys data), we'll take the ecephys asset
         for platform in ("ecephys", "behavior"):
             if any(platform in asset["name"] for asset in raw_assets):

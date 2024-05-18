@@ -8,7 +8,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.152...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.153...HEAD)</small>
+
+### Fixed
+
+- Fix Sql syntax [skip CI] ([86836bd](https://github.com/AllenInstitute/npc_lims/commit/86836bd3f7990fbaa32e92637c1f2b68e2158ae3) by Ben Hardcastle).
+
+### Removed
+
+- Remove resolved session issue ([736f349](https://github.com/AllenInstitute/npc_lims/commit/736f3490053b8bae6cd25cdcec2e47c956dc4803) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.153](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.153) - 2024-05-04
+
+<small>[Compare with v0.1.152](https://github.com/AllenInstitute/npc_lims/compare/v0.1.152...v0.1.153)</small>
 
 ### Added
 
@@ -19,7 +32,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Fix json info for sessions without raw assets ([b1bb0cc](https://github.com/AllenInstitute/npc_lims/commit/b1bb0ccd04ddba21ebbaa3abadd1398698d02e33) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.152](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.152) - 2024-05-04
 
 <small>[Compare with v0.1.151](https://github.com/AllenInstitute/npc_lims/compare/v0.1.151...v0.1.152)</small>
