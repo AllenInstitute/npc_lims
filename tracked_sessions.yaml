@@ -23,7 +23,6 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644864_20230202:
         day: 4
         session_kwargs:
-            probe_letters_to_skip: [F] # spikeinterface skipped
             sorted_data_asset_id: d24daced-4973-466a-9b23-275c7bb64c3e
             # was reuploaded, but asset still exists with 00-00-00 time
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644866_20230207:
@@ -56,12 +55,7 @@ ephys:
         day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_660023_20230808:
         day: 1
-        notes: "sync was already running for ~5 hrs before session, then stopped 17 mins into task (6 hr limit)"
-        session_kwargs:
-            invalid_times:
-                - start_time: 21900
-                  stop_time: -1
-                  reason: sync stopped
+        notes: "sync was already running for ~5 hrs before session started, then stopped 17 mins into task (6 hr limit)"
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_660023_20230809:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230814:
@@ -123,7 +117,7 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_681532_20231017:
         day: 2
         session_kwargs:
-            probe_letters_to_skip: [E]
+            probe_letters_to_skip: [D]
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_681532_20231018:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_681532_20231019:
@@ -155,8 +149,6 @@ ephys:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_690706_20231128:
         day: 2
-        session_kwargs:
-            probe_letters_to_skip: [A] # skipped by SpikeInterface sorting
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_690706_20231129:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_690706_20231130:
@@ -210,8 +202,6 @@ ephys:
         day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703880_20240415:
         day: 1
-        session_kwargs:
-            probe_letters_to_skip: [F] # skipped by SpikeInterface sorting
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703880_20240416:
         day: 2
         issues:
@@ -222,8 +212,6 @@ ephys:
         day: 4
         session_kwargs:
             suppress_errors: True # stim_data[1:4] have number of frames mismatch in sync
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/92
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_699847_20240415:
         day: 1
         issues:
@@ -270,6 +258,9 @@ ephys:
         day: 4
         issues:
             - https://github.com/AllenInstitute/npc_sessions/issues/92
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712815_20240520:
+        day: 1
+        excluded_stim_file_names: ["OptoTagging"]
             
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-07-26_14-09-36_620263
