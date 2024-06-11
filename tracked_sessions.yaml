@@ -315,7 +315,13 @@ ephys:
         session_kwargs:
             is_injection_perturbation: True
             probe_letters_to_skip: B # not inserted
-      
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712141_20240611:
+        day: 3
+        session_kwargs:
+            is_injection_perturbation: True
+            probe_letters_to_skip: B # not inserted
+            concatenate_recordings: [recording1, recording2]
+
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-07-26_14-09-36_620263
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-07-27_13-57-17_620263
