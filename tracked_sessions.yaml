@@ -80,7 +80,7 @@ ephys:
         day: 1
         session_kwargs:
             surface_recording_probe_letters_to_skip: BCDE
-            probe_letters_to_skip: AE
+            probe_letters_to_skip: AE # not inserted
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_668755_20230829:
         day: 2
         session_kwargs:
@@ -104,20 +104,28 @@ ephys:
           - https://github.com/AllenInstitute/npc_sessions/issues/55
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230928:
         day: 4
+        session_kwargs:
+            probe_letters_to_skip: DE # not inserted
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_674562_20231002:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_674562_20231003:
         day: 2
+        session_kwargs:
+            probe_letters_to_skip: B # not inserted
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_674562_20231004:
         day: 3
+        session_kwargs:
+            probe_letters_to_skip: C # not inserted
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_674562_20231005:
         day: 4
+        session_kwargs:
+            probe_letters_to_skip: A # not inserted
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_681532_20231016:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_681532_20231017:
         day: 2
         session_kwargs:
-            probe_letters_to_skip: [D]
+            probe_letters_to_skip: D # not inserted
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_681532_20231018:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_681532_20231019:
@@ -137,14 +145,20 @@ ephys:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686740_20231026:
         day: 4
+        session_kwargs:
+            probe_letters_to_skip: EF # not inserted
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_664851_20231113:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_664851_20231114:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_664851_20231115:
         day: 3
+        session_kwargs:
+            probe_letters_to_skip: F # not inserted
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_664851_20231116:
         day: 4
+        session_kwargs:
+            probe_letters_to_skip: F # not inserted
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_690706_20231127:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_690706_20231128:
@@ -186,10 +200,16 @@ ephys:
         day: 1
         issues:
             - https://github.com/AllenInstitute/npc_sessions/issues/96
+        session_kwargs:
+            probe_letters_to_skip: D # not inserted
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240305:
         day: 2
+        session_kwargs:
+            probe_letters_to_skip: C # not inserted
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240306:
         day: 3
+        session_kwargs:
+            probe_letters_to_skip: DF # not inserted
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240307:
         day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703333_20240408:
@@ -202,6 +222,8 @@ ephys:
         day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703880_20240415:
         day: 1
+        session_kwargs:
+            probe_letters_to_skip: B # no dye track
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703880_20240416:
         day: 2
         issues:
@@ -258,6 +280,18 @@ ephys:
         day: 4
         issues:
             - https://github.com/AllenInstitute/npc_sessions/issues/92
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703881_20240509:
+        day: 3
+        insertion_day: 1
+        session_kwargs:
+            is_injection_perturbation: True
+            probe_letters_to_skip: CD # not inserted
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708020_20240517:
+        day: 5
+        insertion_day: 1
+        session_kwargs:
+            is_injection_perturbation: True
+            probe_letters_to_skip: ABDEF # not inserted
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712815_20240520:
         day: 1
         issues:
@@ -268,7 +302,20 @@ ephys:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712815_20240523:
         day: 4
-        
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712141_20240606:
+        day: 1
+        session_kwargs:
+            is_injection_perturbation: True
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712141_20240607:
+        day: 2
+        session_kwargs:
+            is_injection_perturbation: True
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712141_20240610:
+        day: 3
+        session_kwargs:
+            is_injection_perturbation: True
+            probe_letters_to_skip: B # not inserted
+      
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-07-26_14-09-36_620263
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-07-27_13-57-17_620263
