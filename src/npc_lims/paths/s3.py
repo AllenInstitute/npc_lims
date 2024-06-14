@@ -5,6 +5,7 @@ import dataclasses
 import functools
 import operator
 from collections.abc import Iterator
+from copy import deepcopy
 
 import npc_session
 import upath
@@ -63,13 +64,27 @@ def get_raw_data_paths_from_s3(
     first_level_files_directories: Iterator = (
         tuple(directory.iterdir()) for directory in directories
     )
+    first_level_files_directories_unpacked = functools.reduce(operator.add, first_level_files_directories)
+
     top_level_files_directories: tuple = tuple(
         file for file in raw_data_root.iterdir() if not file.is_dir()
     )
-    paths = (
-        functools.reduce(operator.add, first_level_files_directories)
-        + top_level_files_directories
+    
+    # handle change in upload, where there is now ecephys root folder
+    ephys_file_directories: Iterator = (
+        tuple(directory.iterdir()) for directory in first_level_files_directories_unpacked if directory.is_dir() and 'ecephys' in directory.stem
     )
+
+    try:
+        ephys_file_directories_unpacked = functools.reduce(operator.add, ephys_file_directories)
+    except TypeError: # assume older format
+        ephys_file_directories_unpacked = ()
+
+    paths = (
+        first_level_files_directories_unpacked + top_level_files_directories
+    )
+    if ephys_file_directories_unpacked:
+        paths = paths + ephys_file_directories_unpacked
 
     if not paths:
         raise FileNotFoundError(
@@ -210,6 +225,8 @@ def get_recording_dirs_experiment_path_from_s3(
     Examples:
         >>> recording_dirs = get_recording_dirs_experiment_path_from_s3('662892_20230821')
         >>> assert len(recording_dirs) > 0
+        >>> recording_dirs = get_recording_dirs_experiment_path_from_s3('703881_20240509')
+        >>> assert len(recording_dirs) > 0
     """
     raw_data_paths = get_raw_data_paths_from_s3(session)
     recording_dirs = (
@@ -217,6 +234,7 @@ def get_recording_dirs_experiment_path_from_s3(
         for path in raw_data_paths
         if "Record Node" in str(path) and "zarr" not in str(path)
     )
+
     recording_dirs_experiment = tuple(
         next(path.glob("*/recording*")) for path in recording_dirs
     )
