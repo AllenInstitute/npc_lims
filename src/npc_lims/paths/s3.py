@@ -5,7 +5,6 @@ import dataclasses
 import functools
 import operator
 from collections.abc import Iterator
-from copy import deepcopy
 
 import npc_session
 import upath
@@ -64,25 +63,29 @@ def get_raw_data_paths_from_s3(
     first_level_files_directories: Iterator = (
         tuple(directory.iterdir()) for directory in directories
     )
-    first_level_files_directories_unpacked = functools.reduce(operator.add, first_level_files_directories)
+    first_level_files_directories_unpacked = functools.reduce(
+        operator.add, first_level_files_directories
+    )
 
     top_level_files_directories: tuple = tuple(
         file for file in raw_data_root.iterdir() if not file.is_dir()
     )
-    
+
     # handle change in upload, where there is now ecephys root folder
     ephys_file_directories: Iterator = (
-        tuple(directory.iterdir()) for directory in first_level_files_directories_unpacked if directory.is_dir() and 'ecephys' in directory.stem
+        tuple(directory.iterdir())
+        for directory in first_level_files_directories_unpacked
+        if directory.is_dir() and "ecephys" in directory.stem
     )
 
     try:
-        ephys_file_directories_unpacked = functools.reduce(operator.add, ephys_file_directories)
-    except TypeError: # assume older format
+        ephys_file_directories_unpacked = functools.reduce(
+            operator.add, ephys_file_directories
+        )
+    except TypeError:  # assume older format
         ephys_file_directories_unpacked = ()
 
-    paths = (
-        first_level_files_directories_unpacked + top_level_files_directories
-    )
+    paths = first_level_files_directories_unpacked + top_level_files_directories
     if ephys_file_directories_unpacked:
         paths = paths + ephys_file_directories_unpacked
 
