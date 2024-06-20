@@ -129,16 +129,6 @@ EXAMPLE_JOB_STATUS_BAD_RESULT = Computation(
     end_status=ComputationEndStatus.Succeeded,
 )
 
-# EXAMPLE_JOB_STATUS = {
-#     "created": 1710962969,
-#     "has_results": True,
-#     "id": "1c900aa5-dde4-475d-bf50-cc96aff9db39",
-#     "name": "Run With Parameters 962969",
-#     "run_time": 84184,
-#     "state": "completed",
-#     "end_status": "succeeded",
-# }
-
 
 class SessionIndexError(IndexError):
     pass
@@ -169,37 +159,52 @@ def get_codeocean_client() -> CodeOcean:
     )
 
 
-def get_subject_data_assets(subject: str | int) -> DataAssetSearchResults:
+def get_subject_data_assets(
+    subject: str | int,
+    page_size: int = 10,
+    max_pages: int = 1000,
+    offset: int = 0,
+) -> list[DataAsset]:
     """
     All assets associated with a subject ID.
 
     Examples:
         >>> assets = get_subject_data_assets(668759)
-        >>> assert len(assets.results) > 0
+        >>> assert len(assets) > 0
     """
-    return get_codeocean_client().data_assets.search_data_assets(
-        DataAssetSearchParams(
-            query=f"subject id: {npc_session.SubjectRecord(subject)}",
-            limit=1000,  # intentionally high, TODO: add pagination
-            offset=1,
-            archived=False,
-            favorite=False,
+    results = []
+    while offset < max_pages:
+        search_results = get_codeocean_client().data_assets.search_data_assets(
+            DataAssetSearchParams(
+                query=f"subject id: {npc_session.SubjectRecord(subject)}",
+                limit=page_size,  # intentionally high, TODO: add pagination
+                offset=offset * page_size,
+                archived=False,
+                favorite=False,
+            )
         )
-    )
+        results.extend(search_results.results)
+        if not search_results.has_more:
+            break
+        offset += 1
+    else:
+        logger.warning(f"Max pages reached for {subject=}.")
+
+    return results
 
 
 def get_session_data_assets(
     session: str | npc_session.SessionRecord,
 ) -> tuple[DataAsset, ...]:
     session = npc_session.SessionRecord(session)
-    search_results = get_subject_data_assets(session.subject)
+    results = get_subject_data_assets(session.subject)
     try:
         pattern = get_codoecean_session_id(session)
     except ValueError:  # no raw data uploaded
         pattern = f"ecephys_{session.subject}_{session.date}_{npc_session.PARSE_TIME}"
     return tuple(
         result
-        for result in search_results.results
+        for result in results
         if re.match(
             f"{pattern}(_[a-z]*_[a-z]*)*",
             result.name,
@@ -262,9 +267,9 @@ def get_sessions_with_data_assets(
         >>> sessions = get_sessions_with_data_assets(668759)
         >>> assert len(sessions) > 0
     """
-    search_results = get_subject_data_assets(subject)
+    results = get_subject_data_assets(subject)
     sessions = set()
-    for asset in search_results.results:
+    for asset in results:
         try:
             session = npc_session.SessionRecord(asset.name)
         except ValueError:
@@ -397,7 +402,7 @@ def get_codoecean_session_id(
     session = npc_session.SessionRecord(session)
     data_assets = [
         asset
-        for asset in get_subject_data_assets(session.subject).results
+        for asset in get_subject_data_assets(session.subject)
         if asset.name.startswith(f"ecephys_{session.subject}_{session.date}")
     ]
 
@@ -699,16 +704,16 @@ def is_computation_errored(job_id_or_response: str | Computation) -> bool:
 
 
 def get_skipped_probes(session_id: str | npc_session.SessionRecord) -> str:
-    # """Only works with new pipeline output
+    """Only works with new pipeline output
 
-    # Examples:
-    #     >>> get_skipped_probes('702136_2024-03-05')
-    #     'E'
-    #     >>> get_skipped_probes('666986_2023-08-14')
-    #     'B'
-    #     >>> get_skipped_probes('668755_2023-08-28')
-    #     ''
-    # """
+    Examples:
+        >>> get_skipped_probes('702136_2024-03-05')
+        'E'
+        >>> get_skipped_probes('666986_2023-08-14')
+        'B'
+        >>> get_skipped_probes('668755_2023-08-28')
+        ''
+    """
     output = get_sorting_output_text(session_id)
     skipped_probes = ""
     if "skip" not in output.lower():
