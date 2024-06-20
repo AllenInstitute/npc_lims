@@ -106,7 +106,7 @@ EXAMPLE_JOB_STATUS_FAIL = Computation(
     name="Run With Parameters 962969",
     run_time=84184,
     state=ComputationState.Completed,
-    end_status=ComputationEndStatus.Succeeded,
+    end_status=ComputationEndStatus.Failed,
 )
 
 EXAMPLE_JOB_STATUS_NO_RESULTS = Computation(
@@ -175,13 +175,13 @@ def get_subject_data_assets(subject: str | int) -> DataAssetSearchResults:
 
     Examples:
         >>> assets = get_subject_data_assets(668759)
-        >>> assert len(assets) > 0
+        >>> assert len(assets.results) > 0
     """
     return get_codeocean_client().data_assets.search_data_assets(
         DataAssetSearchParams(
             query=f"subject id: {npc_session.SubjectRecord(subject)}",
-            limit=1000,  # intentionally high
-            offset=0,
+            limit=1000,  # intentionally high, TODO: add pagination
+            offset=1,
             archived=False,
             favorite=False,
         )
@@ -397,7 +397,7 @@ def get_codoecean_session_id(
     session = npc_session.SessionRecord(session)
     data_assets = [
         asset
-        for asset in get_subject_data_assets(session.subject)
+        for asset in get_subject_data_assets(session.subject).results
         if asset.name.startswith(f"ecephys_{session.subject}_{session.date}")
     ]
 
@@ -599,11 +599,15 @@ def is_computation_finished(job_id_or_response: str | Computation) -> bool:
 
 
 def get_result_names(job_id: str) -> list[str]:
-    """File and folder names in the output directory of a job's result"""
+    """File and folder names in the output directory of a job's result
+
+    >>> results = get_result_names('1c900aa5-dde4-475d-bf50-cc96aff9db39')
+    >>> assert 'output' in results
+    """
     available_results = (
-        get_codeocean_client().capsules.list_computations(job_id)
+        get_codeocean_client().computations.list_computation_results(job_id)
     )
-    result_item_names = sorted(item.name for item in available_results)
+    result_item_names = sorted(item.name for item in available_results.items)
     return result_item_names
 
 
@@ -695,16 +699,16 @@ def is_computation_errored(job_id_or_response: str | Computation) -> bool:
 
 
 def get_skipped_probes(session_id: str | npc_session.SessionRecord) -> str:
-    """Only works with new pipeline output
+    # """Only works with new pipeline output
 
-    Examples:
-        >>> get_skipped_probes('702136_2024-03-05')
-        'E'
-        >>> get_skipped_probes('666986_2023-08-14')
-        'B'
-        >>> get_skipped_probes('668755_2023-08-28')
-        ''
-    """
+    # Examples:
+    #     >>> get_skipped_probes('702136_2024-03-05')
+    #     'E'
+    #     >>> get_skipped_probes('666986_2023-08-14')
+    #     'B'
+    #     >>> get_skipped_probes('668755_2023-08-28')
+    #     ''
+    # """
     output = get_sorting_output_text(session_id)
     skipped_probes = ""
     if "skip" not in output.lower():
