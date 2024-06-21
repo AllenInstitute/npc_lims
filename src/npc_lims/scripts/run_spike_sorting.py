@@ -11,18 +11,18 @@ from typing import TypedDict, Union
 import npc_session
 import requests
 import upath
-from aind_codeocean_api.models.computations_requests import (
-    ComputationDataAsset,
-    RunCapsuleRequest,
+
+from codeocean.computation import (
+    RunParams,
 )
-from aind_codeocean_api.models.data_assets_requests import (
-    CreateDataAssetRequest,
-    Source,
-    Sources,
+from codeocean.data_asset import (
+    DataAsset, DataAssetParams, ComputationSource, Source
 )
+
 from typing_extensions import TypeAlias
 
 import npc_lims
+
 
 logger = logging.getLogger()
 
@@ -59,12 +59,12 @@ EXAMPLE_JOB_STATUS = {
 }
 
 
-def get_run_sorting_request(session_id: SessionID) -> RunCapsuleRequest:
-    return RunCapsuleRequest(
+def get_run_sorting_request(session_id: SessionID) -> RunParams:
+    return RunParams(
         pipeline_id=SORTING_PIPELINE_ID,
         data_assets=[
-            ComputationDataAsset(
-                id=npc_lims.get_session_raw_data_asset(session_id)["id"],
+            DataAsset(
+                id=npc_lims.get_session_raw_data_asset(session_id).id,
                 mount="ecephys",
             ),
         ],
@@ -111,7 +111,7 @@ def has_bad_docker_asset(session_id: SessionID) -> bool:
     except ValueError:
         return False
     dt: datetime.date = npc_session.DateRecord(
-        sorted_asset["name"].split("sorted_")[-1]
+        sorted_asset.name.split("sorted_")[-1]
     ).dt
     return datetime.date(2024, 3, 12) <= dt < datetime.date(2024, 3, 20)
 
@@ -131,9 +131,12 @@ def get_current_job_status(
     else:
         job_id = read_json()[session_id]["id"]
 
-    job_status = npc_lims.get_job_status(job_id, check_files=True)
+    job_status = npc_lims.computation_to_capsule_computation(
+        npc_lims.get_job_status(job_id, check_files=True)
+    )
+    npc_lims.get_job_status(job_id, check_files=True)
     if assets := job_status.get("data_assets", []):
-        assets.sort(key=lambda asset: asset["id"])  # type: ignore
+        assets.sort(key=lambda asset: asset.id)  # type: ignore
     return job_status
 
 
@@ -160,23 +163,22 @@ def sync_and_get_num_running_jobs() -> int:
 
 
 def start(session_id: SessionID) -> None:
-    response = npc_lims.get_codeocean_client().run_capsule(
+    computation = npc_lims.get_codeocean_client().computations.run_capsule(
         get_run_sorting_request(session_id)
     )
-    response.raise_for_status()
     logger.info(f"Started job for {session_id}")
     add_to_json(session_id, response)
 
 
-def get_create_data_asset_request(session_id: SessionID) -> CreateDataAssetRequest:
+def get_create_data_asset_request(session_id: SessionID) -> DataAssetParams:
     job_status = get_current_job_status(session_id)
     session = npc_session.SessionRecord(session_id)
     asset_name = get_data_asset_name(session_id)
-    return CreateDataAssetRequest(
+    return DataAssetParams(
         name=asset_name,
         mount=asset_name,
         source=Source(
-            computation=Sources.Computation(
+            computation=ComputationSource(
                 id=job_status["id"],
             )
         ),
@@ -204,20 +206,20 @@ def get_data_asset_name(session_id: SessionID) -> str:
 
 
 def create_data_asset(session_id: SessionID) -> None:
-    asset = npc_lims.get_codeocean_client().create_data_asset(
+    asset = npc_lims.get_codeocean_client().data_assets.create_data_asset(
         get_create_data_asset_request(session_id)
     )
-    asset.raise_for_status()
     while not asset_exists(session_id):
         time.sleep(10)
     logger.info(f"Created data asset for {session_id}")
-    npc_lims.set_asset_viewable_for_everyone(asset.json()["id"])
+    npc_lims.set_asset_viewable_for_everyone(asset.id)
 
 
 def asset_exists(session_id: SessionID) -> bool:
     name = get_data_asset_name(session_id)
     return any(
-        asset["name"] == name for asset in npc_lims.get_session_data_assets(session_id)
+        asset.name == name
+        for asset in npc_lims.get_session_data_assets(session_id)
     )
 
 

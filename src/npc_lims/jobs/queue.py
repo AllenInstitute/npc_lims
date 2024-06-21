@@ -7,11 +7,16 @@ import time
 from typing import Union
 
 import npc_session
-from aind_codeocean_api.models.computations_requests import ComputationDataAsset
+from codeocean.data_asset import (
+    DataAssetParams, ComputationSource, Source
+)
+from codeocean.computation import (
+    Computation, ComputationState, ComputationEndStatus)
+
 from typing_extensions import TypeAlias
 
 import npc_lims
-import npc_lims.metadata.codeocean as codeocean
+import npc_lims.metadata.codeocean_utils as codeocean_utils
 import npc_lims.paths.s3 as s3
 
 logger = logging.getLogger()
@@ -55,8 +60,58 @@ def is_session_in_queue(session: SessionID, process_name: str) -> bool:
     return session in read_json(process_name)
 
 
+def computation_end_status_to_str(end_status: ComputationEndStatus) -> str:
+    if end_status == ComputationEndStatus.Succeeded:
+        return "succeeded"
+    elif end_status == ComputationEndStatus.Stopped:
+        return "stopped"
+    elif end_status == ComputationEndStatus.Failed:
+        return "failed"
+    else:
+        raise ValueError(f"Unknown end_status: {end_status}")
+
+
+def computation_state_to_str(state: ComputationState) -> str:
+    """Converts codeocean computation.state to CapsuleComputationAPI state
+
+    >>> computation_end_status_to_str(ComputationEndStatus.SUCCESS)
+    'success'
+    """
+    if state == ComputationState.Initializing:
+        return "initializing"
+    elif state == ComputationState.Running:
+        return "running"
+    elif state == ComputationState.Completed:
+        return "completed"
+    elif state == ComputationState.Failed:
+        return "failed"
+    elif state == ComputationState.Finalizing:
+        return "finalizing"
+    else:
+        raise ValueError(f"Unknown state: {state}")
+
+
+def computation_to_capsule_computation(
+    computation: Computation
+) -> npc_lims.CapsuleComputationAPI:
+    if computation.end_status:
+        end_status = computation_end_status_to_str(computation.end_status)
+    else:
+        end_status = None
+    return npc_lims.CapsuleComputationAPI(
+        created=computation.created,
+        end_status=end_status,
+        has_results=computation.has_results or False,
+        id=computation.id,
+        name=computation.name,
+        run_time=computation.run_time,
+        state=computation_state_to_str(computation.state),
+    )
+
+
 def add_to_json(
-    session_id: SessionID, process_name: str, response: npc_lims.CapsuleComputationAPI
+    session_id: SessionID, process_name: str,
+    response: npc_lims.CapsuleComputationAPI
 ) -> None:
     if not (s3.S3_SCRATCH_ROOT / f"{process_name}.json").exists():
         current = {}
@@ -107,7 +162,8 @@ def get_current_job_status(
         job_id = read_json(process_name)[session_id]["id"]
 
     if job_id != INITIAL_VALUE:
-        job_status = npc_lims.get_job_status(job_id, check_files=True)
+        computation = npc_lims.get_job_status(job_id, check_files=True)
+        job_status = computation_to_capsule_computation(computation)
     else:
         job_status = read_json(process_name)[session_id]
 
@@ -141,17 +197,17 @@ def get_data_asset_name(session_id: SessionID, process_name: str) -> str:
 
 def create_data_asset(session_id: SessionID, job_id: str, process_name: str) -> None:
     data_asset_name = get_data_asset_name(session_id, process_name)
-    asset = codeocean.create_session_data_asset(session_id, job_id, data_asset_name)
+    asset = codeocean_utils.create_session_data_asset(
+        session_id, job_id, data_asset_name)
 
     if asset is None:
         logger.info(f"Failed to create data asset for {session_id}")
         return
 
-    asset.raise_for_status()
     while not asset_exists(session_id, process_name):
         time.sleep(10)
     logger.info(f"Created data asset for {session_id}")
-    npc_lims.set_asset_viewable_for_everyone(asset.json()["id"])
+    npc_lims.set_asset_viewable_for_everyone(asset.id)
 
 
 def asset_exists(session_id: SessionID, process_name: str) -> bool:
@@ -224,19 +280,31 @@ def add_sessions_to_queue(
 
 
 def start(
-    session_id: SessionID, capsule_pipeline_info: codeocean.CapsulePipelineInfo
+    session_id: SessionID,
+    capsule_pipeline_info: codeocean_utils.CapsulePipelineInfo
 ) -> None:
+    session_data_asset = npc_lims.get_session_raw_data_asset(session_id)
     data_assets = [
-        ComputationDataAsset(
-            id=npc_lims.get_session_raw_data_asset(session_id)["id"],
-            mount=npc_lims.get_session_raw_data_asset(session_id)["name"],
+        DataAssetParams(
+            name=session_data_asset.name,
+            source=Source(
+                computation=ComputationSource(
+                    id=session_data_asset.id,
+                )
+            ),
+            mount=session_data_asset.mount,
         ),
     ]
-    response = npc_lims.run_capsule_or_pipeline(
-        data_assets, capsule_pipeline_info.id, capsule_pipeline_info.is_pipeline
+    computation = npc_lims.run_capsule_or_pipeline(
+        data_assets, capsule_pipeline_info.id,
+        capsule_pipeline_info.is_pipeline
     )
     logger.info(f"Started job for {session_id}")
-    add_to_json(session_id, capsule_pipeline_info.process_name, response)
+    add_to_json(
+        session_id,
+        capsule_pipeline_info.process_name,
+        computation_to_capsule_computation(computation),
+    )
 
 
 def process_capsule_or_pipeline_queue(
@@ -253,7 +321,7 @@ def process_capsule_or_pipeline_queue(
     adds jobs to queue for capsule/pipeline, then processes them
     example: process_capsule_or_pipeline_queue('1f8f159a-7670-47a9-baf1-078905fc9c2e', 'sorted', is_pipeline=True)
     """
-    capsule_pipeline_info = codeocean.CapsulePipelineInfo(
+    capsule_pipeline_info = codeocean_utils.CapsulePipelineInfo(
         capsule_or_pipeline_id, process_name, is_pipeline
     )
 

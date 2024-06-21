@@ -14,7 +14,7 @@ import upath
 
 from codeocean import CodeOcean
 from codeocean.data_asset import (
-    DataAsset, DataAssetSearchParams, DataAssetSearchResults, DataAssetType,
+    DataAsset, DataAssetSearchParams, DataAssetType,
     DataAssetOrigin, Permissions, DataAssetParams, ComputationSource, Source
 )
 from codeocean.components import (
