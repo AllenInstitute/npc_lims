@@ -134,7 +134,6 @@ def get_current_job_status(
     job_status = npc_lims.computation_to_capsule_computation(
         npc_lims.get_job_status(job_id, check_files=True)
     )
-    npc_lims.get_job_status(job_id, check_files=True)
     if assets := job_status.get("data_assets", []):
         assets.sort(key=lambda asset: asset.id)  # type: ignore
     return job_status

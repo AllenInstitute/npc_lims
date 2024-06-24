@@ -10,8 +10,6 @@ import npc_session
 from codeocean.data_asset import (
     DataAssetParams, ComputationSource, Source
 )
-from codeocean.computation import (
-    Computation, ComputationState, ComputationEndStatus)
 
 from typing_extensions import TypeAlias
 
@@ -58,55 +56,6 @@ def is_session_in_queue(session: SessionID, process_name: str) -> bool:
         return False
 
     return session in read_json(process_name)
-
-
-def computation_end_status_to_str(end_status: ComputationEndStatus) -> str:
-    if end_status == ComputationEndStatus.Succeeded:
-        return "succeeded"
-    elif end_status == ComputationEndStatus.Stopped:
-        return "stopped"
-    elif end_status == ComputationEndStatus.Failed:
-        return "failed"
-    else:
-        raise ValueError(f"Unknown end_status: {end_status}")
-
-
-def computation_state_to_str(state: ComputationState) -> str:
-    """Converts codeocean computation.state to CapsuleComputationAPI state
-
-    >>> computation_end_status_to_str(ComputationEndStatus.SUCCESS)
-    'success'
-    """
-    if state == ComputationState.Initializing:
-        return "initializing"
-    elif state == ComputationState.Running:
-        return "running"
-    elif state == ComputationState.Completed:
-        return "completed"
-    elif state == ComputationState.Failed:
-        return "failed"
-    elif state == ComputationState.Finalizing:
-        return "finalizing"
-    else:
-        raise ValueError(f"Unknown state: {state}")
-
-
-def computation_to_capsule_computation(
-    computation: Computation
-) -> npc_lims.CapsuleComputationAPI:
-    if computation.end_status:
-        end_status = computation_end_status_to_str(computation.end_status)
-    else:
-        end_status = None
-    return npc_lims.CapsuleComputationAPI(
-        created=computation.created,
-        end_status=end_status,
-        has_results=computation.has_results or False,
-        id=computation.id,
-        name=computation.name,
-        run_time=computation.run_time,
-        state=computation_state_to_str(computation.state),
-    )
 
 
 def add_to_json(
@@ -163,7 +112,7 @@ def get_current_job_status(
 
     if job_id != INITIAL_VALUE:
         computation = npc_lims.get_job_status(job_id, check_files=True)
-        job_status = computation_to_capsule_computation(computation)
+        job_status = npc_lims.computation_to_capsule_computation(computation)
     else:
         job_status = read_json(process_name)[session_id]
 
@@ -303,7 +252,7 @@ def start(
     add_to_json(
         session_id,
         capsule_pipeline_info.process_name,
-        computation_to_capsule_computation(computation),
+        npc_lims.computation_to_capsule_computation(computation),
     )
 
 
