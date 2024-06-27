@@ -272,6 +272,8 @@ ephys:
         day: 2
         issues:
             - https://github.com/AllenInstitute/npc_sessions/issues/100
+        session_kwargs:
+            suppress_errors: True # RFMapping stim has number of frames mismatch in sync
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708016_20240501:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708016_20240502:
@@ -290,10 +292,13 @@ ephys:
         session_kwargs:
             is_injection_perturbation: True
             probe_letters_to_skip: ABDEF # not inserted
+            suppress_errors: True # some stims have number of frames mismatch in sync
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712815_20240520:
         day: 1
         issues:
           - https://github.com/AllenInstitute/npc_sessions/issues/96
+        session_kwargs:
+            suppress_errors: True # some stims have number of frames mismatch in sync
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712815_20240521:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712815_20240522:
