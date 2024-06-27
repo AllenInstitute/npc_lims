@@ -198,8 +198,6 @@ ephys:
             - https://github.com/AllenInstitute/npc_sessions/issues/83
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240304:
         day: 1
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/96
         session_kwargs:
             probe_letters_to_skip: D # not inserted
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240305:
@@ -345,8 +343,8 @@ ephys:
             probe_letters_to_skip: F # not inserted
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_714748_20240625:
         day: 2
-    # - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_714748_20240626:
-    #     day: 3
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_714748_20240626:
+        day: 3
     # - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_714748_20240627:
     #     day: 4
 
