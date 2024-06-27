@@ -569,7 +569,7 @@ def run_capsule_or_pipeline(
             data_assets=data_assets,
         )
 
-    return get_codeocean_client().run_capsule(run_capsule_request)
+    return get_codeocean_client().computations.run_capsule(run_capsule_request)
 
 
 def get_session_capsule_pipeline_data_asset(
@@ -632,7 +632,7 @@ def set_asset_viewable_for_everyone(asset_id: str) -> None:
     get_codeocean_client().data_assets.update_permissions(
         data_asset_id=asset_id,
         permissions=Permissions(
-            everyone=EveryoneRole(viewer=True),
+            everyone=EveryoneRole.Viewer,
             share_assets=True,
         ),
     )
