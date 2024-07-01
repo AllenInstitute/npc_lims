@@ -9,7 +9,9 @@ from collections.abc import Iterator
 import npc_session
 import upath
 
-import npc_lims.metadata.codeocean as codeocean
+from codeocean.data_asset import DataAsset
+
+import npc_lims.metadata.codeocean_utils as codeocean_utils
 import npc_lims.status.tracked_sessions as tracked_sessions
 
 DR_DATA_REPO = upath.UPath(
@@ -28,7 +30,7 @@ CODE_OCEAN_DATA_BUCKET = upath.UPath("s3://codeocean-s3datasetsbucket-1u41qdg42u
 VIDEO_SUFFIXES = (".mp4", ".avi", ".wmv", ".mov")
 
 
-def get_data_asset_s3_path(asset_id: str | codeocean.DataAssetAPI) -> upath.UPath:
+def get_data_asset_s3_path(asset_id: str | DataAsset) -> upath.UPath:
     """Path on s3 that contains actual data for CodeOcean data asset.
 
     - asset `id` is a UUID
@@ -37,9 +39,12 @@ def get_data_asset_s3_path(asset_id: str | codeocean.DataAssetAPI) -> upath.UPat
     """
     bucket = CODE_OCEAN_DATA_BUCKET
     with contextlib.suppress(AttributeError, KeyError, TypeError):
-        bucket = upath.UPath(upath.UPath(f's3://{asset_id["source_bucket"]}'))  # type: ignore[index]
+        if isinstance(asset_id, DataAsset) and asset_id.source_bucket:
+            bucket = upath.UPath(
+                upath.UPath(f's3://{asset_id.source_bucket.bucket}')
+            )
     with contextlib.suppress(AttributeError, KeyError):
-        return bucket / asset_id.get("id")  # type: ignore[union-attr, operator]
+        return bucket / asset_id.id  # type: ignore[union-attr, operator]
     with contextlib.suppress(AttributeError):
         return bucket / asset_id.id  # type: ignore[union-attr]
     return bucket / str(asset_id)
@@ -56,7 +61,7 @@ def get_raw_data_paths_from_s3(
         >>> files = get_raw_data_paths_from_s3 ('668759_20230711')
         >>> assert len(files) > 0
     """
-    raw_data_root = codeocean.get_raw_data_root(session)
+    raw_data_root = codeocean_utils.get_raw_data_root(session)
     directories: Iterator[upath.UPath] = (
         directory for directory in raw_data_root.iterdir() if directory.is_dir()
     )
@@ -109,9 +114,9 @@ def get_sorted_data_paths_from_s3(
         >>> assert len(sorted_data_s3_paths) > 0
     """
     if sorted_data_asset_id is not None:
-        sorted_data_asset = codeocean.get_data_asset(sorted_data_asset_id)
+        sorted_data_asset = codeocean_utils.get_data_asset(sorted_data_asset_id)
     elif session is not None:
-        sorted_data_asset = codeocean.get_session_sorted_data_asset(session)
+        sorted_data_asset = codeocean_utils.get_session_sorted_data_asset(session)
     else:
         raise ValueError("Must provide either session or sorted_data_asset_id")
     return tuple(get_data_asset_s3_path(sorted_data_asset).iterdir())
@@ -127,7 +132,7 @@ def get_dlc_eye_s3_paths(
     8
     """
     session = npc_session.SessionRecord(session)
-    dlc_eye_data_asset = codeocean.get_session_capsule_pipeline_data_asset(
+    dlc_eye_data_asset = codeocean_utils.get_session_capsule_pipeline_data_asset(
         session, "dlc_eye"
     )
 
@@ -144,7 +149,7 @@ def get_dlc_side_s3_paths(
     5
     """
     session = npc_session.SessionRecord(session)
-    dlc_side_data_asset = codeocean.get_session_capsule_pipeline_data_asset(
+    dlc_side_data_asset = codeocean_utils.get_session_capsule_pipeline_data_asset(
         session, "dlc_side"
     )
 
@@ -161,7 +166,7 @@ def get_dlc_face_s3_paths(
     5
     """
     session = npc_session.SessionRecord(session)
-    dlc_face_data_asset = codeocean.get_session_capsule_pipeline_data_asset(
+    dlc_face_data_asset = codeocean_utils.get_session_capsule_pipeline_data_asset(
         session, "dlc_face"
     )
 
@@ -178,7 +183,7 @@ def get_facemap_s3_paths(
     6
     """
     session = npc_session.SessionRecord(session)
-    facemap_data_asset = codeocean.get_session_capsule_pipeline_data_asset(
+    facemap_data_asset = codeocean_utils.get_session_capsule_pipeline_data_asset(
         session, "facemap"
     )
 
