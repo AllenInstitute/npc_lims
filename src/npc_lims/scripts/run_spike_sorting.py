@@ -9,7 +9,6 @@ import time
 from typing import TypedDict, Union
 
 import npc_session
-import requests
 import upath
 
 from codeocean.computation import (
