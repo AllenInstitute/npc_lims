@@ -75,13 +75,16 @@ def read_json() -> dict[str, JobStatus]:
     return json.loads(JSON_PATH.read_bytes())
 
 
-def add_to_json(session_id: SessionID, response: requests.Response) -> None:
+def add_to_json(
+    session_id: SessionID,
+    response: JobStatus | npc_lims.CapsuleComputationAPI,
+) -> None:
     if not JSON_PATH.exists():
         current = {}
     else:
         current = read_json()
     is_new = session_id not in current
-    current.update({session_id: response.json()})
+    current.update({session_id: response})
     JSON_PATH.write_text(json.dumps(current, indent=4))
     logger.info(
         f"{'Added' if is_new else 'Updated'} {session_id} {'to' if is_new else 'in'} json"
@@ -166,7 +169,10 @@ def start(session_id: SessionID) -> None:
         get_run_sorting_request(session_id)
     )
     logger.info(f"Started job for {session_id}")
-    add_to_json(session_id, response)
+    add_to_json(
+        session_id,
+        npc_lims.computation_to_capsule_computation(computation),
+    )
 
 
 def get_create_data_asset_request(session_id: SessionID) -> DataAssetParams:
