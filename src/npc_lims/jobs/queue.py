@@ -91,6 +91,7 @@ def add_to_queue(
             "name": INITIAL_VALUE,
             "run_time": INITIAL_INT_VALUE,
             "state": INITIAL_VALUE,
+            "data_assets": [],
         }
         add_to_json(session, process_name, request_dict)
 
