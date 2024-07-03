@@ -47,7 +47,10 @@ def main() -> None:
     for s in sorted(npc_lims.get_session_info(), key=lambda s: s.date, reverse=True):
         if not s.is_ephys:
             continue
-        aind_session_id = npc_lims.get_codoecean_session_id(s.id)
+        try:
+            aind_session_id = npc_lims.get_codoecean_session_id(s.id)
+        except ValueError:
+            aind_session_id = f"ecephys_{s.date}_??-??-??"
         if s.is_uploaded:
             raw_asset_id = npc_lims.get_session_raw_data_asset(s.id)["id"]
         else:
