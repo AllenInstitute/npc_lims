@@ -50,7 +50,7 @@ def main() -> None:
         try:
             aind_session_id = npc_lims.get_codoecean_session_id(s.id)
         except ValueError:
-            aind_session_id = f"ecephys_{s.date}_??-??-??"
+            aind_session_id = f"ecephys_{s.subject.id}_{s.date}_??-??-??"
         if s.is_uploaded:
             raw_asset_id = npc_lims.get_session_raw_data_asset(s.id)["id"]
         else:
