@@ -8,13 +8,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.156...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.157...HEAD)</small>
+
+### Fixed
+
+- Fix aind session ID for sessions not uploaded ([cdeee8f](https://github.com/AllenInstitute/npc_lims/commit/cdeee8f21c50db3ac6b5c602e5bde3d3a7c30e8e) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.157](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.157) - 2024-07-03
+
+<small>[Compare with v0.1.156](https://github.com/AllenInstitute/npc_lims/compare/v0.1.156...v0.1.157)</small>
 
 ### Fixed
 
 - Fix aind session ID for sessions not uploaded ([2707096](https://github.com/AllenInstitute/npc_lims/commit/27070962492a6df10dc3d242301d9b94f6d4bd8e) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.156](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.156) - 2024-07-03
 
 <small>[Compare with v0.1.155](https://github.com/AllenInstitute/npc_lims/compare/v0.1.155...v0.1.156)</small>
