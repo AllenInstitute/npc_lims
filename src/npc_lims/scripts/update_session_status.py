@@ -53,11 +53,13 @@ def main() -> None:
         else:
             raw_asset_id = ""
         if s.is_surface_channels:
-            surface_channel_asset_id = npc_lims.get_surface_channel_raw_data_asset(s.id)["id"]
+            surface_channel_asset_id = npc_lims.get_surface_channel_raw_data_asset(
+                s.id
+            )["id"]
         else:
             surface_channel_asset_id = ""
         statement += f"\n\t('{s.date}', '{aind_session_id}', '{raw_asset_id}', '{surface_channel_asset_id}', {int(s.is_uploaded)}, {int(s.is_sorted)}, {int(s.is_annotated)}, {int(s.is_dlc_eye)}, {int(s.is_dlc_side)}, {int(s.is_dlc_face)}, {int(s.is_facemap)}, {int(s.is_session_json)}, {int(s.is_rig_json)}),"
-        
+
     statement = statement[:-1] + ";"
     response = connection.Execute(statement)
     if response[1]:

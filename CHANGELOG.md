@@ -8,9 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.154...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.155...HEAD)</small>
+
+### Fixed
+
+- Fix surface channels check for sessions with no assets ([6b82b37](https://github.com/AllenInstitute/npc_lims/commit/6b82b37fd2ecf9da4f7fb306ca860713ef9d3b08) by bjhardcastle).
 
 <!-- insertion marker -->
+## [v0.1.155](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.155) - 2024-06-14
+
+<small>[Compare with v0.1.154](https://github.com/AllenInstitute/npc_lims/compare/v0.1.154...v0.1.155)</small>
+
 ## [v0.1.154](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.154) - 2024-05-18
 
 <small>[Compare with v0.1.153](https://github.com/AllenInstitute/npc_lims/compare/v0.1.153...v0.1.154)</small>
