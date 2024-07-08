@@ -725,20 +725,6 @@ def get_sorting_output_text(session_id: str | npc_session.SessionRecord) -> str:
 
 
 def read_computation_queue(source: Path) -> dict[str, Computation | None]:
-    """
-    >>> dlc_eye_queue = read_json('dlc_eye')
-    >>> len(dlc_eye_queue) > 0
-    True
-    >>> dlc_side_queue = read_json('dlc_side')
-    >>> len(dlc_side_queue) > 0
-    True
-    >>> dlc_face_queue = read_json('dlc_face')
-    >>> len(dlc_face_queue) > 0
-    True
-    >>> facemap_queue = read_json('facemap')
-    >>> len(facemap_queue) > 0
-    True
-    """
     return {
         session_id: (
             Computation.from_dict(computation_dict)
@@ -782,6 +768,25 @@ def add_to_computation_queue(
     logger.info(
         f"{'Added' if is_new else 'Updated'} {session_id} {'to' if is_new else 'in'} json"
     )
+
+
+def get_current_queue_computation(
+    source: Path,
+    job_or_session_id: str,
+) -> Computation | None:
+    try:
+        session_id = npc_session.SessionRecord(job_or_session_id).id
+    except ValueError:
+        current_job_status = None
+    else:
+        current_job_status = read_computation_queue(source)[session_id]
+
+    if current_job_status is not None:
+    # if current_job_status is None:
+        return get_job_status(
+            current_job_status.id, check_files=True)
+    else:
+        return current_job_status
 
 
 if __name__ == "__main__":

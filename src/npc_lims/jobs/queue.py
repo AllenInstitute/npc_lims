@@ -89,19 +89,10 @@ def get_current_job_status(
     """
     >>> status = get_current_job_status('676909_2023-12-13', 'dlc_eye')
     """
-    try:
-        session_id = npc_session.SessionRecord(job_or_session_id).id
-    except ValueError:
-        current_job_status = None
-    else:
-        current_job_status = read_json(process_name)[session_id]
-
-    if current_job_status is not None:
-    # if current_job_status is None:
-        return npc_lims.get_job_status(
-            current_job_status.id, check_files=True)
-    else:
-        return current_job_status
+    return codeocean_utils.get_current_queue_computation(
+        (s3.S3_SCRATCH_ROOT / f"{process_name}.json"),
+        job_or_session_id
+    )
 
 
 def sync_json(process_name: str) -> None:
