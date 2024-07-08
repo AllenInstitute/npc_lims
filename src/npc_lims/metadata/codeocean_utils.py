@@ -3,10 +3,12 @@ from __future__ import annotations
 import functools
 import logging
 import os
+import json
 import re
 import uuid
 from collections.abc import Sequence
-from typing import Any, Literal, NamedTuple
+from typing import Any, Literal, NamedTuple, Union
+from pathlib import Path
 
 import npc_session
 import requests
@@ -720,6 +722,66 @@ def get_sorting_output_text(session_id: str | npc_session.SessionRecord) -> str:
     if output_path is None:
         raise FileNotFoundError(f"No output file found for {session}")
     return output_path.read_text()
+
+
+def read_computation_queue(source: Path) -> dict[str, Computation | None]:
+    """
+    >>> dlc_eye_queue = read_json('dlc_eye')
+    >>> len(dlc_eye_queue) > 0
+    True
+    >>> dlc_side_queue = read_json('dlc_side')
+    >>> len(dlc_side_queue) > 0
+    True
+    >>> dlc_face_queue = read_json('dlc_face')
+    >>> len(dlc_face_queue) > 0
+    True
+    >>> facemap_queue = read_json('facemap')
+    >>> len(facemap_queue) > 0
+    True
+    """
+    return {
+        session_id: (
+            Computation.from_dict(computation_dict)
+            if computation_dict is not None
+            else None
+        )
+        for (session_id, computation_dict) in
+        json.loads(source.read_text()).items()
+    }
+
+
+def serialize_computation(
+    computation: Computation | None
+) -> dict[str, str | int] | None:
+    if computation is None:
+        return None
+    elif isinstance(computation, Computation):
+        return computation.to_dict()
+    else:
+        raise ValueError(f"Invalid computation type: {type(computation)}")
+
+
+SessionID = Union[str, npc_session.SessionRecord]
+
+
+def add_to_computation_queue(
+    source: Path,
+    session_id: SessionID,
+    computation: Computation | None,
+) -> None:
+    if not source.exists():
+        current = {}
+    else:
+        current = read_computation_queue(source)
+
+    is_new = session_id not in current
+    current.update({session_id: serialize_computation(computation)})
+    source.write_text(
+        json.dumps(current, indent=4)
+    )
+    logger.info(
+        f"{'Added' if is_new else 'Updated'} {session_id} {'to' if is_new else 'in'} json"
+    )
 
 
 if __name__ == "__main__":

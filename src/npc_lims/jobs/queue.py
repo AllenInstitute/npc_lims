@@ -47,16 +47,8 @@ def read_json(process_name: str) -> dict[str, Computation | None]:
     >>> len(facemap_queue) > 0
     True
     """
-    return {
-        session_id: (
-            Computation.from_dict(computation_dict)
-            if computation_dict is not None
-            else None
-        )
-        for (session_id, computation_dict) in
-        json.loads(
-            (s3.S3_SCRATCH_ROOT / f"{process_name}.json").read_text()).items()
-    }
+    return codeocean_utils.read_computation_queue(
+        s3.S3_SCRATCH_ROOT / f"{process_name}.json")
 
 
 def is_session_in_queue(session: SessionID, process_name: str) -> bool:
@@ -70,33 +62,15 @@ def is_session_in_queue(session: SessionID, process_name: str) -> bool:
     return session in read_json(process_name)
 
 
-def serialize_computation(
-    computation: Computation | None
-) -> dict[str, str | int] | None:
-    if computation is None:
-        return None
-    elif isinstance(computation, Computation):
-        return computation.to_dict()
-    else:
-        raise ValueError(f"Invalid computation type: {type(computation)}")
-
-
 def add_to_json(
-    session_id: SessionID, process_name: str,
+    session_id: SessionID,
+    process_name: str,
     computation: Computation | None,
 ) -> None:
-    if not (s3.S3_SCRATCH_ROOT / f"{process_name}.json").exists():
-        current = {}
-    else:
-        current = read_json(process_name)
-
-    is_new = session_id not in current
-    current.update({session_id: serialize_computation(computation)})
-    (s3.S3_SCRATCH_ROOT / f"{process_name}.json").write_text(
-        json.dumps(current, indent=4)
-    )
-    logger.info(
-        f"{'Added' if is_new else 'Updated'} {session_id} {'to' if is_new else 'in'} json"
+    return codeocean_utils.add_to_computation_queue(
+        (s3.S3_SCRATCH_ROOT / f"{process_name}.json"),
+        session_id,
+        computation
     )
 
 
@@ -133,7 +107,7 @@ def get_current_job_status(
 def sync_json(process_name: str) -> None:
     current = read_json(process_name)
     for session_id in current:
-        current[session_id] = serialize_computation(
+        current[session_id] = codeocean_utils.serialize_computation(
             get_current_job_status(session_id, process_name))
         logger.info(f"Updated {session_id} status")
 
