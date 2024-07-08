@@ -5,8 +5,8 @@ import logging
 import os
 import re
 import uuid
-from collections.abc import Mapping, Sequence
-from typing import Any, Literal, NamedTuple, TypedDict
+from collections.abc import Sequence
+from typing import Any, Literal, NamedTuple
 
 import npc_session
 import requests
@@ -42,27 +42,6 @@ class CapsulePipelineInfo(NamedTuple):
     id: str
     process_name: str
     is_pipeline: bool
-
-
-class CapsuleComputationAPIDataAsset(TypedDict):
-
-    id: str
-    mount: str
-
-
-class CapsuleComputationAPI(TypedDict):
-    """Result from CodeOceanAPI when querying for computations for a capsule"""
-
-    """As returned from response.json()"""
-    created: int
-    has_results: bool
-    id: str
-    name: str
-    run_time: int
-    state: str
-    end_status: str | None
-    data_assets: list[CapsuleComputationAPIDataAsset]
-    """Does not exist initially"""
 
 
 ResultItemAPI: TypeAlias = dict[Literal["name", "path", "size", "type"], Any]
@@ -163,70 +142,6 @@ def get_codeocean_client() -> CodeOcean:
             default="https://codeocean.allenneuraldynamics.org",
         ),
         token=token,
-    )
-
-
-def computation_end_status_to_str(end_status: ComputationEndStatus) -> str:
-    if end_status == ComputationEndStatus.Succeeded:
-        return "succeeded"
-    elif end_status == ComputationEndStatus.Stopped:
-        return "stopped"
-    elif end_status == ComputationEndStatus.Failed:
-        return "failed"
-    else:
-        raise ValueError(f"Unknown end_status: {end_status}")
-
-
-def computation_state_to_str(state: ComputationState) -> str:
-    """Converts codeocean computation.state to CapsuleComputationAPI state
-
-    >>> computation_state_to_str(ComputationState.Initializing)
-    'initializing'
-    """
-    if state == ComputationState.Initializing:
-        return "initializing"
-    elif state == ComputationState.Running:
-        return "running"
-    elif state == ComputationState.Completed:
-        return "completed"
-    elif state == ComputationState.Failed:
-        return "failed"
-    elif state == ComputationState.Finalizing:
-        return "finalizing"
-    else:
-        raise ValueError(f"Unknown state: {state}")
-
-
-def computation_to_capsule_computation(
-    computation: Computation
-) -> CapsuleComputationAPI:
-    """Converts codeocean Computation to CapsuleComputationAPI
-
-    >>> computation = get_job_status("1c900aa5-dde4-475d-bf50-cc96aff9db39")
-    >>> result = computation_to_capsule_computation(computation)
-    >>> assert result["data_assets"][0].keys() == {"id", "mount"}
-
-    Notes
-    -----
-    - Used for caching in queue.
-    """
-    if computation.end_status:
-        end_status = computation_end_status_to_str(computation.end_status)
-    else:
-        end_status = None
-
-    return CapsuleComputationAPI(
-        created=computation.created,
-        end_status=end_status,
-        has_results=computation.has_results or False,
-        id=computation.id,
-        name=computation.name,
-        run_time=computation.run_time,
-        state=computation_state_to_str(computation.state),
-        data_assets=[
-            {"id": input_data_asset.id, "mount": input_data_asset.mount }
-            for input_data_asset in computation.data_assets or []
-        ],
     )
 
 

@@ -7,6 +7,10 @@ import time
 from typing import Union
 
 import npc_session
+from codeocean.computation import (
+    Computation,
+    ComputationState,
+)
 from codeocean.data_asset import (
     DataAssetParams, ComputationSource, Source
 )
@@ -28,7 +32,7 @@ INITIAL_INT_VALUE = -1
 VIDEO_MODELS = ("dlc_eye", "dlc_side", "dlc_face", "facemap")
 
 
-def read_json(process_name: str) -> dict[str, npc_lims.CapsuleComputationAPI]:
+def read_json(process_name: str) -> dict[str, Computation | None]:
     """
     >>> dlc_eye_queue = read_json('dlc_eye')
     >>> len(dlc_eye_queue) > 0
@@ -43,8 +47,16 @@ def read_json(process_name: str) -> dict[str, npc_lims.CapsuleComputationAPI]:
     >>> len(facemap_queue) > 0
     True
     """
-    with (s3.S3_SCRATCH_ROOT / f"{process_name}.json").open() as f:
-        return json.load(f)
+    return {
+        session_id: (
+            Computation.from_dict(computation_dict)
+            if computation_dict is not None
+            else None
+        )
+        for (session_id, computation_dict) in
+        json.loads(
+            (s3.S3_SCRATCH_ROOT / f"{process_name}.json").read_text()).items()
+    }
 
 
 def is_session_in_queue(session: SessionID, process_name: str) -> bool:
@@ -58,9 +70,20 @@ def is_session_in_queue(session: SessionID, process_name: str) -> bool:
     return session in read_json(process_name)
 
 
+def serialize_computation(
+    computation: Computation | None
+) -> dict[str, str | int] | None:
+    if computation is None:
+        return None
+    elif isinstance(computation, Computation):
+        return computation.to_dict()
+    else:
+        raise ValueError(f"Invalid computation type: {type(computation)}")
+
+
 def add_to_json(
     session_id: SessionID, process_name: str,
-    response: npc_lims.CapsuleComputationAPI
+    computation: Computation | None,
 ) -> None:
     if not (s3.S3_SCRATCH_ROOT / f"{process_name}.json").exists():
         current = {}
@@ -68,7 +91,7 @@ def add_to_json(
         current = read_json(process_name)
 
     is_new = session_id not in current
-    current.update({session_id: response})
+    current.update({session_id: serialize_computation(computation)})
     (s3.S3_SCRATCH_ROOT / f"{process_name}.json").write_text(
         json.dumps(current, indent=4)
     )
@@ -83,47 +106,35 @@ def add_to_queue(
     session = npc_session.SessionRecord(session_id)
 
     if not is_session_in_queue(session_id, process_name):
-        request_dict: npc_lims.CapsuleComputationAPI = {
-            "created": INITIAL_INT_VALUE,
-            "end_status": INITIAL_VALUE,
-            "has_results": False,
-            "id": INITIAL_VALUE,
-            "name": INITIAL_VALUE,
-            "run_time": INITIAL_INT_VALUE,
-            "state": INITIAL_VALUE,
-            "data_assets": [],
-        }
-        add_to_json(session, process_name, request_dict)
+        add_to_json(session, process_name, None)
 
 
 def get_current_job_status(
     job_or_session_id: str, process_name: str
-) -> npc_lims.CapsuleComputationAPI:
+) -> Computation | None:
     """
     >>> status = get_current_job_status('676909_2023-12-13', 'dlc_eye')
-    >>> status.keys()
-    dict_keys(['created', 'data_assets', 'end_status', 'has_results', 'id', 'name', 'run_time', 'state'])
     """
     try:
         session_id = npc_session.SessionRecord(job_or_session_id).id
     except ValueError:
-        job_id = job_or_session_id
+        current_job_status = None
     else:
-        job_id = read_json(process_name)[session_id]["id"]
+        current_job_status = read_json(process_name)[session_id]
 
-    if job_id != INITIAL_VALUE:
-        computation = npc_lims.get_job_status(job_id, check_files=True)
-        job_status = npc_lims.computation_to_capsule_computation(computation)
+    if current_job_status is not None:
+    # if current_job_status is None:
+        return npc_lims.get_job_status(
+            current_job_status.id, check_files=True)
     else:
-        job_status = read_json(process_name)[session_id]
-
-    return job_status
+        return current_job_status
 
 
 def sync_json(process_name: str) -> None:
     current = read_json(process_name)
     for session_id in current:
-        current[session_id] = get_current_job_status(session_id, process_name)
+        current[session_id] = serialize_computation(
+            get_current_job_status(session_id, process_name))
         logger.info(f"Updated {session_id} status")
 
     (s3.S3_SCRATCH_ROOT / f"{process_name}.json").write_text(
@@ -133,11 +144,13 @@ def sync_json(process_name: str) -> None:
 
 
 def get_data_asset_name(session_id: SessionID, process_name: str) -> str:
+    computation = get_current_job_status(session_id, process_name)
+    if computation is None:
+        raise ValueError(f"No computation found for {session_id}")
+
     created_dt = (
         npc_session.DatetimeRecord(
-            datetime.datetime.fromtimestamp(
-                get_current_job_status(session_id, process_name)["created"]
-            )
+            datetime.datetime.fromtimestamp(computation.created)
         )
         .replace(" ", "_")
         .replace(":", "-")
@@ -175,13 +188,15 @@ def create_all_data_assets(process_name: str, overwrite_existing_assets: bool) -
 
     for session_id in read_json(process_name):
         job_status = get_current_job_status(session_id, process_name)
+        if job_status is None:
+            continue
         if npc_lims.is_computation_errored(
             job_status
         ) or not npc_lims.is_computation_finished(job_status):
             continue
         if asset_exists(session_id, process_name) and not overwrite_existing_assets:
             continue
-        create_data_asset(session_id, job_status["id"], process_name)
+        create_data_asset(session_id, job_status.id, process_name)
 
 
 def sync_and_get_num_running_jobs(process_name: str) -> int:
@@ -189,7 +204,8 @@ def sync_and_get_num_running_jobs(process_name: str) -> int:
     return sum(
         1
         for job in read_json(process_name).values()
-        if job["state"] in ("running", "initializing")
+        if job is not None and job.state in
+        (ComputationState.Running, ComputationState.Initializing)
     )
 
 
@@ -198,10 +214,11 @@ def is_started_or_completed(session_id: SessionID, process_name: str) -> bool:
     >>> is_started_or_completed(npc_session.SessionRecord('664851_2023-11-14'), 'dlc_side')
     True
     """
-    return read_json(process_name)[session_id]["state"] in (
-        "running",
-        "initializing",
-        "completed",
+    computation = read_json(process_name)[session_id]
+    return computation is not None and computation.state in (
+        ComputationState.Running,
+        ComputationState.Initializing,
+        ComputationState.Completed,
     )
 
 
@@ -253,7 +270,7 @@ def start(
     add_to_json(
         session_id,
         capsule_pipeline_info.process_name,
-        npc_lims.computation_to_capsule_computation(computation),
+        computation,
     )
 
 
