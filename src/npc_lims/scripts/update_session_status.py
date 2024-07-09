@@ -28,8 +28,9 @@ def main() -> None:
         """
         CREATE TABLE status (
             date DATE,
-            subject_id VARCHAR(30),
-            project VARCHAR DEFAULT NULL,
+            session_id VARCHAR(35),
+            raw_asset_id VARCHAR(36) DEFAULT NULL,
+            surface_channel_asset_id VARCHAR(36) DEFAULT NULL,
             is_uploaded BOOLEAN DEFAULT NULL,
             is_sorted BOOLEAN DEFAULT NULL,
             is_annotated BOOLEAN DEFAULT NULL,
@@ -42,16 +43,31 @@ def main() -> None:
         );
         """
     )
-    statement = "INSERT INTO status (date, subject_id, project, is_uploaded, is_sorted, is_annotated, is_dlc_eye, is_dlc_side, is_dlc_face, is_facemap, is_session_json, is_rig_json) VALUES "
+    statement = "INSERT INTO status (date, session_id, raw_asset_id, surface_channel_asset_id, is_uploaded, is_sorted, is_annotated, is_dlc_eye, is_dlc_side, is_dlc_face, is_facemap, is_session_json, is_rig_json) VALUES "
     for s in sorted(npc_lims.get_session_info(), key=lambda s: s.date, reverse=True):
         if not s.is_ephys:
             continue
-        statement += f"\n\t('{s.date}', '{s.subject}', '{s.project}', {int(s.is_uploaded)}, {int(s.is_sorted)}, {int(s.is_annotated)}, {int(s.is_dlc_eye)}, {int(s.is_dlc_side)}, {int(s.is_dlc_face)}, {int(s.is_facemap)}, {int(s.is_session_json)}, {int(s.is_rig_json)}),"
+        try:
+            aind_session_id = npc_lims.get_codoecean_session_id(s.id)
+        except ValueError:
+            aind_session_id = f"ecephys_{s.subject.id}_{s.date}_??-??-??"
+        if s.is_uploaded:
+            raw_asset_id = npc_lims.get_session_raw_data_asset(s.id)["id"]
+        else:
+            raw_asset_id = ""
+        if s.is_surface_channels:
+            surface_channel_asset_id = npc_lims.get_surface_channel_raw_data_asset(
+                s.id
+            )["id"]
+        else:
+            surface_channel_asset_id = ""
+        statement += f"\n\t('{s.date}', '{aind_session_id}', '{raw_asset_id}', '{surface_channel_asset_id}', {int(s.is_uploaded)}, {int(s.is_sorted)}, {int(s.is_annotated)}, {int(s.is_dlc_eye)}, {int(s.is_dlc_side)}, {int(s.is_dlc_face)}, {int(s.is_facemap)}, {int(s.is_session_json)}, {int(s.is_rig_json)}),"
+
     statement = statement[:-1] + ";"
     response = connection.Execute(statement)
     if response[1]:
         print(
-            f"Error inserting values into `status` table ob dbhub: {response[1].get('error', 'Unknown error')}"
+            f"Error inserting values into `status` table on dbhub: {response[1].get('error', 'Unknown error')}"
         )
     else:
         print(

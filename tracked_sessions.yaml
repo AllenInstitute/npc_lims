@@ -198,8 +198,6 @@ ephys:
             - https://github.com/AllenInstitute/npc_sessions/issues/83
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240304:
         day: 1
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/96
         session_kwargs:
             probe_letters_to_skip: D # not inserted
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240305:
@@ -209,7 +207,7 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240306:
         day: 3
         session_kwargs:
-            probe_letters_to_skip: DF # not inserted
+            probe_letters_to_skip: DF # not inserted. F duplicated in raw data, but unused
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240307:
         day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703333_20240408:
@@ -274,6 +272,8 @@ ephys:
         day: 2
         issues:
             - https://github.com/AllenInstitute/npc_sessions/issues/100
+        session_kwargs:
+            suppress_errors: True # RFMapping stim has number of frames mismatch in sync
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708016_20240501:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708016_20240502:
@@ -292,10 +292,13 @@ ephys:
         session_kwargs:
             is_injection_perturbation: True
             probe_letters_to_skip: ABDEF # not inserted
+            suppress_errors: True # some stims have number of frames mismatch in sync
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712815_20240520:
         day: 1
         issues:
           - https://github.com/AllenInstitute/npc_sessions/issues/96
+        session_kwargs:
+            suppress_errors: True # some stims have number of frames mismatch in sync
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712815_20240521:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712815_20240522:
@@ -321,6 +324,54 @@ ephys:
             is_injection_perturbation: True
             probe_letters_to_skip: B # not inserted
             concatenate_recordings: [recording1, recording2]
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712141_20240612:
+        day: 4
+        session_kwargs:
+            is_injection_perturbation: True
+            probe_letters_to_skip: E # not inserted
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712141_20240613:
+        day: 5
+        session_kwargs:
+            is_injection_perturbation: True
+            probe_letters_to_skip: E # not inserted
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_726088_20240617:
+        day: 1
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_726088_20240618:
+        day: 2
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_726088_20240620:
+        day: 3
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_726088_20240621:
+        day: 4
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_714748_20240624:
+        day: 1
+        session_kwargs:
+            probe_letters_to_skip: F # not inserted
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_714748_20240625:
+        day: 2
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_714748_20240626:
+        day: 3
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_714748_20240627:
+        day: 4
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_714748_20240628:
+        day: 5
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_715706_20240626:
+        day: 1
+        session_kwargs:
+            probe_letters_to_skip: B # not inserted
+            is_injection_perturbation: True
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_715706_20240627:
+        day: 2
+        session_kwargs:
+            probe_letters_to_skip: B # not inserted
+            is_injection_perturbation: True
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_714753_20240701:
+        day: 1
+        session_kwargs:
+            probe_letters_to_skip: F # not inserted
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_714753_20240702:
+        day: 2
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_714753_20240703:
+        day: 3
 
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-07-26_14-09-36_620263

@@ -371,6 +371,8 @@ def get_surface_channel_raw_data_asset(
         raise FileNotFoundError(
             f"{session} has no surface channel data assets"
         ) from None
+    if not raw_assets:
+        raise FileNotFoundError(f"{session} has no surface channel data assets")
     return get_latest_data_asset(raw_assets)
 
 
