@@ -22,7 +22,7 @@ JobID: TypeAlias = str
 INITIAL_VALUE = "Added to Queue"
 INITIAL_INT_VALUE = -1
 
-VIDEO_MODELS = ("dlc_eye", "dlc_side", "dlc_face", "facemap")
+VIDEO_MODELS = ("dlc_eye", "dlc_side", "dlc_face", "facemap", "LPFaceParts")
 
 
 def read_json(process_name: str) -> dict[str, npc_lims.CapsuleComputationAPI]:
