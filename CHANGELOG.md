@@ -8,9 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.158...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.159...HEAD)</small>
+
+### Fixed
+
+- Fix checking upload status for behavior sessions ([c6a73be](https://github.com/AllenInstitute/npc_lims/commit/c6a73be3917393ed5d8041ca5f6d2f5a81965e4f) by bjhardcastle).
 
 <!-- insertion marker -->
+## [v0.1.159](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.159) - 2024-07-04
+
+<small>[Compare with v0.1.158](https://github.com/AllenInstitute/npc_lims/compare/v0.1.158...v0.1.159)</small>
+
 ## [v0.1.158](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.158) - 2024-07-03
 
 <small>[Compare with v0.1.157](https://github.com/AllenInstitute/npc_lims/compare/v0.1.157...v0.1.158)</small>

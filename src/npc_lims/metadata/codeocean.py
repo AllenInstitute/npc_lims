@@ -138,7 +138,26 @@ def get_session_data_assets(
     session: str | npc_session.SessionRecord,
 ) -> tuple[DataAssetAPI, ...]:
     session = npc_session.SessionRecord(session)
-    assets: tuple[dict[Literal['created', 'custom_metadata', 'description', 'files', 'id', 'last_used', 'name', 'size', 'source_bucket', 'state', 'tags', 'type'], Any], ...] = get_subject_data_assets(session.subject)
+    assets: tuple[
+        dict[
+            Literal[
+                "created",
+                "custom_metadata",
+                "description",
+                "files",
+                "id",
+                "last_used",
+                "name",
+                "size",
+                "source_bucket",
+                "state",
+                "tags",
+                "type",
+            ],
+            Any,
+        ],
+        ...,
+    ] = get_subject_data_assets(session.subject)
     try:
         pattern = get_codoecean_session_id(session)
     except ValueError:  # no raw data uploaded
@@ -382,7 +401,8 @@ def get_codoecean_session_id(
     session_assets = session_times_to_assets[session_times[session.idx]]
     session_id = npc_session.extract_aind_session_id(session_assets[0]["name"])
     assert all(
-        npc_session.extract_aind_session_id(asset["name"]) == session_id for asset in session_assets
+        npc_session.extract_aind_session_id(asset["name"]) == session_id
+        for asset in session_assets
     )
     return session_id
 
