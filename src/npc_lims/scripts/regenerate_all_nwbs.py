@@ -1,4 +1,6 @@
-import npc_lims.metadata.codeocean as codeocean
+from codeocean.computation import RunParams
+
+import npc_lims.metadata.codeocean_utils as codeocean_utils
 import npc_lims.status
 
 NWB_EXPORT_CAPSULE_ID = "43f661ab-b29b-4a64-bb70-2d59ac58a9af"
@@ -13,7 +15,7 @@ def main() -> None:
         if session.is_uploaded:
             data_assets.append(
                 {
-                    "id": codeocean.get_session_raw_data_asset(session.id)["id"],
+                    "id": codeocean_utils.get_session_raw_data_asset(session.id).id,
                     "mount": "raw",
                 }
             )
@@ -21,16 +23,18 @@ def main() -> None:
         if session.is_sorted:
             data_assets.append(
                 {
-                    "id": codeocean.get_session_sorted_data_asset(session.id)["id"],
+                    "id": codeocean_utils.get_session_sorted_data_asset(session.id).id,
                     "mount": "sorted",
                 }
             )
 
-        codeocean.get_codeocean_client().run_capsule(
-            capsule_id=NWB_EXPORT_CAPSULE_ID,
-            data_assets=data_assets,
-            parameters=[session.id],
-        ).raise_for_status()
+        codeocean_utils.get_codeocean_client().run_capsule(
+            RunParams(
+                capsule_id=NWB_EXPORT_CAPSULE_ID,
+                data_assets=data_assets,
+                parameters=[session.id],
+            )
+        )
 
 
 if __name__ == "__main__":
