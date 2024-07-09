@@ -92,6 +92,8 @@ class SessionInfo:
         Examples:
             >>> next(session.is_uploaded for session in get_session_info() if session.is_uploaded)
             True
+            >>> get_session_info("behavior_614910_2022-04-04_13-22-02").is_uploaded
+            True
         """
         with contextlib.suppress(FileNotFoundError, ValueError):
             return bool(codeocean.get_raw_data_root(self.id))
@@ -560,6 +562,7 @@ def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInf
 
 
 if __name__ == "__main__":
+    get_session_info("behavior_614910_2022-04-04_13-22-02").is_uploaded
     import doctest
 
     import dotenv

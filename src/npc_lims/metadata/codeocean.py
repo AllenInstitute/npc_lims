@@ -138,7 +138,7 @@ def get_session_data_assets(
     session: str | npc_session.SessionRecord,
 ) -> tuple[DataAssetAPI, ...]:
     session = npc_session.SessionRecord(session)
-    assets = get_subject_data_assets(session.subject)
+    assets: tuple[dict[Literal['created', 'custom_metadata', 'description', 'files', 'id', 'last_used', 'name', 'size', 'source_bucket', 'state', 'tags', 'type'], Any], ...] = get_subject_data_assets(session.subject)
     try:
         pattern = get_codoecean_session_id(session)
     except ValueError:  # no raw data uploaded
@@ -349,23 +349,11 @@ def get_codoecean_session_id(
     data_assets = [
         asset
         for asset in get_subject_data_assets(session.subject)
-        if asset["name"].startswith(f"ecephys_{session.subject}_{session.date}")
-    ]
-
-    def parse_session_id(s: str) -> str:
-        """
-        >>> parse_session_id('ecephys_703333_2024-04-09_13-06-44_sorted_2024-04-12_12-12-12')
-        'ecephys_703333_2024-04-09_13-06-44'
-        """
-        pattern: str = (
-            f"^(?P<id>ecephys_{session.subject}_{session.date}_{npc_session.PARSE_TIME}).*"
+        if (
+            asset["name"].startswith(f"ecephys_{session.subject}_{session.date}")
+            or asset["name"].startswith(f"behavior_{session.subject}_{session.date}")
         )
-        if m := re.match(
-            f"{pattern}",
-            s,
-        ):
-            return m.group("id")
-        raise ValueError(f"Could not extract session ID from {s!r}")
+    ]
 
     asset_names = tuple(asset["name"] for asset in data_assets)
     session_times = sorted(
@@ -392,9 +380,9 @@ def get_codoecean_session_id(
             f"Number of assets is less than expected: cannot extract asset for session idx = {session.idx} from {asset_names = }"
         )
     session_assets = session_times_to_assets[session_times[session.idx]]
-    session_id = parse_session_id(session_assets[0]["name"])
+    session_id = npc_session.extract_aind_session_id(session_assets[0]["name"])
     assert all(
-        parse_session_id(asset["name"]) == session_id for asset in session_assets
+        npc_session.extract_aind_session_id(asset["name"]) == session_id for asset in session_assets
     )
     return session_id
 
