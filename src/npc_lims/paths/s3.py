@@ -151,7 +151,6 @@ def get_dlc_side_s3_paths(
 
     return tuple(get_data_asset_s3_path(dlc_side_data_asset).iterdir())
 
-
 @functools.cache
 def get_lpfaceparts_s3_dir_paths(
     session: str | npc_session.SessionRecord,
@@ -160,15 +159,19 @@ def get_lpfaceparts_s3_dir_paths(
     Gets the lighting pose result directories for facial landmark predicitons
     >>> directories = get_lpfaceparts_s3_dir_paths('702136_2024-03-07')
     >>> len(directories)
-    2
+    4
     """
     session = npc_session.SessionRecord(session)
     lpfaceparts_data_asset = codeocean.get_session_capsule_pipeline_data_asset(
         session, "LPFaceParts"
     )
 
-    return tuple(get_data_asset_s3_path(lpfaceparts_data_asset).iterdir())
-
+    session_LP_s3_path = get_data_asset_s3_path(lpfaceparts_data_asset)
+    session_LP_s3_directory = tuple(session_LP_s3_path.glob(f'*{session}*'))
+    if not session_LP_s3_directory:
+        raise FileNotFoundError(f'{session} has no lightning pose directory in output. Check codeocean')
+    
+    return tuple(session_LP_s3_directory[0].iterdir())
 
 @functools.cache
 def get_lpfaceparts_camera_predictions_s3_paths(
@@ -188,7 +191,7 @@ def get_lpfaceparts_camera_predictions_s3_paths(
 
     session = npc_session.SessionRecord(session)
     paths = get_lpfaceparts_s3_dir_paths(session)
-    camera_path = tuple(path for path in paths if camera in str(path))
+    camera_path = tuple(path for path in paths if camera == path.stem)
     if not camera_path:
         raise FileNotFoundError(
             f"{session} has no {camera} lightning pose output. Check codeocean"

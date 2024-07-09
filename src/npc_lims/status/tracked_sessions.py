@@ -219,6 +219,25 @@ class SessionInfo:
         return bool(asset)
 
     @functools.cached_property
+    def is_LPFaceParts(self) -> bool:
+        """
+        The lightning pose capsule with the facial features has yielded a result for this session
+        >>> get_session_info("702136_2024-03-07").is_LPFaceParts
+        True
+        """
+        if not self.is_video:
+            return False
+        
+        try:
+            asset = codeocean.get_session_capsule_pipeline_data_asset(
+                self.id, "LPFaceParts"
+            )
+        except (FileNotFoundError, ValueError):
+            return False
+        
+        return bool(asset)
+    
+    @functools.cached_property
     def is_sorted(self) -> bool:
         """The AIND sorting pipeline has yielded a Result asset for this
         session.

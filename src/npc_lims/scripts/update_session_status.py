@@ -38,6 +38,7 @@ def main() -> None:
             is_dlc_side BOOLEAN DEFAULT NULL,
             is_dlc_face BOOLEAN DEFAULT NULL,
             is_facemap BOOLEAN DEFAULT NULL, 
+            is_LPFaceParts BOOLEAN DEFAULT NULL,
             is_session_json BOOLEAN DEFAULT NULL,
             is_rig_json BOOLEAN DEFAULT NULL
         );
@@ -61,7 +62,7 @@ def main() -> None:
             )["id"]
         else:
             surface_channel_asset_id = ""
-        statement += f"\n\t('{s.date}', '{aind_session_id}', '{raw_asset_id}', '{surface_channel_asset_id}', {int(s.is_uploaded)}, {int(s.is_sorted)}, {int(s.is_annotated)}, {int(s.is_dlc_eye)}, {int(s.is_dlc_side)}, {int(s.is_dlc_face)}, {int(s.is_facemap)}, {int(s.is_session_json)}, {int(s.is_rig_json)}),"
+        statement += f"\n\t('{s.date}', '{aind_session_id}', '{raw_asset_id}', '{surface_channel_asset_id}', {int(s.is_uploaded)}, {int(s.is_sorted)}, {int(s.is_annotated)}, {int(s.is_dlc_eye)}, {int(s.is_dlc_side)}, {int(s.is_dlc_face)}, {int(s.is_facemap)}, {int(s.is_LPFaceParts)}, {int(s.is_session_json)}, {int(s.is_rig_json)}),"
 
     statement = statement[:-1] + ";"
     response = connection.Execute(statement)
