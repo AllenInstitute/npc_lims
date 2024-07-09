@@ -227,16 +227,16 @@ class SessionInfo:
         """
         if not self.is_video:
             return False
-        
+
         try:
             asset = codeocean.get_session_capsule_pipeline_data_asset(
                 self.id, "LPFaceParts"
             )
         except (FileNotFoundError, ValueError):
             return False
-        
+
         return bool(asset)
-    
+
     @functools.cached_property
     def is_sorted(self) -> bool:
         """The AIND sorting pipeline has yielded a Result asset for this
