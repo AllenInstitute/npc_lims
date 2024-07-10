@@ -7,7 +7,7 @@ authors = [
     { name = "Ben Hardcastle", email = "ben.hardcastle@alleninstitute.org" },
 ]
 dependencies = [
-    "npc_session>=0.1.30",
+    "npc-session>=0.1.36",
     "redis>=4.1.4",
     "aind-codeocean-api>=0.4.0",
     "pydbhub-bjh>=0.0.8",
