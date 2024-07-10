@@ -44,7 +44,7 @@ def main() -> None:
         );
         """
     )
-    statement = "INSERT INTO status (date, session_id, raw_asset_id, surface_channel_asset_id, is_uploaded, is_sorted, is_annotated, is_dlc_eye, is_dlc_side, is_dlc_face, is_facemap, is_session_json, is_rig_json) VALUES "
+    statement = "INSERT INTO status (date, session_id, raw_asset_id, surface_channel_asset_id, is_uploaded, is_sorted, is_annotated, is_dlc_eye, is_dlc_side, is_dlc_face, is_facemap, is_LPFaceParts, is_session_json, is_rig_json) VALUES "
     for s in sorted(npc_lims.get_session_info(), key=lambda s: s.date, reverse=True):
         if not s.is_ephys:
             continue
