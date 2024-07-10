@@ -154,6 +154,42 @@ class SessionInfo:
             return False
         return True
 
+    @functools.cached_property
+    def surface_channels_id(self) -> str:
+        """
+        Examples:
+            
+            >>> get_session_info("714753_2024-07-03").surface_channels_id
+            'ecephys_714753_2024-07-03_13-09-56'
+        """
+        if not self.is_surface_channels:
+            raise ValueError("No surface channel data for this session")
+        return npc_session.AINDSessionRecord(codeocean.get_surface_channel_root(self.id).name)
+    
+    @functools.cached_property
+    def is_surface_channels_sorted(self) -> bool:
+        """The surface channel data has been sorted.
+
+        Examples:
+
+            >>> get_session_info("714753_2024-07-03").is_surface_channels_sorted
+            True
+            >>> get_session_info("714748_2024-06-27").is_surface_channels_sorted
+            False
+        """
+        if not self.is_surface_channels:
+            raise ValueError("No surface channel data for this session")
+        try:
+            return any(
+                asset
+                for asset in codeocean.get_session_data_assets(self.id.with_idx(1))
+                if "sorted" in asset["name"]
+                and asset["files"]
+                > 6  # number of files produced by sorting pipeline when errorred
+            )
+        except (FileNotFoundError, ValueError):
+            return False
+    
     def is_dlc(self, camera: Literal["eye", "side", "face"]) -> bool:
         if not self.is_video:
             return False
@@ -581,7 +617,6 @@ def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInf
 
 
 if __name__ == "__main__":
-    get_session_info("behavior_614910_2022-04-04_13-22-02").is_uploaded
     import doctest
 
     import dotenv
