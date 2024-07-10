@@ -30,22 +30,40 @@ def main() -> None:
             date DATE,
             session_id VARCHAR(35),
             raw_asset_id VARCHAR(36) DEFAULT NULL,
-            surface_channel_asset_id VARCHAR(36) DEFAULT NULL,
+            surface_channels_asset_id VARCHAR(36) DEFAULT NULL,
             is_uploaded BOOLEAN DEFAULT NULL,
             is_sorted BOOLEAN DEFAULT NULL,
             is_annotated BOOLEAN DEFAULT NULL,
             is_dlc_eye BOOLEAN DEFAULT NULL,
             is_dlc_side BOOLEAN DEFAULT NULL,
             is_dlc_face BOOLEAN DEFAULT NULL,
-            is_facemap BOOLEAN DEFAULT NULL, 
+            is_facemap BOOLEAN DEFAULT NULL,
             is_LPFaceParts BOOLEAN DEFAULT NULL,
             is_session_json BOOLEAN DEFAULT NULL,
             is_rig_json BOOLEAN DEFAULT NULL
         );
-        """
+        """ # last column must not have a comma
     )
-    statement = "INSERT INTO status (date, session_id, raw_asset_id, surface_channel_asset_id, is_uploaded, is_sorted, is_annotated, is_dlc_eye, is_dlc_side, is_dlc_face, is_facemap, is_LPFaceParts, is_session_json, is_rig_json) VALUES "
-    for s in sorted(npc_lims.get_session_info(), key=lambda s: s.date, reverse=True):
+    statement = (
+        "INSERT INTO status ("
+        "date, "
+        "session_id, "
+        "raw_asset_id, "
+        "surface_channels_asset_id, "
+        "is_uploaded, "
+        "is_sorted, "
+        "is_annotated, "
+        "is_dlc_eye, "
+        "is_dlc_side, "
+        "is_dlc_face, "
+        "is_facemap, "
+        "is_LPFaceParts, "
+        "is_session_json, "
+        "is_rig_json" # last column must not have a comma
+        ") VALUES "
+    )
+    for s in sorted(npc_lims.get_session_info(), 
+    key=lambda s: s.date, reverse=True):
         if not s.is_ephys:
             continue
         try:
@@ -57,14 +75,29 @@ def main() -> None:
         else:
             raw_asset_id = ""
         if s.is_surface_channels:
-            surface_channel_asset_id = npc_lims.get_surface_channel_raw_data_asset(
+            surface_channels_asset_id = npc_lims.get_surface_channels_raw_data_asset(
                 s.id
             )["id"]
         else:
-            surface_channel_asset_id = ""
-        statement += f"\n\t('{s.date}', '{aind_session_id}', '{raw_asset_id}', '{surface_channel_asset_id}', {int(s.is_uploaded)}, {int(s.is_sorted)}, {int(s.is_annotated)}, {int(s.is_dlc_eye)}, {int(s.is_dlc_side)}, {int(s.is_dlc_face)}, {int(s.is_facemap)}, {int(s.is_LPFaceParts)}, {int(s.is_session_json)}, {int(s.is_rig_json)}),"
+            surface_channels_asset_id = ""
+        statement += (
+            f"\n\t('{s.date}', "
+            f"'{aind_session_id}', "
+            f"'{raw_asset_id}', "
+            f"'{surface_channels_asset_id}', "
+            f"{int(s.is_uploaded)}, "
+            f"{int(s.is_sorted)}, "
+            f"{int(s.is_uploaded)}, "
+            f"{int(s.is_annotated)}, "
+            f"{int(s.is_dlc_eye)}, "
+            f"{int(s.is_dlc_side)}, "
+            f"{int(s.is_dlc_face)}, "
+            f"{int(s.is_facemap)}, "
+            f"{int(s.is_LPFaceParts)}, "
+            f"{int(s.is_session_json)}, "
+            f"{int(s.is_rig_json)});" # last column must have a semi-colon
+        )
 
-    statement = statement[:-1] + ";"
     response = connection.Execute(statement)
     if response[1]:
         print(
