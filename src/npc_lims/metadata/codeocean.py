@@ -325,11 +325,11 @@ def get_surface_channel_root(session: str | npc_session.SessionRecord) -> upath.
         ...
         FileNotFoundError: 649943_20230216 has no surface channel data assets
     """
-    raw_asset = get_surface_channel_raw_data_asset(session)
+    raw_asset = get_surface_channels_raw_data_asset(session)
     return get_path_from_data_asset(raw_asset)
 
 
-def get_surface_channel_raw_data_asset(
+def get_surface_channels_raw_data_asset(
     session: str | npc_session.SessionRecord,
 ) -> DataAssetAPI:
     """For a main ephys session (implict idx=0), find a raw asset corresponding to
