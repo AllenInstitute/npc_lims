@@ -8,13 +8,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.161...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.162...HEAD)</small>
+
+### Fixed
+
+- Fix insert LPFaceParts ([1a0a00d](https://github.com/AllenInstitute/npc_lims/commit/1a0a00d84753964f6ae6ec9f492c0410d5d73a17) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.162](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.162) - 2024-07-09
+
+<small>[Compare with v0.1.161](https://github.com/AllenInstitute/npc_lims/compare/v0.1.161...v0.1.162)</small>
 
 ### Added
 
 - add lightning pose to video model list ([239b660](https://github.com/AllenInstitute/npc_lims/commit/239b660fccc0240726821a5147e36fd782075dfe) by arjun.sridhar12345).
 
-<!-- insertion marker -->
 ## [v0.1.161](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.161) - 2024-07-09
 
 <small>[Compare with v0.1.160](https://github.com/AllenInstitute/npc_lims/compare/v0.1.160...v0.1.161)</small>
