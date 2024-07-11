@@ -129,7 +129,9 @@ def _get_ttl_hash(seconds=2 * 60) -> int:
 
 
 @functools.cache
-def get_subject_data_assets(subject: str | int, ttl_hash: int | None = None) -> tuple[DataAssetAPI, ...]:
+def get_subject_data_assets(
+    subject: str | int, ttl_hash: int | None = None
+) -> tuple[DataAssetAPI, ...]:
     """
     All assets associated with a subject ID.
 
