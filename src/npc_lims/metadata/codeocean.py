@@ -4,6 +4,7 @@ import functools
 import logging
 import os
 import re
+import time
 import uuid
 from collections.abc import Mapping, Sequence
 from typing import Any, Literal, NamedTuple, TypedDict
@@ -119,7 +120,16 @@ def get_codeocean_client() -> aind_codeocean_api.CodeOceanClient:
     )
 
 
-def get_subject_data_assets(subject: str | int) -> tuple[DataAssetAPI, ...]:
+def _get_ttl_hash(seconds=2 * 60) -> int:
+    """Return the same value within `seconds` time period
+
+    From https://stackoverflow.com/a/55900800
+    """
+    return round(time.time() / seconds)
+
+
+@functools.cache
+def get_subject_data_assets(subject: str | int, ttl_hash: int | None = None) -> tuple[DataAssetAPI, ...]:
     """
     All assets associated with a subject ID.
 
@@ -127,6 +137,7 @@ def get_subject_data_assets(subject: str | int) -> tuple[DataAssetAPI, ...]:
         >>> assets = get_subject_data_assets(668759)
         >>> assert len(assets) > 0
     """
+    del ttl_hash  # only used for functools.cache
     response = get_codeocean_client().search_all_data_assets(
         query=f"subject id: {npc_session.SubjectRecord(subject)}"
     )
@@ -157,7 +168,7 @@ def get_session_data_assets(
             Any,
         ],
         ...,
-    ] = get_subject_data_assets(session.subject)
+    ] = get_subject_data_assets(session.subject, ttl_hash=_get_ttl_hash())
     try:
         pattern = get_codoecean_session_id(session)
     except ValueError:  # no raw data uploaded
@@ -227,7 +238,7 @@ def get_sessions_with_data_assets(
         >>> sessions = get_sessions_with_data_assets(668759)
         >>> assert len(sessions) > 0
     """
-    assets = get_subject_data_assets(subject)
+    assets = get_subject_data_assets(subject, ttl_hash=_get_ttl_hash())
     sessions = set()
     for asset in assets:
         try:
@@ -367,7 +378,7 @@ def get_codoecean_session_id(
     session = npc_session.SessionRecord(session)
     data_assets = [
         asset
-        for asset in get_subject_data_assets(session.subject)
+        for asset in get_subject_data_assets(session.subject, ttl_hash=_get_ttl_hash())
         if (
             asset["name"].startswith(f"ecephys_{session.subject}_{session.date}")
             or asset["name"].startswith(f"behavior_{session.subject}_{session.date}")
