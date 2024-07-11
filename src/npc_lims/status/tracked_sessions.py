@@ -534,22 +534,25 @@ def _get_ttl_hash(seconds=10 * 60) -> int:
     return round(time.time() / seconds)
 
 @functools.cache
-def _get_session_info_from_data_repo(ttl_hash: int | None = None) -> Iterator[SessionInfo]:
+def _get_session_info_from_data_repo(ttl_hash: int | None = None) -> tuple[SessionInfo, ...]:
     """
     Examples:
 
-    >>> session_info = next(_get_session_info_from_data_repo())
+    >>> assert _get_session_info_from_data_repo()
     """
     del ttl_hash  # to emphasize we don't use it and to satisfy mypy
+    all_info = []
     for subject, sessions in behavior_sessions.get_sessions_from_training_db().items():
         for session in sessions:
-            yield SessionInfo(
+            info = SessionInfo(
                 id=behavior_sessions.get_session_id_from_db_row(subject, session),
                 project=npc_session.ProjectRecord("DynamicRouting"),
                 is_ephys=False,  #! not enough info
                 is_sync=False,  #! not enough info
                 allen_path=DR_DATA_REPO_ISILON / str(subject),
             )
+            all_info.append(info)
+    return tuple(all_info)
 
 @functools.cache
 def _get_session_info_from_file(ttl_hash: int | None = None) -> tuple[SessionInfo, ...]:
@@ -629,6 +632,7 @@ def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInf
 
 
 if __name__ == "__main__":
+    get_session_info("behavior_614910_2022-04-04_13-22-02").is_uploaded
     import doctest
 
     import dotenv
