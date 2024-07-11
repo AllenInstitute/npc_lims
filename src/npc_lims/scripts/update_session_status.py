@@ -64,9 +64,7 @@ def main() -> None:
         "is_rig_json"  # last column must not have a comma
         ") VALUES "
     )
-    for s in sorted(npc_lims.get_session_info(), key=lambda s: s.date, reverse=True):
-        if not s.is_ephys:
-            continue
+    for s in sorted(npc_lims.get_session_info(is_ephys=True), key=lambda s: s.date, reverse=True):
         try:
             aind_session_id = npc_lims.get_codoecean_session_id(s.id)
         except ValueError:
@@ -98,9 +96,10 @@ def main() -> None:
             f"{int(s.is_facemap)}, "
             f"{int(s.is_LPFaceParts)}, "
             f"{int(s.is_session_json)}, "
-            f"{int(s.is_rig_json)});"  # last column must have a semi-colon
+            f"{int(s.is_rig_json)})," # last column should not have a trailing space
         )
 
+    statement = statement.rstrip(", ") + ";"
     response = connection.Execute(statement)
     if response[1]:
         print(
