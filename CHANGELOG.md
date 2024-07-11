@@ -8,13 +8,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.162...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.163...HEAD)</small>
+
+### Added
+
+- Add surface channel sorted status ([211adb2](https://github.com/AllenInstitute/npc_lims/commit/211adb21c5c0d52d87ab598d3461de7cfd6ec564) by bjhardcastle).
+- Add surface channels sorted status property ([be0b2a1](https://github.com/AllenInstitute/npc_lims/commit/be0b2a1eb7525a2b23cb477542366799383a025a) by bjhardcastle).
+
+### Fixed
+
+- Fix test ([925e7e0](https://github.com/AllenInstitute/npc_lims/commit/925e7e02b3e7bb256e71e860e6c10dcbc9d6ce95) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.163](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.163) - 2024-07-10
+
+<small>[Compare with v0.1.162](https://github.com/AllenInstitute/npc_lims/compare/v0.1.162...v0.1.163)</small>
 
 ### Fixed
 
 - Fix insert LPFaceParts ([1a0a00d](https://github.com/AllenInstitute/npc_lims/commit/1a0a00d84753964f6ae6ec9f492c0410d5d73a17) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.162](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.162) - 2024-07-09
 
 <small>[Compare with v0.1.161](https://github.com/AllenInstitute/npc_lims/compare/v0.1.161...v0.1.162)</small>

@@ -43,7 +43,7 @@ def main() -> None:
             is_session_json BOOLEAN DEFAULT NULL,
             is_rig_json BOOLEAN DEFAULT NULL
         );
-        """ # last column must not have a comma
+        """  # last column must not have a comma
     )
     statement = (
         "INSERT INTO status ("
@@ -61,11 +61,10 @@ def main() -> None:
         "is_facemap, "
         "is_LPFaceParts, "
         "is_session_json, "
-        "is_rig_json" # last column must not have a comma
+        "is_rig_json"  # last column must not have a comma
         ") VALUES "
     )
-    for s in sorted(npc_lims.get_session_info(), 
-    key=lambda s: s.date, reverse=True):
+    for s in sorted(npc_lims.get_session_info(), key=lambda s: s.date, reverse=True):
         if not s.is_ephys:
             continue
         try:
@@ -99,7 +98,7 @@ def main() -> None:
             f"{int(s.is_facemap)}, "
             f"{int(s.is_LPFaceParts)}, "
             f"{int(s.is_session_json)}, "
-            f"{int(s.is_rig_json)});" # last column must have a semi-colon
+            f"{int(s.is_rig_json)});"  # last column must have a semi-colon
         )
 
     response = connection.Execute(statement)

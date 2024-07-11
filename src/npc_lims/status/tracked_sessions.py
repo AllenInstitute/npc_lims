@@ -158,14 +158,16 @@ class SessionInfo:
     def surface_channels_id(self) -> str:
         """
         Examples:
-            
+
             >>> get_session_info("714753_2024-07-03").surface_channels_id
             'ecephys_714753_2024-07-03_13-09-56'
         """
         if not self.is_surface_channels:
             raise ValueError("No surface channel data for this session")
-        return npc_session.AINDSessionRecord(codeocean.get_surface_channel_root(self.id).name)
-    
+        return npc_session.AINDSessionRecord(
+            codeocean.get_surface_channel_root(self.id).name
+        )
+
     @functools.cached_property
     def is_surface_channels_sorted(self) -> bool:
         """The surface channel data has been sorted.
@@ -187,7 +189,7 @@ class SessionInfo:
             )
         except (FileNotFoundError, ValueError):
             return False
-    
+
     def is_dlc(self, camera: Literal["eye", "side", "face"]) -> bool:
         if not self.is_video:
             return False
