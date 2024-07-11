@@ -4,6 +4,7 @@ import contextlib
 import dataclasses
 import functools
 import json
+import time
 import typing
 from collections.abc import Iterator, Mapping, MutableSequence
 from typing import Any, Literal, TypedDict
@@ -404,6 +405,7 @@ def get_session_info(
 
 def get_session_info(
     session: str | npc_session.SessionRecord | SessionInfo | None = None,
+    ttl_seconds: int = 10 * 60,
     **session_filter_kwargs: Unpack[SessionFilterKwargs],
 ) -> tuple[SessionInfo, ...] | SessionInfo:
     """Quickly get a sequence of all tracked sessions.
@@ -428,9 +430,9 @@ def get_session_info(
     if isinstance(session, SessionInfo):
         session = session.id
     tracked_sessions = set(
-        _get_session_info_from_file(),
+        _get_session_info_from_file(ttl_hash=_get_ttl_hash(seconds=ttl_seconds)),
     )
-    tracked_sessions.update(_get_session_info_from_data_repo())
+    tracked_sessions.update(_get_session_info_from_data_repo(ttl_hash=_get_ttl_hash(seconds=ttl_seconds)))
     if session is None:
         filtered_sessions = (
             s
@@ -524,12 +526,21 @@ def get_session_kwargs(
     return {session.id: session.session_kwargs for session in get_session_info()}
 
 
-def _get_session_info_from_data_repo() -> Iterator[SessionInfo]:
+def _get_ttl_hash(seconds=10 * 60) -> int:
+    """Return the same value within `seconds` time period
+    
+    From https://stackoverflow.com/a/55900800
+    """
+    return round(time.time() / seconds)
+
+@functools.cache
+def _get_session_info_from_data_repo(ttl_hash: int | None = None) -> Iterator[SessionInfo]:
     """
     Examples:
 
     >>> session_info = next(_get_session_info_from_data_repo())
     """
+    del ttl_hash  # to emphasize we don't use it and to satisfy mypy
     for subject, sessions in behavior_sessions.get_sessions_from_training_db().items():
         for session in sessions:
             yield SessionInfo(
@@ -540,8 +551,8 @@ def _get_session_info_from_data_repo() -> Iterator[SessionInfo]:
                 allen_path=DR_DATA_REPO_ISILON / str(subject),
             )
 
-
-def _get_session_info_from_file() -> tuple[SessionInfo, ...]:
+@functools.cache
+def _get_session_info_from_file(ttl_hash: int | None = None) -> tuple[SessionInfo, ...]:
     """Load yaml and parse sessions.
     - currently assumes all sessions include behavior data
 
@@ -549,11 +560,12 @@ def _get_session_info_from_file() -> tuple[SessionInfo, ...]:
 
         >>> assert len(_get_session_info_from_file()) > 0
     """
+    del ttl_hash  # to emphasize we don't use it and to satisfy mypy
     f = _session_info_from_file_contents
     if _TRACKED_SESSIONS_FILE.suffix == ".json":
-        return f(json.loads(_TRACKED_SESSIONS_FILE.read_text()))
+        return f(contents=json.loads(_TRACKED_SESSIONS_FILE.read_text()))
     if _TRACKED_SESSIONS_FILE.suffix == ".yaml":
-        return f(yaml.load(_TRACKED_SESSIONS_FILE.read_bytes(), Loader=yaml.FullLoader))
+        return f(contents=yaml.load(_TRACKED_SESSIONS_FILE.read_bytes(), Loader=yaml.FullLoader))
     raise ValueError(
         f"Add loader for {_TRACKED_SESSIONS_FILE.suffix}"
     )  # pragma: no cover
