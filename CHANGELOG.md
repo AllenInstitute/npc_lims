@@ -8,7 +8,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.163...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.164...HEAD)</small>
+
+### Fixed
+
+- Fix cached iteratator bug ([a2a578d](https://github.com/AllenInstitute/npc_lims/commit/a2a578db071280a79811a08ec1f93143d620354a) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.164](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.164) - 2024-07-11
+
+<small>[Compare with v0.1.163](https://github.com/AllenInstitute/npc_lims/compare/v0.1.163...v0.1.164)</small>
 
 ### Added
 
@@ -19,7 +28,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Fix test ([925e7e0](https://github.com/AllenInstitute/npc_lims/commit/925e7e02b3e7bb256e71e860e6c10dcbc9d6ce95) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.163](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.163) - 2024-07-10
 
 <small>[Compare with v0.1.162](https://github.com/AllenInstitute/npc_lims/compare/v0.1.162...v0.1.163)</small>

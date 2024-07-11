@@ -6,7 +6,7 @@ import functools
 import json
 import time
 import typing
-from collections.abc import Iterator, Mapping, MutableSequence
+from collections.abc import Mapping, MutableSequence
 from typing import Any, Literal, TypedDict
 
 import npc_session
@@ -432,7 +432,9 @@ def get_session_info(
     tracked_sessions = set(
         _get_session_info_from_file(ttl_hash=_get_ttl_hash(seconds=ttl_seconds)),
     )
-    tracked_sessions.update(_get_session_info_from_data_repo(ttl_hash=_get_ttl_hash(seconds=ttl_seconds)))
+    tracked_sessions.update(
+        _get_session_info_from_data_repo(ttl_hash=_get_ttl_hash(seconds=ttl_seconds))
+    )
     if session is None:
         filtered_sessions = (
             s
@@ -528,13 +530,16 @@ def get_session_kwargs(
 
 def _get_ttl_hash(seconds=10 * 60) -> int:
     """Return the same value within `seconds` time period
-    
+
     From https://stackoverflow.com/a/55900800
     """
     return round(time.time() / seconds)
 
+
 @functools.cache
-def _get_session_info_from_data_repo(ttl_hash: int | None = None) -> tuple[SessionInfo, ...]:
+def _get_session_info_from_data_repo(
+    ttl_hash: int | None = None,
+) -> tuple[SessionInfo, ...]:
     """
     Examples:
 
@@ -554,6 +559,7 @@ def _get_session_info_from_data_repo(ttl_hash: int | None = None) -> tuple[Sessi
             all_info.append(info)
     return tuple(all_info)
 
+
 @functools.cache
 def _get_session_info_from_file(ttl_hash: int | None = None) -> tuple[SessionInfo, ...]:
     """Load yaml and parse sessions.
@@ -568,7 +574,11 @@ def _get_session_info_from_file(ttl_hash: int | None = None) -> tuple[SessionInf
     if _TRACKED_SESSIONS_FILE.suffix == ".json":
         return f(contents=json.loads(_TRACKED_SESSIONS_FILE.read_text()))
     if _TRACKED_SESSIONS_FILE.suffix == ".yaml":
-        return f(contents=yaml.load(_TRACKED_SESSIONS_FILE.read_bytes(), Loader=yaml.FullLoader))
+        return f(
+            contents=yaml.load(
+                _TRACKED_SESSIONS_FILE.read_bytes(), Loader=yaml.FullLoader
+            )
+        )
     raise ValueError(
         f"Add loader for {_TRACKED_SESSIONS_FILE.suffix}"
     )  # pragma: no cover
