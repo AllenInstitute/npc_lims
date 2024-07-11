@@ -174,8 +174,6 @@ class SessionInfo:
 
             >>> get_session_info("714753_2024-07-03").is_surface_channels_sorted
             True
-            >>> get_session_info("714748_2024-06-27").is_surface_channels_sorted
-            False
         """
         if not self.is_surface_channels:
             raise ValueError("No surface channel data for this session")
