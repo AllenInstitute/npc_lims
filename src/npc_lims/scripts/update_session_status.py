@@ -33,6 +33,7 @@ def main() -> None:
             surface_channels_asset_id VARCHAR(36) DEFAULT NULL,
             is_uploaded BOOLEAN DEFAULT NULL,
             is_sorted BOOLEAN DEFAULT NULL,
+            is_surface_channels_sorted BOOLEAN DEFAULT NULL,
             is_annotated BOOLEAN DEFAULT NULL,
             is_dlc_eye BOOLEAN DEFAULT NULL,
             is_dlc_side BOOLEAN DEFAULT NULL,
@@ -52,6 +53,7 @@ def main() -> None:
         "surface_channels_asset_id, "
         "is_uploaded, "
         "is_sorted, "
+        "is_surface_channels_sorted, "
         "is_annotated, "
         "is_dlc_eye, "
         "is_dlc_side, "
@@ -78,8 +80,10 @@ def main() -> None:
             surface_channels_asset_id = npc_lims.get_surface_channels_raw_data_asset(
                 s.id
             )["id"]
+            is_surface_channels_sorted = s.is_surface_channels_sorted
         else:
             surface_channels_asset_id = ""
+            is_surface_channels_sorted = None
         statement += (
             f"\n\t('{s.date}', "
             f"'{aind_session_id}', "
@@ -87,7 +91,7 @@ def main() -> None:
             f"'{surface_channels_asset_id}', "
             f"{int(s.is_uploaded)}, "
             f"{int(s.is_sorted)}, "
-            f"{int(s.is_uploaded)}, "
+            f"{int(is_surface_channels_sorted) if is_surface_channels_sorted is not None else 'NULL'}, "
             f"{int(s.is_annotated)}, "
             f"{int(s.is_dlc_eye)}, "
             f"{int(s.is_dlc_side)}, "
