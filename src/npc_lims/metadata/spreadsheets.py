@@ -34,7 +34,7 @@ def get_training_db(nsb: bool = False) -> sqlite3.Connection:
         path for path in get_training_sqlite_paths() if ("NSB" in path.name) == nsb
     )
     db_path.write_bytes(s3_path.read_bytes())
-    con = sqlite3.connect(db_path, check_same_thread=False) # this is read-only
+    con = sqlite3.connect(db_path, check_same_thread=False)  # this is read-only
 
     def dict_factory(cursor, row):
         d = {}
