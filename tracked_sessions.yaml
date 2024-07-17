@@ -411,10 +411,11 @@ ephys:
             is_injection_perturbation: True
             probe_letters_to_skip: BCD # not inserted
             is_production: False
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_715710_20240715:
-        day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_715710_20240715:
-        day: 2
+    # problems with uploading new probe part number
+    # - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_715710_20240715:
+    #     day: 1
+    # - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_715710_20240715:
+    #     day: 2
 
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-07-26_14-09-36_620263:
