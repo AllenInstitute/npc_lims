@@ -354,6 +354,8 @@ ephys:
             is_production: False
             probe_letters_to_skip: B # not inserted
             concatenate_recordings: [recording1, recording2]
+        issues:
+            - https://github.com/AllenInstitute/npc_sessions/issues/113
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712141_20240612:
         day: 4
         session_kwargs:
