@@ -226,6 +226,8 @@ ephys:
         day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703333_20240408:
         day: 1
+        session_kwargs:
+            probe_letters_to_skip: B # bad connection
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703333_20240409:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703333_20240410:
@@ -272,15 +274,15 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_706401_20240423:
         day: 2
         session_kwargs:
-            probe_letters_to_skip: BE
+            probe_letters_to_skip: BE # B not recorded, E empty 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_706401_20240424:
         day: 3
         session_kwargs:
-            probe_letters_to_skip: BE
+            probe_letters_to_skip: BE # B empty, E < 10 s recording
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_706401_20240425:
         day: 4
         session_kwargs:
-            probe_letters_to_skip: BE
+            probe_letters_to_skip: BE # both empty
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708016_20240429:
         day: 1
         issues:
@@ -326,6 +328,9 @@ ephys:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712815_20240523:
         day: 4
+        session_kwargs:
+            probe_letters_to_skip:
+                B # all noise
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712141_20240605:
         day: 1
         session_kwargs:
@@ -405,6 +410,8 @@ ephys:
         day: 4
         session_kwargs:
             probe_letters_to_skip: B # not recorded
+        issues:
+            https://github.com/AllenInstitute/npc_sessions/issues/100
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712138_20240712:
         day: 1
         session_kwargs:
@@ -466,7 +473,9 @@ ephys:
     #   ^ doesn't exist
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2023-02-27_08-14-30_649944
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2023-02-28_09-33-43_649944
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2023-05-15_09-50-06_662983
+    - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2023-05-15_09-50-06_662983:
+        session_kwargs:
+            probe_letters_to_skip: B # bad connection
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2023-05-16_10-25-25_662983
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2023-07-11_10-07-43_668759
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2023-07-12_10-50-07_668759
