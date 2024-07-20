@@ -195,15 +195,21 @@ ephys:
         day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231211:
         day: 1
+        session_kwargs:
+            is_context_naive: True
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231212:
         day: 2
         notes: post-task Spontaneous & OptoTagging ran twice - ephys stopped halfway through final OptoTagging
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231212:
-        day: 2
+        session_kwargs:
+            is_context_naive: True
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231213:
         day: 3
+        session_kwargs:
+            is_context_naive: True
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231214:
         day: 4
+        session_kwargs:
+            is_context_naive: True
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702131_20240226:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702131_20240227:
@@ -247,7 +253,8 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703880_20240418:
         day: 4
         session_kwargs:
-            suppress_errors: True # stim_data[1:4] have number of frames mismatch in sync
+            suppress_errors: True # old var name for back compat - remove after 2024-09-01
+            ignore_stim_errors: True # stim_data[1:4] have number of frames mismatch in sync
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_699847_20240415:
         day: 1
         issues:
@@ -290,10 +297,9 @@ ephys:
             - https://github.com/AllenInstitute/npc_sessions/issues/108
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708016_20240430:
         day: 2
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/100
         session_kwargs:
-            suppress_errors: True # RFMapping stim has number of frames mismatch in sync
+            suppress_errors: True # old var name for back compat - remove after 2024-09-01
+            ignore_stim_errors: True # RFMapping stim has number of frames mismatch in sync
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708016_20240501:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708016_20240502:
@@ -314,13 +320,13 @@ ephys:
             is_injection_perturbation: True
             is_production: False
             probe_letters_to_skip: ABDEF # not inserted
-            suppress_errors: True # some stims have number of frames mismatch in sync
+        issues:
+          - https://github.com/AllenInstitute/npc_sessions/issues/100
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712815_20240520:
         day: 1
         issues:
           - https://github.com/AllenInstitute/npc_sessions/issues/96
-        session_kwargs:
-            suppress_errors: True # some stims have number of frames mismatch in sync
+          - https://github.com/AllenInstitute/npc_sessions/issues/100
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712815_20240521:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712815_20240522:
@@ -353,6 +359,8 @@ ephys:
             is_production: False
             probe_letters_to_skip: B # not inserted
             concatenate_recordings: [recording1, recording2]
+            suppress_errors: True # old var name for back compat - remove after 2024-09-01
+            ignore_stim_errors: True # RFMapping stim has number of frames mismatch in sync
         issues:
             - https://github.com/AllenInstitute/npc_sessions/issues/113
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712141_20240612:
@@ -387,6 +395,8 @@ ephys:
         day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_714748_20240628:
         day: 5
+        issues:
+            https://github.com/AllenInstitute/npc_sessions/issues/100
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_715706_20240626:
         day: 1
         session_kwargs:
@@ -421,11 +431,16 @@ ephys:
             is_injection_perturbation: True
             probe_letters_to_skip: BCD # not inserted
             is_production: False
-    # problems with uploading new probe part number
-    # - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_715710_20240715:
-    #     day: 1
-    # - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_715710_20240715:
-    #     day: 2
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_715710_20240715:
+        day: 1
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_715710_20240716:
+        day: 2
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_715710_20240717:
+        day: 3
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_715710_20240718:
+        day: 4
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_715710_20240719:
+        day: 5
 
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-07-26_14-09-36_620263:
