@@ -392,6 +392,8 @@ ephys:
             probe_letters_to_skip: F # not inserted
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_714748_20240625:
         day: 2
+        issues:
+            https://github.com/AllenInstitute/npc_sessions/issues/115
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_714748_20240626:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_714748_20240627:
