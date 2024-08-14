@@ -15,7 +15,7 @@ import yaml
 from typing_extensions import NotRequired, TypeAlias, Unpack
 
 import npc_lims.exceptions as exceptions
-import npc_lims.metadata.codeocean as codeocean
+import npc_lims.metadata.codeocean_utils as codeocean_utils
 import npc_lims.paths.s3 as s3
 import npc_lims.status.behavior_sessions as behavior_sessions
 
@@ -73,7 +73,7 @@ class SessionInfo:
     @functools.cached_property
     def cloud_path(self) -> upath.UPath | None:
         with contextlib.suppress(FileNotFoundError, ValueError):
-            return codeocean.get_raw_data_root(self.id)
+            return codeocean_utils.get_raw_data_root(self.id)
         if DR_DATA_REPO_ISILON in self.allen_path.parents:
             return s3.DR_DATA_REPO / self.allen_path.relative_to(DR_DATA_REPO_ISILON)
         return None
@@ -97,7 +97,7 @@ class SessionInfo:
             True
         """
         with contextlib.suppress(FileNotFoundError, ValueError):
-            return bool(codeocean.get_raw_data_root(self.id))
+            return bool(codeocean_utils.get_raw_data_root(self.id))
         return False
 
     @functools.cached_property
@@ -150,7 +150,7 @@ class SessionInfo:
         if self.session_kwargs.get("probe_letters_with_surface_channel_recording"):
             return True
         try:
-            _ = codeocean.get_surface_channel_root(self.id)
+            _ = codeocean_utils.get_surface_channel_root(self.id)
         except (FileNotFoundError, ValueError):
             return False
         return True
@@ -196,7 +196,7 @@ class SessionInfo:
             return False
         try:
             return bool(
-                codeocean.get_session_capsule_pipeline_data_asset(
+                codeocean_utils.get_session_capsule_pipeline_data_asset(
                     self.id, f"dlc_{camera}"
                 )
             )
@@ -244,7 +244,7 @@ class SessionInfo:
         if not self.is_video:
             return False
         try:
-            asset = codeocean.get_session_capsule_pipeline_data_asset(
+            asset = codeocean_utils.get_session_capsule_pipeline_data_asset(
                 self.id, "facemap"
             )
         except (FileNotFoundError, ValueError):
@@ -289,7 +289,7 @@ class SessionInfo:
         try:
             return any(
                 asset
-                for asset in codeocean.get_session_data_assets(self.id)
+                for asset in codeocean_utils.get_session_data_assets(self.id)
                 if "sorted" in asset["name"]
                 and asset["files"]
                 > 6  # number of files produced by sorting pipeline when errorred

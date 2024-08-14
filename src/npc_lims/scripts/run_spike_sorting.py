@@ -6,40 +6,26 @@ import functools
 import json
 import logging
 import time
-from typing import TypedDict, Union
+from typing import Union
 
 import npc_session
-import requests
 import upath
-from aind_codeocean_api.models.computations_requests import (
-    ComputationDataAsset,
-    RunCapsuleRequest,
+
+from codeocean.computation import (
+    RunParams, Computation, ComputationState
 )
-from aind_codeocean_api.models.data_assets_requests import (
-    CreateDataAssetRequest,
-    Source,
-    Sources,
+from codeocean.data_asset import (
+    DataAsset, DataAssetParams, ComputationSource, Source
 )
+
 from typing_extensions import TypeAlias
 
 import npc_lims
 
+
 logger = logging.getLogger()
 
 SessionID: TypeAlias = Union[str, npc_session.SessionRecord]
-
-
-class JobStatus(TypedDict):
-    """As returned from response.json()"""
-
-    created: int
-    has_results: bool
-    id: str
-    name: str
-    run_time: int
-    state: str
-    end_status: str | None
-    """Does not exist initially"""
 
 
 JobID: TypeAlias = str
@@ -59,33 +45,28 @@ EXAMPLE_JOB_STATUS = {
 }
 
 
-def get_run_sorting_request(session_id: SessionID) -> RunCapsuleRequest:
-    return RunCapsuleRequest(
+def get_run_sorting_request(session_id: SessionID) -> RunParams:
+    return RunParams(
         pipeline_id=SORTING_PIPELINE_ID,
         data_assets=[
-            ComputationDataAsset(
-                id=npc_lims.get_session_raw_data_asset(session_id)["id"],
+            DataAsset(
+                id=npc_lims.get_session_raw_data_asset(session_id).id,
                 mount="ecephys",
             ),
         ],
     )
 
 
-def read_json() -> dict[str, JobStatus]:
-    return json.loads(JSON_PATH.read_bytes())
+def read_json() -> dict[str, Computation | None]:
+    return npc_lims.read_computation_queue(JSON_PATH)
 
 
-def add_to_json(session_id: SessionID, response: requests.Response) -> None:
-    if not JSON_PATH.exists():
-        current = {}
-    else:
-        current = read_json()
-    is_new = session_id not in current
-    current.update({session_id: response.json()})
-    JSON_PATH.write_text(json.dumps(current, indent=4))
-    logger.info(
-        f"{'Added' if is_new else 'Updated'} {session_id} {'to' if is_new else 'in'} json"
-    )
+def add_to_json(
+    session_id: SessionID,
+    computation: Computation | None,
+) -> None:
+    return npc_lims.add_to_computation_queue(
+        JSON_PATH, session_id, computation)
 
 
 def is_in_json(session_id: SessionID) -> bool:
@@ -100,8 +81,15 @@ def is_started(session_id: SessionID) -> bool:
 
 def is_bad_docker_run(session_id: SessionID) -> bool:
     session_id = npc_session.SessionRecord(session_id).id
-    created: int = read_json()[session_id]["created"]
-    dt = datetime.datetime.fromtimestamp(created)
+    queue = read_json()
+    if session_id not in queue:
+        raise ValueError(f"{session_id} not in queue")
+
+    queued = queue[session_id]
+    if queued is None:
+        raise ValueError(f"{session_id} has no queued job")
+
+    dt = datetime.datetime.fromtimestamp(queued.created)
     return datetime.datetime(2024, 3, 12) <= dt < datetime.datetime(2024, 3, 20)
 
 
@@ -111,7 +99,7 @@ def has_bad_docker_asset(session_id: SessionID) -> bool:
     except ValueError:
         return False
     dt: datetime.date = npc_session.DateRecord(
-        sorted_asset["name"].split("sorted_")[-1]
+        sorted_asset.name.split("sorted_")[-1]
     ).dt
     return datetime.date(2024, 3, 12) <= dt < datetime.date(2024, 3, 20)
 
@@ -119,22 +107,14 @@ def has_bad_docker_asset(session_id: SessionID) -> bool:
 @functools.lru_cache(maxsize=1)
 def get_current_job_status(
     job_or_session_id: str,
-) -> JobStatus | npc_lims.CapsuleComputationAPI:
+) -> Computation | None:
     """
-    >>> get_current_job_status("633d9d0d-511a-4601-884c-5a7f4a63365f").keys()
-    dict_keys(['created', 'data_assets', 'end_status', 'has_results', 'id', 'name', 'processes', 'run_time', 'state'])
+    >>> status = get_current_job_status("633d9d0d-511a-4601-884c-5a7f4a63365f")
     """
-    try:
-        session_id = npc_session.SessionRecord(job_or_session_id).id
-    except ValueError:
-        job_id = job_or_session_id
-    else:
-        job_id = read_json()[session_id]["id"]
-
-    job_status = npc_lims.get_job_status(job_id, check_files=True)
-    if assets := job_status.get("data_assets", []):
-        assets.sort(key=lambda asset: asset["id"])  # type: ignore
-    return job_status
+    return npc_lims.get_current_queue_computation(
+        JSON_PATH,
+        job_or_session_id,
+    )
 
 
 def sync_json() -> None:
@@ -145,7 +125,7 @@ def sync_json() -> None:
             for session_id in current
         }
     for session_id, future in session_to_future.items():
-        current[session_id] = future.result()
+        current[session_id] = npc_lims.serialize_computation(future.result())
         logger.info(f"Updated {session_id} status")
 
     JSON_PATH.write_text(json.dumps(current, indent=4))
@@ -155,29 +135,36 @@ def sync_json() -> None:
 def sync_and_get_num_running_jobs() -> int:
     sync_json()
     return sum(
-        1 for job in read_json().values() if job["state"] in ("running", "initializing")
+        1 for job in read_json().values()
+        if job and job.state in
+        (ComputationState.Running, ComputationState.Initializing)
     )
 
 
 def start(session_id: SessionID) -> None:
-    response = npc_lims.get_codeocean_client().run_capsule(
+    computation = npc_lims.get_codeocean_client().computations.run_capsule(
         get_run_sorting_request(session_id)
     )
-    response.raise_for_status()
     logger.info(f"Started job for {session_id}")
-    add_to_json(session_id, response)
+    add_to_json(
+        session_id,
+        computation,
+    )
 
 
-def get_create_data_asset_request(session_id: SessionID) -> CreateDataAssetRequest:
-    job_status = get_current_job_status(session_id)
+def get_create_data_asset_request(session_id: SessionID) -> DataAssetParams:
+    computation = get_current_job_status(session_id)
+    if computation is None:
+        raise ValueError(f"No computation found for {session_id}")
+
     session = npc_session.SessionRecord(session_id)
     asset_name = get_data_asset_name(session_id)
-    return CreateDataAssetRequest(
+    return DataAssetParams(
         name=asset_name,
         mount=asset_name,
         source=Source(
-            computation=Sources.Computation(
-                id=job_status["id"],
+            computation=ComputationSource(
+                id=computation.id,
             )
         ),
         tags=[str(session.subject), "derived", "ephys", "results"],
@@ -191,11 +178,12 @@ def get_create_data_asset_request(session_id: SessionID) -> CreateDataAssetReque
 
 
 def get_data_asset_name(session_id: SessionID) -> str:
+    computation = get_current_job_status(session_id)
+    if computation is None:
+        raise ValueError(f"No computation found for {session_id}")
     created_dt = (
         npc_session.DatetimeRecord(
-            datetime.datetime.fromtimestamp(
-                get_current_job_status(session_id)["created"]
-            )
+            datetime.datetime.fromtimestamp(computation.created)
         )
         .replace(" ", "_")
         .replace(":", "-")
@@ -204,20 +192,20 @@ def get_data_asset_name(session_id: SessionID) -> str:
 
 
 def create_data_asset(session_id: SessionID) -> None:
-    asset = npc_lims.get_codeocean_client().create_data_asset(
+    asset = npc_lims.get_codeocean_client().data_assets.create_data_asset(
         get_create_data_asset_request(session_id)
     )
-    asset.raise_for_status()
     while not asset_exists(session_id):
         time.sleep(10)
     logger.info(f"Created data asset for {session_id}")
-    npc_lims.set_asset_viewable_for_everyone(asset.json()["id"])
+    npc_lims.set_asset_viewable_for_everyone(asset.id)
 
 
 def asset_exists(session_id: SessionID) -> bool:
     name = get_data_asset_name(session_id)
     return any(
-        asset["name"] == name for asset in npc_lims.get_session_data_assets(session_id)
+        asset.name == name
+        for asset in npc_lims.get_session_data_assets(session_id)
     )
 
 

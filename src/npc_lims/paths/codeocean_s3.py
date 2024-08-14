@@ -8,7 +8,7 @@ from collections.abc import Iterator
 import npc_session
 import upath
 
-import npc_lims.metadata.codeocean as metadata
+import npc_lims.metadata.codeocean_utils as metadata
 
 DR_DATA_REPO = upath.UPath(
     "s3://aind-scratch-data/ben.hardcastle/DynamicRoutingTask/Data"
