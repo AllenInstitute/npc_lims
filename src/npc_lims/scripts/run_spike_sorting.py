@@ -10,18 +10,11 @@ from typing import Union
 
 import npc_session
 import upath
-
-from codeocean.computation import (
-    RunParams, Computation, ComputationState
-)
-from codeocean.data_asset import (
-    DataAsset, DataAssetParams, ComputationSource, Source
-)
-
+from codeocean.computation import Computation, ComputationState, RunParams
+from codeocean.data_asset import ComputationSource, DataAsset, DataAssetParams, Source
 from typing_extensions import TypeAlias
 
 import npc_lims
-
 
 logger = logging.getLogger()
 
@@ -65,8 +58,7 @@ def add_to_json(
     session_id: SessionID,
     computation: Computation | None,
 ) -> None:
-    return npc_lims.add_to_computation_queue(
-        JSON_PATH, session_id, computation)
+    return npc_lims.add_to_computation_queue(JSON_PATH, session_id, computation)
 
 
 def is_in_json(session_id: SessionID) -> bool:
@@ -135,9 +127,10 @@ def sync_json() -> None:
 def sync_and_get_num_running_jobs() -> int:
     sync_json()
     return sum(
-        1 for job in read_json().values()
-        if job and job.state in
-        (ComputationState.Running, ComputationState.Initializing)
+        1
+        for job in read_json().values()
+        if job
+        and job.state in (ComputationState.Running, ComputationState.Initializing)
     )
 
 
@@ -182,9 +175,7 @@ def get_data_asset_name(session_id: SessionID) -> str:
     if computation is None:
         raise ValueError(f"No computation found for {session_id}")
     created_dt = (
-        npc_session.DatetimeRecord(
-            datetime.datetime.fromtimestamp(computation.created)
-        )
+        npc_session.DatetimeRecord(datetime.datetime.fromtimestamp(computation.created))
         .replace(" ", "_")
         .replace(":", "-")
     )
@@ -204,8 +195,7 @@ def create_data_asset(session_id: SessionID) -> None:
 def asset_exists(session_id: SessionID) -> bool:
     name = get_data_asset_name(session_id)
     return any(
-        asset.name == name
-        for asset in npc_lims.get_session_data_assets(session_id)
+        asset.name == name for asset in npc_lims.get_session_data_assets(session_id)
     )
 
 

@@ -183,7 +183,9 @@ class SessionInfo:
         try:
             return any(
                 asset
-                for asset in codeocean_utils.get_session_data_assets(self.id.with_idx(1))
+                for asset in codeocean_utils.get_session_data_assets(
+                    self.id.with_idx(1)
+                )
                 if "sorted" in asset.name
                 and asset.files
                 > 6  # number of files produced by sorting pipeline when errorred
@@ -249,7 +251,10 @@ class SessionInfo:
             )
         except (FileNotFoundError, ValueError):
             return False
-        if "83636983-f80d-42d6-a075-09b60c6abd5e" in asset.provenance.data_assets and self.id != npc_session.SessionRecord("668759_2023-07-11"):
+        if (
+            "83636983-f80d-42d6-a075-09b60c6abd5e" in asset.provenance.data_assets
+            and self.id != npc_session.SessionRecord("668759_2023-07-11")
+        ):
             # the capsule had this asset permanently attached for assets made on April 24th/25th. should be resolved
             # the resulting data are only saved for the wrong asset
             return False

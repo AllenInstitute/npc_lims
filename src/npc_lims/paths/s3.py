@@ -8,7 +8,6 @@ from collections.abc import Iterator
 
 import npc_session
 import upath
-
 from codeocean.data_asset import DataAsset
 
 import npc_lims.metadata.codeocean_utils as codeocean_utils
@@ -41,9 +40,7 @@ def get_data_asset_s3_path(asset_id: str | DataAsset) -> upath.UPath:
     bucket = CODE_OCEAN_DATA_BUCKET
     with contextlib.suppress(AttributeError, KeyError, TypeError):
         if isinstance(asset_id, DataAsset) and asset_id.source_bucket:
-            bucket = upath.UPath(
-                upath.UPath(f's3://{asset_id.source_bucket.bucket}')
-            )
+            bucket = upath.UPath(upath.UPath(f"s3://{asset_id.source_bucket.bucket}"))
     with contextlib.suppress(AttributeError, KeyError):
         return bucket / asset_id.id  # type: ignore[union-attr]
     with contextlib.suppress(AttributeError):

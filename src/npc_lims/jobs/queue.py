@@ -11,10 +11,7 @@ from codeocean.computation import (
     Computation,
     ComputationState,
 )
-from codeocean.data_asset import (
-    DataAssetParams, ComputationSource, Source
-)
-
+from codeocean.data_asset import ComputationSource, DataAssetParams, Source
 from typing_extensions import TypeAlias
 
 import npc_lims
@@ -48,7 +45,8 @@ def read_json(process_name: str) -> dict[str, Computation | None]:
     True
     """
     return codeocean_utils.read_computation_queue(
-        s3.S3_SCRATCH_ROOT / f"{process_name}.json")
+        s3.S3_SCRATCH_ROOT / f"{process_name}.json"
+    )
 
 
 def is_session_in_queue(session: SessionID, process_name: str) -> bool:
@@ -68,9 +66,7 @@ def add_to_json(
     computation: Computation | None,
 ) -> None:
     return codeocean_utils.add_to_computation_queue(
-        (s3.S3_SCRATCH_ROOT / f"{process_name}.json"),
-        session_id,
-        computation
+        (s3.S3_SCRATCH_ROOT / f"{process_name}.json"), session_id, computation
     )
 
 
@@ -90,8 +86,7 @@ def get_current_job_status(
     >>> status = get_current_job_status('676909_2023-12-13', 'dlc_eye')
     """
     return codeocean_utils.get_current_queue_computation(
-        (s3.S3_SCRATCH_ROOT / f"{process_name}.json"),
-        job_or_session_id
+        (s3.S3_SCRATCH_ROOT / f"{process_name}.json"), job_or_session_id
     )
 
 
@@ -99,7 +94,8 @@ def sync_json(process_name: str) -> None:
     current = read_json(process_name)
     for session_id in current:
         current[session_id] = codeocean_utils.serialize_computation(
-            get_current_job_status(session_id, process_name))
+            get_current_job_status(session_id, process_name)
+        )
         logger.info(f"Updated {session_id} status")
 
     (s3.S3_SCRATCH_ROOT / f"{process_name}.json").write_text(
@@ -114,9 +110,7 @@ def get_data_asset_name(session_id: SessionID, process_name: str) -> str:
         raise ValueError(f"No computation found for {session_id}")
 
     created_dt = (
-        npc_session.DatetimeRecord(
-            datetime.datetime.fromtimestamp(computation.created)
-        )
+        npc_session.DatetimeRecord(datetime.datetime.fromtimestamp(computation.created))
         .replace(" ", "_")
         .replace(":", "-")
     )
@@ -126,7 +120,8 @@ def get_data_asset_name(session_id: SessionID, process_name: str) -> str:
 def create_data_asset(session_id: SessionID, job_id: str, process_name: str) -> None:
     data_asset_name = get_data_asset_name(session_id, process_name)
     asset = codeocean_utils.create_session_data_asset(
-        session_id, job_id, data_asset_name)
+        session_id, job_id, data_asset_name
+    )
 
     if asset is None:
         logger.info(f"Failed to create data asset for {session_id}")
@@ -169,8 +164,8 @@ def sync_and_get_num_running_jobs(process_name: str) -> int:
     return sum(
         1
         for job in read_json(process_name).values()
-        if job is not None and job.state in
-        (ComputationState.Running, ComputationState.Initializing)
+        if job is not None
+        and job.state in (ComputationState.Running, ComputationState.Initializing)
     )
 
 
@@ -212,8 +207,7 @@ def add_sessions_to_queue(
 
 
 def start(
-    session_id: SessionID,
-    capsule_pipeline_info: codeocean_utils.CapsulePipelineInfo
+    session_id: SessionID, capsule_pipeline_info: codeocean_utils.CapsulePipelineInfo
 ) -> None:
     session_data_asset = npc_lims.get_session_raw_data_asset(session_id)
     data_assets = [
@@ -228,8 +222,7 @@ def start(
         ),
     ]
     computation = npc_lims.run_capsule_or_pipeline(
-        data_assets, capsule_pipeline_info.id,
-        capsule_pipeline_info.is_pipeline
+        data_assets, capsule_pipeline_info.id, capsule_pipeline_info.is_pipeline
     )
     logger.info(f"Started job for {session_id}")
     add_to_json(

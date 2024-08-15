@@ -8,9 +8,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.167...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.168...HEAD)</small>
+
+### Added
+
+- add session issues for sessions not annotated ([3fd44d8](https://github.com/AllenInstitute/npc_lims/commit/3fd44d8f831213afcbc831e55e3731f45683be90) by arjun.sridhar12345).
+- add lightning pose face parts tracking github action ([b1b04a6](https://github.com/AllenInstitute/npc_lims/commit/b1b04a6391bfe65719dfd338339777895f2d1b76) by arjun.sridhar12345).
 
 <!-- insertion marker -->
+## [v0.1.168](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.168) - 2024-07-11
+
+<small>[Compare with v0.1.167](https://github.com/AllenInstitute/npc_lims/compare/v0.1.167...v0.1.168)</small>
+
 ## [v0.1.167](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.167) - 2024-07-11
 
 <small>[Compare with v0.1.166](https://github.com/AllenInstitute/npc_lims/compare/v0.1.166...v0.1.167)</small>

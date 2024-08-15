@@ -1,38 +1,44 @@
 from __future__ import annotations
 
 import functools
+import json
 import logging
 import os
-import json
 import re
 import time
 import uuid
 from collections.abc import Sequence
-from typing import Any, Literal, NamedTuple, Union
 from pathlib import Path
+from typing import Any, Literal, NamedTuple, Union
 
 import npc_session
 import requests
 import upath
-
 from codeocean import CodeOcean
-from codeocean.data_asset import (
-    DataAsset, DataAssetSearchParams, DataAssetType,
-    DataAssetOrigin, Permissions, DataAssetParams, ComputationSource, Source
-)
 from codeocean.components import (
     EveryoneRole,
 )
 from codeocean.computation import (
-    Computation, RunParams, DataAssetsRunParam, ComputationState,
+    Computation,
     ComputationEndStatus,
+    ComputationState,
+    DataAssetsRunParam,
+    RunParams,
 )
-
+from codeocean.data_asset import (
+    ComputationSource,
+    DataAsset,
+    DataAssetOrigin,
+    DataAssetParams,
+    DataAssetSearchParams,
+    DataAssetType,
+    Permissions,
+    Source,
+)
 from typing_extensions import TypeAlias
 
 import npc_lims.exceptions as exceptions
 import npc_lims.paths.s3 as s3
-
 
 logger = logging.getLogger(__name__)
 
@@ -126,6 +132,7 @@ class SessionIndexError(IndexError):
 class ModelCapsuleMappingError(KeyError):
     pass
 
+
 def _get_ttl_hash(seconds=2 * 60) -> int:
     """Return the same value within `seconds` time period
 
@@ -154,6 +161,7 @@ def get_codeocean_client() -> CodeOcean:
         token=token,
     )
 
+
 @functools.cache
 def get_subject_data_assets(
     subject: str | int,
@@ -169,7 +177,7 @@ def get_subject_data_assets(
         >>> assets = get_subject_data_assets(668759)
         >>> assert len(assets) > 0
     """
-    del ttl_hash # only used for functools.cache
+    del ttl_hash  # only used for functools.cache
     results = []
     while offset < max_pages:
         search_results = get_codeocean_client().data_assets.search_data_assets(
@@ -294,9 +302,9 @@ def is_raw_data_asset(asset: str | DataAsset) -> bool:
     asset = get_data_asset(asset)
     if is_sorted_data_asset(asset):
         return False
-    return (asset.custom_metadata or {}).get(
-        "data level"
-    ) == "raw data" or "raw" in (asset.tags or [])
+    return (asset.custom_metadata or {}).get("data level") == "raw data" or "raw" in (
+        asset.tags or []
+    )
 
 
 def is_sorted_data_asset(asset: str | DataAsset) -> bool:
@@ -403,8 +411,8 @@ def get_codoecean_session_id(
     data_assets = [
         asset
         for asset in get_subject_data_assets(session.subject, ttl_hash=_get_ttl_hash())
-        if asset.name.startswith(f"ecephys_{session.subject}_{session.date}") 
-                                 or asset.name.startswith(f"behavior_{session.subject}_{session.date}")
+        if asset.name.startswith(f"ecephys_{session.subject}_{session.date}")
+        or asset.name.startswith(f"behavior_{session.subject}_{session.date}")
     ]
 
     asset_names = tuple(asset.name for asset in data_assets)
@@ -434,7 +442,8 @@ def get_codoecean_session_id(
     session_assets = session_times_to_assets[session_times[session.idx]]
     session_id = npc_session.extract_aind_session_id(session_assets[0].name)
     assert all(
-        npc_session.extract_aind_session_id(asset.name) == session_id for asset in session_assets
+        npc_session.extract_aind_session_id(asset.name) == session_id
+        for asset in session_assets
     )
     return session_id
 
@@ -510,9 +519,7 @@ def get_session_capsule_pipeline_data_asset(
 
 
 def create_session_data_asset(
-    session: str | npc_session.SessionRecord,
-    computation_id: str,
-    data_asset_name: str
+    session: str | npc_session.SessionRecord, computation_id: str, data_asset_name: str
 ) -> DataAsset:
     session = npc_session.SessionRecord(session)
 
@@ -521,9 +528,7 @@ def create_session_data_asset(
     ):
         return None
 
-    source = Source(
-        computation=ComputationSource(id=computation_id)
-    )
+    source = Source(computation=ComputationSource(id=computation_id))
     tags = [str(session.subject), "derived", "ephys", "results"]
     custom_metadata = {
         "data level": "derived data",
@@ -586,7 +591,7 @@ def is_computation_finished(job_id_or_response: str | Computation) -> bool:
     False
     """
     job_status = _parse_job_id_and_response(job_id_or_response)
-    return job_status.state in (ComputationState.Completed, )
+    return job_status.state in (ComputationState.Completed,)
 
 
 def get_result_names(job_id: str) -> list[str]:
@@ -595,8 +600,8 @@ def get_result_names(job_id: str) -> list[str]:
     >>> results = get_result_names('1c900aa5-dde4-475d-bf50-cc96aff9db39')
     >>> assert 'output' in results
     """
-    available_results = (
-        get_codeocean_client().computations.list_computation_results(job_id)
+    available_results = get_codeocean_client().computations.list_computation_results(
+        job_id
     )
     result_item_names = sorted(item.name for item in available_results.items)
     return result_item_names
@@ -624,15 +629,15 @@ def is_computation_errored(job_id_or_response: str | Computation) -> bool:
     if not is_computation_finished(job_status):
         return False
     job_id = job_status.id
-    if job_status.state in (ComputationState.Failed, ):
+    if job_status.state in (ComputationState.Failed,):
         return True
-    if job_status.end_status in (ComputationEndStatus.Failed, ):
+    if job_status.end_status in (ComputationEndStatus.Failed,):
         return True
     if job_status.has_results is False:
         logger.debug(f"Job {job_id} suspected error based on no results")
         return True
 
-    if job_status.state in (ComputationState.Completed, ):
+    if job_status.state in (ComputationState.Completed,):
         # check if errored based on files in result
         result_item_names = get_result_names(job_id)
         is_no_files = len(result_item_names) == 0
@@ -651,8 +656,7 @@ def is_computation_errored(job_id_or_response: str | Computation) -> bool:
         if "output" in result_item_names:
             output = requests.get(
                 get_codeocean_client()
-                .computations
-                .get_result_file_download_url(job_id, "output")
+                .computations.get_result_file_download_url(job_id, "output")
                 .url
             ).text
             if "Out of memory." in output:
@@ -729,13 +733,12 @@ def read_computation_queue(source: Path) -> dict[str, Computation | None]:
             if computation_dict is not None
             else None
         )
-        for (session_id, computation_dict) in
-        json.loads(source.read_text()).items()
+        for (session_id, computation_dict) in json.loads(source.read_text()).items()
     }
 
 
 def serialize_computation(
-    computation: Computation | None
+    computation: Computation | None,
 ) -> dict[str, str | int] | None:
     if computation is None:
         return None
@@ -760,9 +763,7 @@ def add_to_computation_queue(
 
     is_new = session_id not in current
     current.update({session_id: serialize_computation(computation)})
-    source.write_text(
-        json.dumps(current, indent=4)
-    )
+    source.write_text(json.dumps(current, indent=4))
     logger.info(
         f"{'Added' if is_new else 'Updated'} {session_id} {'to' if is_new else 'in'} json"
     )
@@ -780,9 +781,8 @@ def get_current_queue_computation(
         current_job_status = read_computation_queue(source)[session_id]
 
     if current_job_status is not None:
-    # if current_job_status is None:
-        return get_job_status(
-            current_job_status.id, check_files=True)
+        # if current_job_status is None:
+        return get_job_status(current_job_status.id, check_files=True)
     else:
         return current_job_status
 
