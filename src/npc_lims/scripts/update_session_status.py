@@ -72,13 +72,13 @@ def main() -> None:
         except ValueError:
             aind_session_id = f"ecephys_{s.subject.id}_{s.date}_??-??-??"
         if s.is_uploaded:
-            raw_asset_id = npc_lims.get_session_raw_data_asset(s.id)["id"]
+            raw_asset_id = npc_lims.get_session_raw_data_asset(s.id).id
         else:
             raw_asset_id = ""
         if s.is_surface_channels:
             surface_channels_asset_id = npc_lims.get_surface_channel_raw_data_asset(
                 s.id
-            )["id"]
+            ).id
             is_surface_channels_sorted = s.is_surface_channels_sorted
         else:
             surface_channels_asset_id = ""
