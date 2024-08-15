@@ -335,9 +335,9 @@ def get_session_raw_data_asset(
         # if a session has both an ecephys platform raw asset and a behavior platform
         # asset (which necessarily contains a subset of the ecephys data), we'll take the ecephys asset
         for platform in ("ecephys", "behavior"):
-            if any(platform in asset["name"] for asset in raw_assets):
+            if any(platform in asset.name for asset in raw_assets):
                 raw_assets = tuple(
-                    asset for asset in raw_assets if platform in asset["name"]
+                    asset for asset in raw_assets if platform in asset.name
                 )
                 break
         else:
@@ -403,23 +403,9 @@ def get_codoecean_session_id(
     data_assets = [
         asset
         for asset in get_subject_data_assets(session.subject, ttl_hash=_get_ttl_hash())
-        if asset.name.startswith(f"ecephys_{session.subject}_{session.date}")
+        if asset.name.startswith(f"ecephys_{session.subject}_{session.date}") 
+                                 or asset.name.startswith(f"behavior_{session.subject}_{session.date}")
     ]
-
-    def parse_session_id(s: str) -> str:
-        """
-        >>> parse_session_id('ecephys_703333_2024-04-09_13-06-44_sorted_2024-04-12_12-12-12')
-        'ecephys_703333_2024-04-09_13-06-44'
-        """
-        pattern: str = (
-            f"^(?P<id>ecephys_{session.subject}_{session.date}_{npc_session.PARSE_TIME}).*"
-        )
-        if m := re.match(
-            f"{pattern}",
-            s,
-        ):
-            return m.group("id")
-        raise ValueError(f"Could not extract session ID from {s!r}")
 
     asset_names = tuple(asset.name for asset in data_assets)
     session_times = sorted(
@@ -446,9 +432,9 @@ def get_codoecean_session_id(
             f"Number of assets is less than expected: cannot extract asset for session idx = {session.idx} from {asset_names = }"
         )
     session_assets = session_times_to_assets[session_times[session.idx]]
-    session_id = parse_session_id(session_assets[0].name)
+    session_id = npc_session.extract_aind_session_id(session_assets[0].name)
     assert all(
-        parse_session_id(asset.name) == session_id for asset in session_assets
+        npc_session.extract_aind_session_id(asset.name) == session_id for asset in session_assets
     )
     return session_id
 
@@ -471,7 +457,7 @@ def get_path_from_data_asset(asset: DataAsset) -> upath.UPath:
     uuid or dict of info from Code Ocean API."""
     if not asset.source_bucket:
         raise ValueError(
-            f"Asset {asset['id']} has no `source_bucket` info - not sure how to create UPath:\n{asset!r}"
+            f"Asset {asset.id} has no `source_bucket` info - not sure how to create UPath:\n{asset!r}"
         )
     bucket_info = asset.source_bucket
     roots = {DataAssetOrigin.AWS: "s3", DataAssetOrigin.GCP: "gs"}

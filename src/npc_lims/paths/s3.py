@@ -45,7 +45,7 @@ def get_data_asset_s3_path(asset_id: str | DataAsset) -> upath.UPath:
                 upath.UPath(f's3://{asset_id.source_bucket.bucket}')
             )
     with contextlib.suppress(AttributeError, KeyError):
-        return bucket / asset_id.id  # type: ignore[union-attr, operator]
+        return bucket / asset_id.id  # type: ignore[union-attr]
     with contextlib.suppress(AttributeError):
         return bucket / asset_id.id  # type: ignore[union-attr]
     return bucket / str(asset_id)
@@ -168,7 +168,7 @@ def get_lpfaceparts_s3_dir_paths(
     4
     """
     session = npc_session.SessionRecord(session)
-    lpfaceparts_data_asset = codeocean.get_session_capsule_pipeline_data_asset(
+    lpfaceparts_data_asset = codeocean_utils.get_session_capsule_pipeline_data_asset(
         session, "LPFaceParts"
     )
 

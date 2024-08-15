@@ -76,7 +76,7 @@ def main() -> None:
         else:
             raw_asset_id = ""
         if s.is_surface_channels:
-            surface_channels_asset_id = npc_lims.get_surface_channels_raw_data_asset(
+            surface_channels_asset_id = npc_lims.get_surface_channel_raw_data_asset(
                 s.id
             )["id"]
             is_surface_channels_sorted = s.is_surface_channels_sorted

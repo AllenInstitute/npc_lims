@@ -166,7 +166,7 @@ class SessionInfo:
         if not self.is_surface_channels:
             raise ValueError("No surface channel data for this session")
         return npc_session.AINDSessionRecord(
-            codeocean.get_surface_channel_root(self.id).name
+            codeocean_utils.get_surface_channel_root(self.id).name
         )
 
     @functools.cached_property
@@ -183,9 +183,9 @@ class SessionInfo:
         try:
             return any(
                 asset
-                for asset in codeocean.get_session_data_assets(self.id.with_idx(1))
-                if "sorted" in asset["name"]
-                and asset["files"]
+                for asset in codeocean_utils.get_session_data_assets(self.id.with_idx(1))
+                if "sorted" in asset.name
+                and asset.files
                 > 6  # number of files produced by sorting pipeline when errorred
             )
         except (FileNotFoundError, ValueError):
@@ -249,7 +249,7 @@ class SessionInfo:
             )
         except (FileNotFoundError, ValueError):
             return False
-        if "83636983-f80d-42d6-a075-09b60c6abd5e" in asset["provenance"]["data_assets"] and self.id != npc_session.SessionRecord("668759_2023-07-11"):  # type: ignore
+        if "83636983-f80d-42d6-a075-09b60c6abd5e" in asset.provenance.data_assets and self.id != npc_session.SessionRecord("668759_2023-07-11"):
             # the capsule had this asset permanently attached for assets made on April 24th/25th. should be resolved
             # the resulting data are only saved for the wrong asset
             return False
@@ -266,7 +266,7 @@ class SessionInfo:
             return False
 
         try:
-            asset = codeocean.get_session_capsule_pipeline_data_asset(
+            asset = codeocean_utils.get_session_capsule_pipeline_data_asset(
                 self.id, "LPFaceParts"
             )
         except (FileNotFoundError, ValueError):
@@ -290,8 +290,8 @@ class SessionInfo:
             return any(
                 asset
                 for asset in codeocean_utils.get_session_data_assets(self.id)
-                if "sorted" in asset["name"]
-                and asset["files"]
+                if "sorted" in asset.name
+                and asset.files
                 > 6  # number of files produced by sorting pipeline when errorred
             )
         except (FileNotFoundError, ValueError):
