@@ -10,8 +10,8 @@ import npc_session
 from codeocean.computation import (
     Computation,
     ComputationState,
+    DataAssetsRunParam,
 )
-from codeocean.computation import DataAssetsRunParam
 from codeocean.data_asset import DataAssetState
 from typing_extensions import TypeAlias
 
@@ -127,7 +127,9 @@ def create_data_asset(session_id: SessionID, job_id: str, process_name: str) -> 
 
     while asset.state not in [DataAssetState.Ready, DataAssetState.Failed]:
         time.sleep(10)
-        asset = codeocean_utils.get_codeocean_client().data_assets.get_data_asset(asset.id)
+        asset = codeocean_utils.get_codeocean_client().data_assets.get_data_asset(
+            asset.id
+        )
 
     logger.info(f"Created data asset for {session_id}")
     codeocean_utils.set_asset_viewable_for_everyone(asset.id)
@@ -211,10 +213,7 @@ def start(
 ) -> None:
     session_data_asset = npc_lims.get_session_raw_data_asset(session_id)
     data_assets = [
-        DataAssetsRunParam(
-            id=session_data_asset.id,
-            mount=session_data_asset.mount
-        ),
+        DataAssetsRunParam(id=session_data_asset.id, mount=session_data_asset.mount),
     ]
     computation = npc_lims.run_capsule_or_pipeline(
         data_assets, capsule_pipeline_info.id, capsule_pipeline_info.is_pipeline
@@ -244,7 +243,7 @@ def process_capsule_or_pipeline_queue(
     capsule_pipeline_info = codeocean_utils.CapsulePipelineInfo(
         capsule_or_pipeline_id, process_name, is_pipeline
     )
-    
+
     add_sessions_to_queue(
         capsule_pipeline_info.process_name,
         overwrite_exisitng_assets=overwrite_existing_assets,
@@ -274,7 +273,7 @@ def process_capsule_or_pipeline_queue(
 
     while sync_and_get_num_running_jobs(capsule_pipeline_info.process_name) > 0:
         time.sleep(600)
-    
+
     if create_data_assets_from_results:
         create_all_data_assets(
             capsule_pipeline_info.process_name, overwrite_existing_assets

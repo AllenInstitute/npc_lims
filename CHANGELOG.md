@@ -8,9 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.169...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.170...HEAD)</small>
+
+### Fixed
+
+- fix run params for running capsule and writing to queue ([1f027d2](https://github.com/AllenInstitute/npc_lims/commit/1f027d2a8ac71e563b58a51f37dd659ed5208300) by arjun.sridhar12345).
 
 <!-- insertion marker -->
+## [v0.1.170](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.170) - 2024-08-15
+
+<small>[Compare with v0.1.169](https://github.com/AllenInstitute/npc_lims/compare/v0.1.169...v0.1.170)</small>
+
 ## [v0.1.169](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.169) - 2024-08-15
 
 <small>[Compare with v0.1.168](https://github.com/AllenInstitute/npc_lims/compare/v0.1.168...v0.1.169)</small>
