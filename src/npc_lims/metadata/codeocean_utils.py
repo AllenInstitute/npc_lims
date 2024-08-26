@@ -762,7 +762,15 @@ def add_to_computation_queue(
         current = read_computation_queue(source)
 
     is_new = session_id not in current
-    current.update({session_id: serialize_computation(computation)})
+    for session_queue_id in current:
+        if not is_new and session_queue_id == session_id:
+            current[session_queue_id] = serialize_computation(computation)
+        else:
+            current[session_queue_id] = serialize_computation(current[session_queue_id])
+
+    if is_new:
+        current.update({session_id: serialize_computation(computation)})
+
     source.write_text(json.dumps(current, indent=4))
     logger.info(
         f"{'Added' if is_new else 'Updated'} {session_id} {'to' if is_new else 'in'} json"
