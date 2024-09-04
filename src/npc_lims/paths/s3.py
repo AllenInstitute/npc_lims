@@ -366,6 +366,17 @@ def get_face_video_path_from_s3(
 
     return face_video_path[0]
 
+def get_LFP_subsampling_paths_from_s3(session: str | npc_session.SessionRecord) -> tuple[upath.UPath, ...]:
+    """
+    >>> LFP_subsampled_s3_paths = get_LFP_subsampling_paths_from_s3('674562_2023-10-05')
+    >>> len(LFP_subsampled_s3_paths)
+    8
+    """
+    session = npc_session.SessionRecord(session)
+    session_LFP_asset = codeocean_utils.get_session_capsule_pipeline_data_asset(session, 'LFP_Subsampled')
+    session_LFP_asset_s3_path = get_data_asset_s3_path(session_LFP_asset.id)
+
+    return tuple(session_LFP_asset_s3_path.iterdir())
 
 @functools.cache
 def get_tissuecyte_annotation_files_from_s3(
