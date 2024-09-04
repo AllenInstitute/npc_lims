@@ -366,7 +366,7 @@ def get_face_video_path_from_s3(
 
     return face_video_path[0]
 
-
+@functools.cache
 def get_LFP_subsampling_paths_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> tuple[upath.UPath, ...]:
