@@ -8,9 +8,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.172...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.173...HEAD)</small>
+
+### Added
+
+- Add paper_1 subject list ([8d6d791](https://github.com/AllenInstitute/npc_lims/commit/8d6d791f12b0b8552532c5750411260c0ee3d212) by bjhardcastle).
+- Add sessions ([5165fdb](https://github.com/AllenInstitute/npc_lims/commit/5165fdb54c2c20061b43038ae26d80a3824fc037) by bjhardcastle).
 
 <!-- insertion marker -->
+## [v0.1.173](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.173) - 2024-09-04
+
+<small>[Compare with v0.1.172](https://github.com/AllenInstitute/npc_lims/compare/v0.1.172...v0.1.173)</small>
+
 ## [v0.1.172](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.172) - 2024-09-04
 
 <small>[Compare with v0.1.171](https://github.com/AllenInstitute/npc_lims/compare/v0.1.171...v0.1.172)</small>
