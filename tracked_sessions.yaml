@@ -248,9 +248,6 @@ ephys:
             probe_letters_to_skip: B # no dye track
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703880_20240416:
         day: 2
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/92
-            - https://github.com/AllenInstitute/npc_sessions/issues/117 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703880_20240417:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703880_20240418:
