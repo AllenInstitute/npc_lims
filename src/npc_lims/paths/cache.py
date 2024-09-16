@@ -56,11 +56,11 @@ def get_nwb_path(
 ) -> upath.UPath:
     """
     >>> get_nwb_path("366122_2023-12-31")   # doctest: +SKIP
-    S3Path('s3://aind-scratch-data/ben.hardcastle/cache/nwb/v0.0.210/366122_2023-12-31.nwb.zarr')
+    S3Path('s3://aind-scratch-data/dynamic-routing/cache/nwb/v0.0.210/366122_2023-12-31.nwb.zarr')
     >>> get_nwb_path("366122_2023-12-31", version="v0.0.0")
-    S3Path('s3://aind-scratch-data/ben.hardcastle/cache/nwb/v0.0.0/366122_2023-12-31.nwb.zarr')
+    S3Path('s3://aind-scratch-data/dynamic-routing/cache/nwb/v0.0.0/366122_2023-12-31.nwb.zarr')
     >>> get_nwb_path("366122_2023-12-31", version="v0.0.0", zarr=False)
-    S3Path('s3://aind-scratch-data/ben.hardcastle/cache/nwb/v0.0.0/366122_2023-12-31.nwb')
+    S3Path('s3://aind-scratch-data/dynamic-routing/cache/nwb/v0.0.0/366122_2023-12-31.nwb')
     """
     components_path = get_cache_path(
         "session", session_id=session_id, version=version, consolidated=False
@@ -146,11 +146,11 @@ def get_cache_path(
     If version == "any", the most-recent version of the file will be found.
 
     >>> get_cache_path(nwb_component="units", version="1.0.0")  # excludes spike_times or waveforms
-    S3Path('s3://aind-scratch-data/ben.hardcastle/cache/nwb_components/v1.0.0/consolidated/units.parquet')
+    S3Path('s3://aind-scratch-data/dynamic-routing/cache/nwb_components/v1.0.0/consolidated/units.parquet')
     >>> get_cache_path(nwb_component="units", session_id="366122_2023-12-31", version="1.0.0") # includes spike_times and waveforms
-    S3Path('s3://aind-scratch-data/ben.hardcastle/cache/nwb_components/v1.0.0/units/366122_2023-12-31.parquet')
+    S3Path('s3://aind-scratch-data/dynamic-routing/cache/nwb_components/v1.0.0/units/366122_2023-12-31.parquet')
     >>> get_cache_path(nwb_component="trials", version="1.0.0")
-    S3Path('s3://aind-scratch-data/ben.hardcastle/cache/nwb_components/v1.0.0/consolidated/trials.parquet')
+    S3Path('s3://aind-scratch-data/dynamic-routing/cache/nwb_components/v1.0.0/consolidated/trials.parquet')
     """
     if version and version.lower() == "any":
         for version_dir in sorted(CACHE_ROOT.iterdir(), reverse=True):

@@ -14,11 +14,10 @@ import npc_lims.metadata.codeocean_utils as codeocean_utils
 import npc_lims.status.tracked_sessions as tracked_sessions
 
 DR_DATA_REPO = upath.UPath(
-    "s3://aind-scratch-data/ben.hardcastle/DynamicRoutingTask/Data"
+    "s3://aind-scratch-data/dynamic-routing/DynamicRoutingTask/Data"
 )
-NWB_REPO = upath.UPath("s3://aind-scratch-data/ben.hardcastle/nwb/nwb")
 
-S3_SCRATCH_ROOT = upath.UPath("s3://aind-scratch-data/ben.hardcastle")
+S3_SCRATCH_ROOT = upath.UPath("s3://aind-scratch-data/dynamic-routing")
 
 TISSUECYTE_REPO = upath.UPath(
     "s3://aind-scratch-data/arjun.sridhar/tissuecyte_cloud_processed"
