@@ -304,8 +304,6 @@ ephys:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708016_20240502:
         day: 4
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/92
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703881_20240509:
         day: 3
         insertion_day: 1
