@@ -8,7 +8,7 @@ import tempfile
 import openpyxl
 import upath
 
-from npc_lims.paths.codeocean_s3 import DR_DATA_REPO
+from npc_lims.paths.s3 import DR_DATA_REPO
 
 
 def get_training_sqlite_paths() -> tuple[upath.UPath, ...]:
