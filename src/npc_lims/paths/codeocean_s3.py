@@ -9,10 +9,7 @@ import npc_session
 import upath
 
 import npc_lims.metadata.codeocean_utils as metadata
-
-DR_DATA_REPO = upath.UPath(
-    "s3://aind-scratch-data/ben.hardcastle/DynamicRoutingTask/Data"
-)
+import npc_lims.paths.s3 as s3
 
 
 @functools.cache
@@ -60,10 +57,10 @@ def get_hdf5_stim_files_from_s3(
         ('DynamicRouting1', '13:25:00')
     """
     session = npc_session.SessionRecord(session)
-    root = DR_DATA_REPO / str(session.subject)
+    root = s3.DR_DATA_REPO / str(session.subject)
     if not root.exists():
-        if not DR_DATA_REPO.exists():
-            raise FileNotFoundError(f"{DR_DATA_REPO = } does not exist")
+        if not s3.DR_DATA_REPO.exists():
+            raise FileNotFoundError(f"{s3.DR_DATA_REPO = } does not exist")
         raise FileNotFoundError(
             f"Subject {session.subject} may have been run by NSB: hdf5 files are in lims2"
         )

@@ -17,10 +17,11 @@ import upath
 
 import npc_lims.exceptions as exceptions
 import npc_lims.metadata.types as types
+import npc_lims.paths.s3 as s3
 
 DBHUB_API_KEY = os.getenv("DBHUB_API_KEY")
 
-DEFAULT_BACKUP_PATH = upath.UPath("s3://aind-scratch-data/ben.hardcastle/db-backups")
+DEFAULT_BACKUP_PATH = s3.S3_SCRATCH_ROOT / "db-backups"
 
 
 class SqliteRecordDB:

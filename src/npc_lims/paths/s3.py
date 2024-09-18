@@ -13,11 +13,9 @@ from codeocean.data_asset import DataAsset
 import npc_lims.metadata.codeocean_utils as codeocean_utils
 import npc_lims.status.tracked_sessions as tracked_sessions
 
-DR_DATA_REPO = upath.UPath(
-    "s3://aind-scratch-data/dynamic-routing/DynamicRoutingTask/Data"
-)
 
 S3_SCRATCH_ROOT = upath.UPath("s3://aind-scratch-data/dynamic-routing")
+DR_DATA_REPO = S3_SCRATCH_ROOT / "DynamicRoutingTask" / "Data"
 
 TISSUECYTE_REPO = upath.UPath(
     "s3://aind-scratch-data/arjun.sridhar/tissuecyte_cloud_processed"
