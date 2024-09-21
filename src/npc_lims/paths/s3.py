@@ -6,8 +6,8 @@ import functools
 import operator
 from collections.abc import Iterator
 
-import npc_session
 import aind_session
+import npc_session
 import upath
 from codeocean.data_asset import DataAsset
 
@@ -112,7 +112,9 @@ def get_sorted_data_paths_from_s3(
         sorted_data_asset = aind_session.get_codeocean_model(sorted_data_asset_id)
     elif session is not None:
         np_session = npc_session.SessionRecord(session)
-        aind_session_ = aind_session.get_sessions(np_session.subject, np_session.date)[0]
+        aind_session_ = aind_session.get_sessions(np_session.subject, np_session.date)[
+            0
+        ]
         sorted_data_asset = aind_session_.ecephys.latest_ks25_sorted_data_asset
     else:
         raise ValueError("Must provide either session or sorted_data_asset_id")
