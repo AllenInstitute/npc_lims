@@ -18,6 +18,7 @@ dependencies = [
     "types-requests>=2.31.0.6",
     "npc-io>=0.1.24",
     "codeocean>=0.1.5",
+    "aind-session>=0.2.5",
 ]
 requires-python = ">=3.9"
 readme = "README.md"
@@ -47,6 +48,11 @@ run_queue = "npc_lims.scripts.process_queue:main"
 [tool.pdm]
 plugins = [
     "pdm-bump",
+]
+
+[project.optional-dependencies]
+polars = [
+    "polars>=0.12.0",
 ]
 
 [tool.pdm.dev-dependencies]

@@ -7,6 +7,7 @@ import operator
 from collections.abc import Iterator
 
 import npc_session
+import aind_session
 import upath
 from codeocean.data_asset import DataAsset
 
@@ -108,12 +109,14 @@ def get_sorted_data_paths_from_s3(
         >>> assert len(sorted_data_s3_paths) > 0
     """
     if sorted_data_asset_id is not None:
-        sorted_data_asset = codeocean_utils.get_data_asset(sorted_data_asset_id)
+        np_session = npc_session.SessionRecord(session)
+        aind_session_ = aind_session.get_sessions(np_session.subject, np_session.date)[0]
+        sorted_data_asset = aind_session_.ecephys.latest_ks25_sorted_data_asset
     elif session is not None:
         sorted_data_asset = codeocean_utils.get_session_sorted_data_asset(session)
     else:
         raise ValueError("Must provide either session or sorted_data_asset_id")
-    return tuple(get_data_asset_s3_path(sorted_data_asset).iterdir())
+    return tuple(aind_session.get_data_asset_source_dir(sorted_data_asset).iterdir())
 
 
 @functools.cache
@@ -368,9 +371,9 @@ def get_LFP_subsampling_paths_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> tuple[upath.UPath, ...]:
     """
-    >>> LFP_subsampled_s3_paths = get_LFP_subsampling_paths_from_s3('674562_2023-10-05')
+    >>> LFP_subsampled_s3_paths = get_LFP_subsampling_paths_from_s3('674562_2023-10-03')
     >>> len(LFP_subsampled_s3_paths)
-    8
+    7
     """
     session = npc_session.SessionRecord(session)
     session_LFP_asset = codeocean_utils.get_session_capsule_pipeline_data_asset(
