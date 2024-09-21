@@ -109,14 +109,14 @@ def get_sorted_data_paths_from_s3(
         >>> assert len(sorted_data_s3_paths) > 0
     """
     if sorted_data_asset_id is not None:
+        sorted_data_asset = aind_session.get_codeocean_model(sorted_data_asset_id)
+    elif session is not None:
         np_session = npc_session.SessionRecord(session)
         aind_session_ = aind_session.get_sessions(np_session.subject, np_session.date)[0]
         sorted_data_asset = aind_session_.ecephys.latest_ks25_sorted_data_asset
-    elif session is not None:
-        sorted_data_asset = codeocean_utils.get_session_sorted_data_asset(session)
     else:
         raise ValueError("Must provide either session or sorted_data_asset_id")
-    return tuple(aind_session.get_data_asset_source_dir(sorted_data_asset).iterdir())
+    return tuple(aind_session.get_data_asset_source_dir(sorted_data_asset.id).iterdir())
 
 
 @functools.cache
