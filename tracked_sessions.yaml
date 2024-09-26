@@ -646,7 +646,28 @@ ephys:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_733891_20240917:
         day: 2
-        ephys_day: 2
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_733891_20240918:
+        day: 3
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_733891_20240919:
+        day: 4
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_734897_20240620:
+        day: 2
+        probe_letters_to_skip: BD
+        is_production: false
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_734897_20240618:
+        day: 1
+        probe_letters_to_skip: B
+        is_production: false
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_664566_20231121:
+        day: 2
+        is_production: false
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_664566_20231120:
+        day: 1
+        is_production: false
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_733891_20240920:
+        day: 5
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_737403_20240924:
+        day: 1
 
 # ----------------------------------------------------------------- #
   TempletonPilotSession:
