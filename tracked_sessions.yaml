@@ -567,25 +567,6 @@ ephys:
     # ----------------------------------------------------------------- #
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_718283_20240820:
         day: 1
-        session_kwargs:
-            probe_letters_to_skip: EF
-            is_injection_perturbation: true
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_718283_20240821:
-        day: 2
-        session_kwargs:
-            is_injection_perturbation: true
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_718283_20240822:
-        day: 3
-        session_kwargs:
-            is_injection_perturbation: true
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_718283_20240823:
-        day: 4
-        session_kwargs:
-            is_injection_perturbation: true
-            probe_letters_to_skip: CD
-    # ----------------------------------------------------------------- #
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_718283_20240820:
-        day: 1
         probe_letters_to_skip: EF
         is_production: false
         is_injection_perturbation: true
@@ -648,42 +629,6 @@ ephys:
         is_injection_perturbation: true
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_736208_20240905:
         day: 3
-        probe_letters_to_skip: BF
-        is_production: false
-        is_injection_perturbation: true
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_733780_20240827:
-        ephys_day: 2
-        surface_recording_probe_letters_to_skip: ACDEF
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_733780_20240829:
-        ephys_day: 3
-        probe_letters_to_skip: D
-        surface_recording_probe_letters_to_skip: ABCDF
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_733780_20240830:
-        ephys_day: 4
-        probe_letters_to_skip: D
-        surface_recording_probe_letters_to_skip: ABCDF
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_733780_20240903:
-        ephys_day: 5
-        surface_recording_probe_letters_to_skip: ACDEF
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_733780_20240904:
-        ephys_day: 6
-        surface_recording_probe_letters_to_skip: ABCDF
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_733780_20240905:
-        ephys_day: 7
-        probe_letters_to_skip: AE
-        surface_recording_probe_letters_to_skip: ACDEF
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_736208_20240903:
-        ephys_day: 1
-        probe_letters_to_skip: BF
-        is_production: false
-        is_injection_perturbation: true
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_736208_20240904:
-        ephys_day: 2
-        probe_letters_to_skip: F
-        is_production: false
-        is_injection_perturbation: true
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_736208_20240905:
-        ephys_day: 3
         probe_letters_to_skip: BF
         is_production: false
         is_injection_perturbation: true
