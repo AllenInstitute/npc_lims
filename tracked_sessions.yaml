@@ -34,9 +34,6 @@ ephys:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644864_20230202:
         day: 4
-        session_kwargs:
-            sorted_data_asset_id: d24daced-4973-466a-9b23-275c7bb64c3e
-            # was reuploaded, but asset still exists with 00-00-00 time
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644866_20230207:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644866_20230208:
