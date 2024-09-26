@@ -633,18 +633,19 @@ ephys:
         is_production: false
         is_injection_perturbation: true
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_741611_20240911:
-        ephys_day: 1
+        day: 1
         probe_letters_to_skip: ADEF
         is_production: false
         is_opto_perturbation: true
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_741611_20240912:
-        ephys_day: 2
+        day: 2
         probe_letters_to_skip: ABCF
         is_production: false
         is_opto_perturbation: true
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_733891_20240916:
-        ephys_day: 1
+        day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_733891_20240917:
+        day: 2
         ephys_day: 2
 
 # ----------------------------------------------------------------- #
