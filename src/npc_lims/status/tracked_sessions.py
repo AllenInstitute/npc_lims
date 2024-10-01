@@ -355,6 +355,8 @@ class SessionInfo:
         """
         if "templeton" in self.project.lower():
             return True
+        if "dynamicrouting" in self.project.lower():
+            return False
         # training_info not available for Templeton sessions:
         return self.subject not in (
             behavior_sessions.get_subjects_from_training_db()
@@ -588,7 +590,71 @@ def _get_session_info_from_file(ttl_hash: int | None = None) -> tuple[SessionInf
         f"Add loader for {_TRACKED_SESSIONS_FILE.suffix}"
     )  # pragma: no cover
 
+def _add_session_to_file(
+    platform: Literal['ephys', 'behavior', 'behavior_with_sync'],
+    project: Literal['DynamicRouting', 'TempletonPilotSession'],
+    k: str, v: dict[str, Any],
+) -> None:
+    f = yaml.load(
+        _TRACKED_SESSIONS_FILE.read_bytes(), Loader=yaml.FullLoader
+    )
+    if any(k in entry for entry in f[platform][project]):
+        print(f"Session {k} already exists in {_TRACKED_SESSIONS_FILE} - skipping")
+        return
+    new_path = upath.UPath("new_sessions.yaml")
+    if new_path.exists():
+        new = yaml.load(new_path.read_bytes(), Loader=yaml.FullLoader)
+    else:
+        new = {}
+        new[platform] = {}
+        new[platform][project] = []
+    if any(k in entry for entry in new):
+        print(f"Session {k} already exists in new_sessions.yaml - skipping")
+        return
+    new[platform][project].append({k: v})
+    new_path.write_text(yaml.dump(new))
 
+def add_tracked_ephys_sessions_from_spreadsheet(
+    csv_path: str | upath.UPath = "C:/Users/ben.hardcastle/OneDrive - Allen Institute/Shared Documents - Dynamic Routing/Mouse and experiment tracking/Ephys Experiment Tracking.csv"
+) -> None:
+    try:
+        import polars as pl
+    except ImportError:
+        raise ImportError("Optional dependencies are required to use this function: reinstall with `pip install npc_lims[polars]`")
+    df = (
+        pl.read_csv(csv_path, infer_schema_length=1000)
+        .with_columns(
+            pl.col('Date').cum_count().over('Mouse').alias("day"),
+        )
+    )
+    upath.UPath("new_sessions.yaml").unlink(missing_ok=True)
+    project = 'DynamicRouting'
+    platform = 'ephys'
+    for row in df.iter_rows(named=True):
+        info = {}
+        session_kwargs = {}
+        dc = row['Date'].split('/')
+        date: str = f"{dc[2]}{'0' if len(dc[0])<2 else ''}{dc[0]}{'0' if len(dc[1]) < 2 else ''}{dc[1]}"
+        session_id = f"{row['Mouse']}_{date}"
+        k: str = f'//allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_{row["Mouse"]}_{date}'
+        probes = ''.join(npc_session.extract_probe_letter(v) or '' for v in row['Probes in brain'])
+        if not probes:
+            print(f"Skipping {session_id} - no probes")
+            continue
+        session_kwargs['probe_letters_to_skip'] = ''.join(letter for letter in 'ABCDEF' if letter not in probes)
+        if (x := row.get('Injection substance', '')) or row.get('is perturbation experiment', None) is not None:
+            if x:
+                if 'control' in x.lower() or 'acsf' in x.lower():
+                    session_kwargs['is_injection_control'] = True
+                else:
+                    session_kwargs['is_injection_perturbation'] = True
+            else:
+                session_kwargs['is_perturbation'] = 'unknown_type'
+                
+        info['day'] = row['day']
+        info['session_kwargs'] = session_kwargs
+        _add_session_to_file(platform, project, k, info)
+    
 def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInfo, ...]:
     sessions: MutableSequence[SessionInfo] = []
     for session_type, projects in contents.items():
@@ -647,7 +713,7 @@ def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInf
 
 
 if __name__ == "__main__":
-    get_session_info("behavior_614910_2022-04-04_13-22-02").is_uploaded
+    add_tracked_ephys_sessions_from_spreadsheet()
     import doctest
 
     import dotenv
