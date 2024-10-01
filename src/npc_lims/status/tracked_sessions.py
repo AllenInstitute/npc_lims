@@ -653,7 +653,7 @@ def add_tracked_ephys_sessions_from_spreadsheet(
                 
         info['day'] = row['day']
         info['session_kwargs'] = session_kwargs
-        _add_session_to_file(platform, project, k, info)
+        _add_session_to_file(platform, project, k, info) # type: ignore [arg-type]
     
 def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInfo, ...]:
     sessions: MutableSequence[SessionInfo] = []
