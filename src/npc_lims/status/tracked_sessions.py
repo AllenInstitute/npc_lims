@@ -645,9 +645,9 @@ def add_tracked_ephys_sessions_from_spreadsheet(
         if (x := row.get('Injection substance', '')) or row.get('is perturbation experiment', None) is not None:
             if x:
                 if 'control' in x.lower() or 'acsf' in x.lower():
-                    session_kwargs['is_injection_control'] = True
+                    session_kwargs['is_injection_control'] = True  # type: ignore [assignment]
                 else:
-                    session_kwargs['is_injection_perturbation'] = True
+                    session_kwargs['is_injection_perturbation'] = True # type: ignore [assignment]
             else:
                 session_kwargs['is_perturbation'] = 'unknown_type'
                 
