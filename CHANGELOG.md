@@ -8,13 +8,31 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.175...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.176...HEAD)</small>
+
+### Added
+
+- Add sessions from notebook ([cd40392](https://github.com/AllenInstitute/npc_lims/commit/cd40392c77a6ca66c12c2111e893d4f04b884e08) by bjhardcastle).
+
+### Fixed
+
+- Fix type ([11aaf3b](https://github.com/AllenInstitute/npc_lims/commit/11aaf3b36b4e396127748b535d57f0e4897c90a0) by bjhardcastle).
+- Fix getting `is_templeton` from tracked_sessions.yaml ([05e9d84](https://github.com/AllenInstitute/npc_lims/commit/05e9d848d998154b9da7ac545a28f19169200ced) by bjhardcastle).
+
+### Removed
+
+- Remove duplicate sessions ([c90c4d0](https://github.com/AllenInstitute/npc_lims/commit/c90c4d0c78f3de5999cec9d86dfbc3b95e5d2091) by bjhardcastle).
+- Remove hard-coded sorted data asset for session ([95dec71](https://github.com/AllenInstitute/npc_lims/commit/95dec71033c9bda9064f818060fb0d01a61f368c) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.176](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.176) - 2024-09-21
+
+<small>[Compare with v0.1.175](https://github.com/AllenInstitute/npc_lims/compare/v0.1.175...v0.1.176)</small>
 
 ### Fixed
 
 - Fix previous ([f12d318](https://github.com/AllenInstitute/npc_lims/commit/f12d3184042d16e98918a4f64b62fefbe24ea77c) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.175](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.175) - 2024-09-18
 
 <small>[Compare with v0.1.174](https://github.com/AllenInstitute/npc_lims/compare/v0.1.174...v0.1.175)</small>
