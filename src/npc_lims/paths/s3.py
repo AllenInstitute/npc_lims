@@ -115,7 +115,7 @@ def get_sorted_data_paths_from_s3(
         aind_session_ = aind_session.get_sessions(np_session.subject, np_session.date)[
             0
         ]
-        sorted_data_asset = aind_session_.ecephys.latest_ks25_sorted_data_asset
+        sorted_data_asset = aind_session_.ecephys.sorter.kilosort2_5.data_assets[-1]
     else:
         raise ValueError("Must provide either session or sorted_data_asset_id")
     return tuple(aind_session.get_data_asset_source_dir(sorted_data_asset.id).iterdir())
