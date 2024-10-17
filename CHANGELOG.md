@@ -8,7 +8,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.176...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.177...HEAD)</small>
+
+### Fixed
+
+- Fix getting sorted asset ([04f5507](https://github.com/AllenInstitute/npc_lims/commit/04f5507363a525eb84d7183170b41295d88f4ed9) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.177](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.177) - 2024-10-01
+
+<small>[Compare with v0.1.176](https://github.com/AllenInstitute/npc_lims/compare/v0.1.176...v0.1.177)</small>
 
 ### Added
 
@@ -24,7 +33,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Remove duplicate sessions ([c90c4d0](https://github.com/AllenInstitute/npc_lims/commit/c90c4d0c78f3de5999cec9d86dfbc3b95e5d2091) by bjhardcastle).
 - Remove hard-coded sorted data asset for session ([95dec71](https://github.com/AllenInstitute/npc_lims/commit/95dec71033c9bda9064f818060fb0d01a61f368c) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.176](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.176) - 2024-09-21
 
 <small>[Compare with v0.1.175](https://github.com/AllenInstitute/npc_lims/compare/v0.1.175...v0.1.176)</small>
