@@ -259,7 +259,9 @@ def get_session_sorted_data_asset(
     )
 
     if not sorted_data_assets:
-        raise ValueError(f"Session {session} has no sorted data assets (using old, non-analyzer KS2.5 format)")
+        raise ValueError(
+            f"Session {session} has no sorted data assets (using old, non-analyzer KS2.5 format)"
+        )
 
     return get_latest_data_asset(sorted_data_assets)
 

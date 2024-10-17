@@ -8,13 +8,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.177...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.178...HEAD)</small>
+
+### Fixed
+
+- Fix getting sorted asset ([037a611](https://github.com/AllenInstitute/npc_lims/commit/037a6118f7a1f30b80a92aac62182e46f32d1be6) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.178](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.178) - 2024-10-17
+
+<small>[Compare with v0.1.177](https://github.com/AllenInstitute/npc_lims/compare/v0.1.177...v0.1.178)</small>
 
 ### Fixed
 
 - Fix getting sorted asset ([04f5507](https://github.com/AllenInstitute/npc_lims/commit/04f5507363a525eb84d7183170b41295d88f4ed9) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.177](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.177) - 2024-10-01
 
 <small>[Compare with v0.1.176](https://github.com/AllenInstitute/npc_lims/compare/v0.1.176...v0.1.177)</small>
