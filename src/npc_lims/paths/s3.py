@@ -115,7 +115,16 @@ def get_sorted_data_paths_from_s3(
         aind_session_ = aind_session.get_sessions(np_session.subject, np_session.date)[
             0
         ]
-        sorted_data_asset = aind_session_.ecephys.sorter.kilosort2_5.data_assets[-1]
+        assets = tuple(
+            a
+            for a in aind_session_.ecephys.sorter.kilosort2_5.sorted_data_assets
+            if not a.is_sorting_analyzer
+        )
+        if not assets:
+            raise FileNotFoundError(
+                f"No sorted data assets found for {session} (using old, non-analyzer KS2.5 format)"
+            )
+        sorted_data_asset = assets[-1]
     else:
         raise ValueError("Must provide either session or sorted_data_asset_id")
     return tuple(aind_session.get_data_asset_source_dir(sorted_data_asset.id).iterdir())
