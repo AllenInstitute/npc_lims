@@ -11,6 +11,8 @@ from collections.abc import Sequence
 from pathlib import Path
 from typing import Any, Literal, NamedTuple, Union
 
+import aind_session
+from npc_io import V
 import npc_session
 import requests
 import upath
@@ -251,13 +253,20 @@ def get_session_sorted_data_asset(
         >>> asset = get_session_sorted_data_asset('668759_20230711')
         >>> assert isinstance(asset, DataAsset)
     """
-    session_result_data_assets = get_session_data_assets(session)
-    sorted_data_assets = tuple(
-        data_asset
-        for data_asset in session_result_data_assets
-        if is_sorted_data_asset(data_asset) and (data_asset.files or -1) > 2
-    )
-
+    sorted_data_assets = []
+    for asset in get_session_data_assets(session):
+        try:
+            correct_version: bool = (
+                aind_session.ecephys.get_sorter_name(asset.id) == "kilosort2_5"
+                and not aind_session.ecephys.is_sorting_analyzer_asset(asset.id)
+            )
+        except ValueError:
+            continue
+        else:
+            if not correct_version:
+                continue
+            else:
+                sorted_data_assets.append(asset)
     if not sorted_data_assets:
         raise ValueError(
             f"Session {session} has no sorted data assets (using old, non-analyzer KS2.5 format)"

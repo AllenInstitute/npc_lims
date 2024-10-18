@@ -107,24 +107,12 @@ def get_sorted_data_paths_from_s3(
     Examples:
         >>> sorted_data_s3_paths = get_sorted_data_paths_from_s3('668759_20230711')
         >>> assert len(sorted_data_s3_paths) > 0
+        >>> assert get_sorted_data_paths_from_s3('703882_2024-04-22')[0] != get_sorted_data_paths_from_s3('703882_2024-04-22_1')[0]
     """
     if sorted_data_asset_id is not None:
         sorted_data_asset = aind_session.get_codeocean_model(sorted_data_asset_id)
     elif session is not None:
-        np_session = npc_session.SessionRecord(session)
-        aind_session_ = aind_session.get_sessions(np_session.subject, np_session.date)[
-            0
-        ]
-        assets = tuple(
-            a
-            for a in aind_session_.ecephys.sorter.kilosort2_5.sorted_data_assets
-            if not a.is_sorting_analyzer
-        )
-        if not assets:
-            raise FileNotFoundError(
-                f"No sorted data assets found for {session} (using old, non-analyzer KS2.5 format)"
-            )
-        sorted_data_asset = assets[-1]
+        sorted_data_asset = codeocean_utils.get_session_sorted_data_asset(session)
     else:
         raise ValueError("Must provide either session or sorted_data_asset_id")
     return tuple(aind_session.get_data_asset_source_dir(sorted_data_asset.id).iterdir())
