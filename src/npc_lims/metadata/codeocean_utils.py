@@ -12,7 +12,6 @@ from pathlib import Path
 from typing import Any, Literal, NamedTuple, Union
 
 import aind_session
-from npc_io import V
 import npc_session
 import requests
 import upath
@@ -256,9 +255,10 @@ def get_session_sorted_data_asset(
     sorted_data_assets = []
     for asset in get_session_data_assets(session):
         try:
-            correct_version: bool = (
-                aind_session.ecephys.get_sorter_name(asset.id) == "kilosort2_5"
-                and not aind_session.ecephys.is_sorting_analyzer_asset(asset.id)
+            correct_version: bool = aind_session.ecephys.get_sorter_name(
+                asset.id
+            ) == "kilosort2_5" and not aind_session.ecephys.is_sorting_analyzer_asset(
+                asset.id
             )
         except ValueError:
             continue

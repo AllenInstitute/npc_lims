@@ -8,13 +8,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.178...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.179...HEAD)</small>
+
+### Fixed
+
+- Fix getting sorted assets/paths for surface channel sessions ([e0121b9](https://github.com/AllenInstitute/npc_lims/commit/e0121b9905bdc756e7035de6bb422f22a0b10528) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.179](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.179) - 2024-10-17
+
+<small>[Compare with v0.1.178](https://github.com/AllenInstitute/npc_lims/compare/v0.1.178...v0.1.179)</small>
 
 ### Fixed
 
 - Fix getting sorted asset ([037a611](https://github.com/AllenInstitute/npc_lims/commit/037a6118f7a1f30b80a92aac62182e46f32d1be6) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.178](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.178) - 2024-10-17
 
 <small>[Compare with v0.1.177](https://github.com/AllenInstitute/npc_lims/compare/v0.1.177...v0.1.178)</small>
