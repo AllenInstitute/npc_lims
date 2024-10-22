@@ -97,7 +97,10 @@ class SessionInfo:
             True
         """
         with contextlib.suppress(FileNotFoundError, ValueError):
-            return bool(codeocean_utils.get_raw_data_root(self.id))
+            root = codeocean_utils.get_raw_data_root(self.id)
+            if self.is_ephys and not tuple(root.glob('ecephys*')):
+                return False
+            return True
         return False
 
     @functools.cached_property
