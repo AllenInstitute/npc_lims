@@ -98,7 +98,7 @@ class SessionInfo:
         """
         with contextlib.suppress(FileNotFoundError, ValueError):
             root = codeocean_utils.get_raw_data_root(self.id)
-            if self.is_ephys and not tuple(root.glob('ecephys*')):
+            if self.is_ephys and not tuple(root.glob("ecephys*")):
                 return False
             return True
         return False
