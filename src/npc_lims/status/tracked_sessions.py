@@ -292,15 +292,11 @@ class SessionInfo:
         if not self.is_ephys:
             return False
         try:
-            return any(
-                asset
-                for asset in codeocean_utils.get_session_data_assets(self.id)
-                if "sorted" in asset.name
-                and asset.files
-                > 6  # number of files produced by sorting pipeline when errorred
-            )
+            _ = codeocean_utils.get_session_sorted_data_asset(self.id)
         except (FileNotFoundError, ValueError):
             return False
+        else:
+            return True
 
     @functools.cached_property
     def is_annotated(self) -> bool:

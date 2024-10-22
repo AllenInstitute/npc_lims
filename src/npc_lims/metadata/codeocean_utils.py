@@ -166,9 +166,6 @@ def get_codeocean_client() -> CodeOcean:
 @functools.cache
 def get_subject_data_assets(
     subject: str | int,
-    page_size: int = 10,
-    max_pages: int = 1000,
-    offset: int = 0,
     ttl_hash: int | None = None,
 ) -> tuple[DataAsset, ...]:
     """
@@ -178,26 +175,7 @@ def get_subject_data_assets(
         >>> assets = get_subject_data_assets(668759)
         >>> assert len(assets) > 0
     """
-    del ttl_hash  # only used for functools.cache
-    results = []
-    while offset < max_pages:
-        search_results = get_codeocean_client().data_assets.search_data_assets(
-            DataAssetSearchParams(
-                query=f"subject id: {npc_session.SubjectRecord(subject)}",
-                limit=page_size,  # intentionally high, TODO: add pagination
-                offset=offset * page_size,
-                archived=False,
-                favorite=False,
-            )
-        )
-        results.extend(search_results.results)
-        if not search_results.has_more:
-            break
-        offset += 1
-    else:
-        logger.warning(f"Max pages reached for {subject=}.")
-
-    return tuple(results)
+    return aind_session.get_subject_data_assets(subject, ttl_hash=ttl_hash)
 
 
 def get_session_data_assets(
