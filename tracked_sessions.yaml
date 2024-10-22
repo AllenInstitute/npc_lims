@@ -216,7 +216,8 @@ ephys:
         day: 2
         issues:
             - https://github.com/AllenInstitute/npc_sessions/issues/83 # seizure
-            - https://github.com/AllenInstitute/npc_sessions/issues/117 
+            - https://github.com/AllenInstitute/npc_sessions/issues/117
+            - https://github.com/AllenInstitute/npc_lims/issues/5
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240304:
         day: 1
         session_kwargs:
