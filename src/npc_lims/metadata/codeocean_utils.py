@@ -271,8 +271,16 @@ def get_session_sorted_data_asset(
         raise ValueError(
             f"Session {session} has no sorted data assets (using old, non-analyzer KS2.5 format)"
         )
-
-    return get_latest_data_asset(sorted_data_assets)
+    non_errored_assets = [asset for asset in sorted_data_assets if not aind_session.is_data_asset_error(asset)]
+    if not non_errored_assets:
+        logger.warning(
+            f"Session {session} has no sorted data assets without errors (using old, non-analyzer KS2.5 format)"
+        )
+    if get_latest_data_asset(non_errored_assets).created < get_latest_data_asset(sorted_data_assets).created:
+        logger.warning(
+            f"Session {session} has sorted data assets with errors: using most-recent asset without errors"
+        )
+    return get_latest_data_asset(non_errored_assets or sorted_data_assets)
 
 
 @functools.cache
