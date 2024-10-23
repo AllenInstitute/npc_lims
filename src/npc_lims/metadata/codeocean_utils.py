@@ -16,9 +16,7 @@ import npc_session
 import requests
 import upath
 from codeocean import CodeOcean
-from codeocean.components import (
-    EveryoneRole,
-)
+from codeocean.components import EveryoneRole
 from codeocean.computation import (
     Computation,
     ComputationEndStatus,
@@ -258,7 +256,8 @@ def get_session_sorted_data_asset(
             f"Session {session} has no sorted data assets without errors (using old, non-analyzer KS2.5 format)"
         )
     if (
-        get_latest_data_asset(non_errored_assets).created
+        non_errored_assets
+        and get_latest_data_asset(non_errored_assets).created
         < get_latest_data_asset(sorted_data_assets).created
     ):
         logger.warning(
