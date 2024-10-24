@@ -311,8 +311,6 @@ class SessionInfo:
             >>> next(session.is_annotated for session in get_session_info() if session.is_annotated)
             True
         """
-        if not self.is_sorted:
-            return False
         try:
             return bool(s3.get_tissuecyte_annotation_files_from_s3(self.id))
         except (FileNotFoundError, ValueError):
