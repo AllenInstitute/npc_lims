@@ -42,7 +42,7 @@ class SessionInfo:
     """
 
     id: npc_session.SessionRecord
-    project: npc_session.ProjectRecord
+    project: str
     is_ephys: bool
     is_sync: bool
     """The session has sync data, implying more than a behavior-box."""
@@ -555,7 +555,7 @@ def _get_session_info_from_data_repo(
         for session in sessions:
             info = SessionInfo(
                 id=behavior_sessions.get_session_id_from_db_row(subject, session),
-                project=npc_session.ProjectRecord("DynamicRouting"),
+                project="DynamicRouting",
                 is_ephys=False,  #! not enough info
                 is_sync=False,  #! not enough info
                 allen_path=DR_DATA_REPO_ISILON / str(subject),
@@ -710,7 +710,7 @@ def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInf
                         experiment_day=int(
                             session_config.get("day", _get_day_from_sessions(record))
                         ),
-                        project=npc_session.ProjectRecord(project_name),
+                        project=project_name,
                         is_ephys=is_ephys,
                         is_sync=is_sync,
                         allen_path=upath.UPath(allen_path),
