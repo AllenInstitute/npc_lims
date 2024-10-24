@@ -60,7 +60,7 @@ files = [
 
 [[package]]
 name = "aind-session"
-version = "0.3.4"
+version = "0.3.8"
 requires_python = ">=3.9"
 summary = "User-friendly tools for accessing paths, metadata and assets related to AIND sessions."
 dependencies = [
@@ -70,8 +70,8 @@ dependencies = [
     "npc-session>=0.1.39",
 ]
 files = [
-    {file = "aind_session-0.3.4-py3-none-any.whl", hash = "sha256:d19fe79a615735f57a70aa5d6d90721881ac17379549fcc5e7cd524b5c907d72"},
-    {file = "aind_session-0.3.4.tar.gz", hash = "sha256:cf5d286587ce7b623a4f0c6034624dbfe0a4cc804df2e374771675fce4b552ed"},
+    {file = "aind_session-0.3.8-py3-none-any.whl", hash = "sha256:8e7fab834af11c9a03d318af26d94c7445e486251f2a91ad8a1074e4bffd8fa3"},
+    {file = "aind_session-0.3.8.tar.gz", hash = "sha256:6b8a7a2d91e0226900d0caf54680ea248623b5a325c79f2e96b0d81dc74decf3"},
 ]
 
 [[package]]
