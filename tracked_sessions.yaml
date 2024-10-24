@@ -584,9 +584,11 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_721536_20240516:
         day: 1
         probe_letters_to_skip: BE
+        is_production: false
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_721536_20240517:
         day: 2
         probe_letters_to_skip: BDE
+        is_production: false
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_733780_20240826:
         day: 1
         surface_recording_probe_letters_to_skip: ACDEF
