@@ -8,7 +8,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.183...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.184...HEAD)</small>
+
+### Removed
+
+- Remove use of npc_session.ProjectRecord ([8301e60](https://github.com/AllenInstitute/npc_lims/commit/8301e60801498e9163f2431844df56a3579964f3) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.184](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.184) - 2024-10-25
+
+<small>[Compare with v0.1.183](https://github.com/AllenInstitute/npc_lims/compare/v0.1.183...v0.1.184)</small>
 
 ### Fixed
 
@@ -18,7 +27,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Remove sorted check from `is_annotated` ([9e9fa27](https://github.com/AllenInstitute/npc_lims/commit/9e9fa27d51f7be85aedacf0b324f06d78d3ef49a) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.183](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.183) - 2024-10-23
 
 <small>[Compare with v0.1.182](https://github.com/AllenInstitute/npc_lims/compare/v0.1.182...v0.1.183)</small>
