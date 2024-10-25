@@ -8,13 +8,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.182...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.183...HEAD)</small>
+
+### Fixed
+
+- Fix sqlite connection for multithreading ([cf0d563](https://github.com/AllenInstitute/npc_lims/commit/cf0d5639c4126c6865936d3ece4353ec8eb43502) by bjhardcastle).
+
+### Removed
+
+- Remove sorted check from `is_annotated` ([9e9fa27](https://github.com/AllenInstitute/npc_lims/commit/9e9fa27d51f7be85aedacf0b324f06d78d3ef49a) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.183](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.183) - 2024-10-23
+
+<small>[Compare with v0.1.182](https://github.com/AllenInstitute/npc_lims/compare/v0.1.182...v0.1.183)</small>
 
 ### Fixed
 
 - Fix getting sorted data asset ([a061beb](https://github.com/AllenInstitute/npc_lims/commit/a061bebeba013eab69cc7bd27773a48d832a453d) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.182](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.182) - 2024-10-22
 
 <small>[Compare with v0.1.181](https://github.com/AllenInstitute/npc_lims/compare/v0.1.181...v0.1.182)</small>

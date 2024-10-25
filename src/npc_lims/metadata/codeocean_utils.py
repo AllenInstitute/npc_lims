@@ -3,7 +3,6 @@ from __future__ import annotations
 import functools
 import json
 import logging
-from multiprocessing import Value
 import os
 import re
 import time
@@ -218,16 +217,24 @@ def get_latest_data_asset(
 ) -> DataAsset:
     return sorted(data_assets, key=lambda asset: asset.created)[-1]
 
-def get_aind_session(session_id: str | npc_session.SessionRecord) -> aind_session.Session:
+
+def get_aind_session(
+    session_id: str | npc_session.SessionRecord,
+) -> aind_session.Session:
     """
     Examples:
         >>> assert get_aind_session('ecephys_703333_2024-04-09_1') != get_aind_session('ecephys_703333_2024-04-09')
     """
     session = npc_session.SessionRecord(session_id)
-    aind_sessions = aind_session.get_sessions(subject_id=session.subject, date=session.date)
+    aind_sessions = aind_session.get_sessions(
+        subject_id=session.subject, date=session.date
+    )
     if not aind_sessions:
-        raise ValueError(f"No AIND session found for {session} - likely missing raw data upload")
+        raise ValueError(
+            f"No AIND session found for {session} - likely missing raw data upload"
+        )
     return aind_sessions[session.idx]
+
 
 def get_session_sorted_data_asset(
     session: str | npc_session.SessionRecord,
@@ -249,9 +256,7 @@ def get_session_sorted_data_asset(
             f"Session {session} has no sorted data assets (using old, non-analyzer KS2.5 format)"
         )
     non_errored_assets = [
-        asset
-        for asset in sorted_data_assets
-        if not asset.is_sorting_error
+        asset for asset in sorted_data_assets if not asset.is_sorting_error
     ]
     if not non_errored_assets:
         logger.warning(
