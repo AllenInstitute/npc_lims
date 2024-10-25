@@ -25,7 +25,7 @@ def get_probe_target_db() -> sqlite3.Connection:
     db_path = upath.UPath(tempfile.mkstemp(suffix=".db")[1])
 
     db_path.write_bytes(S3_PROBE_TARGET_DB_PATH.read_bytes())
-    con = sqlite3.connect(db_path)
+    con = sqlite3.connect(db_path, check_same_thread=False)
 
     def dict_factory(cursor, row):
         d = {}
