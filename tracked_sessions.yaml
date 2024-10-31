@@ -230,7 +230,7 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240305:
         day: 2
         session_kwargs:
-            probe_letters_to_skip: C # not inserted, E weird artefacts in data: see https://github.com/AllenInstitute/npc_sessions/issues/148
+            probe_letters_to_skip: CE # not inserted, E weird artefacts in data: see https://github.com/AllenInstitute/npc_sessions/issues/148
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240306:
         day: 3
         session_kwargs:
