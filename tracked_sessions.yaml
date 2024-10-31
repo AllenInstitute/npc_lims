@@ -39,7 +39,8 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644866_20230208:
         day: 2
         session_kwargs:
-            probe_letters_to_skip: E # no dye track, see https://github.com/AllenInstitute/npc_sessions/issues/63
+            probe_letters_to_skip: EB # no dye track, see https://github.com/AllenInstitute/npc_sessions/issues/63
+            # B weird artefacts in data: see https://github.com/AllenInstitute/npc_sessions/issues/148
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644866_20230209:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644866_20230210:
@@ -139,7 +140,7 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_681532_20231017:
         day: 2
         session_kwargs:
-            probe_letters_to_skip: D # not inserted
+            probe_letters_to_skip: DE # D not inserted, E weird artefacts in data: see https://github.com/AllenInstitute/npc_sessions/issues/148
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_681532_20231018:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_681532_20231019:
@@ -157,6 +158,8 @@ ephys:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686740_20231025:
         day: 3
+        session_kwargs:
+            probe_letters_to_skip: E # E weird artefacts in data: see https://github.com/AllenInstitute/npc_sessions/issues/148
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686740_20231026:
         day: 4
         session_kwargs:
@@ -181,6 +184,8 @@ ephys:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_690706_20231130:
         day: 4
+        session_kwargs:
+            probe_letters_to_skip: E # E weird artefacts in data: see https://github.com/AllenInstitute/npc_sessions/issues/148
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686176_20231204:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_686176_20231205:
@@ -221,11 +226,11 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240304:
         day: 1
         session_kwargs:
-            probe_letters_to_skip: D # not inserted
+            probe_letters_to_skip: DEF # D not inserted, EF weird artefacts in data: see https://github.com/AllenInstitute/npc_sessions/issues/148
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240305:
         day: 2
         session_kwargs:
-            probe_letters_to_skip: C # not inserted
+            probe_letters_to_skip: C # not inserted, E weird artefacts in data: see https://github.com/AllenInstitute/npc_sessions/issues/148
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240306:
         day: 3
         session_kwargs:
@@ -238,6 +243,8 @@ ephys:
             probe_letters_to_skip: B # bad connection
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703333_20240409:
         day: 2
+        session_kwargs:
+            probe_letters_to_skip: B # weird artefact in data: see https://github.com/AllenInstitute/npc_sessions/issues/148
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703333_20240410:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703333_20240411:
@@ -264,6 +271,8 @@ ephys:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_699847_20240417:
         day: 3
+        session_kwargs:
+            probe_letters_to_skip: E # E weird artefact in data: see https://github.com/AllenInstitute/npc_sessions/issues/148
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_699847_20240418:
         day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_703882_20240422:
@@ -433,6 +442,8 @@ ephys:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_715710_20240718:
         day: 4
+        session_kwargs:
+            probe_letters_to_skip: A # A weird data: see https://github.com/AllenInstitute/npc_sessions/issues/148
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_715710_20240719:
         day: 5
     # ----------------------------------------------------------------- #
