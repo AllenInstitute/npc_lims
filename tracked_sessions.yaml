@@ -690,7 +690,7 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_733891_20240920:
         day: 5
         session_kwargs:
-            - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_737403_20240924:
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_737403_20240924:
         day: 1
             
 # ----------------------------------------------------------------- #
