@@ -704,7 +704,71 @@ ephys:
         day: 5
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_737403_20240924:
         day: 1
-            
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_767172_20241106:
+        ephys_day: 1
+        session_kwargs:
+            probe_letters_to_skip: ACEF
+            is_production: false
+            is_opto_perturbation: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_764725_20241031:
+        ephys_day: 1
+        session_kwargs:    
+            probe_letters_to_skip: AD
+            is_production: false
+            is_opto_perturbation: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_761584_20241030:
+        ephys_day: 1
+        session_kwargs:    
+            probe_letters_to_skip: AD
+            is_production: false
+            is_opto_perturbation: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_748098_20241029:
+        ephys_day: 1
+        session_kwargs:
+            probe_letters_to_skip: ACDE
+            is_production: false
+            is_opto_perturbation: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_744740_20241111:
+        ephys_day: 1
+        session_kwargs:
+            is_opto_perturbation: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_742903_20241025:
+        ephys_day: 5
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_742903_20241024:
+        ephys_day: 4
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_742903_20241023:
+        ephys_day: 3
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_742903_20241022:
+        ephys_day: 2
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_742903_20241021:
+        ephys_day: 1
+        session_kwargs:
+            probe_letters_to_skip: ACF
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_741148_20241018:
+        ephys_day: 4
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_741148_20241017:
+        ephys_day: 3
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_741148_20241016:
+        ephys_day: 2
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_741148_20241015:
+        ephys_day: 1
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_741137_20241011:
+        ephys_day: 4
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_741137_20241010:
+        ephys_day: 3
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_741137_20241009:
+        ephys_day: 2
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_741137_20241008:
+        ephys_day: 1
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_737403_20240927:
+        ephys_day: 4
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_737403_20240926:
+        ephys_day: 3
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_737403_20240925:
+        ephys_day: 2
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_728917_20241004:
+        ephys_day: 1
+
 # ----------------------------------------------------------------- #
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-07-26_14-09-36_620263:
