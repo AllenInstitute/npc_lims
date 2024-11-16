@@ -92,7 +92,7 @@ def get_sessions_from_training_db() -> dict[int, tuple[dict[str, Any], ...]]:
             for table in db.execute(
                 "SELECT name FROM sqlite_master WHERE type='table'"
             ).fetchall()
-            if table["name"] not in ("sqlite_sequence", "all_mice")
+            if str(table["name"]).isnumeric()
         )
         for subject in subjects:
             sessions[subject] = tuple(
