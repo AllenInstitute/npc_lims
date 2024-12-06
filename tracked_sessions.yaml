@@ -366,6 +366,9 @@ ephys:
             concatenate_recordings: [recording1, recording2]
             suppress_errors: True # old var name for back compat - remove after 2024-09-01
             ignore_stim_errors: True # RFMapping stim has number of frames mismatch in sync
+            excluded_stim_file_names: [RFMapping_712141_20240611_115045] # has mismatch with sync
+            # AND same num frames as other RFMapping stim in session, which causes problem getting
+            # frametimes
         issues:
             - https://github.com/AllenInstitute/npc_sessions/issues/113
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712141_20240612:
