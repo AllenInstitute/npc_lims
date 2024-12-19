@@ -779,6 +779,8 @@ ephys:
         ephys_day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_728917_20241004:
         ephys_day: 1
+        session_kwargs:
+            is_production: false
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_767172_20241106:
         ephys_day: 1
         session_kwargs:
