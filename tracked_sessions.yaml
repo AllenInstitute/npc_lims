@@ -555,6 +555,7 @@ ephys:
         day: 1
         session_kwargs:
             probe_letters_to_skip: BEF # not inserted
+            is_production: False
     # ----------------------------------------------------------------- #
     # 733887
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_733887_20240813:
