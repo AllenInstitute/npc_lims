@@ -818,14 +818,6 @@ ephys:
         ephys_day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_761583_20241216:
         ephys_day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_743199_20241206:
-        ephys_day: 4
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_743199_20241205:
-        ephys_day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_743199_20241204:
-        ephys_day: 2
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_743199_20241203:
-        ephys_day: 1
 
 # ----------------------------------------------------------------- #
   TempletonPilotSession:
