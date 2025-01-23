@@ -169,10 +169,14 @@ def get_lpfaceparts_s3_dir_paths(
     )
 
     if enforce_gamma_encoding:
-        is_gamma_encoded = codeocean_utils.is_lighting_pose_gamma_encoded(lpfaceparts_data_asset)
+        is_gamma_encoded = codeocean_utils.is_lighting_pose_gamma_encoded(
+            lpfaceparts_data_asset
+        )
         if not is_gamma_encoded:
-            raise ValueError(f'{session} has lightning pose asset with an input video that is not gamma encoded and gamma encoding is enforced. Rerun with gamma encoded video as input')
-    
+            raise ValueError(
+                f"{session} has lightning pose asset with an input video that is not gamma encoded and gamma encoding is enforced. Rerun with gamma encoded video as input"
+            )
+
     session_LP_s3_path = get_data_asset_s3_path(lpfaceparts_data_asset)
     session_LP_s3_directory = tuple(session_LP_s3_path.glob(f"*{session}*"))
     if not session_LP_s3_directory:
@@ -185,7 +189,9 @@ def get_lpfaceparts_s3_dir_paths(
 
 @functools.cache
 def get_lpfaceparts_camera_predictions_s3_paths(
-    session: str | npc_session.SessionRecord, camera: str, enforce_gamma_encoding: bool = False
+    session: str | npc_session.SessionRecord,
+    camera: str,
+    enforce_gamma_encoding: bool = False,
 ) -> tuple[upath.UPath, ...]:
     """
     Gets the lightning pose facial landmark prediction csv paths for the session and camera position
@@ -200,7 +206,9 @@ def get_lpfaceparts_camera_predictions_s3_paths(
         raise ValueError(f"{camera} is not a currently used camera position")
 
     session = npc_session.SessionRecord(session)
-    paths = get_lpfaceparts_s3_dir_paths(session, enforce_gamma_encoding=enforce_gamma_encoding)
+    paths = get_lpfaceparts_s3_dir_paths(
+        session, enforce_gamma_encoding=enforce_gamma_encoding
+    )
     camera_path = tuple(path for path in paths if camera == path.stem)
     if not camera_path:
         raise FileNotFoundError(

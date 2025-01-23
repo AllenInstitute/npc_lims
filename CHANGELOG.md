@@ -8,13 +8,27 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.184...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.185...HEAD)</small>
+
+### Added
+
+- add gamma encoding for lightning pose ([35c855f](https://github.com/AllenInstitute/npc_lims/commit/35c855fa3dfcc2f7b48247417424f20849203b0c) by arjun.sridhar12345).
+- Add session config ([46462e3](https://github.com/AllenInstitute/npc_lims/commit/46462e37836ef4e73577a75a2f5e5f6546b06cda) by bjhardcastle).
+- Add sessions ([b1ffebc](https://github.com/AllenInstitute/npc_lims/commit/b1ffebc20e43bfc43975613a9c2fbee900c8366b) by bjhardcastle).
+
+### Fixed
+
+- Fix session kwargs ([2391cbd](https://github.com/AllenInstitute/npc_lims/commit/2391cbd75d03d116b321f1e6263c0624dbb73b5c) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.185](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.185) - 2024-10-25
+
+<small>[Compare with v0.1.184](https://github.com/AllenInstitute/npc_lims/compare/v0.1.184...v0.1.185)</small>
 
 ### Removed
 
 - Remove use of npc_session.ProjectRecord ([8301e60](https://github.com/AllenInstitute/npc_lims/commit/8301e60801498e9163f2431844df56a3579964f3) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.184](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.184) - 2024-10-25
 
 <small>[Compare with v0.1.183](https://github.com/AllenInstitute/npc_lims/compare/v0.1.183...v0.1.184)</small>

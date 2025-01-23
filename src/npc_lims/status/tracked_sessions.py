@@ -281,7 +281,7 @@ class SessionInfo:
             return False
 
         return bool(asset)
-    
+
     @functools.cached_property
     def is_gamma_encoding(self) -> bool:
         """
