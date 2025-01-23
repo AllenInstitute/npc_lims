@@ -504,7 +504,23 @@ def run_capsule_or_pipeline(
 
     return get_codeocean_client().computations.run_capsule(run_capsule_request)
 
-
+def is_lighting_pose_gamma_encoded(lpfaceparts_data_asset: DataAsset) -> bool:
+    """
+    Check for gamma encoded in lightning pose is enforced, this returns if lightning pose was run on a gamma encoded video as input
+    >>> session = npc_session.SessionRecord('686740_2023-10-26')
+    >>> lpfaceparts_data_asset = get_session_capsule_pipeline_data_asset(session, "LPFaceParts")
+    >>> is_lighting_pose_gamma_encoded(lpfaceparts_data_asset)
+    False
+    """
+    is_asset_from_gamma_encoded = False
+    provenance_assets = lpfaceparts_data_asset.provenance.data_assets
+    for asset in provenance_assets:
+        if 'GammaEncoding' in get_data_asset(asset).name:
+            is_asset_from_gamma_encoded = True
+            break
+    
+    return is_asset_from_gamma_encoded
+    
 def get_session_capsule_pipeline_data_asset(
     session: str | npc_session.SessionRecord, process_name: str
 ) -> DataAsset:
@@ -513,7 +529,7 @@ def get_session_capsule_pipeline_data_asset(
     >>> asset = get_session_capsule_pipeline_data_asset('676909_2023-12-13', 'dlc_eye')
     >>> asset = get_session_capsule_pipeline_data_asset('676909_2023-12-13', 'sorted')
     >>> asset.name
-    'ecephys_676909_2023-12-13_13-43-40_sorted_2024-03-01_16-02-45'
+    'ecephys_676909_2023-12-13_13-43-40_sorted_2024-10-26_17-55-19' 
     """
     session = npc_session.SessionRecord(session)
 

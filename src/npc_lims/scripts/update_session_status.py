@@ -39,6 +39,7 @@ def main() -> None:
             is_dlc_side BOOLEAN DEFAULT NULL,
             is_dlc_face BOOLEAN DEFAULT NULL,
             is_facemap BOOLEAN DEFAULT NULL,
+            is_gamma_encoding BOOLEAN DEFAULT NULL,
             is_LPFaceParts BOOLEAN DEFAULT NULL,
             is_session_json BOOLEAN DEFAULT NULL,
             is_rig_json BOOLEAN DEFAULT NULL
@@ -59,6 +60,7 @@ def main() -> None:
         "is_dlc_side, "
         "is_dlc_face, "
         "is_facemap, "
+        "is_gamma_encoding, "
         "is_LPFaceParts, "
         "is_session_json, "
         "is_rig_json"  # last column must not have a comma
@@ -96,6 +98,7 @@ def main() -> None:
             f"{int(s.is_dlc_side)}, "
             f"{int(s.is_dlc_face)}, "
             f"{int(s.is_facemap)}, "
+            f"{int(s.is_gamma_encoding)}, "
             f"{int(s.is_LPFaceParts)}, "
             f"{int(s.is_session_json)}, "
             f"{int(s.is_rig_json)}),"  # last column should not have a trailing space

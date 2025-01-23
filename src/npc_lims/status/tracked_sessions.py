@@ -270,12 +270,31 @@ class SessionInfo:
         >>> get_session_info("702136_2024-03-07").is_LPFaceParts
         True
         """
-        if not self.is_video:
+        if not self.is_gamma_encoding:
             return False
 
         try:
             asset = codeocean_utils.get_session_capsule_pipeline_data_asset(
                 self.id, "LPFaceParts"
+            )
+        except (FileNotFoundError, ValueError):
+            return False
+
+        return bool(asset)
+    
+    @functools.cached_property
+    def is_gamma_encoding(self) -> bool:
+        """
+        The gamma encoding capsule has yielded a result for this session
+        >>> get_session_info("702136_2024-03-07").is_gamma_encoding
+        True
+        """
+        if not self.is_video:
+            return False
+
+        try:
+            asset = codeocean_utils.get_session_capsule_pipeline_data_asset(
+                self.id, "GammaEncoding"
             )
         except (FileNotFoundError, ValueError):
             return False

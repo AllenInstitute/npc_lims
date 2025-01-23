@@ -154,19 +154,25 @@ def get_dlc_side_s3_paths(
 
 @functools.cache
 def get_lpfaceparts_s3_dir_paths(
-    session: str | npc_session.SessionRecord,
+    session: str | npc_session.SessionRecord, enforce_gamma_encoding: bool = False
 ) -> tuple[upath.UPath, ...]:
     """
     Gets the lighting pose result directories for facial landmark predicitons
-    >>> directories = get_lpfaceparts_s3_dir_paths('702136_2024-03-07')
+    >>> directories = get_lpfaceparts_s3_dir_paths('666986_2023-08-16')
     >>> len(directories)
     4
     """
+
     session = npc_session.SessionRecord(session)
     lpfaceparts_data_asset = codeocean_utils.get_session_capsule_pipeline_data_asset(
         session, "LPFaceParts"
     )
 
+    if enforce_gamma_encoding:
+        is_gamma_encoded = codeocean_utils.is_lighting_pose_gamma_encoded(lpfaceparts_data_asset)
+        if not is_gamma_encoded:
+            raise ValueError(f'{session} has lightning pose asset with an input video that is not gamma encoded and gamma encoding is enforced. Rerun with gamma encoded video as input')
+    
     session_LP_s3_path = get_data_asset_s3_path(lpfaceparts_data_asset)
     session_LP_s3_directory = tuple(session_LP_s3_path.glob(f"*{session}*"))
     if not session_LP_s3_directory:
@@ -179,14 +185,14 @@ def get_lpfaceparts_s3_dir_paths(
 
 @functools.cache
 def get_lpfaceparts_camera_predictions_s3_paths(
-    session: str | npc_session.SessionRecord, camera: str
+    session: str | npc_session.SessionRecord, camera: str, enforce_gamma_encoding: bool = False
 ) -> tuple[upath.UPath, ...]:
     """
     Gets the lightning pose facial landmark prediction csv paths for the session and camera position
-    >>> side_paths = get_lpfaceparts_camera_predictions_s3_paths('702136_2024-03-07', 'side')
+    >>> side_paths = get_lpfaceparts_camera_predictions_s3_paths('666986_2023-08-16', 'side')
     >>> len(side_paths)
     3
-    >>> face_paths = get_lpfaceparts_camera_predictions_s3_paths('702136_2024-03-07', 'face')
+    >>> face_paths = get_lpfaceparts_camera_predictions_s3_paths('666986_2023-08-16', 'face')
     >>> len(face_paths)
     3
     """
@@ -194,7 +200,7 @@ def get_lpfaceparts_camera_predictions_s3_paths(
         raise ValueError(f"{camera} is not a currently used camera position")
 
     session = npc_session.SessionRecord(session)
-    paths = get_lpfaceparts_s3_dir_paths(session)
+    paths = get_lpfaceparts_s3_dir_paths(session, enforce_gamma_encoding=enforce_gamma_encoding)
     camera_path = tuple(path for path in paths if camera == path.stem)
     if not camera_path:
         raise FileNotFoundError(

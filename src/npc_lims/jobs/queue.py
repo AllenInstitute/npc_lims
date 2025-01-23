@@ -25,6 +25,8 @@ SessionID: TypeAlias = Union[str, npc_session.SessionRecord]
 JobID: TypeAlias = str
 
 VIDEO_MODELS = ("dlc_eye", "dlc_side", "dlc_face", "facemap", "LPFaceParts")
+VIDEO_MAPPING = {"dlc_eye": "dlc_eye", "dlc_side": "dlc_side", "dlc_face": "dlc_face", "facemap": "facemap",
+                 "LPFaceParts": "LPFaceParts", "GammaEncoding": "gamma_encoding"}
 
 
 def read_json(process_name: str) -> dict[str, Computation | None]:
@@ -187,10 +189,11 @@ def is_started_or_completed(session_id: SessionID, process_name: str) -> bool:
 def add_sessions_to_queue(
     process_name: str, overwrite_exisitng_assets: bool = False
 ) -> None:
+    mapped_process_name = VIDEO_MAPPING[process_name]
     for session_info in npc_lims.get_session_info(is_ephys=True, is_uploaded=True):
         if (
-            hasattr(session_info, f"is_{process_name}")
-            and getattr(session_info, f"is_{process_name}")
+            hasattr(session_info, f"is_{mapped_process_name}")
+            and getattr(session_info, f"is_{mapped_process_name}")
             and not overwrite_exisitng_assets
         ):  # asset exists already
             continue
@@ -203,6 +206,9 @@ def add_sessions_to_queue(
                 )  # check if there is a video on s3
             except FileNotFoundError:
                 continue
+        
+        if process_name == 'LPFaceParts' and not session_info.is_gamma_encoding: # only run lightning pose on gamma encoded videos
+            continue
 
         session_id = session_info.id
         add_to_queue(session_id, process_name)
@@ -211,7 +217,11 @@ def add_sessions_to_queue(
 def start(
     session_id: SessionID, capsule_pipeline_info: codeocean_utils.CapsulePipelineInfo
 ) -> None:
-    session_data_asset = npc_lims.get_session_raw_data_asset(session_id)
+    if capsule_pipeline_info.process_name == 'LPFaceParts':
+        session_data_asset = npc_lims.get_session_capsule_pipeline_data_asset(session_id, 'GammaEncoding')
+    else:
+        session_data_asset = npc_lims.get_session_raw_data_asset(session_id)
+
     data_assets = [
         DataAssetsRunParam(id=session_data_asset.id, mount=session_data_asset.mount),
     ]
@@ -243,7 +253,7 @@ def process_capsule_or_pipeline_queue(
     capsule_pipeline_info = codeocean_utils.CapsulePipelineInfo(
         capsule_or_pipeline_id, process_name, is_pipeline
     )
-
+    
     add_sessions_to_queue(
         capsule_pipeline_info.process_name,
         overwrite_exisitng_assets=overwrite_existing_assets,
@@ -273,7 +283,7 @@ def process_capsule_or_pipeline_queue(
 
     while sync_and_get_num_running_jobs(capsule_pipeline_info.process_name) > 0:
         time.sleep(600)
-
+    
     if create_data_assets_from_results:
         create_all_data_assets(
             capsule_pipeline_info.process_name, overwrite_existing_assets
