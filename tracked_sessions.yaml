@@ -860,7 +860,7 @@ ephys:
         session_kwargs:
             is_production: false
             probe_letters_to_skip: ACDEF
-            is_injection_perturbation: true
+            is_injection_control: true
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_754852_20250211:
         ephys_day: 2
         session_kwargs:
@@ -873,7 +873,7 @@ ephys:
         session_kwargs:
             is_production: false
             probe_letters_to_skip: ACDEF
-            is_injection_perturbation: true
+            is_injection_control: true
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_754852_20250213:
         ephys_day: 4
         session_kwargs:
