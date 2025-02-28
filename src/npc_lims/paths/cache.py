@@ -30,6 +30,7 @@ NWBComponentStr: TypeAlias = Literal[
     "electrode_groups",
     "electrodes",
     "units",
+    "spike_amplitudes",
     "spike_times",
     "licks",
     "running_speed",
