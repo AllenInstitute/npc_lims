@@ -8,7 +8,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.185...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.186...HEAD)</small>
+
+### Fixed
+
+- Fix LP gamma function ([4433bc1](https://github.com/AllenInstitute/npc_lims/commit/4433bc1d88048679064e907cd66d6dde40345981) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.186](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.186) - 2025-01-23
+
+<small>[Compare with v0.1.185](https://github.com/AllenInstitute/npc_lims/compare/v0.1.185...v0.1.186)</small>
 
 ### Added
 
@@ -20,7 +29,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Fix session kwargs ([2391cbd](https://github.com/AllenInstitute/npc_lims/commit/2391cbd75d03d116b321f1e6263c0624dbb73b5c) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.185](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.185) - 2024-10-25
 
 <small>[Compare with v0.1.184](https://github.com/AllenInstitute/npc_lims/compare/v0.1.184...v0.1.185)</small>
