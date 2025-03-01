@@ -508,19 +508,17 @@ def run_capsule_or_pipeline(
 def is_lighting_pose_gamma_encoded(lpfaceparts_data_asset: DataAsset) -> bool:
     """
     Check for gamma encoded in lightning pose is enforced, this returns if lightning pose was run on a gamma encoded video as input
-    >>> session = npc_session.SessionRecord('686740_2023-10-26')
-    >>> lpfaceparts_data_asset = get_session_capsule_pipeline_data_asset(session, "LPFaceParts")
-    >>> is_lighting_pose_gamma_encoded(lpfaceparts_data_asset)
+
+    >>> is_lighting_pose_gamma_encoded(aind_session.get_codeocean_model('cbeb9997-ba7b-471f-81b3-1ea987bb3695'))
+    True
+    >>> is_lighting_pose_gamma_encoded(aind_session.get_codeocean_model('77f6bbbe-c6fc-491a-a931-faf7d8503f67'))
     False
     """
-    is_asset_from_gamma_encoded = False
     provenance_assets = lpfaceparts_data_asset.provenance.data_assets
     for asset in provenance_assets:
-        if "GammaEncoding" in get_data_asset(asset).name:
-            is_asset_from_gamma_encoded = True
-            break
-
-    return is_asset_from_gamma_encoded
+        if "Gamma" in get_data_asset(asset).name:
+            return True
+    return False
 
 
 def get_session_capsule_pipeline_data_asset(
