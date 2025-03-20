@@ -217,7 +217,7 @@ def get_latest_data_asset(
 ) -> DataAsset:
     return sorted(data_assets, key=lambda asset: asset.created)[-1]
 
-
+@functools.cache
 def get_aind_session(
     session_id: str | npc_session.SessionRecord,
 ) -> aind_session.Session:
