@@ -8,13 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.186...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.187...HEAD)</small>
+
+<!-- insertion marker -->
+## [v0.1.187](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.187) - 2025-03-01
+
+<small>[Compare with v0.1.186](https://github.com/AllenInstitute/npc_lims/compare/v0.1.186...v0.1.187)</small>
 
 ### Fixed
 
 - Fix LP gamma function ([4433bc1](https://github.com/AllenInstitute/npc_lims/commit/4433bc1d88048679064e907cd66d6dde40345981) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.186](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.186) - 2025-01-23
 
 <small>[Compare with v0.1.185](https://github.com/AllenInstitute/npc_lims/compare/v0.1.185...v0.1.186)</small>
