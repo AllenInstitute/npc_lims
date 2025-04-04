@@ -204,26 +204,30 @@ ephys:
         day: 1
         session_kwargs:
             is_context_naive: True
+            is_production: False
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231212:
         day: 2
         notes: post-task Spontaneous & OptoTagging ran twice - ephys stopped halfway through final OptoTagging
         session_kwargs:
             is_context_naive: True
+            is_production: False
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231213:
         day: 3
         session_kwargs:
             is_context_naive: True
+            is_production: False
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_676909_20231214:
         day: 4
         session_kwargs:
             is_context_naive: True
+            is_production: False
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702131_20240226:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702131_20240227:
         day: 2
         issues:
             - https://github.com/AllenInstitute/npc_sessions/issues/83 # seizure
-            - https://github.com/AllenInstitute/npc_sessions/issues/117
+            - https://github.com/AllenInstitute/npc_sessions/issues//117
             - https://github.com/AllenInstitute/npc_lims/issues/5
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240304:
         day: 1
@@ -881,6 +885,38 @@ ephys:
             is_injection_perturbation: true
             perturbation_day: 2
             probe_letters_to_skip: ACDEF
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_762526_20250318:
+        ephys_day: 1
+        session_kwargs:
+            perturbation_day: 1
+            probe_letters_to_skip: AEF
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_762526_20250319:
+        ephys_day: 2
+        session_kwargs:
+            perturbation_day: 2
+            probe_letters_to_skip: AEF
+            is_injection_perturbation: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_762526_20250320:
+        ephys_day: 3
+        session_kwargs:
+            perturbation_day: 3
+            probe_letters_to_skip: AEF
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_762526_20250321:
+        ephys_day: 4
+        session_kwargs:
+            perturbation_day: 4
+            probe_letters_to_skip: AEF
+            is_injection_perturbation: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_772655_20250305:
+        ephys_day: 1
+        session_kwargs:
+            probe_letters_to_skip: ABE
+            is_production: false
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_780329_20250319:
+        ephys_day: 1
+        session_kwargs:
+            is_production: false
+            is_opto_perturbation: true
 
 # ----------------------------------------------------------------- #
   TempletonPilotSession:
