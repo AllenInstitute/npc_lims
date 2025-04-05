@@ -2,10 +2,10 @@
 # It is not intended for manual editing.
 
 [metadata]
-groups = ["default", "dev", "docs"]
+groups = ["default", "dev", "docs", "polars"]
 strategy = []
 lock_version = "4.5.0"
-content_hash = "sha256:f2b814d353f38c369c6c4ff506871cc207917b610d39cbd56fc1c37822ad5e8b"
+content_hash = "sha256:2b1eb3bc918356f19058adaebba2561ca82a4eea90bb8bbc4973d2ad5d5ccf64"
 
 [[metadata.targets]]
 requires_python = "==3.9.21"
@@ -1541,6 +1541,16 @@ summary = "plugin and hook calling mechanisms for python"
 files = [
     {file = "pluggy-1.5.0-py3-none-any.whl", hash = "sha256:44e1ad92c8ca002de6377e165f3e0f1be63266ab4d554740532335b9d75ea669"},
     {file = "pluggy-1.5.0.tar.gz", hash = "sha256:2cffa88e94fdc978c4c574f15f9e59b7f4201d439195c3715ca9e2486f1d0cf1"},
+]
+
+[[package]]
+name = "polars"
+version = "1.26.0"
+requires_python = ">=3.9"
+summary = "Blazingly fast DataFrame library"
+files = [
+    {file = "polars-1.26.0-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:66c30f4b7e060c2e7f3a45d6ac94ab3b179831a2f1e629401bf7912d54311529"},
+    {file = "polars-1.26.0.tar.gz", hash = "sha256:b5492d38e5ec2ae6a8853833c5a31549194a361b901134fc5f2f57b49bd563ea"},
 ]
 
 [[package]]
