@@ -6,10 +6,14 @@ import concurrent.futures as cf
 from typing import Any
 
 import npc_lims
+
 try:
     import polars as pl
 except ImportError:
-    raise ImportError("polars is required: run `pip install npc_lims[polars]`") from None
+    raise ImportError(
+        "polars is required: run `pip install npc_lims[polars]`"
+    ) from None
+
 
 def get_status(session: str) -> dict[str, Any]:
     s = npc_lims.get_session_info(session=session)
@@ -22,9 +26,7 @@ def get_status(session: str) -> dict[str, Any]:
     else:
         raw_asset_id = ""
     if s.is_surface_channels:
-        surface_channels_asset_id = npc_lims.get_surface_channel_raw_data_asset(
-            s.id
-        ).id
+        surface_channels_asset_id = npc_lims.get_surface_channel_raw_data_asset(s.id).id
         is_surface_channels_sorted = s.is_surface_channels_sorted
     else:
         surface_channels_asset_id = ""
@@ -36,7 +38,11 @@ def get_status(session: str) -> dict[str, Any]:
         "surface_channels_asset_id": surface_channels_asset_id,
         "is_uploaded": int(s.is_uploaded),
         "is_sorted": int(s.is_sorted),
-        "is_surface_channels_sorted": int(is_surface_channels_sorted) if is_surface_channels_sorted is not None else None,
+        "is_surface_channels_sorted": (
+            int(is_surface_channels_sorted)
+            if is_surface_channels_sorted is not None
+            else None
+        ),
         "is_annotated": int(s.is_annotated),
         "is_dlc_eye": int(s.is_dlc_eye),
         "is_dlc_side": int(s.is_dlc_side),
@@ -48,20 +54,21 @@ def get_status(session: str) -> dict[str, Any]:
         "is_rig_json": int(s.is_rig_json),
     }
 
+
 def main() -> None:
     # sync sqlite dbs with xlsx sheets on s3
     npc_lims.update_training_dbs()
     print("Successfully updated training DBs on s3.")
 
     with cf.ThreadPoolExecutor() as executor:
-        results = list(executor.map(get_status, npc_lims.get_session_info(is_ephys=True)))
+        results = list(
+            executor.map(get_status, npc_lims.get_session_info(is_ephys=True))
+        )
 
     path = npc_lims.S3_SCRATCH_ROOT / "status" / "status.parquet"
-    df = pl.DataFrame(results).sort('date', descending=True)
+    df = pl.DataFrame(results).sort("date", descending=True)
     df.write_parquet(path)
-    print(
-        f"Successfully updated {path}"
-    )
+    print(f"Successfully updated {path}")
     print(df)
 
 
