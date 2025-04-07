@@ -295,7 +295,7 @@ def process_capsule_or_pipeline_queue(
 
     while sync_and_get_num_running_jobs(capsule_pipeline_info.process_name) > 0:
         time.sleep(600)
-    
+
     if create_data_assets_from_results:
         create_all_data_assets(
             capsule_pipeline_info.process_name, overwrite_existing_assets

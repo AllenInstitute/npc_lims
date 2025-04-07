@@ -8,9 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.188...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.189...HEAD)</small>
+
+### Fixed
+
+- fix gamma encoding queue check for asset exists ([2a33c33](https://github.com/AllenInstitute/npc_lims/commit/2a33c3334bf71d99ec40ef1d9f891b28f09d7143) by arjun.sridhar12345).
 
 <!-- insertion marker -->
+## [v0.1.189](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.189) - 2025-04-05
+
+<small>[Compare with v0.1.188](https://github.com/AllenInstitute/npc_lims/compare/v0.1.188...v0.1.189)</small>
+
 ## [v0.1.188](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.188) - 2025-03-20
 
 <small>[Compare with v0.1.187](https://github.com/AllenInstitute/npc_lims/compare/v0.1.187...v0.1.188)</small>
