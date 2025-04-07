@@ -147,10 +147,12 @@ def asset_exists(session_id: SessionID, process_name: str) -> bool:
     """
     >>> asset_exists('703333_2024-04-09', 'dlc_eye')
     True
+    >>> asset_exists('703333_2024-04-09', 'GammaEncoding')
+    True
     """
     session_info = npc_lims.get_session_info(session_id)
 
-    return getattr(session_info, f"is_{process_name}")
+    return getattr(session_info, f"is_{VIDEO_MAPPING[process_name]}")
 
 
 def create_all_data_assets(process_name: str, overwrite_existing_assets: bool) -> None:
@@ -293,7 +295,7 @@ def process_capsule_or_pipeline_queue(
 
     while sync_and_get_num_running_jobs(capsule_pipeline_info.process_name) > 0:
         time.sleep(600)
-
+    
     if create_data_assets_from_results:
         create_all_data_assets(
             capsule_pipeline_info.process_name, overwrite_existing_assets
