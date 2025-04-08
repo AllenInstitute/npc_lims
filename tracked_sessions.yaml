@@ -889,23 +889,23 @@ ephys:
         ephys_day: 1
         session_kwargs:
             perturbation_day: 1
-            probe_letters_to_skip: AEF
+            probe_letters_to_skip: ADF
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_762526_20250319:
         ephys_day: 2
         session_kwargs:
             perturbation_day: 2
-            probe_letters_to_skip: AEF
+            probe_letters_to_skip: ADF
             is_injection_perturbation: true
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_762526_20250320:
         ephys_day: 3
         session_kwargs:
             perturbation_day: 3
-            probe_letters_to_skip: AEF
+            probe_letters_to_skip: ADF
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_762526_20250321:
         ephys_day: 4
         session_kwargs:
             perturbation_day: 4
-            probe_letters_to_skip: AEF
+            probe_letters_to_skip: ADF
             is_injection_perturbation: true
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_772655_20250305:
         ephys_day: 1
