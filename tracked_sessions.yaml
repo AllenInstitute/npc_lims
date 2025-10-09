@@ -844,9 +844,6 @@ ephys:
         ephys_day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_746439_20250130:
         ephys_day: 4
-        issues:
-          - https://github.com/AllenInstitute/npc_lims/issues/5
-        notes: 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_759434_20250203:
         ephys_day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_746439_20250131:
