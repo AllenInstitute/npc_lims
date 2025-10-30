@@ -914,7 +914,172 @@ ephys:
         session_kwargs:
             is_production: false
             is_opto_perturbation: true
-
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_801857_20250925:
+        ephys_day: 1
+        session_kwargs:
+            perturbation_day: 1
+            probe_letters_to_skip: ACDEF
+            is_production: false
+            is_injection_perturbation: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_796012_20250710:
+        ephys_day: 1
+        session_kwargs:
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_796012_20250711:
+        ephys_day: 2
+        session_kwargs:
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_796012_20250714:
+        ephys_day: 3
+        session_kwargs:
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_796012_20250715:
+        ephys_day: 4
+        session_kwargs:
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_796848_20250714:
+        ephys_day: 1
+        session_kwargs:
+            probe_letters_to_skip: B
+            surface_recording_probe_letters_to_skip: B
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_796848_20250715:
+        ephys_day: 2
+        session_kwargs:
+            probe_letters_to_skip: B
+            surface_recording_probe_letters_to_skip: B
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_796848_20250716:
+        ephys_day: 3
+        session_kwargs:
+            probe_letters_to_skip: F
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_796848_20250717:
+        ephys_day: 4
+        session_kwargs:
+            probe_letters_to_skip: F
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_795555_20250821:
+        ephys_day: 1
+        session_kwargs:
+            probe_letters_to_skip: F
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_795555_20250822:
+        ephys_day: 2
+        session_kwargs:
+            probe_letters_to_skip: F
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_795555_20250825:
+        ephys_day: 3
+        session_kwargs:
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_795555_20250826:
+        ephys_day: 4
+        session_kwargs:
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_798632_20250829:
+        ephys_day: 1
+        session_kwargs:
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_798632_20250902:
+        ephys_day: 2
+        session_kwargs:
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_798632_20250903:
+        ephys_day: 3
+        session_kwargs:
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_798632_20250904:
+        ephys_day: 4
+        session_kwargs:
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_807082_20250929:
+        ephys_day: 1
+        session_kwargs:
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_807082_20250930:
+        ephys_day: 2
+        session_kwargs:
+            probe_letters_to_skip: A
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_807082_20251001:
+        ephys_day: 3
+        session_kwargs:
+            probe_letters_to_skip: AF
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_807082_20251002:
+        ephys_day: 4
+        session_kwargs:
+            probe_letters_to_skip: A
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_810752_20251007:
+        ephys_day: 1
+        session_kwargs:
+            probe_letters_to_skip: B
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_810752_20251008:
+        ephys_day: 2
+        session_kwargs:
+            probe_letters_to_skip: B
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_810752_20251009:
+        ephys_day: 3
+        session_kwargs:
+            probe_letters_to_skip: B
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_810752_20251010:
+        ephys_day: 4
+        session_kwargs:
+            probe_letters_to_skip: B
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_796847_20250729:
+        ephys_day: 1
+        session_kwargs:
+            probe_letters_to_skip: F
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_796847_20250730:
+        ephys_day: 2
+        session_kwargs:
+            probe_letters_to_skip: F
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_796847_20250731:
+        ephys_day: 3
+        session_kwargs:
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_796847_20250801:
+        ephys_day: 4
+        session_kwargs:
+            probe_letters_to_skip: D
+            is_production: false
+            is_context_naive: true
+            
 # ----------------------------------------------------------------- #
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-07-26_14-09-36_620263:
