@@ -376,6 +376,7 @@ ephys:
             # AND same num frames as other RFMapping stim in session, which causes problem getting
             # frametimes
         issues:
+            - https://github.com/AllenInstitute/npc_sessions/issues/5
             - https://github.com/AllenInstitute/npc_sessions/issues/113
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712141_20240612:
         day: 4
@@ -1079,7 +1080,7 @@ ephys:
             probe_letters_to_skip: D
             is_production: false
             is_context_naive: true
-            
+
 # ----------------------------------------------------------------- #
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-07-26_14-09-36_620263:
