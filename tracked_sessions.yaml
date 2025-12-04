@@ -1081,6 +1081,101 @@ ephys:
             is_production: false
             is_context_naive: true
 
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_814666_20251106:
+        ephys_day: 1
+        session_kwargs:
+            probe_letters_to_skip: B
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_814666_20251107:
+        ephys_day: 2
+        session_kwargs:
+            probe_letters_to_skip: B
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_814666_20251110:
+        ephys_day: 3
+        session_kwargs:
+            probe_letters_to_skip: B
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_814666_20251111:
+        ephys_day: 4
+        session_kwargs:
+            probe_letters_to_skip: B
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_814669_20251110:
+        ephys_day: 1
+        session_kwargs:
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_814669_20251111:
+        ephys_day: 2
+        session_kwargs:
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_814669_20251112:
+        ephys_day: 3
+        session_kwargs:
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_814669_20251113:
+        ephys_day: 4
+        session_kwargs:
+            is_production: false
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_812113_20251114:
+        ephys_day: 2
+        perturbation_day: 2
+        session_kwargs:
+            probe_letters_to_skip: ACDEF
+            is_production: false
+            is_injection_perturbation: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_812113_20251113:
+        ephys_day: 1
+        perturbation_day: 1
+        session_kwargs:
+            probe_letters_to_skip: ACDEF
+            is_production: false
+            is_injection_perturbation: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_812113_20251117:
+        ephys_day: 3
+        perturbation_day: 3
+        session_kwargs:
+            probe_letters_to_skip: ACDEF
+            is_production: false
+            is_injection_perturbation: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_812113_20251118:
+        ephys_day: 4
+        perturbation_day: 4
+        session_kwargs:
+            probe_letters_to_skip: ACDEF
+            is_production: false
+        is_injection_perturbation: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_815144_20251119:
+        ephys_day: 1
+        perturbation_day: 1
+        session_kwargs:
+            probe_letters_to_skip: ACDEF
+            is_production: false
+            is_injection_perturbation: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_815144_20251120:
+        ephys_day: 2
+        perturbation_day: 2
+        session_kwargs:
+            probe_letters_to_skip: ACDEF
+            is_production: false
+            is_injection_perturbation: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_815144_20251121:
+        ephys_day: 3
+        perturbation_day: 3
+        session_kwargs:
+            probe_letters_to_skip: ACDEF
+            is_production: false
+            is_injection_perturbation: true
+
+
 # ----------------------------------------------------------------- #
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-07-26_14-09-36_620263:
