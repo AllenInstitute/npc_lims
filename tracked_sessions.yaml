@@ -1246,25 +1246,20 @@ ephys:
         session_kwargs:
             probe_letters_to_skip: B
             surface_recording_probe_letters_to_skip: B
-            
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_831994_20251215:
         ephys_day: 1
         session_kwargs:
             probe_letters_to_skip: A
             is_context_naive: true
-
-
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_831994_20251216:
         ephys_day: 2
         session_kwargs:
             probe_letters_to_skip: A
             is_context_naive: true
-
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_831994_20251217:
         ephys_day: 3
         session_kwargs:
             is_context_naive: true
-
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_831994_20251218:
         ephys_day: 4
         session_kwargs:
