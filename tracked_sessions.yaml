@@ -1246,10 +1246,7 @@ ephys:
         session_kwargs:
             probe_letters_to_skip: B
             surface_recording_probe_letters_to_skip: B
-
-
-# ----------------------------------------------------------------- #
-  
+            
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_831994_20251215:
         ephys_day: 1
         session_kwargs:
