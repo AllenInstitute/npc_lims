@@ -1174,6 +1174,26 @@ ephys:
             probe_letters_to_skip: ACDEF
             is_production: true
             is_injection_perturbation: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_831994_20251215:
+        ephys_day: 1
+        session_kwargs:
+            is_production: true
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_831994_20251216:
+        ephys_day: 2
+        session_kwargs:
+            is_production: true
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_831994_20251217:
+        ephys_day: 3
+        session_kwargs:
+            is_production: true
+            is_context_naive: true
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_831994_20251218:
+        ephys_day: 4
+        session_kwargs:
+            is_production: true
+            is_context_naive: true
 
 
 # ----------------------------------------------------------------- #
