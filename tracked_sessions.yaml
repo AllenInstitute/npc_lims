@@ -1229,23 +1229,13 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_834408_20251217:
         ephys_day: 1
         session_kwargs:
-            probe_letters_to_skip: B
-            surface_recording_probe_letters_to_skip: B
+            surface_recording_probe_letters_to_skip: C
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_834408_20251218:
         ephys_day: 2
-        session_kwargs:
-            probe_letters_to_skip: B
-            surface_recording_probe_letters_to_skip: B
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_834408_20251219:
         ephys_day: 3
-        session_kwargs:
-            probe_letters_to_skip: B
-            surface_recording_probe_letters_to_skip: B
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_834408_20251222:
         ephys_day: 4
-        session_kwargs:
-            probe_letters_to_skip: B
-            surface_recording_probe_letters_to_skip: B
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_831994_20251215:
         ephys_day: 1
         session_kwargs:
