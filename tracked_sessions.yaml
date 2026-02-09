@@ -1292,7 +1292,7 @@ ephys:
             probe_letters_to_skip: D
             surface_recording_probe_letters_to_skip: D
     
-TempletonPilotSession:
+  TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-07-26_14-09-36_620263:
         session_kwargs:
             probe_letters_to_skip: ADE # not recorded
