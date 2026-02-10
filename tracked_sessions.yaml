@@ -944,6 +944,7 @@ ephys:
             is_context_naive: true
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_796848_20250714:
         ephys_day: 1
+        notes: "No Open Ephys NIDAQ recording, so sound stim alignment cannot be QCed"
         session_kwargs:
             probe_letters_to_skip: B
             surface_recording_probe_letters_to_skip: B
@@ -951,6 +952,8 @@ ephys:
             is_context_naive: true
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_796848_20250715:
         ephys_day: 2
+        issues:
+            - https://github.com/AllenInstitute/npc_sessions/issues/161
         session_kwargs:
             probe_letters_to_skip: B
             surface_recording_probe_letters_to_skip: B
