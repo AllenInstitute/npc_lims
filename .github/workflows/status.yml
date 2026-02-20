@@ -2,8 +2,8 @@ name: Update session status
 
 on: 
   schedule:
-    # every 12 hours
-    - cron: '0 */6 * * *'
+    # every 24 hours
+    - cron: '0 7 * * *'
   push:
     branches: [ "main" ]
     paths:
