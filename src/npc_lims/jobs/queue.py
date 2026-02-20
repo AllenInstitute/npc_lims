@@ -195,10 +195,10 @@ def is_started_or_completed(session_id: SessionID, process_name: str) -> bool:
 
 
 def add_sessions_to_queue(
-    process_name: str, overwrite_exisitng_assets: bool = False
+    process_name: str, overwrite_exisitng_assets: bool = False, newest_to_oldest: bool = False
 ) -> None:
     mapped_process_name = VIDEO_MAPPING[process_name]
-    for session_info in npc_lims.get_session_info(is_ephys=True, is_uploaded=True):
+    for session_info in sorted(npc_lims.get_session_info(is_ephys=True, is_uploaded=True), key=lambda s: s.date, reverse=newest_to_oldest):
         if (
             hasattr(session_info, f"is_{mapped_process_name}")
             and getattr(session_info, f"is_{mapped_process_name}")
@@ -257,6 +257,7 @@ def process_capsule_or_pipeline_queue(
     is_pipeline: bool = False,
     rerun_errored_jobs: bool = False,
     overwrite_existing_assets: bool = False,
+    newest_to_oldest: bool = False,
 ) -> None:
     """
     adds jobs to queue for capsule/pipeline, then processes them
@@ -269,6 +270,7 @@ def process_capsule_or_pipeline_queue(
     add_sessions_to_queue(
         capsule_pipeline_info.process_name,
         overwrite_exisitng_assets=overwrite_existing_assets,
+        newest_to_oldest=newest_to_oldest,
     )
 
     for session_id in read_json(process_name):
