@@ -16,7 +16,7 @@ except ImportError:
 
 
 def get_status(session: str) -> dict[str, Any]:
-    s = npc_lims.get_session_info(session=session)
+    s: npc_lims.SessionInfo = npc_lims.get_session_info(session=session)
     try:
         aind_session_id = npc_lims.get_codoecean_session_id(s.id)
     except ValueError:
@@ -45,8 +45,6 @@ def get_status(session: str) -> dict[str, Any]:
         ),
         "is_annotated": int(s.is_annotated),
         "is_dlc_eye": int(s.is_dlc_eye),
-        "is_dlc_side": int(s.is_dlc_side),
-        "is_dlc_face": int(s.is_dlc_face),
         "is_facemap": int(s.is_facemap),
         "is_gamma_encoding": int(s.is_gamma_encoding),
         "is_LPFaceParts": int(s.is_LPFaceParts),
