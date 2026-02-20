@@ -113,13 +113,19 @@ class SessionInfo:
     def is_session_json(self) -> bool:
         if self.raw_data_paths is None:
             return False
-        return any(p for p in self.raw_data_paths if p.name in ("session.json", "acquisition.json"))
+        return any(
+            p
+            for p in self.raw_data_paths
+            if p.name in ("session.json", "acquisition.json")
+        )
 
     @functools.cached_property
     def is_rig_json(self) -> bool:
         if self.raw_data_paths is None:
             return False
-        return any(p for p in self.raw_data_paths if p.name in ("rig.json", "instrument.json"))
+        return any(
+            p for p in self.raw_data_paths if p.name in ("rig.json", "instrument.json")
+        )
 
     @functools.cached_property
     def is_video(self) -> bool:

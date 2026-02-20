@@ -8,13 +8,35 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.189...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.190...HEAD)</small>
+
+### Added
+
+- Add sessions from upload notebook ([b44d436](https://github.com/AllenInstitute/npc_lims/commit/b44d4368fbc41fe7753ce39db153817d127431c8) by Ben Hardcastle).
+- Add sessions from notebook ([c6317f3](https://github.com/AllenInstitute/npc_lims/commit/c6317f3b0dcdf2b8024bb575612361dd3f32ec27) by bjhardcastle).
+- Add naive sessions ([e64313c](https://github.com/AllenInstitute/npc_lims/commit/e64313c200d2e94e66497c57cb16b5ec8794d595) by bjhardcastle).
+- Add session issue ([cca59d4](https://github.com/AllenInstitute/npc_lims/commit/cca59d402215fe12ef715a509c979495e5e00a32) by bjhardcastle).
+- Add sessions ([63f91f1](https://github.com/AllenInstitute/npc_lims/commit/63f91f1ebb118a64a879b8431ac7d13ba40d215a) by bjhardcastle).
+
+### Fixed
+
+- Fix testing env ([5f3d263](https://github.com/AllenInstitute/npc_lims/commit/5f3d26379603d9a329e1b600ebf3760fa11e6c9c) by bjhardcastle).
+- Fix formatting ([dee8b56](https://github.com/AllenInstitute/npc_lims/commit/dee8b56e55428f6476d5a46642728e10649b3688) by bjhardcastle).
+- Fix project ([403f9eb](https://github.com/AllenInstitute/npc_lims/commit/403f9eb7bb6e19b4ac59140ebefa7ba022659692) by bjhardcastle).
+
+### Removed
+
+- Remove unused dlc capsules from status ([ceb9e84](https://github.com/AllenInstitute/npc_lims/commit/ceb9e847929849ecbe5b9322cad2da2adc1773f1) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.190](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.190) - 2025-04-07
+
+<small>[Compare with v0.1.189](https://github.com/AllenInstitute/npc_lims/compare/v0.1.189...v0.1.190)</small>
 
 ### Fixed
 
 - fix gamma encoding queue check for asset exists ([2a33c33](https://github.com/AllenInstitute/npc_lims/commit/2a33c3334bf71d99ec40ef1d9f891b28f09d7143) by arjun.sridhar12345).
 
-<!-- insertion marker -->
 ## [v0.1.189](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.189) - 2025-04-05
 
 <small>[Compare with v0.1.188](https://github.com/AllenInstitute/npc_lims/compare/v0.1.188...v0.1.189)</small>

@@ -2046,7 +2046,7 @@ wheels = [
 
 [[package]]
 name = "npc-lims"
-version = "0.1.190"
+version = "0.1.191"
 source = { editable = "." }
 dependencies = [
     { name = "aind-session" },

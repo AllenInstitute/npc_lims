@@ -1,6 +1,6 @@
 [project]
 name = "npc_lims"
-version = "0.1.190"
+version = "0.1.191"
 description = "Tools to fetch and update paths, metadata and state for Mindscope Neuropixels sessions, in the cloud."
 authors = [
     { name = "Arjun Sridhar", email = "arjun.sridhar@alleninstitute.org" },
