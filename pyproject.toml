@@ -39,89 +39,33 @@ text = "MIT"
 Repository = "https://github.com/AllenInstitute/npc_lims"
 Issues = "https://github.com/AllenInstitute/npc_lims/issues"
 
+[project.optional-dependencies]
+polars = [
+    "polars>1.0",
+]
+
 [project.scripts]
 update_session_status = "npc_lims.scripts.update_session_status:main"
 regenerate_nwb_files = "npc_lims.scripts.regenerate_nwb_files:main"
 run_session_cache_capsule = "npc_lims.scripts.run_session_cache_capsule:main"
 run_queue = "npc_lims.scripts.process_queue:main"
 
-[tool.pdm]
-plugins = [
-    "pdm-bump",
+[dependency-groups]
+task_runner = ["poethepoet>=0.33.1"]
+linting = ["black>=25.1.0", "isort>=6.0.1", "ruff>=0.11.2"]
+testing = ["pytest>=7.4.0", "mypy>=1.4.1", "pytest-cov>=4.1.0"]
+bump = [
+    "bump-my-version>=1.1.1",
+    "git-changelog>=2.5.3",
 ]
 
-[project.optional-dependencies]
-polars = [
-    "polars>1.0",
-]
 
-[tool.pdm.dev-dependencies]
-dev = [
-    "pytest>=7.4.0",
-    "ruff>=0.0.282",
-    "mypy>=1.4.1",
-    "pytest-cov>=4.1.0",
-    "black>=23.7.0",
-    "parver>=0.3",
-    "git-changelog>=2.3",
+[build-system]
+requires = [
+    "setuptools>=61",
+    "wheel",
 ]
-docs = [
-    "markdown-callouts>=0.3",
-    "markdown-exec>=1.7",
-    "mkdocs>=1.5",
-    "mkdocs-coverage>=1.0",
-    "mkdocs-gen-files>=0.5",
-    "mkdocs-literate-nav>=0.6",
-    "mkdocs-material>=9.4",
-    "mkdocs-minify-plugin>=0.7",
-    "mkdocstrings[python]>=0.23",
-    "tomli>=2.0; python_version < '3.11'",
-]
-
-[tool.pdm.scripts]
-ruff = "ruff check src --fix-only"
-black = "black src"
-test = "pytest --cov --cov-report=xml"
-mypy = "mypy src --install-types --non-interactive"
-log = "git-changelog -o CHANGELOG.md -p github"
-
-[tool.pdm.scripts.doc]
-shell = "cd docs && mkdocs serve"
-help = "Start the dev server for doc preview"
-
-[tool.pdm.scripts.bumpver]
-composite = [
-    "pdm self add pdm-bump",
-    "pdm bump micro",
-]
-
-[tool.pdm.scripts.tag]
-composite = [
-    "pdm self add pdm-bump",
-    "pdm bump tag",
-]
-
-[tool.pdm.scripts.prebuild]
-composite = [
-    "mypy",
-    "test",
-    "black",
-    "ruff",
-    "log",
-]
-
-[tool.pdm.scripts.dryrun]
-composite = [
-    "prebuild",
-    "pdm publish --repository testpypi",
-]
-
-[tool.pdm.scripts.pub]
-composite = [
-    "prebuild",
-    "bumpver",
-    "pdm publish",
-]
+build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = [
@@ -134,6 +78,38 @@ where = [
     "*.sql",
     "tracked_sessions.*",
 ]
+
+[tool.uv]
+package = true
+default-groups = "all"
+
+[tool.bumpversion]
+tag = true
+allow_dirty = true
+commit = true
+commit_args = "-a"
+message = "Bump version: {current_version} → {new_version} [skip actions]"
+pre_commit_hooks = [
+    "uv lock --upgrade-package lazynwb",
+    "git-changelog -o CHANGELOG.md",
+    "uv build",
+    "uv publish",
+]
+post_commit_hooks = [
+    "git push origin main",
+    "git push --tags",
+]
+
+[tool.poe.tasks]
+mypy = "mypy src --install-types --non-interactive"
+pytest = "pytest --cov-report term-missing:skip-covered --cov-report=html"
+test = ["pytest"]
+ruff = "ruff check src --fix-only"
+black = "black src"
+format = ["ruff", "black"]
+bump_pub_tag = "bump-my-version bump patch"
+release = ["format", "bump_pub_tag"]
+
 
 [tool.ruff]
 fix = true
@@ -219,10 +195,3 @@ warn_unused_ignores = true
 no_implicit_optional = true
 show_error_codes = true
 ignore_missing_imports = true
-
-[build-system]
-requires = [
-    "setuptools>=61",
-    "wheel",
-]
-build-backend = "setuptools.build_meta"
