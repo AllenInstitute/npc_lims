@@ -1318,6 +1318,28 @@ ephys:
             surface_recording_probe_letters_to_skip: BDEF
             is_context_naive: True
     
+  
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_836726_20260211:
+        ephys_day: 1
+        session_kwargs:
+            is_context_naive: True
+    
+  
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_836726_20260212:
+        ephys_day: 2
+        session_kwargs:
+            probe_letters_to_skip: A
+            is_context_naive: True
+    
+  
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_836726_20260213:
+        ephys_day: 3
+        session_kwargs:
+            is_context_naive: True
+    
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-07-26_14-09-36_620263:
         session_kwargs:
