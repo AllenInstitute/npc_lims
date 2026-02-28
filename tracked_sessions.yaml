@@ -1322,6 +1322,33 @@ ephys:
         session_kwargs:
             is_context_naive: True
     
+  
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_835598_20260223:
+        ephys_day: 1
+    
+  
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_835598_20260224:
+        ephys_day: 2
+    
+  
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_835598_20260225:
+        ephys_day: 3
+    
+  
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_835598_20260226:
+        ephys_day: 4
+    
+  
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_835598_20260227:
+        ephys_day: 5
+        session_kwargs:
+            surface_recording_probe_letters_to_skip: D
+    
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-07-26_14-09-36_620263:
         session_kwargs:
