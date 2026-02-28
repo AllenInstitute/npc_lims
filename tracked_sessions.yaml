@@ -1331,7 +1331,7 @@ ephys:
         ephys_day: 3
         session_kwargs:
             is_context_naive: True
-          concatenate_recordings: [recording1, recording2]   
+            concatenate_recordings: [recording1, recording2]
         issues:
           - https://github.com/AllenInstitute/npc_lims/issues/5
   
