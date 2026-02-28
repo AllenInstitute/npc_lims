@@ -755,6 +755,10 @@ ephys:
         ephys_day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_744740_20241114:
         ephys_day: 4
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
+        session_kwargs:
+          concatenate_recordings: [recording1, recording2]   
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_742903_20241021:
         ephys_day: 1
         session_kwargs:
@@ -821,8 +825,14 @@ ephys:
         ephys_day: 3
         issues:
           - https://github.com/AllenInstitute/npc_lims/issues/5
+        session_kwargs:
+          concatenate_recordings: [recording1, recording2]   
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_761583_20241217:
         ephys_day: 2
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
+        session_kwargs:
+          concatenate_recordings: [recording1, recording3]   
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_761583_20241216:
         ephys_day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_744279_20250113:
@@ -1321,7 +1331,9 @@ ephys:
         ephys_day: 3
         session_kwargs:
             is_context_naive: True
-    
+          concatenate_recordings: [recording1, recording2]   
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
   
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_835598_20260223:
@@ -1336,7 +1348,10 @@ ephys:
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_835598_20260225:
         ephys_day: 3
-    
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
+        session_kwargs:
+          concatenate_recordings: [recording1, recording2, recording3]        
   
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_835598_20260226:
@@ -1348,6 +1363,14 @@ ephys:
         ephys_day: 5
         session_kwargs:
             surface_recording_probe_letters_to_skip: D
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_835598_20260225:
+        ephys_day: 3
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
+        session_kwargs:
+          concatenate_recordings: [recording1, recording2, recording3]        
+  
     
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-07-26_14-09-36_620263:
