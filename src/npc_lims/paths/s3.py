@@ -20,6 +20,9 @@ DR_DATA_REPO = S3_SCRATCH_ROOT / "DynamicRoutingTask" / "Data"
 TISSUECYTE_REPO = upath.UPath(
     "s3://aind-scratch-data/arjun.sridhar/tissuecyte_cloud_processed"
 )
+IBL_ANNOTATIONS_REPO = upath.UPath(
+    "s3://aind-scratch-data/dynamic-routing/ibl-gui-output"
+)
 
 CODE_OCEAN_DATA_BUCKET = upath.UPath("s3://codeocean-s3datasetsbucket-1u41qdg42ur9")
 
@@ -431,7 +434,27 @@ def get_tissuecyte_annotation_files_from_s3(
 
     return electrode_files
 
-
+@functools.cache
+def get_ibl_annotation_files_from_s3(
+    session: str | npc_session.SessionRecord,
+) -> tuple[upath.UPath, ...]:
+    """For each probe annotated, get a path to a json file containing CCF coordinates for each
+    electrode (channel) on the probe.
+    
+    Examples:
+        >>> electrode_files = get_ibl_annotation_files_from_s3('752311_2025-01-22')
+        >>> assert len(electrode_files) > 0
+        >>> electrode_files[0].name
+        'ccf_channel_locations.json'
+    """
+    session = npc_session.SessionRecord(session)
+    # dir is organized as <root>/<subject_id>/<session_id>/<probe_name>/<file_name>.json
+    return tuple(
+        IBL_ANNOTATIONS_REPO.glob(
+            f"{session.subject}/*{session}*/*/*.json"
+        )
+    )
+    
 @dataclasses.dataclass
 class StimFile:
     path: upath.UPath
