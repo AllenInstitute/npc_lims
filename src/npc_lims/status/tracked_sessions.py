@@ -336,10 +336,11 @@ class SessionInfo:
             >>> next(session.is_annotated for session in get_session_info() if session.is_annotated)
             True
         """
-        try:
+        with contextlib.suppress(FileNotFoundError, ValueError):
             return bool(s3.get_tissuecyte_annotation_files_from_s3(self.id))
-        except (FileNotFoundError, ValueError):
-            return False
+        with contextlib.suppress(FileNotFoundError, ValueError):
+            return bool(s3.get_ibl_annotation_files_from_s3(self.id))
+        return False
 
     @functools.cached_property
     def training_info(self) -> dict[str, Any]:
