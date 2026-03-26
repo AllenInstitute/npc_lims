@@ -8,7 +8,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.190...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.191...HEAD)</small>
+
+### Added
+
+- Add function get smarspim ccf annotation output from IBL gui ([126b35d](https://github.com/AllenInstitute/npc_lims/commit/126b35d43a7fd0944103e88021c7d1c25e26e86d) by bjhardcastle).
+
+### Fixed
+
+- Fix formatting ([9e68bff](https://github.com/AllenInstitute/npc_lims/commit/9e68bff01659b8e8e7c36316f4dcbc465e58135a) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.191](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.191) - 2026-02-20
+
+<small>[Compare with v0.1.190](https://github.com/AllenInstitute/npc_lims/compare/v0.1.190...v0.1.191)</small>
 
 ### Added
 
@@ -28,7 +41,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Remove unused dlc capsules from status ([ceb9e84](https://github.com/AllenInstitute/npc_lims/commit/ceb9e847929849ecbe5b9322cad2da2adc1773f1) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.190](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.190) - 2025-04-07
 
 <small>[Compare with v0.1.189](https://github.com/AllenInstitute/npc_lims/compare/v0.1.189...v0.1.190)</small>

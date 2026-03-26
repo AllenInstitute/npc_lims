@@ -195,10 +195,16 @@ def is_started_or_completed(session_id: SessionID, process_name: str) -> bool:
 
 
 def add_sessions_to_queue(
-    process_name: str, overwrite_exisitng_assets: bool = False, newest_to_oldest: bool = False
+    process_name: str,
+    overwrite_exisitng_assets: bool = False,
+    newest_to_oldest: bool = False,
 ) -> None:
     mapped_process_name = VIDEO_MAPPING[process_name]
-    for session_info in sorted(npc_lims.get_session_info(is_ephys=True, is_uploaded=True), key=lambda s: s.date, reverse=newest_to_oldest):
+    for session_info in sorted(
+        npc_lims.get_session_info(is_ephys=True, is_uploaded=True),
+        key=lambda s: s.date,
+        reverse=newest_to_oldest,
+    ):
         if (
             hasattr(session_info, f"is_{mapped_process_name}")
             and getattr(session_info, f"is_{mapped_process_name}")

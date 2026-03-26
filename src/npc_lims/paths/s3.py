@@ -434,13 +434,14 @@ def get_tissuecyte_annotation_files_from_s3(
 
     return electrode_files
 
+
 @functools.cache
 def get_ibl_annotation_files_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> tuple[upath.UPath, ...]:
     """For each probe annotated, get a path to a json file containing CCF coordinates for each
     electrode (channel) on the probe.
-    
+
     Examples:
         >>> electrode_files = get_ibl_annotation_files_from_s3('752311_2025-01-22')
         >>> assert len(electrode_files) > 0
@@ -449,12 +450,9 @@ def get_ibl_annotation_files_from_s3(
     """
     session = npc_session.SessionRecord(session)
     # dir is organized as <root>/<subject_id>/<session_id>/<probe_name>/<file_name>.json
-    return tuple(
-        IBL_ANNOTATIONS_REPO.glob(
-            f"{session.subject}/*{session}*/*/*.json"
-        )
-    )
-    
+    return tuple(IBL_ANNOTATIONS_REPO.glob(f"{session.subject}/*{session}*/*/*.json"))
+
+
 @dataclasses.dataclass
 class StimFile:
     path: upath.UPath
