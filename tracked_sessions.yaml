@@ -1230,8 +1230,8 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_822061_20260114:
         ephys_day: 3
         session_kwargs:
-            probe_letters_to_skip: D
-            surface_recording_probe_letters_to_skip: D
+            probe_letters_to_skip: AD
+            surface_recording_probe_letters_to_skip: AD
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_822061_20260115:
         ephys_day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_822061_20260116:
