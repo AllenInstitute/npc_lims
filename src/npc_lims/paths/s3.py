@@ -443,14 +443,14 @@ def get_ibl_annotation_files_from_s3(
     electrode (channel) on the probe.
 
     Examples:
-        >>> electrode_files = get_ibl_annotation_files_from_s3('752311_2025-01-22')
+        >>> electrode_files = get_ibl_annotation_files_from_s3('795555_2025-08-22')
         >>> assert len(electrode_files) > 0
         >>> electrode_files[0].name
-        'ccf_channel_locations.json'
+        'ccf_channel_results.json'
     """
     session = npc_session.SessionRecord(session)
     # dir is organized as <root>/<subject_id>/<session_id>/<probe_name>/<file_name>.json
-    return tuple(IBL_ANNOTATIONS_REPO.glob(f"{session.subject}/*{session}*/*/*.json"))
+    return tuple(IBL_ANNOTATIONS_REPO.glob(f"{session.subject}/*{session}*/*/ccf_channel_results.json"))
 
 
 @dataclasses.dataclass
