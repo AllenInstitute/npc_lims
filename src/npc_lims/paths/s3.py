@@ -450,7 +450,11 @@ def get_ibl_annotation_files_from_s3(
     """
     session = npc_session.SessionRecord(session)
     # dir is organized as <root>/<subject_id>/<session_id>/<probe_name>/<file_name>.json
-    return tuple(IBL_ANNOTATIONS_REPO.glob(f"{session.subject}/*{session}*/*/ccf_channel_results.json"))
+    return tuple(
+        IBL_ANNOTATIONS_REPO.glob(
+            f"{session.subject}/*{session}*/*/ccf_channel_results.json"
+        )
+    )
 
 
 @dataclasses.dataclass
