@@ -342,7 +342,7 @@ class SessionInfo:
             return bool(aind_session.ecephys.get_latest_ibl_annotations(session.id))
         except (FileNotFoundError, ValueError, IndexError):
             return False
-    
+
     @functools.cached_property
     def training_info(self) -> dict[str, Any]:
         """Session metadata from Sam's DR training database.

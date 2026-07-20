@@ -8,9 +8,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.193...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.194...HEAD)</small>
+
+### Fixed
+
+- Fix is_annotated ([4c67baf](https://github.com/AllenInstitute/npc_lims/commit/4c67bafb57bf95171cad5f0736c3d192c8344147) by bjhardcastle).
+- Fix NP2 B-C rewiring ([f2b3b1b](https://github.com/AllenInstitute/npc_lims/commit/f2b3b1b27b21eb0844fcac3ee30341aec1d1cfdc) by bjhardcastle).
 
 <!-- insertion marker -->
+## [v0.1.194](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.194) - 2026-07-18
+
+<small>[Compare with v0.1.193](https://github.com/AllenInstitute/npc_lims/compare/v0.1.193...v0.1.194)</small>
+
 ## [v0.1.193](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.193) - 2026-03-26
 
 <small>[Compare with v0.1.191](https://github.com/AllenInstitute/npc_lims/compare/v0.1.191...v0.1.193)</small>
