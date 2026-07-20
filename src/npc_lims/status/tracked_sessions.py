@@ -334,7 +334,7 @@ class SessionInfo:
 
         Examples:
 
-            >>> next(session.is_annotated for session in get_session_info() if session.is_annotated)
+            >>> get_session_info('795555_2025-08-22').is_annotated
             True
         """
         try:
