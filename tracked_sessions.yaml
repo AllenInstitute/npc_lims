@@ -1296,7 +1296,7 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_836729_20260216:
         ephys_day: 1
         session_kwargs:
-            probe_letters_to_skip: C
+            probe_letters_to_skip: B # B wired to C; C not inserted
             is_context_naive: True
     
   
@@ -1304,7 +1304,7 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_836729_20260217:
         ephys_day: 2
         session_kwargs:
-            probe_letters_to_skip: C
+            probe_letters_to_skip: B # B wired to C; C not inserted
             surface_recording_probe_letters_to_skip: ADEF
             is_context_naive: True
     
@@ -1313,7 +1313,7 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_836729_20260218:
         ephys_day: 3
         session_kwargs:
-            probe_letters_to_skip: C
+            probe_letters_to_skip: B # B wired to C; C not inserted
             surface_recording_probe_letters_to_skip: BDEF
             is_context_naive: True
     
@@ -1461,24 +1461,7 @@ ephys:
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_836726_20260213:
         ephys_day: 3
-    
   
-
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_836729_20260216:
-        ephys_day: 1
-    
-  
-
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_836729_20260217:
-        ephys_day: 2
-    
-  
-
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_836729_20260218:
-        ephys_day: 5
-    
-  
-
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_837230_20260417:
         ephys_day: 1
         session_kwargs:
