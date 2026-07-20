@@ -338,7 +338,7 @@ class SessionInfo:
             True
         """
         try:
-            session = aind_session.get_sessions(*self.id.split("_"))[0]
+            session = aind_session.get_sessions(*self.id.split("_")[:2])[0]
             return bool(aind_session.ecephys.get_latest_ibl_annotations(session.id))
         except (FileNotFoundError, ValueError, IndexError):
             return False
