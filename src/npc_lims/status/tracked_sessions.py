@@ -9,6 +9,7 @@ import typing
 from collections.abc import Mapping, MutableSequence
 from typing import Any, Literal, TypedDict
 
+import aind_session
 import npc_session
 import upath
 import yaml
@@ -329,19 +330,19 @@ class SessionInfo:
     @functools.cached_property
     def is_annotated(self) -> bool:
         """The subject associated with the sessions has CCF annotation data for
-        probes available on S3.
+        probes available on docdb.
 
         Examples:
 
             >>> next(session.is_annotated for session in get_session_info() if session.is_annotated)
             True
         """
-        with contextlib.suppress(FileNotFoundError, ValueError):
-            return bool(s3.get_tissuecyte_annotation_files_from_s3(self.id))
-        with contextlib.suppress(FileNotFoundError, ValueError):
-            return bool(s3.get_ibl_annotation_files_from_s3(self.id))
-        return False
-
+        try:
+            session = aind_session.get_sessions(*self.id.split("_"))[0]
+            return bool(aind_session.ecephys.get_latest_ibl_annotations(session.id))
+        except (FileNotFoundError, ValueError, IndexError):
+            return False
+    
     @functools.cached_property
     def training_info(self) -> dict[str, Any]:
         """Session metadata from Sam's DR training database.
