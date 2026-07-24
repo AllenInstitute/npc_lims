@@ -336,12 +336,15 @@ class SessionInfo:
 
             >>> get_session_info('795555_2025-08-22').is_annotated
             True
+            >>> get_session_info('743199_2024-12-05').is_annotated
+            True
         """
-        try:
+        with contextlib.suppress(FileNotFoundError, ValueError):
+            return bool(s3.get_tissuecyte_annotation_files_from_s3(self.id))
+        with contextlib.suppress(FileNotFoundError, ValueError, IndexError, KeyError):
             session = aind_session.get_sessions(*self.id.split("_")[:2])[0]
             return bool(aind_session.ecephys.get_latest_ibl_annotations(session.id))
-        except (FileNotFoundError, ValueError, IndexError, KeyError):
-            return False
+        return False
 
     @functools.cached_property
     def training_info(self) -> dict[str, Any]:
