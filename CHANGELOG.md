@@ -8,13 +8,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.195...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.196...HEAD)</small>
+
+### Fixed
+
+- Fix is_annotated for tissuecyte sessions ([70d3f2e](https://github.com/AllenInstitute/npc_lims/commit/70d3f2e245b585254c67c99b42f465cf59a568e9) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.196](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.196) - 2026-07-21
+
+<small>[Compare with v0.1.195](https://github.com/AllenInstitute/npc_lims/compare/v0.1.195...v0.1.196)</small>
 
 ### Fixed
 
 - Fix is_annotated ([91acf6c](https://github.com/AllenInstitute/npc_lims/commit/91acf6c06cd3551acb905b8d89153cddd9781d0e) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.195](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.195) - 2026-07-20
 
 <small>[Compare with v0.1.194](https://github.com/AllenInstitute/npc_lims/compare/v0.1.194...v0.1.195)</small>
