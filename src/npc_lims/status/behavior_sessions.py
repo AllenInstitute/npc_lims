@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import functools
 import logging
+import sqlite3
 import typing
 from typing import Any
 
@@ -22,6 +23,19 @@ INVALID_SUBJECT_KEYS = (
     "retired",
     "sound",
 )
+
+
+def _get_session_exclusion_column(
+    db: sqlite3.Connection, subject: int | str
+) -> str | None:
+    columns = {
+        str(row["name"]).lower(): str(row["name"])
+        for row in db.execute(f"PRAGMA table_info('{subject}')").fetchall()
+    }
+    for column in ("ignore", "noLicks", "no_licks"):
+        if column.lower() in columns:
+            return columns[column.lower()]
+    return None
 
 
 @functools.cache
@@ -95,11 +109,12 @@ def get_sessions_from_training_db() -> dict[int, tuple[dict[str, Any], ...]]:
             if str(table["name"]).isnumeric()
         )
         for subject in subjects:
+            query = f"SELECT * FROM '{subject}'"
+            if exclusion_column := _get_session_exclusion_column(db, subject):
+                query += f' WHERE "{exclusion_column}" != 1'
             sessions[subject] = tuple(
                 row | {"nsb": nsb}
-                for row in db.execute(
-                    f"SELECT * FROM '{subject}' WHERE ignore != 1"
-                ).fetchall()
+                for row in db.execute(query).fetchall()
                 if row["start_time"]  # ie not empty
             )
     return sessions
