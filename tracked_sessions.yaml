@@ -1933,6 +1933,31 @@ ephys:
             is_context_naive: True
             is_deep_insertion: True
     
+  
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_850217_20260402:
+        ephys_day: 1
+        session_kwargs:
+            is_context_naive: True
+    
+  
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_850217_20260403:
+        ephys_day: 2
+        session_kwargs:
+            is_context_naive: True
+            is_deep_insertion: True
+    
+  
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_850217_20260406:
+        ephys_day: 3
+        session_kwargs:
+            is_context_naive: True
+            is_deep_insertion: True
+            probe_letters_to_skip: C
+            surface_recording_probe_letters_to_skip: C
+    
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-07-26_14-09-36_620263:
         session_kwargs:
