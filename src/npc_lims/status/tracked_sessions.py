@@ -24,8 +24,10 @@ _TRACKED_SESSIONS_FILE = upath.UPath(
     "https://raw.githubusercontent.com/AllenInstitute/npc_lims/main/tracked_sessions.yaml"
 )
 
+SessionFileEntry: TypeAlias = str | dict[str, dict[str, Any] | None]
 FileContents: TypeAlias = dict[
-    Literal["ephys", "behavior_with_sync", "behavior"], dict[str, str]
+    Literal["ephys", "behavior_with_sync", "behavior"],
+    dict[str, list[SessionFileEntry]],
 ]
 
 DR_DATA_REPO_ISILON = upath.UPath(
@@ -738,7 +740,12 @@ def _session_info_from_file_contents(contents: FileContents) -> tuple[SessionInf
                     SessionInfo(
                         id=record,
                         experiment_day=int(
-                            session_config.get("day", _get_day_from_sessions(record))
+                            session_config.get(
+                                "ephys_day",
+                                session_config.get(
+                                    "day", _get_day_from_sessions(record)
+                                ),
+                            )
                         ),
                         project=project_name,
                         is_ephys=is_ephys,

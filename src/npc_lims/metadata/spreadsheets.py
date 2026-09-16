@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import functools
+import os
 import re
 import sqlite3
 import tempfile
@@ -21,6 +22,34 @@ def get_training_sqlite_paths() -> tuple[upath.UPath, ...]:
     )
 
 
+def download_training_dbs(
+    save_dir: str | os.PathLike | upath.UPath | None = None,
+    nsb: bool | None = None,
+) -> tuple[upath.UPath, ...]:
+    """
+    Download training sqlite databases to a local directory.
+
+    By default this downloads both Dynamic Routing training databases. Pass
+    ``nsb=True`` or ``nsb=False`` to download just one database.
+
+    Examples:
+        >>> paths = download_training_dbs()
+        >>> assert len(paths) == 2
+        >>> assert all(path.suffix == ".sqlite" for path in paths)
+    """
+    save_dir = upath.UPath(save_dir or tempfile.mkdtemp())
+    save_dir.mkdir(parents=True, exist_ok=True)
+
+    downloaded_paths = []
+    for s3_path in get_training_sqlite_paths():
+        if nsb is not None and ("NSB" in s3_path.name) != nsb:
+            continue
+        local_path = save_dir / s3_path.name
+        local_path.write_bytes(s3_path.read_bytes())
+        downloaded_paths.append(local_path)
+    return tuple(downloaded_paths)
+
+
 @functools.cache
 def get_training_db(nsb: bool = False) -> sqlite3.Connection:
     """
@@ -29,11 +58,7 @@ def get_training_db(nsb: bool = False) -> sqlite3.Connection:
     Examples:
         >>> assert get_training_db()
     """
-    db_path = upath.UPath(tempfile.mkstemp(suffix=".db")[1])
-    s3_path = next(
-        path for path in get_training_sqlite_paths() if ("NSB" in path.name) == nsb
-    )
-    db_path.write_bytes(s3_path.read_bytes())
+    db_path = download_training_dbs(tempfile.mkdtemp(), nsb=nsb)[0]
     con = sqlite3.connect(db_path, check_same_thread=False)  # this is read-only
 
     def dict_factory(cursor, row):

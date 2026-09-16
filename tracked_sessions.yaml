@@ -693,16 +693,6 @@ ephys:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_733891_20240919:
         day: 4
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_734897_20240620:
-        day: 2
-        session_kwargs:
-            probe_letters_to_skip: BD
-            is_production: false
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_734897_20240618:
-        day: 1
-        session_kwargs:
-            probe_letters_to_skip: B
-            is_production: false
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_664566_20231121:
         day: 2
         session_kwargs:
@@ -915,16 +905,6 @@ ephys:
             perturbation_day: 4
             probe_letters_to_skip: ADF
             is_injection_perturbation: true
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_772655_20250305:
-        ephys_day: 1
-        session_kwargs:
-            probe_letters_to_skip: ABE
-            is_production: false
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_780329_20250319:
-        ephys_day: 1
-        session_kwargs:
-            is_production: false
-            is_opto_perturbation: true
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_801857_20250925:
         ephys_day: 1
         session_kwargs:
@@ -1209,20 +1189,6 @@ ephys:
         session_kwargs:
             is_production: true
             is_context_naive: true
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_813586_20251202:
-        ephys_day: 1
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_813586_20251203:
-        ephys_day: 2
-        session_kwargs:
-            probe_letters_to_skip: E
-            surface_recording_probe_letters_to_skip: E
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_813586_20251204:
-        ephys_day: 3
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_813586_20251205:
-        ephys_day: 4
-        session_kwargs:
-            probe_letters_to_skip: D
-            surface_recording_probe_letters_to_skip: D
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_822061_20260112:
         ephys_day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_822061_20260113:
@@ -1380,29 +1346,10 @@ ephys:
         session_kwargs:
           concatenate_recordings: [recording1, recording2, recording3]        
   
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_810754_20251027:
-        ephys_day: 1
-        session_kwargs:
-            is_production: true
-            is_context_naive: true
-
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_810754_20251028:
-        ephys_day: 2
-        session_kwargs:
-            is_production: true
-            is_context_naive: true
-            
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_810754_20251029:
         ephys_day: 3
         session_kwargs:
             probe_letters_to_skip: CD
-            is_production: true
-            is_context_naive: true
-
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_810754_20251030:
-        ephys_day: 4
-        session_kwargs:
-            probe_letters_to_skip: C
             is_production: true
             is_context_naive: true
 
@@ -1542,13 +1489,6 @@ ephys:
     
   
 
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_840160_20260428:
-        ephys_day: 1
-        session_kwargs:
-            is_deep_insertion: True
-            probe_letters_to_skip: C
-            surface_recording_probe_letters_to_skip: C
-    
   
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_840160_20260429:
@@ -1770,13 +1710,6 @@ ephys:
     
   
 
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_840160_20260428:
-        ephys_day: 1
-        session_kwargs:
-            is_deep_insertion: True
-            probe_letters_to_skip: C
-            surface_recording_probe_letters_to_skip: C
-    
   
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_840160_20260429:
@@ -1957,7 +1890,326 @@ ephys:
             is_deep_insertion: True
             probe_letters_to_skip: C
             surface_recording_probe_letters_to_skip: C
-    
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_840160_20260428:
+        ephys_day: 1
+        notes: stim computer issue, final 'spontaneous_rewards' and 'spontaneous' stims started and immediately stopped
+        session_kwargs:
+          is_deep_insertion: true
+          probe_letters_to_skip: C
+          surface_recording_probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_839146_20260518:
+        ephys_day: 5
+        session_kwargs:
+          is_deep_insertion: true
+          probe_letters_to_skip: C
+          surface_recording_probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_856847_20260604:
+        ephys_day: 3
+        session_kwargs:
+          is_context_naive: true
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_856847_20260602:
+        ephys_day: 1
+        session_kwargs:
+          is_context_naive: true
+          is_deep_insertion: true
+          probe_letters_to_skip: C
+          surface_recording_probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_862025_20260805:
+        ephys_day: 2
+        session_kwargs:
+          is_context_naive: true
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_734897_20240620:
+        ephys_day: 2
+        session_kwargs:
+          probe_letters_to_skip: BD
+          perturbation_day: 2
+          is_production: false
+          is_opto_perturbation: true
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_734897_20240618:
+        ephys_day: 1
+        session_kwargs:
+          probe_letters_to_skip: B
+          perturbation_day: 1
+          is_production: false
+          is_opto_perturbation: true
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_772655_20250306:
+        ephys_day: 2
+        session_kwargs:
+          is_production: false
+          probe_letters_to_skip: ABE
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_772655_20250305:
+        ephys_day: 1
+        session_kwargs:
+          is_production: false
+          probe_letters_to_skip: ABE
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_772656_20250425:
+        notes: dye test
+        ephys_day: 2
+        session_kwargs:
+          is_production: false
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_772656_20250423:
+        ephys_day: 1
+        session_kwargs:
+          is_production: false
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_773262_20250327:
+        ephys_day: 1
+        session_kwargs:
+          perturbation_day: 1
+          is_production: false
+          is_opto_perturbation: true
+          probe_letters_to_skip: B
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_780329_20250319:
+        ephys_day: 1
+        session_kwargs:
+          perturbation_day: 1
+          is_production: false
+          is_opto_perturbation: true
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_793277_20250612:
+        ephys_day: 1
+        session_kwargs:
+          is_production: false
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_802590_20250822:
+        ephys_day: 1
+        notes: congugated muscimol degradation test
+        session_kwargs:
+          perturbation_day: 1
+          is_production: false
+          is_injection_perturbation: true
+          probe_letters_to_skip: ABDE
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_805142_20250912:
+        ephys_day: 1
+        notes: conjugated muscimol smaller vol ephys validation; histo validation of cloud separation; able to localize muscimol lateral spread
+        session_kwargs:
+          perturbation_day: 1
+          is_production: false
+          is_injection_perturbation: true
+          probe_letters_to_skip: ACDE
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_810754_20251030:
+        ephys_day: 4
+        session_kwargs:
+          is_deep_insertion: true
+          probe_letters_to_skip: C
+          surface_recording_probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_810754_20251028:
+        ephys_day: 2
+        session_kwargs:
+          is_deep_insertion: true
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_810754_20251027:
+        ephys_day: 1
+        session_kwargs:
+          is_deep_insertion: true
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_813586_20251205:
+        ephys_day: 4
+        notes: E signal good!
+        session_kwargs:
+          is_deep_insertion: true
+          probe_letters_to_skip: D
+          surface_recording_probe_letters_to_skip: D
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_813586_20251204:
+        ephys_day: 3
+        notes: E still noisy, headstage to be replaced
+        session_kwargs:
+          is_deep_insertion: true
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_813586_20251203:
+        ephys_day: 2
+        notes: B lost ephys signal but shank did not detach; No E (being replaced)
+        session_kwargs:
+          is_deep_insertion: true
+          probe_letters_to_skip: E
+          surface_recording_probe_letters_to_skip: E
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_813586_20251202:
+        ephys_day: 1
+        notes: E noisy, probe to be replaced
+        session_kwargs:
+          is_deep_insertion: true
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_818720_20251222:
+        ephys_day: 2
+        session_kwargs:
+          perturbation_day: 2
+          is_production: false
+          is_opto_perturbation: true
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_818720_20251219:
+        ephys_day: 1
+        session_kwargs:
+          perturbation_day: 1
+          is_production: false
+          is_opto_perturbation: true
+          probe_letters_to_skip: ACDEF
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_839146_20260515:
+        ephys_day: 4
+        session_kwargs:
+          is_deep_insertion: true
+          probe_letters_to_skip: C
+          surface_recording_probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_839146_20260514:
+        ephys_day: 3
+        notes: use post_experiment photodoc for targeting info (F inserted 1000um but retracted completely); forgot to disable F in OpenEphys for main recording
+        session_kwargs:
+          is_deep_insertion: true
+          probe_letters_to_skip: CF
+          surface_recording_probe_letters_to_skip: CF
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_839146_20260513:
+        ephys_day: 2
+        session_kwargs:
+          is_deep_insertion: true
+          probe_letters_to_skip: C
+          surface_recording_probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_839146_20260512:
+        ephys_day: 1
+        session_kwargs:
+          is_deep_insertion: true
+          probe_letters_to_skip: C
+          surface_recording_probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_841308_20260511:
+        ephys_day: 5
+        session_kwargs:
+          is_deep_insertion: true
+          probe_letters_to_skip: C
+          surface_recording_probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_841308_20260508:
+        ephys_day: 4
+        notes: forgot stabilization screw
+        session_kwargs:
+          is_deep_insertion: true
+          probe_letters_to_skip: C
+          surface_recording_probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_856845_20260529:
+        ephys_day: 3
+        session_kwargs:
+          is_context_naive: true
+          is_deep_insertion: true
+          surface_recording_probe_letters_to_skip: BC
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_856845_20260527:
+        ephys_day: 1
+        session_kwargs:
+          is_context_naive: true
+          is_deep_insertion: true
+          surface_recording_probe_letters_to_skip: ABC
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_856847_20260605:
+        ephys_day: 4
+        session_kwargs:
+          is_context_naive: true
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_856847_20260603:
+        ephys_day: 2
+        session_kwargs:
+          is_context_naive: true
+          is_deep_insertion: true
+          probe_letters_to_skip: C
+          surface_recording_probe_letters_to_skip: BCEF
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_859582_20260702:
+        ephys_day: 4
+        session_kwargs:
+          is_context_naive: true
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_859582_20260701:
+        ephys_day: 3
+        session_kwargs:
+          is_context_naive: true
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_859582_20260630:
+        ephys_day: 2
+        session_kwargs:
+          is_context_naive: true
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_859582_20260629:
+        ephys_day: 1
+        notes: D was left disabled in OpenEphys by mistake
+        session_kwargs:
+          is_context_naive: true
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_859584_20260709:
+        ephys_day: 4
+        notes: mouse broke toe during experiment, EUd and perfused post-experiment
+        session_kwargs:
+          is_context_naive: true
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_859584_20260708:
+        ephys_day: 3
+        session_kwargs:
+          is_context_naive: true
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_859584_20260707:
+        ephys_day: 2
+        session_kwargs:
+          is_context_naive: true
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_859584_20260706:
+        ephys_day: 1
+        session_kwargs:
+          is_context_naive: true
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_862025_20260806:
+        ephys_day: 3
+        session_kwargs:
+          is_context_naive: true
+          probe_letters_to_skip: E
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_862025_20260804:
+        ephys_day: 1
+        session_kwargs:
+          is_context_naive: true
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_873603_20260914:
+        ephys_day: 1
+        session_kwargs:
+          perturbation_day: 1
+          is_production: false
+          is_opto_perturbation: true
+          probe_letters_to_skip: E
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_862027_20260915:
+        ephys_day: 1
+        session_kwargs:
+          is_context_naive: true
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_862027_20260916:
+        ephys_day: 2
+        session_kwargs:
+          is_context_naive: true
   TempletonPilotSession:
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-07-26_14-09-36_620263:
         session_kwargs:
@@ -2068,13 +2320,6 @@ ephys:
 
 
 
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/DRpilot_836629_20260430:
-        ephys_day: 3
-        session_kwargs:
-            probe_letters_to_skip: C
-
-
-
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/DRpilot_836629_20260501:
         ephys_day: 4
         session_kwargs:
@@ -2103,13 +2348,6 @@ ephys:
 
 
 
-    - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/DRpilot_836629_20260430:
-        ephys_day: 3
-        session_kwargs:
-            probe_letters_to_skip: C
-
-
-
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/DRpilot_836629_20260501:
         ephys_day: 4
         session_kwargs:
@@ -2122,6 +2360,105 @@ ephys:
         session_kwargs:
             probe_letters_to_skip: C
 
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_836629_20260430:
+        ephys_day: 3
+        session_kwargs:
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_852252_20260626:
+        ephys_day: 3
+        session_kwargs:
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_852252_20260625:
+        ephys_day: 2
+        session_kwargs:
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_852252_20260624:
+        ephys_day: 1
+        session_kwargs:
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_852255_20260622:
+        ephys_day: 4
+        session_kwargs:
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_852255_20260618:
+        ephys_day: 3
+        session_kwargs:
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_852255_20260617:
+        ephys_day: 2
+        session_kwargs:
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_852255_20260616:
+        ephys_day: 1
+        session_kwargs:
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_857681_20260818:
+        ephys_day: 4
+        session_kwargs:
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_857681_20260817:
+        ephys_day: 3
+        session_kwargs:
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_857681_20260814:
+        ephys_day: 2
+        session_kwargs:
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_857681_20260813:
+        ephys_day: 1
+        session_kwargs:
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_859583_20260520:
+        ephys_day: 4
+        session_kwargs:
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_859583_20260519:
+        ephys_day: 3
+        session_kwargs:
+          probe_letters_to_skip: D
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_859583_20260515:
+        ephys_day: 2
+        session_kwargs:
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_859583_20260514:
+        ephys_day: 1
+        session_kwargs:
+          probe_letters_to_skip: D
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_872697_20260903:
+        ephys_day: 4
+        session_kwargs:
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_872697_20260902:
+        ephys_day: 3
+        session_kwargs:
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_872697_20260901:
+        ephys_day: 2
+        session_kwargs:
+          probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_872697_20260831:
+        ephys_day: 1
+        session_kwargs:
+          probe_letters_to_skip: C
 behavior_with_sync: # hab sessions with sync + video, or sync + opto, etc.
   DynamicRouting:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708019_20240322:
