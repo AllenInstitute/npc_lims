@@ -19,6 +19,7 @@ dependencies = [
     "npc-io>=0.1.24",
     "codeocean>=0.3.1",
     "aind-session>=0.3.25",
+    "tqdm>=4.70.1",
 ]
 requires-python = ">=3.9"
 readme = "README.md"
