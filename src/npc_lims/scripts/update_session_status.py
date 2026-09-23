@@ -7,6 +7,9 @@
 #     "pydantic-settings>=2.0",
 #     "tqdm>=4.0",
 # ]
+#
+# [tool.uv.sources]
+# npc_lims = { git = "https://github.com/AllenInstitute/npc_lims" }
 # ///
 
 from __future__ import annotations
