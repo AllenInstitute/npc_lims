@@ -37,8 +37,12 @@ class Settings(BaseSettings):
     )
 
 
-def get_status(session: str) -> dict[str, Any]:
-    s: npc_lims.SessionInfo = npc_lims.get_session_info(session=session)
+def get_status(session: str | npc_lims.SessionInfo) -> dict[str, Any]:
+    s = (
+        session
+        if isinstance(session, npc_lims.SessionInfo)
+        else npc_lims.get_session_info(session=session)
+    )
     try:
         aind_session_id = npc_lims.get_codoecean_session_id(s.id)
     except ValueError:
@@ -58,7 +62,9 @@ def get_status(session: str) -> dict[str, Any]:
         "surface_channels_asset_id": surface_channels_asset_id,
         "is_uploaded": (is_uploaded := s.is_uploaded),
         "is_sorted": (is_sorted := (s.is_sorted if is_uploaded else None)),
-        "is_surface_channels_sorted": s.is_surface_channels_sorted if surface_channels_asset_id else None,
+        "is_surface_channels_sorted": (
+            s.is_surface_channels_sorted if surface_channels_asset_id else None
+        ),
         "is_annotated": s.is_annotated if is_sorted else None,
         "is_video": (is_video := (s.is_video if is_uploaded else None)),
         "is_dlc_eye": s.is_dlc_eye if is_video else None,

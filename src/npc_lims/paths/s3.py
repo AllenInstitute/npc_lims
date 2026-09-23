@@ -402,7 +402,7 @@ def get_LFP_subsampling_paths_from_s3(
 
 @functools.cache
 def get_tissuecyte_annotation_files_from_s3(
-    session: str | npc_session.SessionRecord,
+    session: str | npc_session.SessionRecord | tracked_sessions.SessionInfo,
 ) -> tuple[upath.UPath, ...]:
     """For each probe inserted, get a csv file containing CCF coordinates for each
     electrode (channel) on the probe.
@@ -413,8 +413,13 @@ def get_tissuecyte_annotation_files_from_s3(
         >>> electrode_files[0].name
         'Probe_A2_channels_626791_warped_processed_new_sorting.csv'
     """
-    session = npc_session.SessionRecord(session)
-    day = tracked_sessions.get_session_info(session).experiment_day
+    if isinstance(session, tracked_sessions.SessionInfo):
+        session_info = session
+        session = session.id
+    else:
+        session = npc_session.SessionRecord(session)
+        session_info = tracked_sessions.get_session_info(session)
+    day = session_info.experiment_day
     subject_electrode_network_path = TISSUECYTE_REPO / str(session.subject.id)
 
     if not subject_electrode_network_path.exists():
