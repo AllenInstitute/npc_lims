@@ -362,7 +362,29 @@ def get_session_raw_data_asset(
             raise NotImplementedError(
                 f"Raw data assets from multiple platforms found for {session}, which we don't know how to handle: {platforms}"
             )
+
+    # A surface-channel recording is also tagged as an ecephys raw asset, but
+    # does not contain the behavior data that identifies the main recording.
+    # If the main recording failed, it can be the only raw asset for the
+    # session, so selecting the latest raw asset would incorrectly report the
+    # surface-channel asset as the main upload.
+    if platforms[0] == "ecephys":
+        raw_assets = tuple(
+            asset for asset in raw_assets if _has_main_recording_data(asset)
+        )
+        if not raw_assets:
+            raise ValueError(f"Session {session} has no main raw data assets")
     return get_latest_data_asset(raw_assets)
+
+
+def _has_main_recording_data(asset: DataAsset) -> bool:
+    """Return whether an ecephys raw asset contains the main recording data."""
+    if asset.source_bucket is None:
+        return False
+    root = get_path_from_data_asset(asset)
+    return any(
+        (root / folder).is_dir() for folder in ("behavior", "behavior-videos")
+    )
 
 
 def get_surface_channel_root(session: str | npc_session.SessionRecord) -> upath.UPath:
