@@ -410,17 +410,23 @@ def get_surface_channel_raw_data_asset(
     """For a main ephys session (implict idx=0), find a raw asset corresponding to
     the second session on the same day (idx=1).
     """
-    session = npc_session.SessionRecord(session).with_idx(1)
+    session = npc_session.SessionRecord(session)
     try:
+        indexed_session = session.with_idx(1)
         raw_assets = tuple(
             asset
-            for asset in get_session_data_assets(session)
+            for asset in get_session_data_assets(indexed_session)
             if is_raw_data_asset(asset)
         )
     except SessionIndexError:
-        raise FileNotFoundError(
-            f"{session} has no surface channel data assets"
-        ) from None
+        # If the main recording failed, the surface-channel recording can be
+        # the only asset and therefore occupy index 0. It is identifiable by
+        # lacking both folders used by a main recording.
+        raw_assets = tuple(
+            asset
+            for asset in get_session_data_assets(session)
+            if is_raw_data_asset(asset) and not _has_main_recording_data(asset)
+        )
     if not raw_assets:
         raise FileNotFoundError(f"{session} has no surface channel data assets")
     return get_latest_data_asset(raw_assets)
