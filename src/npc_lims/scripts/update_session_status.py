@@ -49,30 +49,24 @@ def get_status(session: str) -> dict[str, Any]:
         raw_asset_id = ""
     if s.is_surface_channels:
         surface_channels_asset_id = npc_lims.get_surface_channel_raw_data_asset(s.id).id
-        is_surface_channels_sorted = s.is_surface_channels_sorted
     else:
-        surface_channels_asset_id = ""
-        is_surface_channels_sorted = None
+        surface_channels_asset_id = None
     return {
         "date": s.date,
         "session_id": aind_session_id,
         "raw_asset_id": raw_asset_id,
         "surface_channels_asset_id": surface_channels_asset_id,
-        "is_uploaded": s.is_uploaded,
-        "is_sorted": s.is_sorted,
-        "is_surface_channels_sorted": (
-            is_surface_channels_sorted
-            if is_surface_channels_sorted is not None
-            else None
-        ),
-        "is_annotated": s.is_annotated,
-        "is_video": (is_video := s.is_video),
+        "is_uploaded": (is_uploaded := s.is_uploaded),
+        "is_sorted": (is_sorted := (s.is_sorted if is_uploaded else None)),
+        "is_surface_channels_sorted": s.is_surface_channels_sorted if surface_channels_asset_id else None,
+        "is_annotated": s.is_annotated if is_sorted else None,
+        "is_video": (is_video := (s.is_video if is_uploaded else None)),
         "is_dlc_eye": s.is_dlc_eye if is_video else None,
         "is_facemap": s.is_facemap if is_video else None,
         "is_gamma_encoding": s.is_gamma_encoding if is_video else None,
         "is_LPFaceParts": s.is_LPFaceParts if is_video else None,
-        "is_session_json": s.is_session_json,
-        "is_rig_json": s.is_rig_json,
+        "is_session_json": s.is_session_json if is_uploaded else None,
+        "is_rig_json": s.is_rig_json if is_uploaded else None,
     }
 
 
