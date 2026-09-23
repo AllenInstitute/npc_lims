@@ -4,6 +4,7 @@ on:
   schedule:
     # every 24 hours
     - cron: '0 22 * * *'
+      timezone: America/Los_Angeles
   push:
     branches: [ "main" ]
     paths:
