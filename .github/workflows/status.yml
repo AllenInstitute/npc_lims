@@ -3,7 +3,7 @@ name: Update session status
 on: 
   schedule:
     # every 24 hours
-    - cron: '0 22 * * *'
+    - cron: '26 22 * * *'
       timezone: America/Los_Angeles
   push:
     branches: [ "main" ]
