@@ -206,7 +206,11 @@ class SessionInfo:
                 and asset.files
                 > 6  # number of files produced by sorting pipeline when errorred
             )
-        except (FileNotFoundError, ValueError):
+        except (
+            FileNotFoundError,
+            ValueError,
+            codeocean_utils.SessionIndexError,
+        ):
             return False
 
     def is_dlc(self, camera: Literal["eye", "side", "face"]) -> bool:
