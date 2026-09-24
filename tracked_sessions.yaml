@@ -1942,27 +1942,34 @@ ephys:
           is_opto_perturbation: true
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_772655_20250306:
+        notes: dye test
         ephys_day: 2
         session_kwargs:
           is_production: false
           probe_letters_to_skip: ABE
+          is_task: false
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_772655_20250305:
+        notes: dye test
         ephys_day: 1
         session_kwargs:
           is_production: false
           probe_letters_to_skip: ABE
+          is_task: false
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_772656_20250425:
         notes: dye test
         ephys_day: 2
         session_kwargs:
           is_production: false
+          is_task: false
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_772656_20250423:
+        notes: dye test
         ephys_day: 1
         session_kwargs:
           is_production: false
+          is_task: false
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_773262_20250327:
         ephys_day: 1
