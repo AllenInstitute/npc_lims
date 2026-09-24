@@ -193,11 +193,15 @@ class SessionInfo:
         if not self.is_surface_channels:
             raise ValueError("No surface channel data for this session")
         try:
-            return any(
-                asset
-                for asset in codeocean_utils.get_session_data_assets(
+            try:
+                assets = codeocean_utils.get_session_data_assets(
                     self.id.with_idx(1)
                 )
+            except codeocean_utils.SessionIndexError:
+                assets = codeocean_utils.get_session_data_assets(self.id)
+            return any(
+                asset
+                for asset in assets
                 if "sorted" in asset.name
                 and asset.files
                 > 6  # number of files produced by sorting pipeline when errorred
