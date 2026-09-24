@@ -1,3 +1,15 @@
+#!/usr/bin/env python
+
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#     "npc-lims[polars]",
+# ]
+#
+# [tool.uv.sources]
+# npc_lims = { git = "https://github.com/AllenInstitute/npc_lims" }
+# ///
+
 from __future__ import annotations
 
 import time
