@@ -8,9 +8,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.198...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.199...HEAD)</small>
+
+### Added
+
+- Add standalone script metadata ([0952ada](https://github.com/AllenInstitute/npc_lims/commit/0952ada5a3fada095ca20ffc1d79e6089d14623b) by bjhardcastle).
+- Add timezone specification to scheduled workflow ([9ce8759](https://github.com/AllenInstitute/npc_lims/commit/9ce8759927db207a51e75ea019cd8687ca3e1e48) by bjhardcastle).
+
+### Fixed
+
+- Fix main raw asset detection for surface recordings ([be577a3](https://github.com/AllenInstitute/npc_lims/commit/be577a36739c2d8fc95e899a0f20e9a62500d3ee) by bjhardcastle).
 
 <!-- insertion marker -->
+## [v0.1.199](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.199) - 2026-09-23
+
+<small>[Compare with v0.1.198](https://github.com/AllenInstitute/npc_lims/compare/v0.1.198...v0.1.199)</small>
+
 ## [v0.1.198](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.198) - 2026-07-31
 
 <small>[Compare with v0.1.197](https://github.com/AllenInstitute/npc_lims/compare/v0.1.197...v0.1.198)</small>

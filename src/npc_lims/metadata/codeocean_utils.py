@@ -382,9 +382,7 @@ def _has_main_recording_data(asset: DataAsset) -> bool:
     if asset.source_bucket is None:
         return False
     root = get_path_from_data_asset(asset)
-    return any(
-        (root / folder).is_dir() for folder in ("behavior", "behavior-videos")
-    )
+    return any((root / folder).is_dir() for folder in ("behavior", "behavior-videos"))
 
 
 def get_surface_channel_root(session: str | npc_session.SessionRecord) -> upath.UPath:
