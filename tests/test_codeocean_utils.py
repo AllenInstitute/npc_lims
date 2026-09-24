@@ -91,6 +91,6 @@ def test_surface_asset_can_be_index_zero_when_main_recording_failed(
     )
 
     assert (
-        codeocean_utils.get_surface_channel_raw_data_asset("840160_2026-04-28")
+        codeocean_utils.get_surface_channel_raw_data_asset("840160_2026-04-28_1")
         is surface_asset
     )

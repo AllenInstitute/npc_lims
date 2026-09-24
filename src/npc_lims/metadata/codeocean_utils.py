@@ -411,6 +411,7 @@ def get_surface_channel_raw_data_asset(
     the second session on the same day (idx=1).
     """
     session = npc_session.SessionRecord(session)
+    session = npc_session.SessionRecord(f"{session.subject}_{session.date}")
     try:
         indexed_session = session.with_idx(1)
         raw_assets = tuple(
