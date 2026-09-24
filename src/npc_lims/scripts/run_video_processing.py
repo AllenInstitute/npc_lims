@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # /// script
-# requires-python = ">=3.11"
+# requires-python = ">=3.9,<3.12"
 # dependencies = [
 #     "npc-lims[polars]",
 # ]
