@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from types import SimpleNamespace
 from typing import NoReturn
 
 import npc_session
@@ -8,6 +9,7 @@ import pytest
 import upath
 
 import npc_lims
+from npc_lims.metadata import codeocean_utils
 from npc_lims.paths import s3
 from npc_lims.scripts.update_session_status import get_status
 
@@ -74,3 +76,25 @@ def test_annotation_lookup_reuses_session_info(
     assert s3.get_tissuecyte_annotation_files_from_s3(session) == (
         upath.UPath(expected),
     )
+
+
+def test_surface_channels_sorted_falls_back_to_index_zero(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    session = npc_lims.SessionInfo(
+        id=npc_session.SessionRecord("123456_2024-01-02"),
+        project="test",
+        is_ephys=True,
+        is_sync=True,
+        allen_path=upath.UPath("s3://test/123456/2024-01-02"),
+    )
+    object.__setattr__(session, "is_surface_channels", True)
+
+    def get_assets(requested: npc_session.SessionRecord) -> tuple[object, ...]:
+        if requested.idx == 1:
+            raise codeocean_utils.SessionIndexError
+        return (SimpleNamespace(name="surface_sorted", files=7),)
+
+    monkeypatch.setattr(codeocean_utils, "get_session_data_assets", get_assets)
+
+    assert session.is_surface_channels_sorted is True
