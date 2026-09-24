@@ -194,9 +194,7 @@ class SessionInfo:
             raise ValueError("No surface channel data for this session")
         try:
             try:
-                assets = codeocean_utils.get_session_data_assets(
-                    self.id.with_idx(1)
-                )
+                assets = codeocean_utils.get_session_data_assets(self.id.with_idx(1))
             except codeocean_utils.SessionIndexError:
                 assets = codeocean_utils.get_session_data_assets(self.id)
             return any(

@@ -8,7 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.199...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.200...HEAD)</small>
+
+<!-- insertion marker -->
+## [v0.1.200](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.200) - 2026-09-24
+
+<small>[Compare with v0.1.199](https://github.com/AllenInstitute/npc_lims/compare/v0.1.199...v0.1.200)</small>
 
 ### Added
 
@@ -19,7 +24,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Fix main raw asset detection for surface recordings ([be577a3](https://github.com/AllenInstitute/npc_lims/commit/be577a36739c2d8fc95e899a0f20e9a62500d3ee) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.199](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.199) - 2026-09-23
 
 <small>[Compare with v0.1.198](https://github.com/AllenInstitute/npc_lims/compare/v0.1.198...v0.1.199)</small>
