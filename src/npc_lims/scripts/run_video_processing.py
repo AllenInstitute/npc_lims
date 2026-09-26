@@ -12,9 +12,9 @@
 
 from __future__ import annotations
 
+import threading
 import time
 from collections.abc import Mapping
-from concurrent.futures import ThreadPoolExecutor
 from typing import Any
 
 try:
@@ -46,7 +46,9 @@ PROCESS_STATUS_COLUMNS = {
     "facemap": "is_facemap",
 }
 MAX_CONCURRENT_SESSIONS = 3
+LAUNCH_PAUSE_SECONDS = 10.0
 POLL_INTERVAL = 60.0
+THREAD_STATUS_CHECK_INTERVAL = 0.1
 
 
 def get_missing_processes(row: Mapping[str, Any]) -> list[str]:
@@ -103,29 +105,95 @@ def process_video_session(raw_data_asset_id: str) -> None:
     wait_for_computation(trigger_video_processing(raw_data_asset_id))
 
 
+def _process_video_session_in_thread(
+    raw_data_asset_id: str,
+    error: list[Exception],
+) -> None:
+    try:
+        process_video_session(raw_data_asset_id)
+    except Exception as exc:
+        error.append(exc)
+
+
+def _start_video_session_thread(
+    raw_data_asset_id: str,
+) -> tuple[threading.Thread, list[Exception]]:
+    error: list[Exception] = []
+    thread = threading.Thread(
+        target=_process_video_session_in_thread,
+        args=(raw_data_asset_id, error),
+    )
+    thread.start()
+    return thread, error
+
+
+def _wait_for_next_launch(last_launch_at: float | None) -> None:
+    if last_launch_at is None:
+        return
+    elapsed = time.monotonic() - last_launch_at
+    if elapsed < LAUNCH_PAUSE_SECONDS:
+        time.sleep(LAUNCH_PAUSE_SECONDS - elapsed)
+
+
+def process_video_sessions(
+    raw_data_asset_ids: list[str],
+    max_concurrent_sessions: int = MAX_CONCURRENT_SESSIONS,
+) -> None:
+    """Run video processing with bounded, explicitly tracked worker threads."""
+    if max_concurrent_sessions < 1:
+        raise ValueError("max_concurrent_sessions must be at least 1")
+
+    active_threads: dict[threading.Thread, list[Exception]] = {}
+    first_error: Exception | None = None
+    next_session_index = 0
+    last_launch_at: float | None = None
+
+    while active_threads or next_session_index < len(raw_data_asset_ids):
+        while (
+            next_session_index < len(raw_data_asset_ids)
+            and len(active_threads) < max_concurrent_sessions
+        ):
+            _wait_for_next_launch(last_launch_at)
+            thread, error = _start_video_session_thread(
+                raw_data_asset_ids[next_session_index]
+            )
+            active_threads[thread] = error
+            next_session_index += 1
+            last_launch_at = time.monotonic()
+
+        completed_threads = []
+        for thread, error in list(active_threads.items()):
+            if not thread.is_alive():
+                thread.join()
+                if error and first_error is None:
+                    first_error = error[0]
+                completed_threads.append(thread)
+
+        for thread in completed_threads:
+            del active_threads[thread]
+
+        if active_threads and not completed_threads:
+            time.sleep(THREAD_STATUS_CHECK_INTERVAL)
+
+    if first_error is not None:
+        raise first_error
+
+
 def main() -> None:
     status = pl.read_csv(STATUS_CSV_URL, null_values=[""])
     video_sessions = status.filter(
         pl.col("is_video") & pl.col("raw_asset_id").is_not_null()
     )
 
-    with ThreadPoolExecutor(max_workers=MAX_CONCURRENT_SESSIONS) as executor:
-        futures = []
-        for row in video_sessions.iter_rows(named=True):
-            raw_data_asset_id = str(row["raw_asset_id"])
-            missing_processes = get_missing_processes(row)
-            if not missing_processes:
-                continue
+    raw_data_asset_ids = []
+    for row in video_sessions.iter_rows(named=True):
+        raw_data_asset_id = str(row["raw_asset_id"])
+        missing_processes = get_missing_processes(row)
+        if not missing_processes:
+            continue
+        raw_data_asset_ids.append(raw_data_asset_id)
 
-            futures.append(
-                executor.submit(
-                    process_video_session,
-                    raw_data_asset_id,
-                )
-            )
-
-        for future in futures:
-            future.result()
+    process_video_sessions(raw_data_asset_ids)
 
 
 if __name__ == "__main__":
