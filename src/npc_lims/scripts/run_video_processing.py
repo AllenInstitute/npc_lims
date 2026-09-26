@@ -47,7 +47,7 @@ PROCESS_STATUS_COLUMNS = {
     "facemap": "is_facemap",
 }
 PROCESS_TYPES = tuple(PROCESS_STATUS_COLUMNS)
-MAX_CONCURRENT_SESSIONS = 3
+MAX_CONCURRENT_JOBS = 3
 LAUNCH_PAUSE_SECONDS = 10.0
 POLL_INTERVAL = 60.0
 THREAD_STATUS_CHECK_INTERVAL = 0.1
@@ -157,12 +157,12 @@ def _wait_for_next_launch(last_launch_at: float | None) -> None:
 
 def process_video_sessions(
     raw_data_asset_ids: list[str],
-    max_concurrent_sessions: int = MAX_CONCURRENT_SESSIONS,
+    max_concurrent_jobs: int = MAX_CONCURRENT_JOBS,
     process_types: Sequence[str] | None = None,
 ) -> None:
     """Run video processing with bounded, explicitly tracked worker threads."""
-    if max_concurrent_sessions < 1:
-        raise ValueError("max_concurrent_sessions must be at least 1")
+    if max_concurrent_jobs < 1:
+        raise ValueError("max_concurrent_jobs must be at least 1")
 
     active_threads: dict[threading.Thread, list[Exception]] = {}
     first_error: Exception | None = None
@@ -172,7 +172,7 @@ def process_video_sessions(
     while active_threads or next_session_index < len(raw_data_asset_ids):
         while (
             next_session_index < len(raw_data_asset_ids)
-            and len(active_threads) < max_concurrent_sessions
+            and len(active_threads) < max_concurrent_jobs
         ):
             _wait_for_next_launch(last_launch_at)
             thread, error = _start_video_session_thread(
@@ -214,12 +214,12 @@ def parse_args() -> argparse.Namespace:
         help="Process type to run; repeat to target multiple types (default: all).",
     )
     parser.add_argument(
-        "--max-concurrent-sessions",
+        "--max-concurrent-jobs",
         type=int,
-        default=MAX_CONCURRENT_SESSIONS,
+        default=MAX_CONCURRENT_JOBS,
         help=(
-            "Maximum number of sessions to process concurrently "
-            f"(default: {MAX_CONCURRENT_SESSIONS})."
+            "Maximum number of jobs to process concurrently "
+            f"(default: {MAX_CONCURRENT_JOBS})."
         ),
     )
     return parser.parse_args()
@@ -242,7 +242,7 @@ def main() -> None:
 
     process_video_sessions(
         raw_data_asset_ids,
-        max_concurrent_sessions=args.max_concurrent_sessions,
+        max_concurrent_jobs=args.max_concurrent_jobs,
         process_types=args.process_types,
     )
 
