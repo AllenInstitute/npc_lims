@@ -1,261 +1,184 @@
+#!/usr/bin/env python
+
+# /// script
+# requires-python = ">=3.9,<3.12"
+# dependencies = [
+#     "npc-lims[polars]",
+# ]
+#
+# [tool.uv.sources]
+# npc_lims = { git = "https://github.com/AllenInstitute/npc_lims" }
+# ///
+
 from __future__ import annotations
 
-import concurrent.futures
-import datetime
-import functools
-import json
-import logging
+import argparse
+import threading
 import time
-from typing import Union
 
-import npc_session
-import upath
-from codeocean.computation import Computation, ComputationState, RunParams
-from codeocean.data_asset import ComputationSource, DataAsset, DataAssetParams, Source
-from typing_extensions import TypeAlias
+try:
+    import polars as pl
+except ImportError:
+    raise ImportError(
+        "polars is required: run `pip install npc_lims[polars]`"
+    ) from None
+
+from codeocean.computation import (
+    Computation,
+    ComputationEndStatus,
+    ComputationState,
+    RunParams,
+)
+from codeocean.data_asset import DataAsset
 
 import npc_lims
 
-logger = logging.getLogger()
-
-SessionID: TypeAlias = Union[str, npc_session.SessionRecord]
-
-
-JobID: TypeAlias = str
-
-SORTING_PIPELINE_ID = "1f8f159a-7670-47a9-baf1-078905fc9c2e"
-JSON_PATH = upath.UPath("sorting_jobs.json")
-MAX_RUNNING_JOBS = 4
-
-EXAMPLE_JOB_STATUS = {
-    "created": 1708570920,
-    "has_results": True,
-    "id": "eadd2f5e-6f3b-4179-8788-5d6e798b1f92",
-    "name": "Run 8570920",
-    "run_time": 92774,
-    "state": "completed",
-    "end_status": "succeeded",
-}
+SPIKE_SORTING_PIPELINE_ID = "1f8f159a-7670-47a9-baf1-078905fc9c2e"
+STATUS_CSV_URL = (
+    "https://raw.githubusercontent.com/AllenInstitute/npc_lims/main/tables/status.csv"
+)
+MAX_CONCURRENT_ASSETS = 3
+LAUNCH_PAUSE_SECONDS = 10.0
+POLL_INTERVAL = 60.0
+THREAD_STATUS_CHECK_INTERVAL = 0.1
 
 
-def get_run_sorting_request(session_id: SessionID) -> RunParams:
+def get_unsorted_asset_ids(status: pl.DataFrame) -> list[str]:
+    """Return uploaded main and surface assets that have not been sorted."""
+    asset_ids: list[str] = []
+    for row in status.iter_rows(named=True):
+        if row.get("is_uploaded") is not True:
+            continue
+
+        raw_asset_id = row.get("raw_asset_id")
+        if raw_asset_id and row.get("is_sorted") is not True:
+            asset_ids.append(str(raw_asset_id))
+
+        surface_asset_id = row.get("surface_channels_asset_id")
+        if surface_asset_id and row.get("is_surface_channels_sorted") is not True:
+            asset_ids.append(str(surface_asset_id))
+
+    return asset_ids
+
+
+def get_run_params(raw_data_asset_id: str) -> RunParams:
     return RunParams(
-        pipeline_id=SORTING_PIPELINE_ID,
-        data_assets=[
-            DataAsset(
-                id=npc_lims.get_session_raw_data_asset(session_id).id,
-                mount="ecephys",
-            ),
-        ],
+        pipeline_id=SPIKE_SORTING_PIPELINE_ID,
+        data_assets=[DataAsset(id=raw_data_asset_id, mount="ecephys")],
     )
 
 
-def read_json() -> dict[str, Computation | None]:
-    return npc_lims.read_computation_queue(JSON_PATH)
+def trigger_spike_sorting(raw_data_asset_id: str) -> Computation:
+    """Start spike sorting for one raw data asset."""
+    return npc_lims.get_codeocean_client().computations.run_capsule(
+        get_run_params(raw_data_asset_id)
+    )
 
 
-def add_to_json(
-    session_id: SessionID,
-    computation: Computation | None,
+def wait_for_computation(computation: Computation) -> None:
+    """Poll a computation until it succeeds or fails."""
+    client = npc_lims.get_codeocean_client()
+    while True:
+        status = client.computations.get_computation(computation.id)
+        if status.state == ComputationState.Failed or getattr(
+            status, "end_status", None
+        ) in (ComputationEndStatus.Failed, ComputationEndStatus.Stopped):
+            raise RuntimeError(f"Computation failed: {computation.id}")
+        if status.state == ComputationState.Completed:
+            if npc_lims.is_computation_errored(status):
+                raise RuntimeError(f"Computation failed: {computation.id}")
+            return
+        time.sleep(POLL_INTERVAL)
+
+
+def process_asset(raw_data_asset_id: str) -> None:
+    print(f"Launching spike sorting for {raw_data_asset_id}")
+    wait_for_computation(trigger_spike_sorting(raw_data_asset_id))
+
+
+def _process_asset_in_thread(
+    raw_data_asset_id: str, error: list[Exception]
 ) -> None:
-    return npc_lims.add_to_computation_queue(JSON_PATH, session_id, computation)
-
-
-def is_in_json(session_id: SessionID) -> bool:
-    if not JSON_PATH.exists():
-        return False
-    return session_id in read_json()
-
-
-def is_started(session_id: SessionID) -> bool:
-    return is_in_json(session_id)
-
-
-def is_bad_docker_run(session_id: SessionID) -> bool:
-    session_id = npc_session.SessionRecord(session_id).id
-    queue = read_json()
-    if session_id not in queue:
-        raise ValueError(f"{session_id} not in queue")
-
-    queued = queue[session_id]
-    if queued is None:
-        raise ValueError(f"{session_id} has no queued job")
-
-    dt = datetime.datetime.fromtimestamp(queued.created)
-    return datetime.datetime(2024, 3, 12) <= dt < datetime.datetime(2024, 3, 20)
-
-
-def has_bad_docker_asset(session_id: SessionID) -> bool:
     try:
-        sorted_asset = npc_lims.get_session_sorted_data_asset(session_id)
-    except ValueError:
-        return False
-    dt: datetime.date = npc_session.DateRecord(
-        sorted_asset.name.split("sorted_")[-1]
-    ).dt
-    return datetime.date(2024, 3, 12) <= dt < datetime.date(2024, 3, 20)
+        process_asset(raw_data_asset_id)
+    except Exception as exc:
+        error.append(exc)
 
 
-@functools.lru_cache(maxsize=1)
-def get_current_job_status(
-    job_or_session_id: str,
-) -> Computation | None:
-    """
-    >>> status = get_current_job_status("633d9d0d-511a-4601-884c-5a7f4a63365f")
-    """
-    return npc_lims.get_current_queue_computation(
-        JSON_PATH,
-        job_or_session_id,
-    )
-
-
-def sync_json() -> None:
-    current = read_json()
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        session_to_future = {
-            session_id: executor.submit(get_current_job_status, session_id)
-            for session_id in current
-        }
-    for session_id, future in session_to_future.items():
-        current[session_id] = npc_lims.serialize_computation(future.result())
-        logger.info(f"Updated {session_id} status")
-
-    JSON_PATH.write_text(json.dumps(current, indent=4))
-    logger.info("Wrote updated json")
-
-
-def sync_and_get_num_running_jobs() -> int:
-    sync_json()
-    return sum(
-        1
-        for job in read_json().values()
-        if job
-        and job.state in (ComputationState.Running, ComputationState.Initializing)
-    )
-
-
-def start(session_id: SessionID) -> None:
-    computation = npc_lims.get_codeocean_client().computations.run_capsule(
-        get_run_sorting_request(session_id)
-    )
-    logger.info(f"Started job for {session_id}")
-    add_to_json(
-        session_id,
-        computation,
-    )
-
-
-def get_create_data_asset_request(session_id: SessionID) -> DataAssetParams:
-    computation = get_current_job_status(session_id)
-    if computation is None:
-        raise ValueError(f"No computation found for {session_id}")
-
-    session = npc_session.SessionRecord(session_id)
-    asset_name = get_data_asset_name(session_id)
-    return DataAssetParams(
-        name=asset_name,
-        mount=asset_name,
-        source=Source(
-            computation=ComputationSource(
-                id=computation.id,
-            )
-        ),
-        tags=[str(session.subject), "derived", "ephys", "results"],
-        custom_metadata={
-            "data level": "derived data",
-            "experiment type": "ecephys",
-            "modality": "Extracellular electrophysiology",
-            "subject id": str(session.subject),
-        },
-    )
-
-
-def get_data_asset_name(session_id: SessionID) -> str:
-    computation = get_current_job_status(session_id)
-    if computation is None:
-        raise ValueError(f"No computation found for {session_id}")
-    created_dt = (
-        npc_session.DatetimeRecord(datetime.datetime.fromtimestamp(computation.created))
-        .replace(" ", "_")
-        .replace(":", "-")
-    )
-    return f"{npc_lims.get_raw_data_root(session_id).name}_sorted_{created_dt}"
-
-
-def create_data_asset(session_id: SessionID) -> None:
-    asset = npc_lims.get_codeocean_client().data_assets.create_data_asset(
-        get_create_data_asset_request(session_id)
-    )
-    while not asset_exists(session_id):
-        time.sleep(10)
-    logger.info(f"Created data asset for {session_id}")
-    npc_lims.set_asset_viewable_for_everyone(asset.id)
-
-
-def asset_exists(session_id: SessionID) -> bool:
-    name = get_data_asset_name(session_id)
-    return any(
-        asset.name == name for asset in npc_lims.get_session_data_assets(session_id)
-    )
-
-
-def create_all_data_assets() -> None:
-    sync_json()
-    for session_id in read_json():
-        job_status = get_current_job_status(session_id)
-        if npc_lims.is_computation_errored(
-            job_status
-        ) or not npc_lims.is_computation_finished(job_status):
-            continue
-        if asset_exists(session_id):
-            continue
-        create_data_asset(session_id)
-
-
-def main(
-    rerun_errored_jobs: bool = False,
-    reverse: bool = False,
+def process_assets(
+    raw_data_asset_ids: list[str],
+    max_concurrent_assets: int = MAX_CONCURRENT_ASSETS,
 ) -> None:
-    sessions = npc_lims.get_session_info(is_ephys=True, is_uploaded=True)
-    if reverse:
-        sessions = tuple(reversed(sessions))
-    for session_info in sessions:
-        session_ids = [session_info.id]
-        if session_info.is_surface_channels:
-            session_ids.append(session_info.id.with_idx(1))
+    """Run spike sorting with bounded concurrency."""
+    if max_concurrent_assets < 1:
+        raise ValueError("max_concurrent_assets must be at least 1")
 
-        for session_id in session_ids:
-            is_skippable = (
-                is_started(session_id)
-                and not is_bad_docker_run(session_id)
-                and not has_bad_docker_asset(session_id)
+    active_threads: dict[threading.Thread, list[Exception]] = {}
+    first_error: Exception | None = None
+    next_asset_index = 0
+    last_launch_at: float | None = None
+
+    while active_threads or next_asset_index < len(raw_data_asset_ids):
+        while (
+            next_asset_index < len(raw_data_asset_ids)
+            and len(active_threads) < max_concurrent_assets
+        ):
+            if last_launch_at is not None:
+                elapsed = time.monotonic() - last_launch_at
+                if elapsed < LAUNCH_PAUSE_SECONDS:
+                    time.sleep(LAUNCH_PAUSE_SECONDS - elapsed)
+
+            error: list[Exception] = []
+            thread = threading.Thread(
+                target=_process_asset_in_thread,
+                args=(raw_data_asset_ids[next_asset_index], error),
             )
-            if is_skippable:
-                logger.debug(f"Already started: {session_id}")
+            thread.start()
+            active_threads[thread] = error
+            next_asset_index += 1
+            last_launch_at = time.monotonic()
 
-                if not rerun_errored_jobs:
-                    continue
-                if not npc_lims.is_computation_errored(
-                    get_current_job_status(session_id)
-                ):
-                    continue
+        completed_threads = []
+        for thread, error in list(active_threads.items()):
+            if not thread.is_alive():
+                thread.join()
+                if error and first_error is None:
+                    first_error = error[0]
+                completed_threads.append(thread)
 
-            # to avoid overloading CodeOcean
-            while sync_and_get_num_running_jobs() >= MAX_RUNNING_JOBS:
-                time.sleep(600)
-            start(session_id)
+        for thread in completed_threads:
+            del active_threads[thread]
 
-    while sync_and_get_num_running_jobs() > 0:
-        time.sleep(600)
-    create_all_data_assets()
+        if active_threads and not completed_threads:
+            time.sleep(THREAD_STATUS_CHECK_INTERVAL)
+
+    if first_error is not None:
+        raise first_error
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Run spike sorting for unsorted uploaded assets."
+    )
+    parser.add_argument(
+        "--max-concurrent-assets",
+        type=int,
+        default=MAX_CONCURRENT_ASSETS,
+        help=(
+            "Maximum number of assets to sort concurrently "
+            f"(default: {MAX_CONCURRENT_ASSETS})."
+        ),
+    )
+    return parser.parse_args()
+
+
+def main() -> None:
+    args = parse_args()
+    status = pl.read_csv(STATUS_CSV_URL, null_values=[""])
+    asset_ids = get_unsorted_asset_ids(status)
+    print(f"Found {len(asset_ids)} unsorted assets")
+    process_assets(asset_ids, args.max_concurrent_assets)
 
 
 if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod(raise_on_error=True)
-    # logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
-    # sync_json()
-    # main(rerun_errored_jobs=True, reverse=False)
-    # create_all_data_assets()
-    # sync_json()
+    main()
