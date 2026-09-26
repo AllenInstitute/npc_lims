@@ -14,7 +14,8 @@
 
 from __future__ import annotations
 
-import concurrent.futures as cf
+import threading
+import time
 from pathlib import Path
 from typing import Any
 
@@ -29,6 +30,11 @@ except ImportError:
     raise ImportError(
         "polars is required: run `pip install npc_lims[polars]`"
     ) from None
+
+
+MAX_CONCURRENT_SESSIONS = 3
+LAUNCH_PAUSE_SECONDS = 10.0
+THREAD_STATUS_CHECK_INTERVAL = 0.1
 
 
 class Settings(BaseSettings):
@@ -79,6 +85,96 @@ def get_status(session: str | npc_lims.SessionInfo) -> dict[str, Any]:
     }
 
 
+def _get_status_in_thread(
+    session: npc_lims.SessionInfo,
+    result: list[dict[str, Any]],
+    error: list[Exception],
+) -> None:
+    try:
+        result.append(get_status(session))
+    except Exception as exc:
+        error.append(exc)
+
+
+def _start_status_thread(
+    session: npc_lims.SessionInfo,
+) -> tuple[
+    threading.Thread,
+    list[dict[str, Any]],
+    list[Exception],
+]:
+    result: list[dict[str, Any]] = []
+    error: list[Exception] = []
+    thread = threading.Thread(
+        target=_get_status_in_thread,
+        args=(session, result, error),
+    )
+    thread.start()
+    return thread, result, error
+
+
+def _wait_for_next_launch(last_launch_at: float | None) -> None:
+    if last_launch_at is None:
+        return
+    elapsed = time.monotonic() - last_launch_at
+    if elapsed < LAUNCH_PAUSE_SECONDS:
+        time.sleep(LAUNCH_PAUSE_SECONDS - elapsed)
+
+
+def get_session_statuses(
+    sessions: list[npc_lims.SessionInfo],
+    max_concurrent_sessions: int = MAX_CONCURRENT_SESSIONS,
+) -> list[dict[str, Any]]:
+    """Fetch session statuses with a bounded number of worker threads."""
+    if max_concurrent_sessions < 1:
+        raise ValueError("max_concurrent_sessions must be at least 1")
+
+    active_threads: dict[
+        threading.Thread, tuple[list[dict[str, Any]], list[Exception]]
+    ] = {}
+    results: list[dict[str, Any]] = []
+    first_error: Exception | None = None
+    next_session_index = 0
+    last_launch_at: float | None = None
+
+    with tqdm(
+        total=len(sessions),
+        desc="Fetching session status",
+    ) as progress:
+        while active_threads or next_session_index < len(sessions):
+            while (
+                next_session_index < len(sessions)
+                and len(active_threads) < max_concurrent_sessions
+            ):
+                _wait_for_next_launch(last_launch_at)
+                thread, result, error = _start_status_thread(
+                    sessions[next_session_index]
+                )
+                active_threads[thread] = (result, error)
+                next_session_index += 1
+                last_launch_at = time.monotonic()
+
+            completed_threads = []
+            for thread, (result, error) in list(active_threads.items()):
+                if not thread.is_alive():
+                    thread.join()
+                    results.extend(result)
+                    if error and first_error is None:
+                        first_error = error[0]
+                    completed_threads.append(thread)
+                    progress.update()
+
+            for thread in completed_threads:
+                del active_threads[thread]
+
+            if active_threads and not completed_threads:
+                time.sleep(THREAD_STATUS_CHECK_INTERVAL)
+
+    if first_error is not None:
+        raise first_error
+    return results
+
+
 def main() -> None:
     settings = Settings()
 
@@ -89,16 +185,7 @@ def main() -> None:
 
     print("Fetching current information for session in tracking system...")
     sessions = list(npc_lims.get_session_info(is_ephys=True))
-    with cf.ThreadPoolExecutor() as executor:
-        futures = [executor.submit(get_status, session) for session in sessions]
-        results = [
-            future.result()
-            for future in tqdm(
-                cf.as_completed(futures),
-                total=len(futures),
-                desc="Fetching session status",
-            )
-        ]
+    results = get_session_statuses(sessions)
     path = npc_lims.S3_SCRATCH_ROOT / "status" / "status.parquet"
     df = pl.DataFrame(results).sort("date", descending=True)
     print("Dataframe with rows:", len(df))
