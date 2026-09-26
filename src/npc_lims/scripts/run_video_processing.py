@@ -13,7 +13,6 @@
 from __future__ import annotations
 
 import argparse
-import threading
 import time
 from collections.abc import Mapping, Sequence
 from typing import Any
@@ -50,7 +49,6 @@ PROCESS_TYPES = tuple(PROCESS_STATUS_COLUMNS)
 MAX_CONCURRENT_JOBS = 3
 LAUNCH_PAUSE_SECONDS = 10.0
 POLL_INTERVAL = 60.0
-THREAD_STATUS_CHECK_INTERVAL = 0.1
 
 
 def get_missing_processes(
@@ -94,19 +92,54 @@ def trigger_video_processing(
     )
 
 
+def _get_process_label(process_types: Sequence[str] | None) -> str:
+    return (
+        "all video processing"
+        if process_types is None
+        else ", ".join(process_types)
+    )
+
+
+def launch_video_session(
+    raw_data_asset_id: str, process_types: Sequence[str] | None = None
+) -> Computation:
+    """Launch processing synchronously so API errors surface immediately."""
+    process_label = _get_process_label(process_types)
+    print(f"Requesting {process_label} for {raw_data_asset_id}...", flush=True)
+    try:
+        computation = trigger_video_processing(raw_data_asset_id, process_types)
+    except Exception as exc:
+        raise RuntimeError(
+            f"Could not launch {process_label} for {raw_data_asset_id}"
+        ) from exc
+
+    print(
+        f"Launched {process_label} for {raw_data_asset_id} "
+        f"(computation {computation.id})",
+        flush=True,
+    )
+    return computation
+
+
+def is_computation_complete(computation: Computation) -> bool:
+    """Poll once, raising on failure and returning whether the job is complete."""
+    status = npc_lims.get_codeocean_client().computations.get_computation(
+        computation.id
+    )
+    if status.state == ComputationState.Failed or getattr(
+        status, "end_status", None
+    ) in (ComputationEndStatus.Failed, ComputationEndStatus.Stopped):
+        raise RuntimeError(f"Computation failed: {computation.id}")
+    if status.state == ComputationState.Completed:
+        if npc_lims.is_computation_errored(status):
+            raise RuntimeError(f"Computation failed: {computation.id}")
+        return True
+    return False
+
+
 def wait_for_computation(computation: Computation) -> None:
     """Poll one dispatcher computation until it succeeds or fails."""
-    client = npc_lims.get_codeocean_client()
-    while True:
-        status = client.computations.get_computation(computation.id)
-        if status.state == ComputationState.Failed or getattr(
-            status, "end_status", None
-        ) in (ComputationEndStatus.Failed, ComputationEndStatus.Stopped):
-            raise RuntimeError(f"Computation failed: {computation.id}")
-        if status.state == ComputationState.Completed:
-            if npc_lims.is_computation_errored(status):
-                raise RuntimeError(f"Computation failed: {computation.id}")
-            return
+    while not is_computation_complete(computation):
         time.sleep(POLL_INTERVAL)
 
 
@@ -114,37 +147,14 @@ def process_video_session(
     raw_data_asset_id: str, process_types: Sequence[str] | None = None
 ) -> None:
     """Run and poll the full video-processing pipeline for one session."""
-    process_label = (
-        "all video processing"
-        if process_types is None
-        else ", ".join(process_types)
-    )
-    print(f"Launching {process_label} for {raw_data_asset_id}")
-    wait_for_computation(trigger_video_processing(raw_data_asset_id, process_types))
-
-
-def _process_video_session_in_thread(
-    raw_data_asset_id: str,
-    error: list[Exception],
-    process_types: Sequence[str] | None,
-) -> None:
+    computation = launch_video_session(raw_data_asset_id, process_types)
     try:
-        process_video_session(raw_data_asset_id, process_types)
+        wait_for_computation(computation)
     except Exception as exc:
-        error.append(exc)
-
-
-def _start_video_session_thread(
-    raw_data_asset_id: str,
-    process_types: Sequence[str] | None,
-) -> tuple[threading.Thread, list[Exception]]:
-    error: list[Exception] = []
-    thread = threading.Thread(
-        target=_process_video_session_in_thread,
-        args=(raw_data_asset_id, error, process_types),
-    )
-    thread.start()
-    return thread, error
+        raise RuntimeError(
+            f"Video processing failed for {raw_data_asset_id} "
+            f"(computation {computation.id})"
+        ) from exc
 
 
 def _wait_for_next_launch(last_launch_at: float | None) -> None:
@@ -152,7 +162,9 @@ def _wait_for_next_launch(last_launch_at: float | None) -> None:
         return
     elapsed = time.monotonic() - last_launch_at
     if elapsed < LAUNCH_PAUSE_SECONDS:
-        time.sleep(LAUNCH_PAUSE_SECONDS - elapsed)
+        remaining = LAUNCH_PAUSE_SECONDS - elapsed
+        print(f"Waiting {remaining:.1f}s before next launch...", flush=True)
+        time.sleep(remaining)
 
 
 def process_video_sessions(
@@ -160,44 +172,56 @@ def process_video_sessions(
     max_concurrent_jobs: int = MAX_CONCURRENT_JOBS,
     process_types: Sequence[str] | None = None,
 ) -> None:
-    """Run video processing with bounded, explicitly tracked worker threads."""
+    """Launch and poll video processing with bounded remote concurrency."""
     if max_concurrent_jobs < 1:
         raise ValueError("max_concurrent_jobs must be at least 1")
 
-    active_threads: dict[threading.Thread, list[Exception]] = {}
-    first_error: Exception | None = None
+    active_computations: dict[str, tuple[Computation, str]] = {}
     next_session_index = 0
     last_launch_at: float | None = None
 
-    while active_threads or next_session_index < len(raw_data_asset_ids):
+    while active_computations or next_session_index < len(raw_data_asset_ids):
         while (
             next_session_index < len(raw_data_asset_ids)
-            and len(active_threads) < max_concurrent_jobs
+            and len(active_computations) < max_concurrent_jobs
         ):
             _wait_for_next_launch(last_launch_at)
-            thread, error = _start_video_session_thread(
-                raw_data_asset_ids[next_session_index], process_types
+            raw_data_asset_id = raw_data_asset_ids[next_session_index]
+            computation = launch_video_session(
+                raw_data_asset_id, process_types
             )
-            active_threads[thread] = error
+            active_computations[computation.id] = (
+                computation,
+                raw_data_asset_id,
+            )
             next_session_index += 1
             last_launch_at = time.monotonic()
 
-        completed_threads = []
-        for thread, error in list(active_threads.items()):
-            if not thread.is_alive():
-                thread.join()
-                if error and first_error is None:
-                    first_error = error[0]
-                completed_threads.append(thread)
+        completed_ids: list[str] = []
+        for computation_id, (
+            computation,
+            raw_data_asset_id,
+        ) in active_computations.items():
+            try:
+                is_complete = is_computation_complete(computation)
+            except Exception as exc:
+                raise RuntimeError(
+                    f"Video processing failed for {raw_data_asset_id} "
+                    f"(computation {computation_id})"
+                ) from exc
+            if is_complete:
+                print(
+                    f"Completed video processing for {raw_data_asset_id} "
+                    f"(computation {computation_id})",
+                    flush=True,
+                )
+                completed_ids.append(computation_id)
 
-        for thread in completed_threads:
-            del active_threads[thread]
+        for computation_id in completed_ids:
+            del active_computations[computation_id]
 
-        if active_threads and not completed_threads:
-            time.sleep(THREAD_STATUS_CHECK_INTERVAL)
-
-    if first_error is not None:
-        raise first_error
+        if active_computations and not completed_ids:
+            time.sleep(POLL_INTERVAL)
 
 
 def parse_args() -> argparse.Namespace:
@@ -239,6 +263,16 @@ def main() -> None:
         if not missing_processes:
             continue
         raw_data_asset_ids.append(raw_data_asset_id)
+
+    process_label = (
+        "all video processing"
+        if args.process_types is None
+        else ", ".join(args.process_types)
+    )
+    print(
+        f"Found {len(raw_data_asset_ids)} sessions needing {process_label}",
+        flush=True,
+    )
 
     process_video_sessions(
         raw_data_asset_ids,

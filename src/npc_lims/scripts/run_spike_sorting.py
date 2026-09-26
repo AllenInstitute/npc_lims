@@ -13,7 +13,6 @@
 from __future__ import annotations
 
 import argparse
-import threading
 import time
 
 try:
@@ -40,7 +39,6 @@ STATUS_CSV_URL = (
 MAX_CONCURRENT_JOBS = 3
 LAUNCH_PAUSE_SECONDS = 10.0
 POLL_INTERVAL = 60.0
-THREAD_STATUS_CHECK_INTERVAL = 0.1
 
 
 def get_unsorted_asset_ids(status: pl.DataFrame) -> list[str]:
@@ -75,85 +73,119 @@ def trigger_spike_sorting(raw_data_asset_id: str) -> Computation:
     )
 
 
+def launch_spike_sorting(raw_data_asset_id: str) -> Computation:
+    """Launch spike sorting synchronously so API errors surface immediately."""
+    print(f"Requesting spike sorting for {raw_data_asset_id}...", flush=True)
+    try:
+        computation = trigger_spike_sorting(raw_data_asset_id)
+    except Exception as exc:
+        raise RuntimeError(
+            f"Could not launch spike sorting for {raw_data_asset_id}"
+        ) from exc
+
+    print(
+        f"Launched spike sorting for {raw_data_asset_id} "
+        f"(computation {computation.id})",
+        flush=True,
+    )
+    return computation
+
+
+def is_computation_complete(computation: Computation) -> bool:
+    """Poll once, raising on failure and returning whether the job is complete."""
+    status = npc_lims.get_codeocean_client().computations.get_computation(
+        computation.id
+    )
+    if status.state == ComputationState.Failed or getattr(
+        status, "end_status", None
+    ) in (ComputationEndStatus.Failed, ComputationEndStatus.Stopped):
+        raise RuntimeError(f"Computation failed: {computation.id}")
+    if status.state == ComputationState.Completed:
+        if npc_lims.is_computation_errored(status):
+            raise RuntimeError(f"Computation failed: {computation.id}")
+        return True
+    return False
+
+
 def wait_for_computation(computation: Computation) -> None:
     """Poll a computation until it succeeds or fails."""
-    client = npc_lims.get_codeocean_client()
-    while True:
-        status = client.computations.get_computation(computation.id)
-        if status.state == ComputationState.Failed or getattr(
-            status, "end_status", None
-        ) in (ComputationEndStatus.Failed, ComputationEndStatus.Stopped):
-            raise RuntimeError(f"Computation failed: {computation.id}")
-        if status.state == ComputationState.Completed:
-            if npc_lims.is_computation_errored(status):
-                raise RuntimeError(f"Computation failed: {computation.id}")
-            return
+    while not is_computation_complete(computation):
         time.sleep(POLL_INTERVAL)
 
 
 def process_asset(raw_data_asset_id: str) -> None:
-    print(f"Launching spike sorting for {raw_data_asset_id}")
-    wait_for_computation(trigger_spike_sorting(raw_data_asset_id))
-
-
-def _process_asset_in_thread(
-    raw_data_asset_id: str, error: list[Exception]
-) -> None:
+    computation = launch_spike_sorting(raw_data_asset_id)
     try:
-        process_asset(raw_data_asset_id)
+        wait_for_computation(computation)
     except Exception as exc:
-        error.append(exc)
+        raise RuntimeError(
+            f"Spike sorting failed for {raw_data_asset_id} "
+            f"(computation {computation.id})"
+        ) from exc
+
+
+def _wait_for_next_launch(last_launch_at: float | None) -> None:
+    if last_launch_at is None:
+        return
+    elapsed = time.monotonic() - last_launch_at
+    if elapsed < LAUNCH_PAUSE_SECONDS:
+        remaining = LAUNCH_PAUSE_SECONDS - elapsed
+        print(f"Waiting {remaining:.1f}s before next launch...", flush=True)
+        time.sleep(remaining)
 
 
 def process_assets(
     raw_data_asset_ids: list[str],
     max_concurrent_jobs: int = MAX_CONCURRENT_JOBS,
 ) -> None:
-    """Run spike sorting with bounded concurrency."""
+    """Launch and poll spike sorting with bounded remote concurrency."""
     if max_concurrent_jobs < 1:
         raise ValueError("max_concurrent_jobs must be at least 1")
 
-    active_threads: dict[threading.Thread, list[Exception]] = {}
-    first_error: Exception | None = None
+    active_computations: dict[str, tuple[Computation, str]] = {}
     next_asset_index = 0
     last_launch_at: float | None = None
 
-    while active_threads or next_asset_index < len(raw_data_asset_ids):
+    while active_computations or next_asset_index < len(raw_data_asset_ids):
         while (
             next_asset_index < len(raw_data_asset_ids)
-            and len(active_threads) < max_concurrent_jobs
+            and len(active_computations) < max_concurrent_jobs
         ):
-            if last_launch_at is not None:
-                elapsed = time.monotonic() - last_launch_at
-                if elapsed < LAUNCH_PAUSE_SECONDS:
-                    time.sleep(LAUNCH_PAUSE_SECONDS - elapsed)
-
-            error: list[Exception] = []
-            thread = threading.Thread(
-                target=_process_asset_in_thread,
-                args=(raw_data_asset_ids[next_asset_index], error),
+            _wait_for_next_launch(last_launch_at)
+            raw_data_asset_id = raw_data_asset_ids[next_asset_index]
+            computation = launch_spike_sorting(raw_data_asset_id)
+            active_computations[computation.id] = (
+                computation,
+                raw_data_asset_id,
             )
-            thread.start()
-            active_threads[thread] = error
             next_asset_index += 1
             last_launch_at = time.monotonic()
 
-        completed_threads = []
-        for thread, error in list(active_threads.items()):
-            if not thread.is_alive():
-                thread.join()
-                if error and first_error is None:
-                    first_error = error[0]
-                completed_threads.append(thread)
+        completed_ids: list[str] = []
+        for computation_id, (
+            computation,
+            raw_data_asset_id,
+        ) in active_computations.items():
+            try:
+                is_complete = is_computation_complete(computation)
+            except Exception as exc:
+                raise RuntimeError(
+                    f"Spike sorting failed for {raw_data_asset_id} "
+                    f"(computation {computation_id})"
+                ) from exc
+            if is_complete:
+                print(
+                    f"Completed spike sorting for {raw_data_asset_id} "
+                    f"(computation {computation_id})",
+                    flush=True,
+                )
+                completed_ids.append(computation_id)
 
-        for thread in completed_threads:
-            del active_threads[thread]
+        for computation_id in completed_ids:
+            del active_computations[computation_id]
 
-        if active_threads and not completed_threads:
-            time.sleep(THREAD_STATUS_CHECK_INTERVAL)
-
-    if first_error is not None:
-        raise first_error
+        if active_computations and not completed_ids:
+            time.sleep(POLL_INTERVAL)
 
 
 def parse_args() -> argparse.Namespace:
