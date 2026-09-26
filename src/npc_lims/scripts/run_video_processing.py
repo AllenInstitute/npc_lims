@@ -12,9 +12,10 @@
 
 from __future__ import annotations
 
+import argparse
 import threading
 import time
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from typing import Any
 
 try:
@@ -45,28 +46,36 @@ PROCESS_STATUS_COLUMNS = {
     "dlc_eye": "is_dlc_eye",
     "facemap": "is_facemap",
 }
+PROCESS_TYPES = tuple(PROCESS_STATUS_COLUMNS)
 MAX_CONCURRENT_SESSIONS = 3
 LAUNCH_PAUSE_SECONDS = 10.0
 POLL_INTERVAL = 60.0
 THREAD_STATUS_CHECK_INTERVAL = 0.1
 
 
-def get_missing_processes(row: Mapping[str, Any]) -> list[str]:
+def get_missing_processes(
+    row: Mapping[str, Any], process_types: Sequence[str] | None = None
+) -> list[str]:
     """Return video processes whose status is false or unavailable."""
+    process_types = PROCESS_TYPES if process_types is None else process_types
     return [
         process_name
-        for process_name, status_column in PROCESS_STATUS_COLUMNS.items()
-        if row.get(status_column) is not True
+        for process_name in process_types
+        if row.get(PROCESS_STATUS_COLUMNS[process_name]) is not True
     ]
 
 
-def get_run_params(raw_data_asset_id: str) -> RunParams:
+def get_run_params(
+    raw_data_asset_id: str, process_types: Sequence[str] | None = None
+) -> RunParams:
     """Create the argparse-style parameters expected by the dispatcher capsule."""
     parameters = {
         "raw_data_asset_id": raw_data_asset_id,
         "dry_run": "0",
         "skip_existing": "1",
     }
+    if process_types is not None:
+        parameters["processes"] = ",".join(process_types)
 
     return RunParams(
         capsule_id=VIDEO_PROCESSING_CAPSULE_ID,
@@ -76,10 +85,12 @@ def get_run_params(raw_data_asset_id: str) -> RunParams:
     )
 
 
-def trigger_video_processing(raw_data_asset_id: str) -> Computation:
+def trigger_video_processing(
+    raw_data_asset_id: str, process_types: Sequence[str] | None = None
+) -> Computation:
     """Trigger a dispatcher computation without waiting for it to finish."""
     return npc_lims.get_codeocean_client().computations.run_capsule(
-        get_run_params(raw_data_asset_id)
+        get_run_params(raw_data_asset_id, process_types)
     )
 
 
@@ -99,29 +110,38 @@ def wait_for_computation(computation: Computation) -> None:
         time.sleep(POLL_INTERVAL)
 
 
-def process_video_session(raw_data_asset_id: str) -> None:
+def process_video_session(
+    raw_data_asset_id: str, process_types: Sequence[str] | None = None
+) -> None:
     """Run and poll the full video-processing pipeline for one session."""
-    print(f"Launching all video processing for {raw_data_asset_id}")
-    wait_for_computation(trigger_video_processing(raw_data_asset_id))
+    process_label = (
+        "all video processing"
+        if process_types is None
+        else ", ".join(process_types)
+    )
+    print(f"Launching {process_label} for {raw_data_asset_id}")
+    wait_for_computation(trigger_video_processing(raw_data_asset_id, process_types))
 
 
 def _process_video_session_in_thread(
     raw_data_asset_id: str,
     error: list[Exception],
+    process_types: Sequence[str] | None,
 ) -> None:
     try:
-        process_video_session(raw_data_asset_id)
+        process_video_session(raw_data_asset_id, process_types)
     except Exception as exc:
         error.append(exc)
 
 
 def _start_video_session_thread(
     raw_data_asset_id: str,
+    process_types: Sequence[str] | None,
 ) -> tuple[threading.Thread, list[Exception]]:
     error: list[Exception] = []
     thread = threading.Thread(
         target=_process_video_session_in_thread,
-        args=(raw_data_asset_id, error),
+        args=(raw_data_asset_id, error, process_types),
     )
     thread.start()
     return thread, error
@@ -138,6 +158,7 @@ def _wait_for_next_launch(last_launch_at: float | None) -> None:
 def process_video_sessions(
     raw_data_asset_ids: list[str],
     max_concurrent_sessions: int = MAX_CONCURRENT_SESSIONS,
+    process_types: Sequence[str] | None = None,
 ) -> None:
     """Run video processing with bounded, explicitly tracked worker threads."""
     if max_concurrent_sessions < 1:
@@ -155,7 +176,7 @@ def process_video_sessions(
         ):
             _wait_for_next_launch(last_launch_at)
             thread, error = _start_video_session_thread(
-                raw_data_asset_ids[next_session_index]
+                raw_data_asset_ids[next_session_index], process_types
             )
             active_threads[thread] = error
             next_session_index += 1
@@ -179,7 +200,33 @@ def process_video_sessions(
         raise first_error
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Run video processing for incomplete sessions."
+    )
+    parser.add_argument(
+        "--process-type",
+        "--process",
+        "--processes",
+        dest="process_types",
+        choices=PROCESS_TYPES,
+        action="append",
+        help="Process type to run; repeat to target multiple types (default: all).",
+    )
+    parser.add_argument(
+        "--max-concurrent-sessions",
+        type=int,
+        default=MAX_CONCURRENT_SESSIONS,
+        help=(
+            "Maximum number of sessions to process concurrently "
+            f"(default: {MAX_CONCURRENT_SESSIONS})."
+        ),
+    )
+    return parser.parse_args()
+
+
 def main() -> None:
+    args = parse_args()
     status = pl.read_csv(STATUS_CSV_URL, null_values=[""])
     video_sessions = status.filter(
         pl.col("is_video") & pl.col("raw_asset_id").is_not_null()
@@ -188,12 +235,16 @@ def main() -> None:
     raw_data_asset_ids = []
     for row in video_sessions.iter_rows(named=True):
         raw_data_asset_id = str(row["raw_asset_id"])
-        missing_processes = get_missing_processes(row)
+        missing_processes = get_missing_processes(row, args.process_types)
         if not missing_processes:
             continue
         raw_data_asset_ids.append(raw_data_asset_id)
 
-    process_video_sessions(raw_data_asset_ids)
+    process_video_sessions(
+        raw_data_asset_ids,
+        max_concurrent_sessions=args.max_concurrent_sessions,
+        process_types=args.process_types,
+    )
 
 
 if __name__ == "__main__":
