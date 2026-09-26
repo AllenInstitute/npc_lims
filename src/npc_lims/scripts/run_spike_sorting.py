@@ -37,7 +37,7 @@ SPIKE_SORTING_PIPELINE_ID = "1f8f159a-7670-47a9-baf1-078905fc9c2e"
 STATUS_CSV_URL = (
     "https://raw.githubusercontent.com/AllenInstitute/npc_lims/main/tables/status.csv"
 )
-MAX_CONCURRENT_ASSETS = 3
+MAX_CONCURRENT_JOBS = 3
 LAUNCH_PAUSE_SECONDS = 10.0
 POLL_INTERVAL = 60.0
 THREAD_STATUS_CHECK_INTERVAL = 0.1
@@ -107,11 +107,11 @@ def _process_asset_in_thread(
 
 def process_assets(
     raw_data_asset_ids: list[str],
-    max_concurrent_assets: int = MAX_CONCURRENT_ASSETS,
+    max_concurrent_jobs: int = MAX_CONCURRENT_JOBS,
 ) -> None:
     """Run spike sorting with bounded concurrency."""
-    if max_concurrent_assets < 1:
-        raise ValueError("max_concurrent_assets must be at least 1")
+    if max_concurrent_jobs < 1:
+        raise ValueError("max_concurrent_jobs must be at least 1")
 
     active_threads: dict[threading.Thread, list[Exception]] = {}
     first_error: Exception | None = None
@@ -121,7 +121,7 @@ def process_assets(
     while active_threads or next_asset_index < len(raw_data_asset_ids):
         while (
             next_asset_index < len(raw_data_asset_ids)
-            and len(active_threads) < max_concurrent_assets
+            and len(active_threads) < max_concurrent_jobs
         ):
             if last_launch_at is not None:
                 elapsed = time.monotonic() - last_launch_at
@@ -161,12 +161,12 @@ def parse_args() -> argparse.Namespace:
         description="Run spike sorting for unsorted uploaded assets."
     )
     parser.add_argument(
-        "--max-concurrent-assets",
+        "--max-concurrent-jobs",
         type=int,
-        default=MAX_CONCURRENT_ASSETS,
+        default=MAX_CONCURRENT_JOBS,
         help=(
-            "Maximum number of assets to sort concurrently "
-            f"(default: {MAX_CONCURRENT_ASSETS})."
+            "Maximum number of sorting jobs to run concurrently "
+            f"(default: {MAX_CONCURRENT_JOBS})."
         ),
     )
     return parser.parse_args()
@@ -177,7 +177,7 @@ def main() -> None:
     status = pl.read_csv(STATUS_CSV_URL, null_values=[""])
     asset_ids = get_unsorted_asset_ids(status)
     print(f"Found {len(asset_ids)} unsorted assets")
-    process_assets(asset_ids, args.max_concurrent_assets)
+    process_assets(asset_ids, args.max_concurrent_jobs)
 
 
 if __name__ == "__main__":
