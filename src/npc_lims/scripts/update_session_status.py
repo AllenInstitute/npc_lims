@@ -70,6 +70,19 @@ def get_status(session: str | npc_lims.SessionInfo) -> dict[str, Any]:
         surface_channels_asset_id = npc_lims.get_surface_channel_raw_data_asset(s.id).id
     else:
         surface_channels_asset_id = None
+    if surface_channels_asset_id:
+        try:
+            surface_channel_assets = npc_lims.get_session_data_assets(s.id.with_idx(1))
+        except npc_lims.SessionIndexError:
+            # If the main recording failed, the surface-channel recording can be
+            # the only asset and therefore occupy index 0.
+            surface_channel_assets = (
+                session_assets
+                if is_uploaded
+                else npc_lims.get_session_data_assets(s.id)
+            )
+    else:
+        surface_channel_assets = ()
     is_video = s.is_video if is_uploaded else None
     is_gamma_encoding = (
         _has_asset(session_assets, "GammaEncoding") if is_video else None
@@ -84,9 +97,7 @@ def get_status(session: str | npc_lims.SessionInfo) -> dict[str, Any]:
             is_sorted := (_has_sorted_asset(session_assets) if is_uploaded else None)
         ),
         "is_surface_channels_sorted": (
-            _has_surface_channels_sorted(
-                npc_lims.get_session_data_assets(s.id.with_idx(1))
-            )
+            _has_surface_channels_sorted(surface_channel_assets)
             if surface_channels_asset_id
             else None
         ),

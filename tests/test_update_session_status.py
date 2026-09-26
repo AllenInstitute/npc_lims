@@ -163,3 +163,51 @@ def test_surface_channels_sorted_falls_back_to_index_zero(
     monkeypatch.setattr(codeocean_utils, "get_session_data_assets", get_assets)
 
     assert session.is_surface_channels_sorted is True
+
+
+def test_get_status_surface_channels_sorted_falls_back_to_index_zero(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    session = npc_lims.SessionInfo(
+        id=npc_session.SessionRecord("840160_2026-04-28"),
+        project="test",
+        is_ephys=True,
+        is_sync=True,
+        allen_path=upath.UPath("s3://test/840160/2026-04-28"),
+    )
+    for name, value in {
+        "is_uploaded": True,
+        "is_surface_channels": True,
+        "is_video": False,
+        "is_session_json": True,
+        "is_rig_json": True,
+    }.items():
+        object.__setattr__(session, name, value)
+
+    main_assets = (SimpleNamespace(name="surface_sorted", files=7),)
+
+    def get_assets(requested: npc_session.SessionRecord) -> tuple[object, ...]:
+        if requested.idx == 1:
+            raise codeocean_utils.SessionIndexError
+        return main_assets
+
+    monkeypatch.setattr(npc_lims, "get_session_data_assets", get_assets)
+    monkeypatch.setattr(
+        npc_lims,
+        "get_codoecean_session_id",
+        lambda _: "ecephys_840160_2026-04-28_12-21-46",
+    )
+    monkeypatch.setattr(
+        npc_lims,
+        "get_session_raw_data_asset",
+        lambda _: SimpleNamespace(id="raw-asset"),
+    )
+    monkeypatch.setattr(
+        npc_lims,
+        "get_surface_channel_raw_data_asset",
+        lambda _: SimpleNamespace(id="surface-asset"),
+    )
+
+    result = get_status(session)
+
+    assert result["is_surface_channels_sorted"] is True
