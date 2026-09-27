@@ -26,9 +26,9 @@ from codeocean.computation import (
     Computation,
     ComputationEndStatus,
     ComputationState,
+    DataAssetsRunParam,
     RunParams,
 )
-from codeocean.data_asset import DataAsset
 
 import npc_lims
 
@@ -62,7 +62,9 @@ def get_unsorted_asset_ids(status: pl.DataFrame) -> list[str]:
 def get_run_params(raw_data_asset_id: str) -> RunParams:
     return RunParams(
         pipeline_id=SPIKE_SORTING_PIPELINE_ID,
-        data_assets=[DataAsset(id=raw_data_asset_id, mount="ecephys")],
+        data_assets=[
+            DataAssetsRunParam(id=raw_data_asset_id, mount="ecephys")
+        ],
     )
 
 
