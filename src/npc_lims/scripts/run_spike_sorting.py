@@ -26,13 +26,14 @@ from codeocean.computation import (
     Computation,
     ComputationEndStatus,
     ComputationState,
-    DataAssetsRunParam,
+    NamedRunParam,
     RunParams,
 )
 
 import npc_lims
 
-SPIKE_SORTING_PIPELINE_ID = "1f8f159a-7670-47a9-baf1-078905fc9c2e"
+EPHYS_TRIGGER_CAPSULE_ID = "eb5a26e4-a391-4d79-9da5-1ab65b71253f"
+SPIKE_SORTING_PIPELINE_TYPE = "ecephys_ks25_v0.1.0"
 STATUS_CSV_URL = (
     "https://raw.githubusercontent.com/AllenInstitute/npc_lims/main/tables/status.csv"
 )
@@ -61,9 +62,16 @@ def get_unsorted_asset_ids(status: pl.DataFrame) -> list[str]:
 
 def get_run_params(raw_data_asset_id: str) -> RunParams:
     return RunParams(
-        pipeline_id=SPIKE_SORTING_PIPELINE_ID,
-        data_assets=[
-            DataAssetsRunParam(id=raw_data_asset_id, mount="ecephys")
+        capsule_id=EPHYS_TRIGGER_CAPSULE_ID,
+        named_parameters=[
+            NamedRunParam(
+                param_name="pipeline_type",
+                value=SPIKE_SORTING_PIPELINE_TYPE,
+            ),
+            NamedRunParam(
+                param_name="input_data_asset_id",
+                value=raw_data_asset_id,
+            ),
         ],
     )
 
