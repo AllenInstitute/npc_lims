@@ -102,17 +102,28 @@ def launch_spike_sorting(raw_data_asset_id: str) -> Computation:
 
 
 def is_computation_complete(computation: Computation) -> bool:
-    """Poll once, raising on failure and returning whether the job is complete."""
+    """Poll once and return whether the job is complete.
+
+    A failed computation is still terminal.  Report it and let the caller
+    continue processing any other assets rather than aborting the run.
+    """
     status = npc_lims.get_codeocean_client().computations.get_computation(
         computation.id
     )
     if status.state == ComputationState.Failed or getattr(
         status, "end_status", None
     ) in (ComputationEndStatus.Failed, ComputationEndStatus.Stopped):
-        raise RuntimeError(f"Computation failed: {computation.id}")
+        print(
+            f"Spike sorting failed for computation {computation.id}; continuing.",
+            flush=True,
+        )
+        return True
     if status.state == ComputationState.Completed:
         if npc_lims.is_computation_errored(status):
-            raise RuntimeError(f"Computation failed: {computation.id}")
+            print(
+                f"Spike sorting failed for computation {computation.id}; continuing.",
+                flush=True,
+            )
         return True
     return False
 
@@ -125,13 +136,7 @@ def wait_for_computation(computation: Computation) -> None:
 
 def process_asset(raw_data_asset_id: str) -> None:
     computation = launch_spike_sorting(raw_data_asset_id)
-    try:
-        wait_for_computation(computation)
-    except Exception as exc:
-        raise RuntimeError(
-            f"Spike sorting failed for {raw_data_asset_id} "
-            f"(computation {computation.id})"
-        ) from exc
+    wait_for_computation(computation)
 
 
 def _wait_for_next_launch(last_launch_at: float | None) -> None:
@@ -176,16 +181,10 @@ def process_assets(
             computation,
             raw_data_asset_id,
         ) in active_computations.items():
-            try:
-                is_complete = is_computation_complete(computation)
-            except Exception as exc:
-                raise RuntimeError(
-                    f"Spike sorting failed for {raw_data_asset_id} "
-                    f"(computation {computation_id})"
-                ) from exc
+            is_complete = is_computation_complete(computation)
             if is_complete:
                 print(
-                    f"Completed spike sorting for {raw_data_asset_id} "
+                    f"Finished spike sorting for {raw_data_asset_id} "
                     f"(computation {computation_id})",
                     flush=True,
                 )

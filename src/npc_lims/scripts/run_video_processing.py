@@ -122,17 +122,29 @@ def launch_video_session(
 
 
 def is_computation_complete(computation: Computation) -> bool:
-    """Poll once, raising on failure and returning whether the job is complete."""
+    """Poll once and return whether the job is complete.
+
+    A failed computation is still terminal.  Report it and let the caller
+    continue processing any other sessions rather than aborting the run.
+    """
     status = npc_lims.get_codeocean_client().computations.get_computation(
         computation.id
     )
     if status.state == ComputationState.Failed or getattr(
         status, "end_status", None
     ) in (ComputationEndStatus.Failed, ComputationEndStatus.Stopped):
-        raise RuntimeError(f"Computation failed: {computation.id}")
+        print(
+            f"Video processing failed for computation {computation.id}; continuing.",
+            flush=True,
+        )
+        return True
     if status.state == ComputationState.Completed:
         if npc_lims.is_computation_errored(status):
-            raise RuntimeError(f"Computation failed: {computation.id}")
+            print(
+                "Video processing failed for computation "
+                f"{computation.id}; continuing.",
+                flush=True,
+            )
         return True
     return False
 
@@ -148,13 +160,7 @@ def process_video_session(
 ) -> None:
     """Run and poll the full video-processing pipeline for one session."""
     computation = launch_video_session(raw_data_asset_id, process_types)
-    try:
-        wait_for_computation(computation)
-    except Exception as exc:
-        raise RuntimeError(
-            f"Video processing failed for {raw_data_asset_id} "
-            f"(computation {computation.id})"
-        ) from exc
+    wait_for_computation(computation)
 
 
 def _wait_for_next_launch(last_launch_at: float | None) -> None:
@@ -202,16 +208,10 @@ def process_video_sessions(
             computation,
             raw_data_asset_id,
         ) in active_computations.items():
-            try:
-                is_complete = is_computation_complete(computation)
-            except Exception as exc:
-                raise RuntimeError(
-                    f"Video processing failed for {raw_data_asset_id} "
-                    f"(computation {computation_id})"
-                ) from exc
+            is_complete = is_computation_complete(computation)
             if is_complete:
                 print(
-                    f"Completed video processing for {raw_data_asset_id} "
+                    f"Finished video processing for {raw_data_asset_id} "
                     f"(computation {computation_id})",
                     flush=True,
                 )
