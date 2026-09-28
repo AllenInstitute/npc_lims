@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # /// script
-# requires-python = ">=3.9"
+# requires-python = ">=3.9,<3.14"
 # dependencies = [
 #     "npc-lims[polars]",
 #     "pydantic-settings>=2.0",
@@ -20,6 +20,7 @@ from pathlib import Path
 from typing import Any
 
 import aind_session
+import npc_session
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from tqdm import tqdm
 
@@ -84,6 +85,7 @@ def get_status(session: str | npc_lims.SessionInfo) -> dict[str, Any]:
     else:
         surface_channel_assets = ()
     is_video = s.is_video if is_uploaded else None
+    is_imaged = _is_imaged(s, session_assets)
     is_gamma_encoding = (
         _has_asset(session_assets, "GammaEncoding") if is_video else None
     )
@@ -93,6 +95,10 @@ def get_status(session: str | npc_lims.SessionInfo) -> dict[str, Any]:
         "raw_asset_id": raw_asset_id,
         "surface_channels_asset_id": surface_channels_asset_id,
         "is_uploaded": is_uploaded,
+        "is_prod": bool(s.session_kwargs.get("is_production", True)),
+        "is_imaged": is_imaged,
+        "is_parquet_cached": _is_cached_parquet(s.id),
+        "is_nwb_cached": _is_cached_nwb(s.id),
         "is_sorted": (
             is_sorted := (_has_sorted_asset(session_assets) if is_uploaded else None)
         ),
@@ -109,7 +115,9 @@ def get_status(session: str | npc_lims.SessionInfo) -> dict[str, Any]:
         "is_LPFaceParts": (
             _has_asset(session_assets, "LPFaceParts")
             if is_video and is_gamma_encoding
-            else False if is_video else None
+            else False
+            if is_video
+            else None
         ),
         "is_session_json": s.is_session_json if is_uploaded else None,
         "is_rig_json": s.is_rig_json if is_uploaded else None,
@@ -118,6 +126,33 @@ def get_status(session: str | npc_lims.SessionInfo) -> dict[str, Any]:
 
 def _has_asset(assets: tuple[Any, ...], name: str) -> bool:
     return any(name in asset.name for asset in assets)
+
+
+def _is_imaged(session: npc_lims.SessionInfo, assets: tuple[Any, ...]) -> bool:
+    """Return whether SmartSPIM or tissuecyte data is available for a session."""
+    if any("smartspim" in asset.name.lower() for asset in assets):
+        return True
+    with contextlib.suppress(FileNotFoundError, ValueError, IndexError, KeyError):
+        return bool(s3.get_tissuecyte_annotation_files_from_s3(session))
+    return False
+
+
+def _is_cached_parquet(session_id: npc_session.SessionRecord) -> bool:
+    """Return whether the session has a cached parquet component."""
+    try:
+        return npc_lims.get_cache_path(
+            "session", session_id=session_id, version="any", consolidated=False
+        ).exists()
+    except Exception:  # cache storage may be unavailable during a status update
+        return False
+
+
+def _is_cached_nwb(session_id: npc_session.SessionRecord) -> bool:
+    """Return whether the session has a cached NWB file."""
+    try:
+        return npc_lims.get_nwb_path(session_id, version="any").exists()
+    except Exception:  # cache storage may be unavailable during a status update
+        return False
 
 
 def _has_sorted_asset(assets: tuple[Any, ...]) -> bool:
