@@ -41,6 +41,7 @@ VIDEO_STATUS_COLUMNS = (
 )
 STALLED_NODES = {
     "Not uploaded",
+    "Metadata incomplete",
     "Not sorted",
     "Surface channels not sorted",
     "Not imaged",
