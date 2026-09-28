@@ -148,9 +148,7 @@ def session_paths(
 
     video_path = ["All sessions"]
     if not _is_true(row.get("is_uploaded")):
-        video_path.append("Video processing")
-        video_path.append("Not uploaded")
-        paths.append((tuple(video_path), PARALLEL_BRANCH_WEIGHT))
+        pass
     elif not _is_true(row.get("is_video")):
         video_path.append("Uploaded")
         video_path.append("Video processing")
