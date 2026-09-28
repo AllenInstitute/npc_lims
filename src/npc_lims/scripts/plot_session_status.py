@@ -139,6 +139,9 @@ def make_plot(rows: list[dict[str, str]], input_source: str) -> FigureLike:
             node={
                 "label": labels,
                 "color": colors,
+                # Keep every node on the left side of the plot so Plotly renders
+                # every label to the right of its proportion bar.
+                "align": "left",
                 "pad": 20,
                 "thickness": 20,
                 "line": {"color": "white", "width": 0.5},
