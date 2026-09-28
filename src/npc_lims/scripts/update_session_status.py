@@ -148,9 +148,12 @@ def _is_cached_parquet(session_id: npc_session.SessionRecord) -> bool:
 
 
 def _is_cached_nwb(session_id: npc_session.SessionRecord) -> bool:
-    """Return whether the session has a cached NWB file."""
+    """Return whether the session has any entry in the latest NWB cache."""
     try:
-        return npc_lims.get_nwb_path(session_id, version="any").exists()
+        latest_version = npc_lims.get_current_cache_version()
+        nwb_cache_dir = npc_lims.CACHE_ROOT.parent / "nwb" / latest_version
+        session_prefix = str(npc_session.SessionRecord(session_id))
+        return any(nwb_cache_dir.glob(f"{session_prefix}*"))
     except Exception:  # cache storage may be unavailable during a status update
         return False
 
