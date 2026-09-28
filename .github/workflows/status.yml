@@ -41,7 +41,7 @@ jobs:
     - name: Install package
       run: |
         pip install -e .[polars]
-        pip install "plotly>=5.0" "kaleido==0.2.1"
+        pip install "plotly==5.24.1" "kaleido==0.2.1"
 
     - name: Configure aws credentials
       env:
