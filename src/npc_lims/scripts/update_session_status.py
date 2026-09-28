@@ -97,8 +97,6 @@ def get_status(session: str | npc_lims.SessionInfo) -> dict[str, Any]:
         "is_uploaded": is_uploaded,
         "is_prod": bool(s.session_kwargs.get("is_production", True)),
         "is_imaged": is_imaged,
-        "is_parquet_cached": _is_cached_parquet(s.id),
-        "is_nwb_cached": _is_cached_nwb(s.id),
         "is_sorted": (
             is_sorted := (_has_sorted_asset(session_assets) if is_uploaded else None)
         ),
@@ -121,6 +119,8 @@ def get_status(session: str | npc_lims.SessionInfo) -> dict[str, Any]:
         ),
         "is_session_json": s.is_session_json if is_uploaded else None,
         "is_rig_json": s.is_rig_json if is_uploaded else None,
+        "is_parquet_cached": _is_cached_parquet(s.id),
+        "is_nwb_cached": _is_cached_nwb(s.id),
     }
 
 

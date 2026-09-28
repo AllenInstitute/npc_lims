@@ -10,9 +10,9 @@
 
 """Create an interactive Sankey plot from a session-status CSV.
 
-Each session is assigned to the first incomplete stage in the workflow. This
-makes the terminal stalled counts mutually exclusive rather than counting a
-session once for every missing status.
+The plot is limited to production sessions by default. Metadata is tracked as
+an independent aside, while annotation, video processing, and cache endpoints
+show their own dependencies.
 """
 
 from __future__ import annotations
@@ -41,75 +41,150 @@ VIDEO_STATUS_COLUMNS = (
 )
 STALLED_NODES = {
     "Not uploaded",
-    "Missing session/rig JSON",
     "Not sorted",
     "Surface channels not sorted",
+    "Not imaged",
     "Not annotated",
     "Missing Gamma encoding",
     "Missing DLC eye",
     "Missing Facemap",
     "Missing LPFaceParts",
+    "Parquet not cached",
+    "NWB not cached",
 }
+PARALLEL_BRANCH_WEIGHT = 0.5
 
 
 def _is_true(value: str | None) -> bool:
     return str(value).strip().lower() in {"1", "true", "yes", "y"}
 
 
-def session_path(row: dict[str, str]) -> tuple[str, ...]:
-    """Return the workflow path for one session, ending at its first stall."""
+def _filter_rows(
+    rows: list[dict[str, str]], production_only: bool
+) -> list[dict[str, str]]:
+    if not production_only:
+        return rows
+    return [row for row in rows if _is_true(row.get("is_prod"))]
+
+
+def _common_path(row: dict[str, str]) -> list[str]:
+    """Return the common workflow path, ending at its first stall."""
     path = ["All sessions"]
 
     if not _is_true(row.get("is_uploaded")):
-        return (*path, "Not uploaded")
+        return [*path, "Not uploaded"]
     path.append("Uploaded")
 
-    if not (
-        _is_true(row.get("is_session_json"))
-        and _is_true(row.get("is_rig_json"))
-    ):
-        return (*path, "Missing session/rig JSON")
-    path.append("Metadata complete")
-
     if not _is_true(row.get("is_sorted")):
-        return (*path, "Not sorted")
+        return [*path, "Not sorted"]
     path.append("Sorted")
 
     if row.get("surface_channels_asset_id") and not _is_true(
         row.get("is_surface_channels_sorted")
     ):
-        return (*path, "Surface channels not sorted")
+        return [*path, "Surface channels not sorted"]
 
-    if not _is_true(row.get("is_annotated")):
-        return (*path, "Not annotated")
-    path.append("Annotated")
+    return path
 
-    if not _is_true(row.get("is_video")):
-        return (*path, "Complete (no video)")
-    path.append("Video")
 
-    for process_name, column in VIDEO_STATUS_COLUMNS:
-        if not _is_true(row.get(column)):
-            return (*path, f"Missing {process_name}")
-    return (*path, "Complete")
+def session_paths(
+    row: dict[str, str],
+) -> tuple[tuple[tuple[str, ...], float], ...]:
+    """Return weighted workflow paths for one session.
+
+    Metadata and cache status are independent of the processing workflow. The
+    cache branch always ends with the NWB status, even when an upstream
+    processing branch is stalled.
+    """
+    common_path = _common_path(row)
+    paths: list[tuple[tuple[str, ...], float]] = [
+        (tuple(common_path), 1.0),
+        (
+            (
+                "All sessions",
+                "Metadata",
+                "Metadata complete"
+                if _is_true(row.get("is_session_json"))
+                and _is_true(row.get("is_rig_json"))
+                else "Metadata incomplete",
+            ),
+            PARALLEL_BRANCH_WEIGHT,
+        ),
+        (
+            (
+                "All sessions",
+                "Parquet cached"
+                if _is_true(row.get("is_parquet_cached"))
+                else "Parquet not cached",
+                "NWB cached"
+                if _is_true(row.get("is_nwb_cached"))
+                else "NWB not cached",
+            ),
+            PARALLEL_BRANCH_WEIGHT,
+        ),
+    ]
+
+    if common_path[-1] == "Sorted":
+        annotation_path = [*common_path, "Annotation"]
+        if not _is_true(row.get("is_imaged")):
+            annotation_path.append("Not imaged")
+        else:
+            annotation_path.append(
+                "Annotated" if _is_true(row.get("is_annotated")) else "Not annotated"
+            )
+        paths.append((tuple(annotation_path), PARALLEL_BRANCH_WEIGHT))
+
+    video_path = ["All sessions"]
+    if not _is_true(row.get("is_uploaded")):
+        video_path.append("Video processing")
+        video_path.append("Not uploaded")
+        paths.append((tuple(video_path), PARALLEL_BRANCH_WEIGHT))
+    elif not _is_true(row.get("is_video")):
+        video_path.append("Uploaded")
+        video_path.append("Video processing")
+        video_path.append("No video")
+        paths.append((tuple(video_path), PARALLEL_BRANCH_WEIGHT))
+    else:
+        video_path.extend(("Uploaded", "Video processing"))
+        # DLC and Facemap are parallel products. LPFaceParts only depends on
+        # gamma encoding, so it gets its own branch from the same prerequisite.
+        gamma_complete = _is_true(row.get("is_gamma_encoding"))
+        for process_name, column in VIDEO_STATUS_COLUMNS:
+            process_path = [
+                *video_path,
+                "Gamma encoding" if gamma_complete else "Missing Gamma encoding",
+            ]
+            if process_name != "Gamma encoding":
+                process_path.append(
+                    process_name
+                    if _is_true(row.get(column))
+                    else f"Missing {process_name}"
+                )
+            paths.append((tuple(process_path), PARALLEL_BRANCH_WEIGHT / 3))
+
+    return tuple(paths)
 
 
 def build_links(
     rows: list[dict[str, str]],
-) -> tuple[list[str], list[int], list[int], list[int], Counter[str]]:
-    """Aggregate session paths into Sankey node and link data."""
-    link_counts: Counter[tuple[str, str]] = Counter()
+) -> tuple[list[str], list[int], list[int], list[float], Counter[str]]:
+    """Aggregate weighted session paths into Sankey node and link data."""
+    link_counts: dict[tuple[str, str], float] = {}
     node_counts: Counter[str] = Counter()
     for row in rows:
-        path = session_path(row)
-        node_counts.update(path)
-        link_counts.update(zip(path, path[1:]))
+        paths = session_paths(row)
+        seen_nodes: set[str] = set()
+        for path, weight in paths:
+            node_counts.update(node for node in path if node not in seen_nodes)
+            seen_nodes.update(path)
+            for link in zip(path, path[1:]):
+                link_counts[link] = link_counts.get(link, 0.0) + weight
 
     nodes = list(node_counts)
     node_index = {node: index for index, node in enumerate(nodes)}
     source: list[int] = []
     target: list[int] = []
-    values: list[int] = []
+    values: list[float] = []
     for (from_node, to_node), count in link_counts.items():
         source.append(node_index[from_node])
         target.append(node_index[to_node])
@@ -117,7 +192,9 @@ def build_links(
     return nodes, source, target, values, node_counts
 
 
-def make_plot(rows: list[dict[str, str]], input_source: str) -> FigureLike:
+def make_plot(
+    rows: list[dict[str, str]], input_source: str, *, production_only: bool = True
+) -> FigureLike:
     """Build the Plotly Sankey figure."""
     try:
         import plotly.graph_objects as go
@@ -127,12 +204,19 @@ def make_plot(rows: list[dict[str, str]], input_source: str) -> FigureLike:
             "src/npc_lims/scripts/plot_session_status.py`"
         ) from None
 
+    rows = _filter_rows(rows, production_only)
     nodes, source, target, values, node_counts = build_links(rows)
     labels = [f"{node}<br><sup>n={node_counts[node]}</sup>" for node in nodes]
-    terminal_nodes = [node for node in nodes if node in STALLED_NODES]
-    colors = [
-        "#d95f02" if node in terminal_nodes else "#4c78a8" for node in nodes
+    session_link_counts: Counter[tuple[str, str]] = Counter()
+    for row in rows:
+        for path, _ in session_paths(row):
+            session_link_counts.update(zip(path, path[1:]))
+    link_sessions = [
+        session_link_counts[(nodes[from_index], nodes[to_index])]
+        for from_index, to_index in zip(source, target)
     ]
+    terminal_nodes = [node for node in nodes if node in STALLED_NODES]
+    colors = ["#d95f02" if node in terminal_nodes else "#4c78a8" for node in nodes]
     return go.Figure(
         go.Sankey(
             arrangement="snap",
@@ -151,12 +235,17 @@ def make_plot(rows: list[dict[str, str]], input_source: str) -> FigureLike:
                 "source": source,
                 "target": target,
                 "value": values,
+                "customdata": link_sessions,
                 "hovertemplate": "%{source.label} → %{target.label}<br>"
-                "Sessions: %{value}<extra></extra>",
+                "Sessions: %{customdata}<br>"
+                "Weighted flow: %{value}<extra></extra>",
             },
         )
     ).update_layout(
-        title=f"Session status ({len(rows):,} sessions)\n{input_source}",
+        title=(
+            f"Session status ({len(rows):,} sessions; "
+            f"is_prod={'true' if production_only else 'any'})\n{input_source}"
+        ),
         font={"size": 12},
         margin={"l": 20, "r": 20, "t": 80, "b": 20},
     )
@@ -214,16 +303,23 @@ def main() -> None:
         type=Path,
         help="Additionally write an SVG image to this path",
     )
+    parser.add_argument(
+        "--all-sessions",
+        action="store_true",
+        help="Include non-production sessions (default: production only)",
+    )
     args = parser.parse_args()
 
     rows = read_rows(args.input_csv)
     if not rows:
         raise ValueError(f"No session rows found in {args.input_csv}")
 
-    figure = make_plot(rows, args.input_csv)
+    production_only = not args.all_sessions
+    figure = make_plot(rows, args.input_csv, production_only=production_only)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     figure.write_html(args.output, include_plotlyjs=True)
-    print(f"Wrote interactive Sankey for {len(rows):,} sessions to {args.output}")
+    session_count = len(_filter_rows(rows, production_only))
+    print(f"Wrote interactive Sankey for {session_count:,} sessions to {args.output}")
     for image_path, image_format in ((args.png, "png"), (args.svg, "svg")):
         if image_path is None:
             continue
