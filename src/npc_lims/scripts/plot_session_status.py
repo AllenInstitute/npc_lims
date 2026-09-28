@@ -94,36 +94,47 @@ def session_paths(
     """Return weighted workflow paths for one session.
 
     Metadata and cache status are independent of the processing workflow. The
-    cache branch always ends with the NWB status, even when an upstream
-    processing branch is stalled.
+    Parquet and NWB cache status are independent branches, even when an
+    upstream processing branch is stalled.
     """
     common_path = _common_path(row)
-    paths: list[tuple[tuple[str, ...], float]] = [
-        (tuple(common_path), 1.0),
-        (
-            (
-                "All sessions",
-                "Metadata",
-                "Metadata complete"
-                if _is_true(row.get("is_session_json"))
-                and _is_true(row.get("is_rig_json"))
-                else "Metadata incomplete",
-            ),
-            PARALLEL_BRANCH_WEIGHT,
-        ),
-        (
-            (
-                "All sessions",
-                "Parquet cached"
-                if _is_true(row.get("is_parquet_cached"))
-                else "Parquet not cached",
-                "NWB cached"
-                if _is_true(row.get("is_nwb_cached"))
-                else "NWB not cached",
-            ),
-            PARALLEL_BRANCH_WEIGHT,
-        ),
-    ]
+    paths: list[tuple[tuple[str, ...], float]] = [(tuple(common_path), 1.0)]
+
+    if _is_true(row.get("is_uploaded")):
+        uploaded_path = ("All sessions", "Uploaded")
+        paths.extend(
+            [
+                (
+                    (
+                        *uploaded_path,
+                        "Metadata",
+                        "Metadata complete"
+                        if _is_true(row.get("is_session_json"))
+                        and _is_true(row.get("is_rig_json"))
+                        else "Metadata incomplete",
+                    ),
+                    PARALLEL_BRANCH_WEIGHT,
+                ),
+                (
+                    (
+                        *uploaded_path,
+                        "Parquet cached"
+                        if _is_true(row.get("is_parquet_cached"))
+                        else "Parquet not cached",
+                    ),
+                    PARALLEL_BRANCH_WEIGHT,
+                ),
+                (
+                    (
+                        *uploaded_path,
+                        "NWB cached"
+                        if _is_true(row.get("is_nwb_cached"))
+                        else "NWB not cached",
+                    ),
+                    PARALLEL_BRANCH_WEIGHT,
+                ),
+            ]
+        )
 
     if common_path[-1] == "Sorted":
         annotation_path = [*common_path, "Annotation"]
