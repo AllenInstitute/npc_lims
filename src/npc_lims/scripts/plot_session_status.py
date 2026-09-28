@@ -88,36 +88,37 @@ def _common_path(row: dict[str, str]) -> list[str]:
     return path
 
 
-def session_paths(
+def session_paths(  # noqa: C901
     row: dict[str, str],
 ) -> tuple[tuple[tuple[str, ...], float], ...]:
     """Return weighted workflow paths for one session.
 
-    Metadata and cache status are independent of the processing workflow. The
-    Parquet and NWB cache status are independent branches, even when an
-    upstream processing branch is stalled.
+    Successful metadata, annotation, and video-processing paths rejoin at
+    ``Caching``. Parquet and NWB cache status then branch independently from
+    that node; incomplete branches stop at their current status.
     """
     common_path = _common_path(row)
     paths: list[tuple[tuple[str, ...], float]] = [(tuple(common_path), 1.0)]
 
     if _is_true(row.get("is_uploaded")):
         uploaded_path = ("All sessions", "Uploaded")
+        metadata_complete = _is_true(row.get("is_session_json")) and _is_true(
+            row.get("is_rig_json")
+        )
+        metadata_path = [
+            *uploaded_path,
+            "Metadata",
+            "Metadata complete" if metadata_complete else "Metadata incomplete",
+        ]
+        if metadata_complete:
+            metadata_path.append("Caching")
         paths.extend(
             [
+                (tuple(metadata_path), PARALLEL_BRANCH_WEIGHT),
                 (
                     (
                         *uploaded_path,
-                        "Metadata",
-                        "Metadata complete"
-                        if _is_true(row.get("is_session_json"))
-                        and _is_true(row.get("is_rig_json"))
-                        else "Metadata incomplete",
-                    ),
-                    PARALLEL_BRANCH_WEIGHT,
-                ),
-                (
-                    (
-                        *uploaded_path,
+                        "Caching",
                         "Parquet cached"
                         if _is_true(row.get("is_parquet_cached"))
                         else "Parquet not cached",
@@ -127,6 +128,7 @@ def session_paths(
                 (
                     (
                         *uploaded_path,
+                        "Caching",
                         "NWB cached"
                         if _is_true(row.get("is_nwb_cached"))
                         else "NWB not cached",
@@ -144,6 +146,8 @@ def session_paths(
             annotation_path.append(
                 "Annotated" if _is_true(row.get("is_annotated")) else "Not annotated"
             )
+            if annotation_path[-1] == "Annotated":
+                annotation_path.append("Caching")
         paths.append((tuple(annotation_path), PARALLEL_BRANCH_WEIGHT))
 
     video_path = ["All sessions"]
@@ -153,6 +157,7 @@ def session_paths(
         video_path.append("Uploaded")
         video_path.append("Video processing")
         video_path.append("No video")
+        video_path.append("Caching")
         paths.append((tuple(video_path), PARALLEL_BRANCH_WEIGHT))
     else:
         video_path.extend(("Uploaded", "Video processing"))
@@ -173,6 +178,8 @@ def session_paths(
             process_path.append(
                 process_name if _is_true(row.get(column)) else f"Missing {process_name}"
             )
+            if process_path[-1] == process_name:
+                process_path.extend(("Video processing complete", "Caching"))
             paths.append((tuple(process_path), PARALLEL_BRANCH_WEIGHT / 3))
 
     return tuple(paths)
