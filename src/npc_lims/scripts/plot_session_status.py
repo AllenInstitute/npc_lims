@@ -146,20 +146,23 @@ def session_paths(
         paths.append((tuple(video_path), PARALLEL_BRANCH_WEIGHT))
     else:
         video_path.extend(("Uploaded", "Video processing"))
-        # DLC and Facemap are parallel products. LPFaceParts only depends on
+        # DLC and Facemap depend only on upload/video. LPFaceParts depends on
         # gamma encoding, so it gets its own branch from the same prerequisite.
         gamma_complete = _is_true(row.get("is_gamma_encoding"))
         for process_name, column in VIDEO_STATUS_COLUMNS:
-            process_path = [
-                *video_path,
-                "Gamma encoding" if gamma_complete else "Missing Gamma encoding",
-            ]
-            if process_name != "Gamma encoding":
+            if process_name == "Gamma encoding":
+                continue
+            process_path = [*video_path]
+            if process_name == "LPFaceParts":
                 process_path.append(
-                    process_name
-                    if _is_true(row.get(column))
-                    else f"Missing {process_name}"
+                    "Gamma encoding" if gamma_complete else "Missing Gamma encoding"
                 )
+                if not gamma_complete:
+                    paths.append((tuple(process_path), PARALLEL_BRANCH_WEIGHT / 3))
+                    continue
+            process_path.append(
+                process_name if _is_true(row.get(column)) else f"Missing {process_name}"
+            )
             paths.append((tuple(process_path), PARALLEL_BRANCH_WEIGHT / 3))
 
     return tuple(paths)
