@@ -230,7 +230,7 @@ def main() -> None:
         csv_path = settings.csv_output_path
         csv_path.parent.mkdir(parents=True, exist_ok=True)
         print(f"Writing updated session status to {csv_path}...")
-        df.write_csv(csv_path)
+        df.sort("session_id", descending=True).write_csv(csv_path)
         print(f"Successfully updated {csv_path}")
 
 
