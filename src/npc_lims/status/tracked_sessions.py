@@ -33,6 +33,8 @@ FileContents: TypeAlias = dict[
 DR_DATA_REPO_ISILON = upath.UPath(
     "//allen/programs/mindscope/workgroups/dynamicrouting/DynamicRoutingTask/Data"
 )
+SESSION_METADATA_FILENAMES = frozenset(("session.json", "acquisition.json"))
+RIG_METADATA_FILENAMES = frozenset(("rig.json", "instrument.json"))
 
 
 @dataclasses.dataclass(frozen=True)
@@ -119,7 +121,7 @@ class SessionInfo:
         return any(
             p
             for p in self.raw_data_paths
-            if p.name in ("session.json", "acquisition.json")
+            if p.name in SESSION_METADATA_FILENAMES
         )
 
     @functools.cached_property
@@ -127,7 +129,7 @@ class SessionInfo:
         if self.raw_data_paths is None:
             return False
         return any(
-            p for p in self.raw_data_paths if p.name in ("rig.json", "instrument.json")
+            p for p in self.raw_data_paths if p.name in RIG_METADATA_FILENAMES
         )
 
     @functools.cached_property

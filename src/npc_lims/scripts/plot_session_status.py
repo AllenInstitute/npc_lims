@@ -41,7 +41,8 @@ VIDEO_STATUS_COLUMNS = (
 )
 STALLED_NODES = {
     "Not uploaded",
-    "Metadata incomplete",
+    "Session missing",
+    "Rig missing",
     "Not sorted",
     "Surface channels not sorted",
     "Not imaged",
@@ -54,6 +55,7 @@ STALLED_NODES = {
     "NWB not cached",
 }
 PARALLEL_BRANCH_WEIGHT = 0.5
+DEFAULT_CACHE_VERSION = "v0.0.289"
 
 
 def _is_true(value: str | None) -> bool:
@@ -93,48 +95,45 @@ def session_paths(  # noqa: C901
 ) -> tuple[tuple[tuple[str, ...], float], ...]:
     """Return weighted workflow paths for one session.
 
-    Successful metadata, annotation, and video-processing paths rejoin at
-    ``Caching``. Parquet and NWB cache status then branch independently from
-    that node; incomplete branches stop at their current status.
+    Metadata branches stop at their own completion statuses. Successful
+    annotation and video-processing branches converge at ``Caching``. Cache
+    status then branches to parquet and NWB from that convergence point;
+    incomplete branches stop at their current status.
     """
     common_path = _common_path(row)
-    paths: list[tuple[tuple[str, ...], float]] = [(tuple(common_path), 1.0)]
+    # A successful sorted session continues through the annotation path below;
+    # adding the common path as well would count it twice at ``Sorted`` and make
+    # the incoming link much wider than the annotation output.
+    paths: list[tuple[tuple[str, ...], float]] = []
+    if common_path[-1] != "Sorted":
+        paths.append((tuple(common_path), 1.0))
 
     if _is_true(row.get("is_uploaded")):
         uploaded_path = ("All sessions", "Uploaded")
         metadata_complete = _is_true(row.get("is_session_json")) and _is_true(
             row.get("is_rig_json")
         )
-        metadata_path = [
-            *uploaded_path,
-            "Metadata",
-            "Metadata complete" if metadata_complete else "Metadata incomplete",
-        ]
+        metadata_path = [*uploaded_path, "Metadata"]
         if metadata_complete:
-            metadata_path.append("Caching")
+            metadata_paths = [(*metadata_path, "Metadata complete")]
+        else:
+            missing_metadata = []
+            if not _is_true(row.get("is_session_json")):
+                missing_metadata.append("Session missing")
+            if not _is_true(row.get("is_rig_json")):
+                missing_metadata.append("Rig missing")
+            # If both files are missing, split the metadata branch between the
+            # two independent failure modes without doubling its total width.
+            metadata_paths = [
+                (*metadata_path, missing) for missing in missing_metadata
+            ]
         paths.extend(
             [
-                (tuple(metadata_path), PARALLEL_BRANCH_WEIGHT),
                 (
-                    (
-                        *uploaded_path,
-                        "Caching",
-                        "Parquet cached"
-                        if _is_true(row.get("is_parquet_cached"))
-                        else "Parquet not cached",
-                    ),
-                    PARALLEL_BRANCH_WEIGHT,
-                ),
-                (
-                    (
-                        *uploaded_path,
-                        "Caching",
-                        "NWB cached"
-                        if _is_true(row.get("is_nwb_cached"))
-                        else "NWB not cached",
-                    ),
-                    PARALLEL_BRANCH_WEIGHT,
-                ),
+                    tuple(path),
+                    PARALLEL_BRANCH_WEIGHT / len(metadata_paths),
+                )
+                for path in metadata_paths
             ]
         )
 
@@ -148,7 +147,7 @@ def session_paths(  # noqa: C901
             )
             if annotation_path[-1] == "Annotated":
                 annotation_path.append("Caching")
-        paths.append((tuple(annotation_path), PARALLEL_BRANCH_WEIGHT))
+        paths.append((tuple(annotation_path), 1.0))
 
     video_path = ["All sessions"]
     if not _is_true(row.get("is_uploaded")):
@@ -157,7 +156,6 @@ def session_paths(  # noqa: C901
         video_path.append("Uploaded")
         video_path.append("Video processing")
         video_path.append("No video")
-        video_path.append("Caching")
         paths.append((tuple(video_path), PARALLEL_BRANCH_WEIGHT))
     else:
         video_path.extend(("Uploaded", "Video processing"))
@@ -182,7 +180,35 @@ def session_paths(  # noqa: C901
                 process_path.extend(("Video processing complete", "Caching"))
             paths.append((tuple(process_path), PARALLEL_BRANCH_WEIGHT / 3))
 
-    return tuple(paths)
+    cache_paths: list[tuple[tuple[str, ...], float]] = []
+    for path, weight in paths:
+        if path[-1] != "Caching":
+            cache_paths.append((path, weight))
+            continue
+        cache_paths.extend(
+            (
+                (
+                    (
+                        *path,
+                        "Parquet cached"
+                        if _is_true(row.get("is_parquet_cached"))
+                        else "Parquet not cached",
+                    ),
+                    weight / 2,
+                ),
+                (
+                    (
+                        *path,
+                        "NWB cached"
+                        if _is_true(row.get("is_nwb_cached"))
+                        else "NWB not cached",
+                    ),
+                    weight / 2,
+                ),
+            )
+        )
+
+    return tuple(cache_paths)
 
 
 def build_links(
@@ -213,7 +239,11 @@ def build_links(
 
 
 def make_plot(
-    rows: list[dict[str, str]], input_source: str, *, production_only: bool = True
+    rows: list[dict[str, str]],
+    input_source: str,
+    *,
+    production_only: bool = True,
+    cache_version: str = DEFAULT_CACHE_VERSION,
 ) -> FigureLike:
     """Build the Plotly Sankey figure."""
     try:
@@ -264,7 +294,8 @@ def make_plot(
     ).update_layout(
         title=(
             f"Session status ({len(rows):,} sessions; "
-            f"is_prod={'true' if production_only else 'any'})\n{input_source}"
+            f"is_prod={'true' if production_only else 'any'}; "
+            f"cache={cache_version})\n{input_source}"
         ),
         font={"size": 12},
         margin={"l": 20, "r": 20, "t": 80, "b": 20},
@@ -328,6 +359,11 @@ def main() -> None:
         action="store_true",
         help="Include non-production sessions (default: production only)",
     )
+    parser.add_argument(
+        "--cache-version",
+        default=DEFAULT_CACHE_VERSION,
+        help=f"NWB cache version shown in the title (default: {DEFAULT_CACHE_VERSION})",
+    )
     args = parser.parse_args()
 
     rows = read_rows(args.input_csv)
@@ -335,7 +371,12 @@ def main() -> None:
         raise ValueError(f"No session rows found in {args.input_csv}")
 
     production_only = not args.all_sessions
-    figure = make_plot(rows, args.input_csv, production_only=production_only)
+    figure = make_plot(
+        rows,
+        args.input_csv,
+        production_only=production_only,
+        cache_version=args.cache_version,
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     figure.write_html(args.output, include_plotlyjs=True)
     session_count = len(_filter_rows(rows, production_only))
