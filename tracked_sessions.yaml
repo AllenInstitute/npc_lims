@@ -468,6 +468,8 @@ ephys:
             is_production: False
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_724612_20240723:
         day: 2
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
         session_kwargs:
             probe_letters_to_skip: CD # not inserted
             is_injection_perturbation: True
@@ -600,6 +602,8 @@ ephys:
             is_injection_perturbation: true
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_718283_20240822:
         day: 3
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
         session_kwargs:
             is_production: false
             is_injection_perturbation: true
@@ -1121,6 +1125,8 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_812113_20251114:
         ephys_day: 2
         perturbation_day: 2
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
         session_kwargs:
             probe_letters_to_skip: ACDEF
             is_production: true
@@ -1128,6 +1134,8 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_812113_20251113:
         ephys_day: 1
         perturbation_day: 1
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
         session_kwargs:
             probe_letters_to_skip: ACDEF
             is_production: true
@@ -1135,6 +1143,8 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_812113_20251117:
         ephys_day: 3
         perturbation_day: 3
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
         session_kwargs:
             probe_letters_to_skip: ACDEF
             is_production: true
@@ -1142,6 +1152,8 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_812113_20251118:
         ephys_day: 4
         perturbation_day: 4
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
         session_kwargs:
             probe_letters_to_skip: ACDEF
             is_production: true
@@ -1149,6 +1161,8 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_815144_20251119:
         ephys_day: 1
         perturbation_day: 1
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
         session_kwargs:
             probe_letters_to_skip: ACDEF
             is_production: true
@@ -1156,6 +1170,8 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_815144_20251120:
         ephys_day: 2
         perturbation_day: 2
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
         session_kwargs:
             probe_letters_to_skip: ACDEF
             is_production: true
@@ -1163,6 +1179,8 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_815144_20251121:
         ephys_day: 3
         perturbation_day: 3
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
         session_kwargs:
             probe_letters_to_skip: ACDEF
             is_production: true
@@ -1348,6 +1366,8 @@ ephys:
   
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_810754_20251029:
         ephys_day: 3
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
         session_kwargs:
             probe_letters_to_skip: CD
             is_production: true
@@ -1355,6 +1375,8 @@ ephys:
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_810754_20251031:
         ephys_day: 5
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
         session_kwargs:
             probe_letters_to_skip: D
             is_production: true
@@ -1556,6 +1578,8 @@ ephys:
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_847958_20260413:
         ephys_day: 1
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
         session_kwargs:
             is_split_recording: True
             is_deep_insertion: True
@@ -1777,6 +1801,8 @@ ephys:
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_847958_20260413:
         ephys_day: 1
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
         session_kwargs:
             is_split_recording: True
             is_deep_insertion: True
@@ -2120,12 +2146,28 @@ ephys:
           is_deep_insertion: true
           surface_recording_probe_letters_to_skip: BC
 
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_856845_20260601:
+        ephys_day: 4
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
+        session_kwargs:
+          is_context_naive: true
+          is_deep_insertion: true
+
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_856845_20260527:
         ephys_day: 1
         session_kwargs:
           is_context_naive: true
           is_deep_insertion: true
           surface_recording_probe_letters_to_skip: ABC
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_856845_20260528:
+        ephys_day: 2
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
+        session_kwargs:
+          is_context_naive: true
+          is_deep_insertion: true
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_856847_20260605:
         ephys_day: 4
@@ -2366,6 +2408,13 @@ ephys:
         ephys_day: 1
         session_kwargs:
             probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_836629_20260428:
+        ephys_day: 1
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/5
+        session_kwargs:
+          probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_836629_20260430:
         ephys_day: 3
