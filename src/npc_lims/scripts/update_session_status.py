@@ -82,7 +82,7 @@ def get_status(
         try:
             surface_channel_assets = npc_lims.get_session_data_assets(s.id.with_idx(1))
         except npc_lims.SessionIndexError:
-            # If the main recording failed, the surface-channel recording can be
+            # If the main recording isn't uploaded, the surface-channel recording can be
             # the only asset and therefore occupy index 0.
             surface_channel_assets = (
                 session_assets
@@ -92,7 +92,7 @@ def get_status(
     else:
         surface_channel_assets = ()
     is_video = s.is_video if is_uploaded else None
-    is_imaged = _is_imaged(s, session_assets)
+    is_imaged = _is_imaged(s, session_assets) if is_uploaded else None
     is_gamma_encoding = (
         _has_asset(session_assets, "GammaEncoding") if is_video else None
     )
@@ -112,22 +112,23 @@ def get_status(
             if surface_channels_asset_id
             else None
         ),
-        "is_annotated": (_is_annotated(s, aind_session_id) if is_sorted else None),
+        "is_annotated": (is_annotated := (_is_annotated(s, aind_session_id) if is_sorted else None)),
         "is_video": is_video,
-        "is_dlc_eye": _has_asset(session_assets, "dlc_eye") if is_video else None,
-        "is_facemap": _has_asset(session_assets, "facemap") if is_video else None,
+        "is_dlc_eye": (is_dlc_eye := (_has_asset(session_assets, "dlc_eye") if is_video else None)),
+        "is_facemap": (is_facemap := (_has_asset(session_assets, "facemap") if is_video else None)),
         "is_gamma_encoding": is_gamma_encoding,
         "is_LPFaceParts": (
-            _has_asset(session_assets, "LPFaceParts")
+            is_LPFaceParts := (_has_asset(session_assets, "LPFaceParts")
             if is_video and is_gamma_encoding
             else False
             if is_video
-            else None
+            else None)
         ),
         "is_session_json": s.is_session_json if is_uploaded else None,
         "is_rig_json": s.is_rig_json if is_uploaded else None,
-        "is_parquet_cached": _is_cached_parquet(s.id),
-        "is_nwb_cached": _is_cached_nwb(s.id, cache_version),
+        "is_complete": (is_complete := (is_annotated and ((is_LPFaceParts and is_dlc_eye and is_facemap) if is_video else True)) if is_uploaded else None),
+        "is_parquet_cached": _is_cached_parquet(s.id) if is_complete else None,
+        "is_nwb_cached": _is_cached_nwb(s.id, cache_version) if is_complete else None,
     }
 
 
