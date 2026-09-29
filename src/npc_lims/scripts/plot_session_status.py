@@ -55,7 +55,6 @@ STALLED_NODES = {
     "NWB not cached",
 }
 PARALLEL_BRANCH_WEIGHT = 0.5
-DEFAULT_CACHE_VERSION = "v0.0.289"
 
 
 def _is_true(value: str | None) -> bool:
@@ -239,11 +238,7 @@ def build_links(
 
 
 def make_plot(
-    rows: list[dict[str, str]],
-    input_source: str,
-    *,
-    production_only: bool = True,
-    cache_version: str = DEFAULT_CACHE_VERSION,
+    rows: list[dict[str, str]], input_source: str, *, production_only: bool = True
 ) -> FigureLike:
     """Build the Plotly Sankey figure."""
     try:
@@ -294,8 +289,7 @@ def make_plot(
     ).update_layout(
         title=(
             f"Session status ({len(rows):,} sessions; "
-            f"is_prod={'true' if production_only else 'any'}; "
-            f"cache={cache_version})\n{input_source}"
+            f"is_prod={'true' if production_only else 'any'})\n{input_source}"
         ),
         font={"size": 12},
         margin={"l": 20, "r": 20, "t": 80, "b": 20},
@@ -359,11 +353,6 @@ def main() -> None:
         action="store_true",
         help="Include non-production sessions (default: production only)",
     )
-    parser.add_argument(
-        "--cache-version",
-        default=DEFAULT_CACHE_VERSION,
-        help=f"NWB cache version shown in the title (default: {DEFAULT_CACHE_VERSION})",
-    )
     args = parser.parse_args()
 
     rows = read_rows(args.input_csv)
@@ -371,12 +360,7 @@ def main() -> None:
         raise ValueError(f"No session rows found in {args.input_csv}")
 
     production_only = not args.all_sessions
-    figure = make_plot(
-        rows,
-        args.input_csv,
-        production_only=production_only,
-        cache_version=args.cache_version,
-    )
+    figure = make_plot(rows, args.input_csv, production_only=production_only)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     figure.write_html(args.output, include_plotlyjs=True)
     session_count = len(_filter_rows(rows, production_only))
