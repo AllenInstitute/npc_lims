@@ -35,8 +35,12 @@ except ImportError:
     ) from None
 
 
+DEFAULT_CACHE_VERSION = "v0.0.289"
+
+
 class Settings(BaseSettings):
     csv_output_path: Path | None = None
+    cache_version: str = DEFAULT_CACHE_VERSION
 
     model_config = SettingsConfigDict(
         cli_kebab_case=True,
@@ -47,7 +51,10 @@ class Settings(BaseSettings):
 MAX_WORKERS = 16
 
 
-def get_status(session: str | npc_lims.SessionInfo) -> dict[str, Any]:
+def get_status(
+    session: str | npc_lims.SessionInfo,
+    cache_version: str = DEFAULT_CACHE_VERSION,
+) -> dict[str, Any]:
     s = (
         session
         if isinstance(session, npc_lims.SessionInfo)
@@ -120,7 +127,7 @@ def get_status(session: str | npc_lims.SessionInfo) -> dict[str, Any]:
         "is_session_json": s.is_session_json if is_uploaded else None,
         "is_rig_json": s.is_rig_json if is_uploaded else None,
         "is_parquet_cached": _is_cached_parquet(s.id),
-        "is_nwb_cached": _is_cached_nwb(s.id),
+        "is_nwb_cached": _is_cached_nwb(s.id, cache_version),
     }
 
 
@@ -147,11 +154,10 @@ def _is_cached_parquet(session_id: npc_session.SessionRecord) -> bool:
         return False
 
 
-def _is_cached_nwb(session_id: npc_session.SessionRecord) -> bool:
-    """Return whether the session has any entry in the latest NWB cache."""
+def _is_cached_nwb(session_id: npc_session.SessionRecord, cache_version: str) -> bool:
+    """Return whether the session has any entry in the selected NWB cache."""
     try:
-        latest_version = npc_lims.get_current_cache_version()
-        nwb_cache_dir = npc_lims.CACHE_ROOT.parent / "nwb" / latest_version
+        nwb_cache_dir = npc_lims.CACHE_ROOT.parent / "nwb" / cache_version
         session_prefix = str(npc_session.SessionRecord(session_id))
         return any(nwb_cache_dir.glob(f"{session_prefix}*"))
     except Exception:  # cache storage may be unavailable during a status update
@@ -201,7 +207,10 @@ def main() -> None:
     with cf.ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         list(executor.map(_preload_session_assets, sessions_by_subject.values()))
     with cf.ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        futures = [executor.submit(get_status, session) for session in sessions]
+        futures = [
+            executor.submit(get_status, session, settings.cache_version)
+            for session in sessions
+        ]
         results = [
             future.result()
             for future in tqdm(
