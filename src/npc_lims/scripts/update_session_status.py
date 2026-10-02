@@ -70,6 +70,7 @@ def get_status(
     # the much more expensive AIND session model. Unuploaded sessions do not need
     # this lookup at all.
     session_assets = npc_lims.get_session_data_assets(s.id) if is_uploaded else ()
+    subject_assets = npc_lims.get_subject_data_assets(s.subject) if is_uploaded else ()
     if is_uploaded:
         raw_asset_id = npc_lims.get_session_raw_data_asset(s.id).id
     else:
@@ -92,7 +93,7 @@ def get_status(
     else:
         surface_channel_assets = ()
     is_video = s.is_video if is_uploaded else None
-    is_imaged = _is_imaged(s, session_assets) if is_uploaded else None
+    is_imaged = _is_imaged(s, subject_assets) if is_uploaded else None
     is_gamma_encoding = (
         _has_asset(session_assets, "GammaEncoding") if is_video else None
     )
@@ -136,9 +137,9 @@ def _has_asset(assets: tuple[Any, ...], name: str) -> bool:
     return any(name in asset.name for asset in assets)
 
 
-def _is_imaged(session: npc_lims.SessionInfo, assets: tuple[Any, ...]) -> bool:
-    """Return whether SmartSPIM or tissuecyte data is available for a session."""
-    if any("smartspim" in asset.name.lower() for asset in assets):
+def _is_imaged(session: npc_lims.SessionInfo, subject_assets: tuple[Any, ...]) -> bool:
+    """Return whether SmartSPIM or tissuecyte data is available for a subject."""
+    if any("smartspim" in asset.name.lower() for asset in subject_assets):
         return True
     with contextlib.suppress(FileNotFoundError, ValueError, IndexError, KeyError):
         return bool(s3.get_tissuecyte_annotation_files_from_s3(session))

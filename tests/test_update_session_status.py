@@ -73,7 +73,11 @@ def test_get_status_uses_session_assets_for_derived_statuses(
         SimpleNamespace(name="ecephys_123456_2024-01-02_sorted_2024-01-03", files=10),
         SimpleNamespace(name="ecephys_123456_2024-01-02_dlc_eye_2024-01-03", files=1),
     )
+    subject_assets = (
+        SimpleNamespace(name="subject_123456_smartspim", files=1),
+    )
     monkeypatch.setattr(npc_lims, "get_session_data_assets", lambda _: assets)
+    monkeypatch.setattr(npc_lims, "get_subject_data_assets", lambda _: subject_assets)
     monkeypatch.setattr(
         npc_lims,
         "get_codoecean_session_id",
@@ -111,6 +115,7 @@ def test_get_status_uses_session_assets_for_derived_statuses(
     assert result["is_facemap"] is False
     assert result["is_gamma_encoding"] is False
     assert result["is_LPFaceParts"] is False
+    assert result["is_imaged"] is True
 
 
 def test_annotation_lookup_reuses_session_info(
