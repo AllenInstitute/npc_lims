@@ -113,7 +113,7 @@ def get_status(
             if surface_channels_asset_id
             else None
         ),
-        "is_annotated": (is_annotated := (_is_annotated(s, aind_session_id) if is_sorted else None)),
+        "is_annotated": (is_annotated := (_is_annotated(s, aind_session_id) if is_sorted and is_imaged else None)),
         "is_video": is_video,
         "is_dlc_eye": (is_dlc_eye := (_has_asset(session_assets, "dlc_eye") if is_video else None)),
         "is_facemap": (is_facemap := (_has_asset(session_assets, "facemap") if is_video else None)),
