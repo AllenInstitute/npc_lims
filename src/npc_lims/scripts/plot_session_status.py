@@ -57,8 +57,24 @@ STALLED_NODES = {
 PARALLEL_BRANCH_WEIGHT = 0.5
 
 
+def _status(value: str | None) -> bool | None:
+    """Parse a status while preserving an unknown/ineligible value as ``None``."""
+    if value is None or not str(value).strip():
+        return None
+    normalized = str(value).strip().lower()
+    if normalized in {"1", "true", "yes", "y"}:
+        return True
+    if normalized in {"0", "false", "no", "n"}:
+        return False
+    return None
+
+
 def _is_true(value: str | None) -> bool:
-    return str(value).strip().lower() in {"1", "true", "yes", "y"}
+    return _status(value) is True
+
+
+def _is_false(value: str | None) -> bool:
+    return _status(value) is False
 
 
 def _filter_rows(
@@ -73,18 +89,23 @@ def _common_path(row: dict[str, str]) -> list[str]:
     """Return the common workflow path, ending at its first stall."""
     path = ["All sessions"]
 
-    if not _is_true(row.get("is_uploaded")):
+    if _is_false(row.get("is_uploaded")):
         return [*path, "Not uploaded"]
+    if not _is_true(row.get("is_uploaded")):
+        return path
     path.append("Uploaded")
 
-    if not _is_true(row.get("is_sorted")):
+    if _is_false(row.get("is_sorted")):
         return [*path, "Not sorted"]
+    if not _is_true(row.get("is_sorted")):
+        return path
     path.append("Sorted")
 
     if row.get("surface_channels_asset_id") and not _is_true(
         row.get("is_surface_channels_sorted")
     ):
-        return [*path, "Surface channels not sorted"]
+        if _is_false(row.get("is_surface_channels_sorted")):
+            return [*path, "Surface channels not sorted"]
 
     return path
 
@@ -117,41 +138,45 @@ def session_paths(  # noqa: C901
             metadata_paths = [(*metadata_path, "Metadata complete")]
         else:
             missing_metadata = []
-            if not _is_true(row.get("is_session_json")):
+            if _is_false(row.get("is_session_json")):
                 missing_metadata.append("Session missing")
-            if not _is_true(row.get("is_rig_json")):
+            if _is_false(row.get("is_rig_json")):
                 missing_metadata.append("Rig missing")
             # If both files are missing, split the metadata branch between the
             # two independent failure modes without doubling its total width.
             metadata_paths = [
                 (*metadata_path, missing) for missing in missing_metadata
             ]
-        paths.extend(
-            [
-                (
-                    tuple(path),
-                    PARALLEL_BRANCH_WEIGHT / len(metadata_paths),
-                )
-                for path in metadata_paths
-            ]
-        )
+        if metadata_paths:
+            paths.extend(
+                [
+                    (
+                        tuple(path),
+                        PARALLEL_BRANCH_WEIGHT / len(metadata_paths),
+                    )
+                    for path in metadata_paths
+                ]
+            )
 
     if common_path[-1] == "Sorted":
         annotation_path = [*common_path, "Annotation"]
-        if not _is_true(row.get("is_imaged")):
+        if _is_false(row.get("is_imaged")):
             annotation_path.append("Not imaged")
-        else:
+            paths.append((tuple(annotation_path), 1.0))
+        elif _is_true(row.get("is_imaged")):
             annotation_path.append(
                 "Annotated" if _is_true(row.get("is_annotated")) else "Not annotated"
             )
-            if annotation_path[-1] == "Annotated":
+            if _is_false(row.get("is_annotated")):
+                paths.append((tuple(annotation_path), 1.0))
+            elif annotation_path[-1] == "Annotated":
                 annotation_path.append("Caching")
-        paths.append((tuple(annotation_path), 1.0))
+                paths.append((tuple(annotation_path), 1.0))
 
     video_path = ["All sessions"]
     if not _is_true(row.get("is_uploaded")):
         pass
-    elif not _is_true(row.get("is_video")):
+    elif _is_false(row.get("is_video")):
         video_path.append("Uploaded")
         video_path.append("Video processing")
         video_path.append("No video")
@@ -161,31 +186,35 @@ def session_paths(  # noqa: C901
         # DLC and Facemap depend only on upload/video. LPFaceParts depends on
         # gamma encoding, so it gets its own branch from the same prerequisite.
         gamma_complete = _is_true(row.get("is_gamma_encoding"))
+        video_paths: list[tuple[str, ...]] = []
         for process_name, column in VIDEO_STATUS_COLUMNS:
-            if process_name == "Gamma encoding":
-                continue
             process_path = [*video_path]
             if process_name == "LPFaceParts":
-                process_path.append(
-                    "Gamma encoding" if gamma_complete else "Missing Gamma encoding"
-                )
-                if not gamma_complete:
-                    paths.append((tuple(process_path), PARALLEL_BRANCH_WEIGHT / 3))
+                if _is_false(row.get("is_gamma_encoding")):
+                    video_paths.append((*process_path, "Missing Gamma encoding"))
                     continue
-            process_path.append(
-                process_name if _is_true(row.get(column)) else f"Missing {process_name}"
-            )
-            if process_path[-1] == process_name:
-                process_path.extend(("Video processing complete", "Caching"))
-            paths.append((tuple(process_path), PARALLEL_BRANCH_WEIGHT / 3))
+                if not gamma_complete:
+                    continue
+            if _is_true(row.get(column)):
+                process_path.extend((process_name, "Video processing complete", "Caching"))
+            elif _is_false(row.get(column)):
+                process_path.append(f"Missing {process_name}")
+            else:
+                continue
+            video_paths.append(tuple(process_path))
+        paths.extend(
+            (path, PARALLEL_BRANCH_WEIGHT / len(video_paths))
+            for path in video_paths
+        )
 
     cache_paths: list[tuple[tuple[str, ...], float]] = []
     for path, weight in paths:
         if path[-1] != "Caching":
             cache_paths.append((path, weight))
             continue
-        cache_paths.extend(
-            (
+        cache_branches = []
+        if _status(row.get("is_parquet_cached")) is not None:
+            cache_branches.append(
                 (
                     (
                         *path,
@@ -194,7 +223,10 @@ def session_paths(  # noqa: C901
                         else "Parquet not cached",
                     ),
                     weight / 2,
-                ),
+                )
+            )
+        if _status(row.get("is_nwb_cached")) is not None:
+            cache_branches.append(
                 (
                     (
                         *path,
@@ -203,11 +235,17 @@ def session_paths(  # noqa: C901
                         else "NWB not cached",
                     ),
                     weight / 2,
-                ),
+                )
             )
-        )
+        if cache_branches:
+            cache_paths.extend(
+                (cache_path, weight / len(cache_branches))
+                for cache_path, _ in cache_branches
+            )
+        else:
+            cache_paths.append((path, weight))
 
-    return tuple(cache_paths)
+    return tuple(cache_paths or [(tuple(("All sessions",)), 1.0)])
 
 
 def build_links(
