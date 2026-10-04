@@ -43,6 +43,9 @@ jobs:
         pip install -e .[polars]
         pip install "plotly==5.24.1" "kaleido==0.2.1"
 
+    - name: Install uv
+      uses: astral-sh/setup-uv@v6
+
     - name: Configure aws credentials
       env:
         AWS_IAM_ROLE: ${{ vars.AWS_IAM_ROLE }}
