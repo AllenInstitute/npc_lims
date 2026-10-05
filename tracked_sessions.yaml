@@ -2294,9 +2294,11 @@ ephys:
             probe_letters_to_skip: DE # not recorded
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-12-05_13-08-02_644547:
         session_kwargs:
+            is_video: false
             probe_letters_to_skip: DE # not recorded
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-12-06_12-35-35_644547:
         session_kwargs:
+            is_video: false
             probe_letters_to_skip: DE # not recorded
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2023-01-17_11-39-17_646318:
         session_kwargs:
