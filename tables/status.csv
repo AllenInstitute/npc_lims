@@ -83,7 +83,7 @@ date,session_id,raw_asset_id,surface_channels_asset_id,is_uploaded,is_prod,is_im
 2026-04-17,ecephys_837230_2026-04-17_13-31-48,d498f156-4d62-44b7-bbb4-a9898b40930c,,true,true,true,true,,false,true,true,true,true,true,true,true,false,,
 2026-02-18,ecephys_836729_2026-02-18_12-21-19,be20f438-b8db-4a30-9c1d-f5edab5f1738,b0275774-eb0d-4fb7-adb0-a272d3ee6c5b,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,false
 2026-02-17,ecephys_836729_2026-02-17_12-11-16,e47383b7-bea6-4e51-92bc-b06de38d83f2,46790a9b-b65e-405b-af41-a35a2346dc25,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,false
-2026-02-16,ecephys_836729_2026-02-16_13-20-53,7a6b032f-a219-45e0-9b44-90031d76bbdd,,true,true,true,true,,true,true,true,true,false,false,true,true,false,,
+2026-02-16,ecephys_836729_2026-02-16_13-20-53,7a6b032f-a219-45e0-9b44-90031d76bbdd,,true,true,true,true,,true,true,true,true,true,true,true,true,true,true,false
 2026-02-13,ecephys_836726_2026-02-13_10-19-31,d51549a6-ef74-4e68-8395-6729c14c2bda,,true,true,true,true,,false,true,true,true,true,true,true,true,false,,
 2026-02-12,ecephys_836726_2026-02-12_11-39-49,14c59648-82be-4111-8006-cb488c4cfdf7,,true,true,true,true,,false,true,true,true,true,true,true,true,false,,
 2026-02-11,ecephys_836726_2026-02-11_12-18-03,585229f6-ddf8-414d-b375-fbb65c423020,,true,true,true,true,,false,true,true,true,true,true,true,true,false,,
