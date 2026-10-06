@@ -148,8 +148,8 @@ date,session_id,raw_asset_id,surface_channels_asset_id,is_uploaded,is_prod,is_im
 2025-10-22,ecephys_805752_2025-10-22_12-42-18,b5844f3d-903c-44ba-8830-f7cf5f0ad514,aa7cb4a2-373b-48ec-88cd-c0e4bbc3c6ad,true,true,true,true,true,false,true,true,true,true,true,true,true,false,,
 2025-10-21,ecephys_805752_2025-10-21_12-24-14,f4c6f71d-9313-42c7-ad23-3b7841ff42c1,b5b6db41-f9ff-46f2-b84d-c3af028e199d,true,true,true,true,true,false,true,true,true,true,true,true,true,false,,
 2025-10-20,ecephys_805752_2025-10-20_13-10-14,04dd58fe-b43c-4832-83c2-7009797db135,a7110144-5315-4f36-9803-78cecb62bf09,true,true,true,true,true,false,true,true,true,true,true,true,true,false,,
-2025-09-12,ecephys_805142_2025-09-12_11-06-57,ffaeed67-8eb4-45fe-8938-e4effad659c8,,true,false,true,true,,false,true,false,true,true,true,true,true,false,,
-2025-08-22,ecephys_802590_2025-08-22_17-15-02,9ed608c6-2c84-4983-9409-d1a5890e6667,,true,false,true,true,,false,true,false,true,true,true,true,true,false,,
+2025-09-12,ecephys_805142_2025-09-12_11-06-57,ffaeed67-8eb4-45fe-8938-e4effad659c8,,true,false,true,true,,false,true,true,true,true,true,true,true,false,,
+2025-08-22,ecephys_802590_2025-08-22_17-15-02,9ed608c6-2c84-4983-9409-d1a5890e6667,,true,false,true,true,,false,true,true,true,true,true,true,true,false,,
 2025-09-25,ecephys_801857_2025-09-25_14-08-48,92bc92a5-915e-46d4-ac26-b904047a42fa,,true,false,true,true,,false,true,true,true,true,true,true,true,false,,
 2025-09-04,ecephys_798632_2025-09-04_11-30-42,f4ca7aff-4d09-4862-82e1-17a65dac6660,,true,true,true,true,,true,true,true,true,true,true,true,true,true,true,true
 2025-09-03,ecephys_798632_2025-09-03_10-33-28,0d53f3be-3d39-4bfd-b3d4-9a32be20cea6,,true,true,true,true,,true,true,true,true,true,true,true,true,true,true,true
@@ -196,9 +196,9 @@ date,session_id,raw_asset_id,surface_channels_asset_id,is_uploaded,is_prod,is_im
 2025-02-05,ecephys_759434_2025-02-05_12-32-35,476cdb34-cbac-4a44-9914-f585eb169a8d,,true,true,true,true,,true,true,true,true,true,true,true,true,true,true,true
 2025-02-04,ecephys_759434_2025-02-04_12-27-22,7eb6f148-ceb7-43f4-8e84-641c0db17535,,true,true,true,true,,true,true,true,true,true,true,true,true,true,true,true
 2025-02-03,ecephys_759434_2025-02-03_13-16-51,68c89ce8-8f53-4886-ae83-37f26f1fdbbc,,true,true,true,true,,true,true,true,true,true,true,true,true,true,true,true
-2025-02-13,ecephys_754852_2025-02-13_13-55-21,88b1f838-cbd1-4184-a710-2c35aecbc883,,true,false,true,true,,false,true,false,true,true,true,true,true,false,,
-2025-02-12,ecephys_754852_2025-02-12_14-47-39,a28dad17-69cd-4ae0-8664-4583a58d7a7a,,true,false,true,true,,false,true,false,true,true,true,false,false,false,,
-2025-02-11,ecephys_754852_2025-02-11_16-14-43,708e89a4-f5eb-4fa5-b319-7cf1913debc9,,true,false,true,true,,false,true,false,true,true,true,true,true,false,,
+2025-02-13,ecephys_754852_2025-02-13_13-55-21,88b1f838-cbd1-4184-a710-2c35aecbc883,,true,false,true,true,,false,true,true,true,true,true,true,true,false,,
+2025-02-12,ecephys_754852_2025-02-12_14-47-39,a28dad17-69cd-4ae0-8664-4583a58d7a7a,,true,false,true,true,,false,true,true,true,true,true,false,false,false,,
+2025-02-11,ecephys_754852_2025-02-11_16-14-43,708e89a4-f5eb-4fa5-b319-7cf1913debc9,,true,false,true,true,,false,true,true,true,true,true,true,true,false,,
 2025-02-10,ecephys_754852_2025-02-10_15-58-04,757abd17-caf3-4931-ae1e-468ba353e9b5,,true,false,true,true,,false,true,true,true,true,true,false,false,false,,
 2024-11-20,ecephys_751595_2024-11-20_14-42-14,0bf59437-bbbd-4f2b-9df8-bd73d52cae5d,,true,false,true,true,,false,true,true,true,true,true,true,true,false,,
 2024-11-27,ecephys_750329_2024-11-27_09-57-44,2a20a75e-4f63-47d5-87c3-34e02616648f,,true,true,true,true,,true,true,true,true,true,true,true,true,true,true,true
