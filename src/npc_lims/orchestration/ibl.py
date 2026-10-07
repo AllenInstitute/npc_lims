@@ -1,8 +1,20 @@
-from __future__ import annotations
-
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#   "aind-session>=0.3.25",
+#   "codeocean>=0.3.1",
+#   "dagster==1.5.14",
+#   "dagster-webserver==1.5.14",
+#   "npc-session>=0.1.36",
+#   "universal-pathlib>=0.1.4",
+# ]
+# ///
 import dataclasses
 import datetime
+import subprocess
+import sys
 from collections.abc import Mapping
+from pathlib import Path
 
 import npc_session
 import upath
@@ -10,23 +22,23 @@ from dagster import (
     AssetObservation,
     DefaultSensorStatus,
     Definitions,
-    RunRequest,
+    OpExecutionContext,
     RunConfig,
+    RunRequest,
     SensorEvaluationContext,
     SkipReason,
     job,
     op,
-    sensor, 
-    OpExecutionContext,
+    sensor,
 )
 
 from npc_lims.ibl import (
+    ANNOTATIONS_ROOT,
     get_annotated_ng_jsons,
     normalize_etag,
-    ANNOTATIONS_ROOT,
 )
 
-SENSOR_MINIMUM_INTERVAL_SECONDS = 60
+SENSOR_MINIMUM_INTERVAL_SECONDS = 10
 
 
 @dataclasses.dataclass(frozen=True)
@@ -43,7 +55,7 @@ class S3ObjectMetadata:
 class NgJsonConfig:
     """Configuration for observing one annotated Neuroglancer JSON."""
 
-    subject_id: str
+    subject_id: int
     uri: str
     etag: str
     size: int
@@ -71,9 +83,7 @@ def get_s3_object_metadata(path: upath.UPath) -> S3ObjectMetadata | None:
         return None
 
     size = _metadata_value(info, "size", "Size", "ContentLength")
-    last_modified = _metadata_value(
-        info, "LastModified", "last_modified", "mtime", "updated"
-    )
+    last_modified = _metadata_value(info, "LastModified", "last_modified", "mtime", "updated")
     if isinstance(last_modified, datetime.datetime):
         last_modified = last_modified.isoformat()
     elif last_modified is None:
@@ -91,38 +101,33 @@ def get_s3_object_metadata(path: upath.UPath) -> S3ObjectMetadata | None:
 
 @op(
     config_schema={
-        "subject_id": str,
+        "subject_id": int,
         "uri": str,
         "etag": str,
         "size": int,
         "last_modified": str,
     }
 )
-def observe_annotated_ng_json(context: OpExecutionContext) -> None:  # noqa: ANN001
-    """Record metadata for one externally created annotated Neuroglancer JSON."""
+def observe_annotated_ng_json(context: OpExecutionContext) -> None:
+    """Annotated Neuroglancer JSON for one subject"""
     config = NgJsonConfig(**context.op_config)
     metadata = dataclasses.asdict(config)
-    subject_id = config.subject_id
     context.log_event(
         AssetObservation(
-            asset_key=["annotated_ng_json", subject_id],
+            asset_key=["annotated_ng_json", str(config.subject_id)],
             description="Neuroglancer annotation observed in S3",
             metadata=metadata,
         )
     )
     context.log.info(
         "Observed annotated Neuroglancer JSON for subject %s at %s (ETag %s)",
-        subject_id,
+        config.subject_id,
         config.uri,
         config.etag,
     )
 
 
-@job(
-    description=(
-        "Create data conversion asset for a subject to use with the IBL GUI in Code Ocean"
-    )
-)
+@job(description=("Create data conversion asset for a subject to use with the IBL GUI in Code Ocean"))
 def ibl_conversion_job() -> None:
     observe_annotated_ng_json()
 
@@ -171,14 +176,31 @@ def ng_json_sensor(
                         }
                     }
                 ),
-                tags={"subject_id": subject_id},
+                tags={"subject_id": str(subject_id)},
             )
         )
     if not requests:
         return SkipReason(f"No annotated Neuroglancer JSONs were found in {ANNOTATIONS_ROOT}")
     return requests
 
+
 defs = Definitions(
     jobs=[ibl_conversion_job],
     sensors=[ng_json_sensor],
 )
+
+
+if __name__ == "__main__":
+    Path(".dagster").mkdir(exist_ok=True)
+    raise SystemExit(
+        subprocess.call(
+            [
+                sys.executable,
+                "-m",
+                "dagster",
+                "dev",
+                "-m",
+                "npc_lims.orchestration.ibl",
+            ]
+        )
+    )
