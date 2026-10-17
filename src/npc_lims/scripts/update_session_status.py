@@ -21,6 +21,7 @@ from typing import Any
 
 import aind_session
 import npc_session
+import upath
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from tqdm import tqdm
 
@@ -49,6 +50,11 @@ class Settings(BaseSettings):
 
 
 MAX_WORKERS = 16
+
+
+def _write_parquet(df: pl.DataFrame, path: upath.UPath) -> None:
+    with path.open("wb") as file:
+        df.write_parquet(file)
 
 
 def get_status(
@@ -225,7 +231,7 @@ def main() -> None:
     df = pl.DataFrame(results).sort("date", descending=True)
     print("Dataframe with rows:", len(df))
     print(f"Writing updated session status to {path}...")
-    df.write_parquet(path)
+    _write_parquet(df, path)
     print(f"Successfully updated {path}")
     if settings.csv_output_path is not None:
         csv_path = settings.csv_output_path
