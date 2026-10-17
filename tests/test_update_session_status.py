@@ -6,13 +6,22 @@ from typing import NoReturn
 
 import aind_session
 import npc_session
+import polars as pl
 import pytest
 import upath
 
 import npc_lims
 from npc_lims.metadata import codeocean_utils
 from npc_lims.paths import s3
-from npc_lims.scripts.update_session_status import get_status
+from npc_lims.scripts.update_session_status import _write_parquet, get_status
+
+
+def test_write_parquet_to_path_stream(tmp_path: Path) -> None:
+    path = upath.UPath(tmp_path / "status.parquet")
+
+    _write_parquet(pl.DataFrame({"value": [1]}), path)
+
+    assert pl.read_parquet(path).equals(pl.DataFrame({"value": [1]}))
 
 
 def test_get_status_does_not_reresolve_session_info(
