@@ -225,7 +225,7 @@ def main() -> None:
     df = pl.DataFrame(results).sort("date", descending=True)
     print("Dataframe with rows:", len(df))
     print(f"Writing updated session status to {path}...")
-    df.write_parquet(path)
+    df.write_parquet(path.as_posix())
     print(f"Successfully updated {path}")
     if settings.csv_output_path is not None:
         csv_path = settings.csv_output_path
