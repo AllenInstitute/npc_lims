@@ -21,7 +21,7 @@ dependencies = [
     "aind-session>=0.3.25",
     "tqdm>=4.70.1",
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.11,<3.12"
 readme = "README.md"
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -43,6 +43,13 @@ Issues = "https://github.com/AllenInstitute/npc_lims/issues"
 [project.optional-dependencies]
 polars = [
     "polars>1.0",
+]
+orchestration = [
+    "apache-airflow>=3.0,<4",
+    "dagster",
+    "dagster-webserver",
+    "polars",
+    "universal-pathlib",
 ]
 
 [project.scripts]
