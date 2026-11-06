@@ -1,13 +1,13 @@
 """Launch IBL B5 trigger capsule for each tracked subject with a CO asset and no trigger run yet.
-Max 3 in flight; records computation ids into docs/ibl_tracking.md as they launch."""
+Max 3 in flight; records computation ids into ibl-orchestration/ibl_tracking.md as they launch."""
 import re, time, pathlib
 from codeocean.computation import RunParams, PipelineProcessParams, Param, ComputationState
 import npc_lims.metadata.codeocean_utils as u
 
 TRIGGER = "d89073c0-e1ff-44e8-8ca1-4130b4964fba"
-WORKER = "09e00815-6730-479c-8b50-355bffb0b2b9"
+WORKER = "cba3374d-cd09-4297-a17d-152c371e117d"
 MAX_CONCURRENT = 1000  # user override: launch all at once
-doc = pathlib.Path("docs/ibl_tracking.md")
+doc = pathlib.Path("ibl-orchestration/ibl_tracking.md")
 c = u.get_codeocean_client()
 
 def rows():
