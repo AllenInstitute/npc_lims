@@ -6,10 +6,12 @@
         "titleBar.activeBackground": "#82d78a",
         "titleBar.activeForeground": "#15202b",
         "titleBar.inactiveBackground": "#82d78a99",
-        "titleBar.inactiveForeground": "#15202b99"
+        "titleBar.inactiveForeground": "#15202b99",
+        "commandCenter.foreground": "#15202b"
     },
     "peacock.color": "#82d78a",
     "python.linting.pylintEnabled": false,
     "python.linting.mypyEnabled": true,
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "python.defaultInterpreterPath": "C:\\Users\\ben.hardcastle\\github\\npc_lims\\.venv\\Scripts\\python.exe"
 }

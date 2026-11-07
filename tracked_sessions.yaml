@@ -1355,14 +1355,7 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_835598_20260227:
         ephys_day: 5
         session_kwargs:
-            surface_recording_probe_letters_to_skip: D
-
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_835598_20260225:
-        ephys_day: 3
-        issues:
-          - https://github.com/AllenInstitute/npc_lims/issues/5
-        session_kwargs:
-          concatenate_recordings: [recording1, recording2, recording3]        
+            surface_recording_probe_letters_to_skip: D   
   
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_810754_20251029:
         ephys_day: 3

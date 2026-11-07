@@ -11,8 +11,17 @@ Tools to fetch and update paths, metadata and state for Mindscope Neuropixels se
 [![GitHub
 issues](https://img.shields.io/github/issues/alleninstitute/npc_lims?logo=github)](https://github.com/alleninstitute/npc_lims/issues)
 
-## quickstart
 
+## populate tracked_sessions.yaml from experiment tracking spreadsheet
+```
+ python -m npc_lims.metadata.ephys_tracking `
+  "C:\Users\ben.hardcastle\Desktop\upload_ephys.bat" `
+  "Ephys Experiment Tracking.xlsx" `
+  "tracked_sessions.yaml" `
+  --write  # omit to do a dry run
+```
+
+## quickstart
 - make a new Python >=3.9 virtual environment with conda or venv (lighter option, since this package does not require pandas, numpy etc.):
   ```bash
   python -m venv .venv
