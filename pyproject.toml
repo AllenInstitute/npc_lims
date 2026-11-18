@@ -21,10 +21,12 @@ dependencies = [
     "aind-session>=0.3.25",
     "tqdm>=4.70.1",
 ]
-requires-python = ">=3.11,<3.12"
+requires-python = ">=3.9,<3.12"
 readme = "README.md"
 classifiers = [
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "License :: OSI Approved :: MIT License",
     "Operating System :: Microsoft :: Windows",
