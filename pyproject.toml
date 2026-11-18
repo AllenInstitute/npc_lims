@@ -179,7 +179,9 @@ exclude_also = [
 addopts = [
     "--import-mode=importlib",
     "--doctest-modules",
-    "--ignore-glob=*scripts*,*examples*,*docs*",
+    "--ignore-glob=*scripts*",
+    "--ignore-glob=*examples*",
+    "--ignore-glob=*docs*",
     "--doctest-glob=*README.md",
 ]
 doctest_optionflags = [
