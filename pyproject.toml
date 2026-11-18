@@ -46,8 +46,6 @@ polars = [
 ]
 orchestration = [
     "apache-airflow>=3.0,<4",
-    "dagster",
-    "dagster-webserver",
     "polars",
     "universal-pathlib",
 ]

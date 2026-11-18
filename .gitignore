@@ -168,4 +168,3 @@ cython_debug/
 # pyenv
 .python-version
 .scratch/
-.dagster/
