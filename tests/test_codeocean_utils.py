@@ -94,3 +94,32 @@ def test_surface_asset_can_be_index_zero_when_main_recording_failed(
         codeocean_utils.get_surface_channel_raw_data_asset("840160_2026-04-28_1")
         is surface_asset
     )
+
+
+def test_surface_channel_asset_is_selected_for_indexed_session(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    surface_asset = SimpleNamespace(
+        name="ecephys_840160_2026-04-28_14-05-04",
+        created=1,
+        source_bucket=object(),
+    )
+    asset_root = upath.UPath(tmp_path)
+    (tmp_path / "ecephys").mkdir()
+
+    monkeypatch.setattr(
+        codeocean_utils,
+        "get_session_data_assets",
+        lambda session: (surface_asset,),
+    )
+    monkeypatch.setattr(codeocean_utils, "is_raw_data_asset", lambda asset: True)
+    monkeypatch.setattr(
+        codeocean_utils,
+        "get_path_from_data_asset",
+        lambda asset: asset_root,
+    )
+
+    assert (
+        codeocean_utils.get_session_raw_data_asset("840160_2026-04-28_1")
+        is surface_asset
+    )

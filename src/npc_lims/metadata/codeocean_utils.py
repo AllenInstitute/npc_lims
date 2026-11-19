@@ -368,7 +368,9 @@ def get_session_raw_data_asset(
     # If the main recording failed, it can be the only raw asset for the
     # session, so selecting the latest raw asset would incorrectly report the
     # surface-channel asset as the main upload.
-    if platforms[0] == "ecephys":
+    # Only applies to the main recording (idx 0): later recordings on the same
+    # day (idx >= 1, e.g. surface channels) legitimately lack behavior data.
+    if platforms[0] == "ecephys" and session.idx == 0:
         raw_assets = tuple(
             asset for asset in raw_assets if _has_main_recording_data(asset)
         )
