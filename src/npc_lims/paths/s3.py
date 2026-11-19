@@ -284,8 +284,8 @@ def get_settings_xml_path_from_s3(
 def get_h5_sync_from_s3(session: str | npc_session.SessionRecord) -> upath.UPath:
     """
     Examples:
-        >>> get_h5_sync_from_s3('662892_20230821')
-        S3Path('s3://aind-ephys-data/ecephys_662892_2023-08-21_12-43-45/behavior/20230821T124345.h5')
+        >>> get_h5_sync_from_s3('662892_20230821').as_posix()
+        's3://aind-ephys-data/ecephys_662892_2023-08-21_12-43-45/behavior/20230821T124345.h5'
     """
     raw_data_paths_s3 = get_raw_data_paths_from_s3(session)
     sync_path = tuple(path for path in raw_data_paths_s3 if ".h5" in path.suffix)
@@ -326,8 +326,8 @@ def get_behavior_video_path_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> upath.UPath:
     """
-    >>> get_behavior_video_path_from_s3('686740_2023-10-26')
-    S3Path('s3://aind-ephys-data/ecephys_686740_2023-10-26_12-29-08/behavior_videos/Behavior_20231026T122922.mp4')
+    >>> get_behavior_video_path_from_s3('686740_2023-10-26').as_posix()
+    's3://aind-ephys-data/ecephys_686740_2023-10-26_12-29-08/behavior_videos/Behavior_20231026T122922.mp4'
     """
     raw_data_paths = get_raw_data_paths_from_s3(session)
     behavior_video_path = tuple(
@@ -345,8 +345,8 @@ def get_behavior_video_path_from_s3(
 @functools.cache
 def get_eye_video_path_from_s3(session: str | npc_session.SessionRecord) -> upath.UPath:
     """
-    >>> get_eye_video_path_from_s3('686740_2023-10-26')
-    S3Path('s3://aind-ephys-data/ecephys_686740_2023-10-26_12-29-08/behavior_videos/Eye_20231026T122922.mp4')
+    >>> get_eye_video_path_from_s3('686740_2023-10-26').as_posix()
+    's3://aind-ephys-data/ecephys_686740_2023-10-26_12-29-08/behavior_videos/Eye_20231026T122922.mp4'
     """
     raw_data_paths = get_raw_data_paths_from_s3(session)
     eye_video_path = tuple(
@@ -366,8 +366,8 @@ def get_face_video_path_from_s3(
     session: str | npc_session.SessionRecord,
 ) -> upath.UPath:
     """
-    >>> get_face_video_path_from_s3('686740_2023-10-26')
-    S3Path('s3://aind-ephys-data/ecephys_686740_2023-10-26_12-29-08/behavior_videos/Face_20231026T122923.mp4')
+    >>> get_face_video_path_from_s3('686740_2023-10-26').as_posix()
+    's3://aind-ephys-data/ecephys_686740_2023-10-26_12-29-08/behavior_videos/Face_20231026T122923.mp4'
     """
     raw_data_paths = get_raw_data_paths_from_s3(session)
     face_video_path = tuple(

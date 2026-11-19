@@ -392,8 +392,8 @@ def get_surface_channel_root(session: str | npc_session.SessionRecord) -> upath.
     info from Code Ocean.
 
     Examples:
-        >>> get_surface_channel_root('660023_20230808')
-        S3Path('s3://aind-ephys-data/ecephys_660023_2023-08-08_15-11-14')
+        >>> get_surface_channel_root('660023_20230808').as_posix()
+        's3://aind-ephys-data/ecephys_660023_2023-08-08_15-11-14'
         >>> assert get_surface_channel_root('660023_20230808') != get_raw_data_root('660023_20230808')
         >>> get_surface_channel_root('649943_20230216')
         Traceback (most recent call last):
@@ -492,8 +492,8 @@ def get_raw_data_root(session: str | npc_session.SessionRecord) -> upath.UPath:
     """Reconstruct path to raw data in bucket (e.g. on s3) using data-asset
     info from Code Ocean.
 
-        >>> get_raw_data_root('668759_20230711')
-        S3Path('s3://aind-ephys-data/ecephys_668759_2023-07-11_13-07-32')
+        >>> get_raw_data_root('668759_20230711').as_posix()
+        's3://aind-ephys-data/ecephys_668759_2023-07-11_13-07-32'
     """
     raw_asset = get_session_raw_data_asset(session)
 

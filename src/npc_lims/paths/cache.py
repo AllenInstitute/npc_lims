@@ -56,12 +56,12 @@ def get_nwb_path(
     zarr: bool = True,
 ) -> upath.UPath:
     """
-    >>> get_nwb_path("366122_2023-12-31")   # doctest: +SKIP
-    S3Path('s3://aind-scratch-data/dynamic-routing/cache/nwb/v0.0.210/366122_2023-12-31.nwb.zarr')
-    >>> get_nwb_path("366122_2023-12-31", version="v0.0.0")
-    S3Path('s3://aind-scratch-data/dynamic-routing/cache/nwb/v0.0.0/366122_2023-12-31.nwb.zarr')
-    >>> get_nwb_path("366122_2023-12-31", version="v0.0.0", zarr=False)
-    S3Path('s3://aind-scratch-data/dynamic-routing/cache/nwb/v0.0.0/366122_2023-12-31.nwb')
+    >>> get_nwb_path("366122_2023-12-31").as_posix()   # doctest: +SKIP
+    's3://aind-scratch-data/dynamic-routing/cache/nwb/v0.0.210/366122_2023-12-31.nwb.zarr'
+    >>> get_nwb_path("366122_2023-12-31", version="v0.0.0").as_posix()
+    's3://aind-scratch-data/dynamic-routing/cache/nwb/v0.0.0/366122_2023-12-31.nwb.zarr'
+    >>> get_nwb_path("366122_2023-12-31", version="v0.0.0", zarr=False).as_posix()
+    's3://aind-scratch-data/dynamic-routing/cache/nwb/v0.0.0/366122_2023-12-31.nwb'
     """
     components_path = get_cache_path(
         "session", session_id=session_id, version=version, consolidated=False
@@ -146,12 +146,12 @@ def get_cache_path(
 
     If version == "any", the most-recent version of the file will be found.
 
-    >>> get_cache_path(nwb_component="units", version="1.0.0")  # excludes spike_times or waveforms
-    S3Path('s3://aind-scratch-data/dynamic-routing/cache/nwb_components/v1.0.0/consolidated/units.parquet')
-    >>> get_cache_path(nwb_component="units", session_id="366122_2023-12-31", version="1.0.0") # includes spike_times and waveforms
-    S3Path('s3://aind-scratch-data/dynamic-routing/cache/nwb_components/v1.0.0/units/366122_2023-12-31.parquet')
-    >>> get_cache_path(nwb_component="trials", version="1.0.0")
-    S3Path('s3://aind-scratch-data/dynamic-routing/cache/nwb_components/v1.0.0/consolidated/trials.parquet')
+    >>> get_cache_path(nwb_component="units", version="1.0.0").as_posix()  # excludes spike_times or waveforms
+    's3://aind-scratch-data/dynamic-routing/cache/nwb_components/v1.0.0/consolidated/units.parquet'
+    >>> get_cache_path(nwb_component="units", session_id="366122_2023-12-31", version="1.0.0").as_posix() # includes spike_times and waveforms
+    's3://aind-scratch-data/dynamic-routing/cache/nwb_components/v1.0.0/units/366122_2023-12-31.parquet'
+    >>> get_cache_path(nwb_component="trials", version="1.0.0").as_posix()
+    's3://aind-scratch-data/dynamic-routing/cache/nwb_components/v1.0.0/consolidated/trials.parquet'
     """
     if version and version.lower() == "any":
         for version_dir in sorted(CACHE_ROOT.iterdir(), reverse=True):
