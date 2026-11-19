@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.9, <3.12"
 resolution-markers = [
     "python_full_version >= '3.11'",
@@ -217,10 +217,10 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "mako", version = "1.3.12", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "sqlalchemy", version = "1.4.54", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "tomli", marker = "python_full_version < '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version < '3.10'" },
+    { name = "mako", version = "1.3.12", source = { registry = "https://pypi.org/simple" } },
+    { name = "sqlalchemy", version = "1.4.54", source = { registry = "https://pypi.org/simple" } },
+    { name = "tomli" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/9a/ca/4dc52902cf3491892d464f5265a81e9dff094692c8a049a3ed6a05fe7ee8/alembic-1.16.5.tar.gz", hash = "sha256:a88bb7f6e513bd4301ecf4c7f2206fe93f9913f9b48dac3b78babde2d6fe765e", size = 1969868, upload-time = "2025-08-27T18:02:05.668Z" }
 wheels = [
@@ -236,11 +236,11 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "mako", version = "1.4.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "sqlalchemy", version = "2.0.58", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "mako", version = "1.4.3", source = { registry = "https://pypi.org/simple" } },
+    { name = "sqlalchemy", version = "2.0.58", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "sqlalchemy", version = "2.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "tomli", marker = "python_full_version == '3.10.*'" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.10'" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ed/aa/02910bdb8e2f1444f6654d5b296cd827d126f82209050ee7b1000f92ac4b/alembic-1.20.0.tar.gz", hash = "sha256:db505480647bc60386c5369402f4a57a506b7539c9e9ef5e270d45cbbe4939bf", size = 2093272, upload-time = "2026-09-11T19:09:11.126Z" }
 wheels = [
@@ -287,8 +287,8 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "apache-airflow-core", version = "3.0.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "apache-airflow-task-sdk", version = "1.0.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "apache-airflow-core", version = "3.0.6", source = { registry = "https://pypi.org/simple" } },
+    { name = "apache-airflow-task-sdk", version = "1.0.6", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/be/42/af606a7f0afb692474965faac627105ca4abd814016f7f4c2c15d864755b/apache_airflow-3.0.6.tar.gz", hash = "sha256:b1baec61de9ee69a1a5fc9e280f2e18389325880ce3aec01e17922c8b2477ed2", size = 27272, upload-time = "2025-08-29T15:56:17.359Z" }
 wheels = [
@@ -304,8 +304,8 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "apache-airflow-core", version = "3.3.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "apache-airflow-task-sdk", version = "1.3.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+    { name = "apache-airflow-core", version = "3.3.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "apache-airflow-task-sdk", version = "1.3.2", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e9/9e/148e8d9211c57689af9a8aafa228ff4d9b23bf23c203e973cd2fed9f1353/apache_airflow-3.3.2.tar.gz", hash = "sha256:cdbe0dcd47ff2e9ab267fcc050bc6e4fa6e40fb86bf3671e05d9672206da59bb", size = 31774, upload-time = "2026-09-17T08:39:00.645Z" }
 wheels = [
@@ -320,66 +320,66 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "a2wsgi", marker = "python_full_version < '3.10'" },
-    { name = "aiosqlite", marker = "python_full_version < '3.10'" },
-    { name = "alembic", version = "1.16.5", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "apache-airflow-providers-common-compat", version = "1.7.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "apache-airflow-providers-common-io", version = "1.6.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "apache-airflow-providers-common-sql", version = "1.27.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "apache-airflow-providers-smtp", version = "2.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "apache-airflow-providers-standard", version = "1.3.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "apache-airflow-task-sdk", version = "1.0.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "argcomplete", version = "3.7.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "asgiref", version = "3.11.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "attrs", marker = "python_full_version < '3.10'" },
-    { name = "cadwyn", version = "6.0.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "colorlog", marker = "python_full_version < '3.10'" },
-    { name = "cron-descriptor", version = "2.1.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "croniter", marker = "python_full_version < '3.10'" },
-    { name = "cryptography", marker = "python_full_version < '3.10'" },
-    { name = "deprecated", marker = "python_full_version < '3.10'" },
-    { name = "dill", marker = "python_full_version < '3.10'" },
-    { name = "eval-type-backport", marker = "python_full_version < '3.10'" },
-    { name = "fastapi", version = "0.128.8", source = { registry = "https://pypi.org/simple" }, extra = ["standard"], marker = "python_full_version < '3.10'" },
-    { name = "flask", marker = "python_full_version < '3.10'" },
-    { name = "gunicorn", marker = "python_full_version < '3.10'" },
-    { name = "httpx", marker = "python_full_version < '3.10'" },
-    { name = "importlib-metadata", marker = "python_full_version < '3.10'" },
-    { name = "itsdangerous", marker = "python_full_version < '3.10'" },
-    { name = "jinja2", marker = "python_full_version < '3.10'" },
-    { name = "jsonschema", version = "4.25.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "lazy-object-proxy", version = "1.12.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "libcst", marker = "python_full_version < '3.10'" },
-    { name = "linkify-it-py", version = "2.0.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "lockfile", marker = "python_full_version < '3.10'" },
-    { name = "methodtools", marker = "python_full_version < '3.10'" },
-    { name = "opentelemetry-api", version = "1.41.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "opentelemetry-exporter-otlp", version = "1.41.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "packaging", marker = "python_full_version < '3.10'" },
-    { name = "pathspec", marker = "python_full_version < '3.10'" },
-    { name = "pendulum", version = "3.2.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "pluggy", marker = "python_full_version < '3.10'" },
-    { name = "psutil", marker = "python_full_version < '3.10'" },
-    { name = "pydantic", marker = "python_full_version < '3.10'" },
-    { name = "pygments", marker = "python_full_version < '3.10'" },
-    { name = "pyjwt", marker = "python_full_version < '3.10'" },
-    { name = "python-daemon", marker = "python_full_version < '3.10'" },
-    { name = "python-dateutil", marker = "python_full_version < '3.10'" },
-    { name = "python-slugify", version = "8.0.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "requests", marker = "python_full_version < '3.10'" },
-    { name = "rich", marker = "python_full_version < '3.10'" },
-    { name = "rich-argparse", marker = "python_full_version < '3.10'" },
-    { name = "setproctitle", marker = "python_full_version < '3.10'" },
-    { name = "sqlalchemy", version = "1.4.54", source = { registry = "https://pypi.org/simple" }, extra = ["asyncio"], marker = "python_full_version < '3.10'" },
-    { name = "sqlalchemy-jsonfield", marker = "python_full_version < '3.10'" },
-    { name = "sqlalchemy-utils", marker = "python_full_version < '3.10'" },
-    { name = "svcs", version = "25.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "tabulate", version = "0.9.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "tenacity", version = "9.1.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "termcolor", version = "3.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version < '3.10'" },
-    { name = "universal-pathlib", marker = "python_full_version < '3.10'" },
-    { name = "uuid6", marker = "python_full_version < '3.10'" },
+    { name = "a2wsgi" },
+    { name = "aiosqlite" },
+    { name = "alembic", version = "1.16.5", source = { registry = "https://pypi.org/simple" } },
+    { name = "apache-airflow-providers-common-compat", version = "1.7.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "apache-airflow-providers-common-io", version = "1.6.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "apache-airflow-providers-common-sql", version = "1.27.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "apache-airflow-providers-smtp", version = "2.1.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "apache-airflow-providers-standard", version = "1.3.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "apache-airflow-task-sdk", version = "1.0.6", source = { registry = "https://pypi.org/simple" } },
+    { name = "argcomplete", version = "3.7.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "asgiref", version = "3.11.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "attrs" },
+    { name = "cadwyn", version = "6.0.3", source = { registry = "https://pypi.org/simple" } },
+    { name = "colorlog" },
+    { name = "cron-descriptor", version = "2.1.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "croniter" },
+    { name = "cryptography" },
+    { name = "deprecated" },
+    { name = "dill" },
+    { name = "eval-type-backport" },
+    { name = "fastapi", version = "0.128.8", source = { registry = "https://pypi.org/simple" }, extra = ["standard"] },
+    { name = "flask" },
+    { name = "gunicorn" },
+    { name = "httpx" },
+    { name = "importlib-metadata" },
+    { name = "itsdangerous" },
+    { name = "jinja2" },
+    { name = "jsonschema", version = "4.25.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "lazy-object-proxy", version = "1.12.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "libcst" },
+    { name = "linkify-it-py", version = "2.0.3", source = { registry = "https://pypi.org/simple" } },
+    { name = "lockfile" },
+    { name = "methodtools" },
+    { name = "opentelemetry-api", version = "1.41.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-exporter-otlp", version = "1.41.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "packaging" },
+    { name = "pathspec" },
+    { name = "pendulum", version = "3.2.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "pluggy" },
+    { name = "psutil" },
+    { name = "pydantic" },
+    { name = "pygments" },
+    { name = "pyjwt" },
+    { name = "python-daemon" },
+    { name = "python-dateutil" },
+    { name = "python-slugify", version = "8.0.4", source = { registry = "https://pypi.org/simple" } },
+    { name = "requests" },
+    { name = "rich" },
+    { name = "rich-argparse" },
+    { name = "setproctitle" },
+    { name = "sqlalchemy", version = "1.4.54", source = { registry = "https://pypi.org/simple" }, extra = ["asyncio"] },
+    { name = "sqlalchemy-jsonfield" },
+    { name = "sqlalchemy-utils" },
+    { name = "svcs", version = "25.1.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "tabulate", version = "0.9.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "tenacity", version = "9.1.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "termcolor", version = "3.1.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "typing-extensions" },
+    { name = "universal-pathlib" },
+    { name = "uuid6" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/69/b8/52227f28608ba6cf80ee571e0c27e3c19379a206e9aab341ecff8c7c80df/apache_airflow_core-3.0.6.tar.gz", hash = "sha256:1a18e4ee726592f0c0fb28d27a618e2ecdb01e8b698d28fb3d14ca9e5e42e0da", size = 2884781, upload-time = "2025-08-29T15:56:14.84Z" }
 wheels = [
@@ -395,79 +395,79 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "a2wsgi", marker = "python_full_version >= '3.10'" },
-    { name = "aiosqlite", marker = "python_full_version >= '3.10'" },
-    { name = "alembic", version = "1.20.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "apache-airflow-providers-common-compat", version = "1.20.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "a2wsgi" },
+    { name = "aiosqlite" },
+    { name = "alembic", version = "1.20.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "apache-airflow-providers-common-compat", version = "1.20.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "apache-airflow-providers-common-compat", version = "1.22.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "apache-airflow-providers-common-io", version = "1.10.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "apache-airflow-providers-common-io", version = "1.10.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "apache-airflow-providers-common-io", version = "1.10.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "apache-airflow-providers-common-sql", version = "2.2.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "apache-airflow-providers-common-sql", version = "2.2.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "apache-airflow-providers-common-sql", version = "2.3.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "apache-airflow-providers-smtp", version = "3.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "apache-airflow-providers-smtp", version = "3.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "apache-airflow-providers-smtp", version = "3.1.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "apache-airflow-providers-standard", version = "1.20.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "apache-airflow-providers-standard", version = "1.20.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "apache-airflow-providers-standard", version = "1.20.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "apache-airflow-task-sdk", version = "1.3.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "argcomplete", version = "3.7.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "asgiref", version = "3.12.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "attrs", marker = "python_full_version >= '3.10'" },
-    { name = "cachetools", marker = "python_full_version >= '3.10'" },
-    { name = "cadwyn", version = "7.0.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "colorlog", marker = "python_full_version >= '3.10'" },
-    { name = "cron-descriptor", version = "2.2.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "croniter", marker = "python_full_version >= '3.10'" },
-    { name = "cryptography", marker = "python_full_version >= '3.10'" },
-    { name = "deprecated", marker = "python_full_version >= '3.10'" },
-    { name = "dill", marker = "python_full_version >= '3.10'" },
-    { name = "fastapi", version = "0.136.3", source = { registry = "https://pypi.org/simple" }, extra = ["standard-no-fastapi-cloud-cli"], marker = "python_full_version >= '3.10'" },
-    { name = "httpx", marker = "python_full_version >= '3.10'" },
-    { name = "importlib-metadata", marker = "python_full_version >= '3.10'" },
-    { name = "isoduration", marker = "python_full_version >= '3.10'" },
-    { name = "itsdangerous", marker = "python_full_version >= '3.10'" },
-    { name = "jinja2", marker = "python_full_version >= '3.10'" },
-    { name = "jsonschema", version = "4.26.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "lazy-object-proxy", version = "1.12.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "apache-airflow-task-sdk", version = "1.3.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "argcomplete", version = "3.7.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "asgiref", version = "3.12.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "attrs" },
+    { name = "cachetools" },
+    { name = "cadwyn", version = "7.0.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "colorlog" },
+    { name = "cron-descriptor", version = "2.2.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "croniter" },
+    { name = "cryptography" },
+    { name = "deprecated" },
+    { name = "dill" },
+    { name = "fastapi", version = "0.136.3", source = { registry = "https://pypi.org/simple" }, extra = ["standard-no-fastapi-cloud-cli"] },
+    { name = "httpx" },
+    { name = "importlib-metadata" },
+    { name = "isoduration" },
+    { name = "itsdangerous" },
+    { name = "jinja2" },
+    { name = "jsonschema", version = "4.26.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "lazy-object-proxy", version = "1.12.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "lazy-object-proxy", version = "1.13.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "libcst", marker = "python_full_version >= '3.10'" },
-    { name = "linkify-it-py", version = "2.2.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "lockfile", marker = "python_full_version >= '3.10'" },
-    { name = "methodtools", marker = "python_full_version >= '3.10'" },
-    { name = "msgspec", version = "0.22.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "natsort", marker = "python_full_version >= '3.10'" },
-    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "opentelemetry-exporter-otlp", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "opentelemetry-proto", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "packaging", marker = "python_full_version >= '3.10'" },
-    { name = "pathspec", marker = "python_full_version >= '3.10'" },
-    { name = "pendulum", version = "3.3.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "pluggy", marker = "python_full_version >= '3.10'" },
-    { name = "psutil", marker = "python_full_version >= '3.10'" },
-    { name = "pydantic", marker = "python_full_version >= '3.10'" },
-    { name = "pygments", marker = "python_full_version >= '3.10'" },
-    { name = "pygtrie", version = "2.5.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "libcst" },
+    { name = "linkify-it-py", version = "2.2.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "lockfile" },
+    { name = "methodtools" },
+    { name = "msgspec", version = "0.22.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "natsort" },
+    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-exporter-otlp", version = "1.45.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-proto", version = "1.45.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "packaging" },
+    { name = "pathspec" },
+    { name = "pendulum", version = "3.3.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "pluggy" },
+    { name = "psutil" },
+    { name = "pydantic" },
+    { name = "pygments" },
+    { name = "pygtrie", version = "2.5.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "pygtrie", version = "2.6.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "pyjwt", marker = "python_full_version >= '3.10'" },
-    { name = "python-daemon", marker = "python_full_version >= '3.10'" },
-    { name = "python-dateutil", marker = "python_full_version >= '3.10'" },
-    { name = "python-slugify", version = "9.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "pyyaml", marker = "python_full_version >= '3.10'" },
-    { name = "requests", marker = "python_full_version >= '3.10'" },
-    { name = "rich", marker = "python_full_version >= '3.10'" },
-    { name = "rich-argparse", marker = "python_full_version >= '3.10'" },
-    { name = "setproctitle", marker = "python_full_version >= '3.10'" },
-    { name = "sqlalchemy", version = "2.0.58", source = { registry = "https://pypi.org/simple" }, extra = ["asyncio"], marker = "python_full_version == '3.10.*'" },
+    { name = "pyjwt" },
+    { name = "python-daemon" },
+    { name = "python-dateutil" },
+    { name = "python-slugify", version = "9.1.3", source = { registry = "https://pypi.org/simple" } },
+    { name = "pyyaml" },
+    { name = "requests" },
+    { name = "rich" },
+    { name = "rich-argparse" },
+    { name = "setproctitle" },
+    { name = "sqlalchemy", version = "2.0.58", source = { registry = "https://pypi.org/simple" }, extra = ["asyncio"], marker = "python_full_version < '3.11'" },
     { name = "sqlalchemy", version = "2.1.3", source = { registry = "https://pypi.org/simple" }, extra = ["asyncio"], marker = "python_full_version >= '3.11'" },
-    { name = "starlette", version = "1.7.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "structlog", version = "26.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "svcs", version = "26.2.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "tabulate", version = "0.10.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "tenacity", version = "9.2.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "termcolor", version = "3.3.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.10'" },
-    { name = "universal-pathlib", marker = "python_full_version >= '3.10'" },
-    { name = "uuid6", marker = "python_full_version >= '3.10'" },
-    { name = "uvicorn", version = "0.54.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+    { name = "starlette", version = "1.7.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "structlog", version = "26.1.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "svcs", version = "26.2.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "tabulate", version = "0.10.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "tenacity", version = "9.2.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "termcolor", version = "3.3.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "typing-extensions" },
+    { name = "universal-pathlib" },
+    { name = "uuid6" },
+    { name = "uvicorn", version = "0.54.0", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/45/47/bcf1e5ebc134c6a39f06fe00534a8981ea195e7191ea2d60dabb7af0428e/apache_airflow_core-3.3.2.tar.gz", hash = "sha256:53f38e7749a2689a1d67c6e661284ecddaa687c1f7f3cae2d76b2eca7758210f", size = 7442317, upload-time = "2026-09-17T08:39:34.987Z" }
 wheels = [
@@ -482,7 +482,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "apache-airflow", version = "3.0.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "apache-airflow", version = "3.0.6", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d3/9a/ecee796c8c7c70a6e449c92eb1c368892dbfb33901b6e0472a201beb6822/apache_airflow_providers_common_compat-1.7.1.tar.gz", hash = "sha256:eeabf0ea016ca5adc450a3e1cf94ff7ff7ec34854e3e2c60bd4fa3acbd63d1a7", size = 20732, upload-time = "2025-06-18T15:06:26.17Z" }
 wheels = [
@@ -497,8 +497,8 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "apache-airflow", version = "3.3.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
-    { name = "asgiref", version = "3.12.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "apache-airflow", version = "3.3.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "asgiref", version = "3.12.1", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/93/5b/3095cec8f5170a10695c770d6bcf4abce69c5475af294b5dfc4e7e6f3005/apache_airflow_providers_common_compat-1.20.0.tar.gz", hash = "sha256:2b94a1e75142917a1ca4d4dd5315328d79be5a3a67220d697b4f3b996b46dda1", size = 51496, upload-time = "2026-09-29T06:55:24.833Z" }
 wheels = [
@@ -513,8 +513,8 @@ resolution-markers = [
     "python_full_version >= '3.11'",
 ]
 dependencies = [
-    { name = "apache-airflow", version = "3.3.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "asgiref", version = "3.12.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "apache-airflow", version = "3.3.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "asgiref", version = "3.12.1", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/f8/ae/e6019988b3f4ea6607a2cc8e9ce779dbd4b4871a7ce4739b5cfda82df761/apache_airflow_providers_common_compat-1.22.0.tar.gz", hash = "sha256:b57f853d0fdbbff38f9ae9deddb95e307186f5c2818044816b667b17ba401d89", size = 56455, upload-time = "2026-10-17T18:10:53.261Z" }
 wheels = [
@@ -529,7 +529,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "apache-airflow", version = "3.0.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "apache-airflow", version = "3.0.6", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/64/c0/895c209702979f9fa1eb90073ec3d04eb59f76bddb51b72b9fc5e8ab80f9/apache_airflow_providers_common_io-1.6.0.tar.gz", hash = "sha256:b9dabc08f0c7b27ec13cc9d222c096b520b64d2ee331fa6d7ccddfcf06158236", size = 22858, upload-time = "2025-05-18T10:42:04.229Z" }
 wheels = [
@@ -544,8 +544,8 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "apache-airflow", version = "3.3.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
-    { name = "apache-airflow-providers-common-compat", version = "1.20.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "apache-airflow", version = "3.3.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "apache-airflow-providers-common-compat", version = "1.20.0", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c7/60/f9653ca7799f152dd42f59b92ca44cfbb265367504fadae97b9f1bd16ad3/apache_airflow_providers_common_io-1.10.0.tar.gz", hash = "sha256:e0c2c4e348e5389204b990492759a1a8c060cd99da7821501a3e39954b5d25f7", size = 29771, upload-time = "2026-09-29T06:55:25.802Z" }
 wheels = [
@@ -560,8 +560,8 @@ resolution-markers = [
     "python_full_version >= '3.11'",
 ]
 dependencies = [
-    { name = "apache-airflow", version = "3.3.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "apache-airflow-providers-common-compat", version = "1.22.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "apache-airflow", version = "3.3.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "apache-airflow-providers-common-compat", version = "1.22.0", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ce/92/2f24b81c68e7bd44d8caedc7a7cc5e98c0e1728cd2561f40752e619fd160/apache_airflow_providers_common_io-1.10.1.tar.gz", hash = "sha256:375c39def9c715951a0b373d1a5038d1e74a6a3e5a7a469834b33c2d2e86c8b6", size = 29924, upload-time = "2026-10-13T11:03:18.881Z" }
 wheels = [
@@ -576,10 +576,10 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "apache-airflow", version = "3.0.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "methodtools", marker = "python_full_version < '3.10'" },
-    { name = "more-itertools", version = "10.8.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "sqlparse", version = "0.5.5", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "apache-airflow", version = "3.0.6", source = { registry = "https://pypi.org/simple" } },
+    { name = "methodtools" },
+    { name = "more-itertools", version = "10.8.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "sqlparse", version = "0.5.5", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/f1/e9/afe2da325d136796a7ff4cfcd05d4a64362ee4b9acc719f3deb6aa2b1082/apache_airflow_providers_common_sql-1.27.2.tar.gz", hash = "sha256:7cdc5cdf40a3e91e7b6079ef6eaea929ed0da78980b6afdba02c1011129fb756", size = 100414, upload-time = "2025-06-18T15:06:27.095Z" }
 wheels = [
@@ -594,11 +594,11 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "apache-airflow", version = "3.3.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
-    { name = "apache-airflow-providers-common-compat", version = "1.20.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
-    { name = "methodtools", marker = "python_full_version == '3.10.*'" },
-    { name = "more-itertools", version = "11.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
-    { name = "sqlparse", version = "0.6.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "apache-airflow", version = "3.3.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "apache-airflow-providers-common-compat", version = "1.20.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "methodtools" },
+    { name = "more-itertools", version = "11.1.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "sqlparse", version = "0.6.0", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0e/4f/58080a87b5ec66b713a4015c8e1fb51aad2400f49420cc484d2dc89749d1/apache_airflow_providers_common_sql-2.2.0.tar.gz", hash = "sha256:67fa96b7e27cfe13d756fca3f47d2d4f153e93986527dfa526749c0d38ed7e00", size = 150628, upload-time = "2026-09-29T06:55:27.878Z" }
 wheels = [
@@ -613,11 +613,11 @@ resolution-markers = [
     "python_full_version >= '3.11'",
 ]
 dependencies = [
-    { name = "apache-airflow", version = "3.3.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "apache-airflow-providers-common-compat", version = "1.22.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "methodtools", marker = "python_full_version >= '3.11'" },
-    { name = "more-itertools", version = "11.2.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "sqlparse", version = "0.6.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "apache-airflow", version = "3.3.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "apache-airflow-providers-common-compat", version = "1.22.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "methodtools" },
+    { name = "more-itertools", version = "11.2.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "sqlparse", version = "0.6.0", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/38/36/882c8b67bc7793500782c6d1f802d4dafe4ddd22b99723232f3fb424bfb3/apache_airflow_providers_common_sql-2.3.0.tar.gz", hash = "sha256:2e146e34a1876be1cfb072094c313cfcccc70e445e8f33507965cff794802b66", size = 158783, upload-time = "2026-10-13T11:03:20.444Z" }
 wheels = [
@@ -632,8 +632,8 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "apache-airflow", version = "3.0.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "apache-airflow-providers-common-compat", version = "1.7.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "apache-airflow", version = "3.0.6", source = { registry = "https://pypi.org/simple" } },
+    { name = "apache-airflow-providers-common-compat", version = "1.7.1", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c2/12/220f2f921abccf2bc1bb58f5d22cf73d4f41014d6810c60d7411b39b615d/apache_airflow_providers_smtp-2.1.0.tar.gz", hash = "sha256:758b66da0336d2e1165f7050a06d215865e4b553c770a5c82bc7fac5508fe727", size = 36692, upload-time = "2025-05-18T10:43:07.759Z" }
 wheels = [
@@ -648,9 +648,9 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "aiosmtplib", marker = "python_full_version == '3.10.*'" },
-    { name = "apache-airflow", version = "3.3.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
-    { name = "apache-airflow-providers-common-compat", version = "1.20.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "aiosmtplib" },
+    { name = "apache-airflow", version = "3.3.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "apache-airflow-providers-common-compat", version = "1.20.0", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/3d/b9/aa8cdc6b6e8068d21c9e7f9295d07a89c5f7baa87799f4f574961da56169/apache_airflow_providers_smtp-3.1.0.tar.gz", hash = "sha256:a0f1b0587d0550de123b443635e245c7a5641b33867c7ee30974bd97a2174780", size = 48437, upload-time = "2026-09-29T06:56:11.377Z" }
 wheels = [
@@ -665,9 +665,9 @@ resolution-markers = [
     "python_full_version >= '3.11'",
 ]
 dependencies = [
-    { name = "aiosmtplib", marker = "python_full_version >= '3.11'" },
-    { name = "apache-airflow", version = "3.3.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "apache-airflow-providers-common-compat", version = "1.22.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "aiosmtplib" },
+    { name = "apache-airflow", version = "3.3.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "apache-airflow-providers-common-compat", version = "1.22.0", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7c/c1/6776f7517588453a1ff6a8c27728d660d7357d86633aee7efa7bfd5ce0c6/apache_airflow_providers_smtp-3.1.1.tar.gz", hash = "sha256:1d03c2054cfbebc84517159973be44c4b5b5313a3fbc3f5c68b36b1911c5eb3b", size = 49693, upload-time = "2026-10-13T11:04:09.442Z" }
 wheels = [
@@ -682,7 +682,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "apache-airflow", version = "3.0.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "apache-airflow", version = "3.0.6", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/01/12/71c09e07c3744d71dd4d5dd509a9ab3db896dcc69d726cf97609fb64d055/apache_airflow_providers_standard-1.3.0.tar.gz", hash = "sha256:53eff0c34279ce5ece2ff5fb1401055dde7ae5c3a4e8acd1d90042ac3198d54e", size = 159024, upload-time = "2025-06-18T15:06:48.057Z" }
 wheels = [
@@ -697,8 +697,8 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "apache-airflow", version = "3.3.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
-    { name = "apache-airflow-providers-common-compat", version = "1.20.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "apache-airflow", version = "3.3.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "apache-airflow-providers-common-compat", version = "1.20.0", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/64/d0/a4753cb5501d2f5b4c386c48a07cf8311bae482f9ca99f78e042598e8caf/apache_airflow_providers_standard-1.20.0.tar.gz", hash = "sha256:ca51783ee22184a18c59bccb014a07d8998a6123d1fae892ad6c765aa0332ddc", size = 227174, upload-time = "2026-09-29T06:56:15.224Z" }
 wheels = [
@@ -713,8 +713,8 @@ resolution-markers = [
     "python_full_version >= '3.11'",
 ]
 dependencies = [
-    { name = "apache-airflow", version = "3.3.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "apache-airflow-providers-common-compat", version = "1.22.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "apache-airflow", version = "3.3.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "apache-airflow-providers-common-compat", version = "1.22.0", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/72/88/4841dc0238a066da7875dbce63bf06117182f8b56acb4a5417cf2c43cc08/apache_airflow_providers_standard-1.20.1.tar.gz", hash = "sha256:fe54e9983618ce2f17a61c45c41553da279d68494722d8e387c9779a74606fa1", size = 227786, upload-time = "2026-10-13T11:04:13.144Z" }
 wheels = [
@@ -729,18 +729,18 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "apache-airflow-core", version = "3.0.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "attrs", marker = "python_full_version < '3.10'" },
-    { name = "fsspec", version = "2025.10.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "httpx", marker = "python_full_version < '3.10'" },
-    { name = "jinja2", marker = "python_full_version < '3.10'" },
-    { name = "methodtools", marker = "python_full_version < '3.10'" },
-    { name = "msgspec", version = "0.20.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "pendulum", version = "3.2.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "psutil", marker = "python_full_version < '3.10'" },
-    { name = "python-dateutil", marker = "python_full_version < '3.10'" },
-    { name = "retryhttp", marker = "python_full_version < '3.10'" },
-    { name = "structlog", version = "25.5.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "apache-airflow-core", version = "3.0.6", source = { registry = "https://pypi.org/simple" } },
+    { name = "attrs" },
+    { name = "fsspec", version = "2025.10.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "httpx" },
+    { name = "jinja2" },
+    { name = "methodtools" },
+    { name = "msgspec", version = "0.20.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "pendulum", version = "3.2.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "psutil" },
+    { name = "python-dateutil" },
+    { name = "retryhttp" },
+    { name = "structlog", version = "25.5.0", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/3d/7e/13034bcfc743a5af70a38d2d91407169f44e83b5305e5075bef0db02eb64/apache_airflow_task_sdk-1.0.6.tar.gz", hash = "sha256:5f3a1c8ba5deecc976728e6cf87ae2f2b50913427fd04ae3d024f5b23bac14bc", size = 1211455, upload-time = "2025-08-29T15:56:16.342Z" }
 wheels = [
@@ -756,33 +756,33 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "apache-airflow-core", version = "3.3.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "asgiref", version = "3.12.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "attrs", marker = "python_full_version >= '3.10'" },
-    { name = "babel", marker = "python_full_version >= '3.10'" },
-    { name = "colorlog", marker = "python_full_version >= '3.10'" },
-    { name = "fsspec", version = "2026.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "greenback", marker = "python_full_version >= '3.10'" },
-    { name = "httpx", marker = "python_full_version >= '3.10'" },
-    { name = "importlib-metadata", marker = "python_full_version >= '3.10'" },
-    { name = "isoduration", marker = "python_full_version >= '3.10'" },
-    { name = "jinja2", marker = "python_full_version >= '3.10'" },
-    { name = "jsonschema", version = "4.26.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "methodtools", marker = "python_full_version >= '3.10'" },
-    { name = "msgspec", version = "0.22.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "packaging", marker = "python_full_version >= '3.10'" },
-    { name = "pathspec", marker = "python_full_version >= '3.10'" },
-    { name = "pendulum", version = "3.3.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "pluggy", marker = "python_full_version >= '3.10'" },
-    { name = "psutil", marker = "python_full_version >= '3.10'" },
-    { name = "pydantic", marker = "python_full_version >= '3.10'" },
-    { name = "pygtrie", version = "2.5.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "apache-airflow-core", version = "3.3.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "asgiref", version = "3.12.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "attrs" },
+    { name = "babel" },
+    { name = "colorlog" },
+    { name = "fsspec", version = "2026.1.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "greenback" },
+    { name = "httpx" },
+    { name = "importlib-metadata" },
+    { name = "isoduration" },
+    { name = "jinja2" },
+    { name = "jsonschema", version = "4.26.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "methodtools" },
+    { name = "msgspec", version = "0.22.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "packaging" },
+    { name = "pathspec" },
+    { name = "pendulum", version = "3.3.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "pluggy" },
+    { name = "psutil" },
+    { name = "pydantic" },
+    { name = "pygtrie", version = "2.5.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "pygtrie", version = "2.6.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "python-dateutil", marker = "python_full_version >= '3.10'" },
-    { name = "structlog", version = "26.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "tenacity", version = "9.2.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.10'" },
+    { name = "python-dateutil" },
+    { name = "structlog", version = "26.1.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "tenacity", version = "9.2.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/52/23/b80ddd45781d46c5924fceeb62dccffa8c7695b83ae98d5b26abad0dc442/apache_airflow_task_sdk-1.3.2.tar.gz", hash = "sha256:d9a1c7785684a215df3927b028a44b2b6927dacebd54c0d281b5906febc3efef", size = 1714211, upload-time = "2026-09-17T08:40:19.774Z" }
 wheels = [
@@ -819,8 +819,8 @@ name = "arrow"
 version = "1.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "python-dateutil", marker = "python_full_version >= '3.10'" },
-    { name = "tzdata", marker = "python_full_version >= '3.10'" },
+    { name = "python-dateutil" },
+    { name = "tzdata" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b9/33/032cdc44182491aa708d06a68b62434140d8c50820a087fac7af37703357/arrow-1.4.0.tar.gz", hash = "sha256:ed0cc050e98001b8779e84d461b0098c4ac597e88704a655582b21d116e526d7", size = 152931, upload-time = "2025-10-18T17:46:46.761Z" }
 wheels = [
@@ -835,7 +835,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.10'" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/63/40/f03da1264ae8f7cfdbf9146542e5e7e8100a4c66ab48e791df9a03d3f6c0/asgiref-3.11.1.tar.gz", hash = "sha256:5f184dc43b7e763efe848065441eac62229c9f7b0475f41f80e207a114eda4ce", size = 38550, upload-time = "2026-02-03T13:30:14.33Z" }
 wheels = [
@@ -851,7 +851,7 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version == '3.10.*'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e6/26/3b59f2bdae5f640389becb1f673cded775287f5fc4f816309d9ca9a3f93d/asgiref-3.12.1.tar.gz", hash = "sha256:59dcb51c272ad209d59bed5708a64a333083e86017d7fcdd67498eeab7784340", size = 42378, upload-time = "2026-07-14T09:56:18.087Z" }
 wheels = [
@@ -944,14 +944,14 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "click", version = "8.1.8", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "mypy-extensions", marker = "python_full_version < '3.10'" },
-    { name = "packaging", marker = "python_full_version < '3.10'" },
-    { name = "pathspec", marker = "python_full_version < '3.10'" },
-    { name = "platformdirs", version = "4.4.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "pytokens", marker = "python_full_version < '3.10'" },
-    { name = "tomli", marker = "python_full_version < '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version < '3.10'" },
+    { name = "click", version = "8.1.8", source = { registry = "https://pypi.org/simple" } },
+    { name = "mypy-extensions" },
+    { name = "packaging" },
+    { name = "pathspec" },
+    { name = "platformdirs", version = "4.4.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "pytokens" },
+    { name = "tomli" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/8c/ad/33adf4708633d047950ff2dfdea2e215d84ac50ef95aff14a614e4b6e9b2/black-25.11.0.tar.gz", hash = "sha256:9a323ac32f5dc75ce7470501b887250be5005a01602e931a15e45593f70f6e08", size = 655669, upload-time = "2025-11-10T01:53:50.558Z" }
 wheels = [
@@ -979,14 +979,14 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "click", version = "8.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "mypy-extensions", marker = "python_full_version >= '3.10'" },
-    { name = "packaging", marker = "python_full_version >= '3.10'" },
-    { name = "pathspec", marker = "python_full_version >= '3.10'" },
-    { name = "platformdirs", version = "4.9.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "pytokens", marker = "python_full_version >= '3.10'" },
-    { name = "tomli", marker = "python_full_version == '3.10.*'" },
-    { name = "typing-extensions", marker = "python_full_version == '3.10.*'" },
+    { name = "click", version = "8.3.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "mypy-extensions" },
+    { name = "packaging" },
+    { name = "pathspec" },
+    { name = "platformdirs", version = "4.9.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "pytokens" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/13/88/560b11e521c522440af991d46848a2bde64b5f7202ec14e1f46f9509d328/black-26.1.0.tar.gz", hash = "sha256:d294ac3340eef9c9eb5d29288e96dc719ff269a88e27b396340459dd85da4c58", size = 658785, upload-time = "2026-01-18T04:50:11.993Z" }
 wheels = [
@@ -1089,13 +1089,13 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "backports-strenum", marker = "python_full_version < '3.10'" },
-    { name = "fastapi", version = "0.128.8", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "jinja2", marker = "python_full_version < '3.10'" },
-    { name = "pydantic", marker = "python_full_version < '3.10'" },
-    { name = "starlette", version = "0.49.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version < '3.10'" },
-    { name = "typing-inspection", marker = "python_full_version < '3.10'" },
+    { name = "backports-strenum" },
+    { name = "fastapi", version = "0.128.8", source = { registry = "https://pypi.org/simple" } },
+    { name = "jinja2" },
+    { name = "pydantic" },
+    { name = "starlette", version = "0.49.3", source = { registry = "https://pypi.org/simple" } },
+    { name = "typing-extensions" },
+    { name = "typing-inspection" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/89/45/05ae2f2f0314443b39f8acb6aad5504d101b905bee6d9e44a405a5914234/cadwyn-6.0.3.tar.gz", hash = "sha256:bf9b7228a5f809ab19daac569a9877218e2356975a0a4908273b6b56bd7820ef", size = 689124, upload-time = "2026-02-15T17:34:00.884Z" }
 wheels = [
@@ -1111,13 +1111,13 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "backports-strenum", marker = "python_full_version == '3.10.*'" },
-    { name = "fastapi", version = "0.136.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "jinja2", marker = "python_full_version >= '3.10'" },
-    { name = "pydantic", marker = "python_full_version >= '3.10'" },
-    { name = "starlette", version = "1.7.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.10'" },
-    { name = "typing-inspection", marker = "python_full_version >= '3.10'" },
+    { name = "backports-strenum", marker = "python_full_version < '3.11'" },
+    { name = "fastapi", version = "0.136.3", source = { registry = "https://pypi.org/simple" } },
+    { name = "jinja2" },
+    { name = "pydantic" },
+    { name = "starlette", version = "1.7.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "typing-extensions" },
+    { name = "typing-inspection" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/80/31/9a986a9fe20c6b52bde0dd23c9fc002388ab0c8f7b30a37217b07aa1875f/cadwyn-7.0.0.tar.gz", hash = "sha256:3b57549a37e218dffb55ac5d188639de0516207f05642b084f23627c5a44d614", size = 662353, upload-time = "2026-06-06T16:34:39.492Z" }
 wheels = [
@@ -1247,7 +1247,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "colorama", marker = "python_full_version < '3.10' and sys_platform == 'win32'" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b9/2e/0090cbf739cee7d23781ad4b89a9894a41538e4fcf4c31dcdd705b78eb8b/click-8.1.8.tar.gz", hash = "sha256:ed53c9d8990d83c2a27deae68e4ee337473f6330c040a31d4225c9574d16096a", size = 226593, upload-time = "2024-12-21T18:38:44.339Z" }
 wheels = [
@@ -1263,7 +1263,7 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "colorama", marker = "python_full_version >= '3.10' and sys_platform == 'win32'" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/3d/fa/656b739db8587d7b5dfa22e22ed02566950fbfbcdc20311993483657a5c0/click-8.3.1.tar.gz", hash = "sha256:12ff4785d337a1bb490bb7e9c2b1ee5da3112e94a8622f26a6c77f5d2fc6842a", size = 295065, upload-time = "2025-11-15T20:45:42.706Z" }
 wheels = [
@@ -1357,7 +1357,7 @@ wheels = [
 
 [package.optional-dependencies]
 toml = [
-    { name = "tomli", marker = "python_full_version < '3.10'" },
+    { name = "tomli" },
 ]
 
 [[package]]
@@ -1404,7 +1404,7 @@ wheels = [
 
 [package.optional-dependencies]
 toml = [
-    { name = "tomli", marker = "python_full_version >= '3.10' and python_full_version <= '3.11'" },
+    { name = "tomli", marker = "python_full_version <= '3.11'" },
 ]
 
 [[package]]
@@ -1455,7 +1455,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.10'" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/2f/51/7c6b4dc9a0f1db6a22cbdfb7a674c8ded4e6aab40531afa7d912a060f08f/cron_descriptor-2.1.1.tar.gz", hash = "sha256:0f55b469bb81f8c60602baebc08a78fc3b1eb234805793a08a4862f336760390", size = 51579, upload-time = "2026-09-29T23:58:19.831Z" }
 wheels = [
@@ -1471,7 +1471,7 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version >= '3.10'" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/41/6b/9ebac1857c0e90d5ba487090f4f9b23e8bf9adead62922550621de21cbf2/cron_descriptor-2.2.1.tar.gz", hash = "sha256:6759056f43b3cabca274b5df182bb63571f2f383bdd4d9d3ff4662c527430a65", size = 53562, upload-time = "2026-10-13T12:39:33.386Z" }
 wheels = [
@@ -1632,7 +1632,7 @@ name = "exceptiongroup"
 version = "1.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/50/79/66800aadf48771f6b62f7eb014e352e5d06856655206165d775e675a02c9/exceptiongroup-1.3.1.tar.gz", hash = "sha256:8b412432c6055b0b7d14c310000ae93352ed6754f70fa8f7c34141f91c4e3219", size = 30371, upload-time = "2025-11-21T23:01:54.787Z" }
 wheels = [
@@ -1647,11 +1647,11 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "annotated-doc", marker = "python_full_version < '3.10'" },
-    { name = "pydantic", marker = "python_full_version < '3.10'" },
-    { name = "starlette", version = "0.49.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version < '3.10'" },
-    { name = "typing-inspection", marker = "python_full_version < '3.10'" },
+    { name = "annotated-doc" },
+    { name = "pydantic" },
+    { name = "starlette", version = "0.49.3", source = { registry = "https://pypi.org/simple" } },
+    { name = "typing-extensions" },
+    { name = "typing-inspection" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/01/72/0df5c58c954742f31a7054e2dd1143bae0b408b7f36b59b85f928f9b456c/fastapi-0.128.8.tar.gz", hash = "sha256:3171f9f328c4a218f0a8d2ba8310ac3a55d1ee12c28c949650288aee25966007", size = 375523, upload-time = "2026-02-11T15:19:36.69Z" }
 wheels = [
@@ -1660,14 +1660,14 @@ wheels = [
 
 [package.optional-dependencies]
 standard = [
-    { name = "email-validator", marker = "python_full_version < '3.10'" },
-    { name = "fastapi-cli", version = "0.0.22", source = { registry = "https://pypi.org/simple" }, extra = ["standard"], marker = "python_full_version < '3.10'" },
-    { name = "httpx", marker = "python_full_version < '3.10'" },
-    { name = "jinja2", marker = "python_full_version < '3.10'" },
-    { name = "pydantic-extra-types", marker = "python_full_version < '3.10'" },
-    { name = "pydantic-settings", version = "2.11.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "python-multipart", version = "0.0.20", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "uvicorn", version = "0.39.0", source = { registry = "https://pypi.org/simple" }, extra = ["standard"], marker = "python_full_version < '3.10'" },
+    { name = "email-validator" },
+    { name = "fastapi-cli", version = "0.0.22", source = { registry = "https://pypi.org/simple" }, extra = ["standard"] },
+    { name = "httpx" },
+    { name = "jinja2" },
+    { name = "pydantic-extra-types" },
+    { name = "pydantic-settings", version = "2.11.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "python-multipart", version = "0.0.20", source = { registry = "https://pypi.org/simple" } },
+    { name = "uvicorn", version = "0.39.0", source = { registry = "https://pypi.org/simple" }, extra = ["standard"] },
 ]
 
 [[package]]
@@ -1679,11 +1679,11 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "annotated-doc", marker = "python_full_version >= '3.10'" },
-    { name = "pydantic", marker = "python_full_version >= '3.10'" },
-    { name = "starlette", version = "1.7.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.10'" },
-    { name = "typing-inspection", marker = "python_full_version >= '3.10'" },
+    { name = "annotated-doc" },
+    { name = "pydantic" },
+    { name = "starlette", version = "1.7.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "typing-extensions" },
+    { name = "typing-inspection" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/81/2d/ff8d91d7b564d464629a0fd50a4489c97fcb836ac230bf3a7269232a9b1f/fastapi-0.136.3.tar.gz", hash = "sha256:e487fae93ad408e6f47641ee4dfe389864fd7bec92e547ea8498fc13f43e83ab", size = 396410, upload-time = "2026-05-23T18:53:15.192Z" }
 wheels = [
@@ -1692,14 +1692,14 @@ wheels = [
 
 [package.optional-dependencies]
 standard-no-fastapi-cloud-cli = [
-    { name = "email-validator", marker = "python_full_version >= '3.10'" },
-    { name = "fastapi-cli", version = "0.0.32", source = { registry = "https://pypi.org/simple" }, extra = ["standard-no-fastapi-cloud-cli"], marker = "python_full_version >= '3.10'" },
-    { name = "httpx", marker = "python_full_version >= '3.10'" },
-    { name = "jinja2", marker = "python_full_version >= '3.10'" },
-    { name = "pydantic-extra-types", marker = "python_full_version >= '3.10'" },
-    { name = "pydantic-settings", version = "2.13.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "python-multipart", version = "0.0.32", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "uvicorn", version = "0.54.0", source = { registry = "https://pypi.org/simple" }, extra = ["standard"], marker = "python_full_version >= '3.10'" },
+    { name = "email-validator" },
+    { name = "fastapi-cli", version = "0.0.32", source = { registry = "https://pypi.org/simple" }, extra = ["standard-no-fastapi-cloud-cli"] },
+    { name = "httpx" },
+    { name = "jinja2" },
+    { name = "pydantic-extra-types" },
+    { name = "pydantic-settings", version = "2.13.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "python-multipart", version = "0.0.32", source = { registry = "https://pypi.org/simple" } },
+    { name = "uvicorn", version = "0.54.0", source = { registry = "https://pypi.org/simple" }, extra = ["standard"] },
 ]
 
 [[package]]
@@ -1710,10 +1710,10 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "rich-toolkit", marker = "python_full_version < '3.10'" },
-    { name = "tomli", marker = "python_full_version < '3.10'" },
-    { name = "typer", version = "0.23.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "uvicorn", version = "0.39.0", source = { registry = "https://pypi.org/simple" }, extra = ["standard"], marker = "python_full_version < '3.10'" },
+    { name = "rich-toolkit" },
+    { name = "tomli" },
+    { name = "typer", version = "0.23.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "uvicorn", version = "0.39.0", source = { registry = "https://pypi.org/simple" }, extra = ["standard"] },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/67/6f/eb6b193f7738145ffe903c7e763fd9d016bb6e8faaf0007d181341c380d9/fastapi_cli-0.0.22.tar.gz", hash = "sha256:e5a0e3c9e88f8a70affa144e6f85ccee14378a1706ade2001970e55418cad4f6", size = 19821, upload-time = "2026-02-16T19:13:24.508Z" }
 wheels = [
@@ -1722,8 +1722,8 @@ wheels = [
 
 [package.optional-dependencies]
 standard = [
-    { name = "fastapi-cloud-cli", marker = "python_full_version < '3.10'" },
-    { name = "uvicorn", version = "0.39.0", source = { registry = "https://pypi.org/simple" }, extra = ["standard"], marker = "python_full_version < '3.10'" },
+    { name = "fastapi-cloud-cli" },
+    { name = "uvicorn", version = "0.39.0", source = { registry = "https://pypi.org/simple" }, extra = ["standard"] },
 ]
 
 [[package]]
@@ -1735,10 +1735,10 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "rich-toolkit", marker = "python_full_version >= '3.10'" },
-    { name = "tomli", marker = "python_full_version == '3.10.*'" },
-    { name = "typer", version = "0.27.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "uvicorn", version = "0.54.0", source = { registry = "https://pypi.org/simple" }, extra = ["standard"], marker = "python_full_version >= '3.10'" },
+    { name = "rich-toolkit" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
+    { name = "typer", version = "0.27.3", source = { registry = "https://pypi.org/simple" } },
+    { name = "uvicorn", version = "0.54.0", source = { registry = "https://pypi.org/simple" }, extra = ["standard"] },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/33/eb/3b534c6f8e157f9ddbf2a153512307c886cad0b258739c200dd8ff8c4452/fastapi_cli-0.0.32.tar.gz", hash = "sha256:38024d2345275e1b37ce8848727a580d84901b570e96b3256d9d36a9a5039424", size = 26636, upload-time = "2026-07-16T12:16:58.678Z" }
 wheels = [
@@ -1747,7 +1747,7 @@ wheels = [
 
 [package.optional-dependencies]
 standard-no-fastapi-cloud-cli = [
-    { name = "uvicorn", version = "0.54.0", source = { registry = "https://pypi.org/simple" }, extra = ["standard"], marker = "python_full_version >= '3.10'" },
+    { name = "uvicorn", version = "0.54.0", source = { registry = "https://pypi.org/simple" }, extra = ["standard"] },
 ]
 
 [[package]]
@@ -1755,14 +1755,14 @@ name = "fastapi-cloud-cli"
 version = "0.12.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "fastar", marker = "python_full_version < '3.10'" },
-    { name = "httpx", marker = "python_full_version < '3.10'" },
-    { name = "pydantic", extra = ["email"], marker = "python_full_version < '3.10'" },
-    { name = "rich-toolkit", marker = "python_full_version < '3.10'" },
-    { name = "rignore", marker = "python_full_version < '3.10'" },
-    { name = "sentry-sdk", marker = "python_full_version < '3.10'" },
-    { name = "typer", version = "0.23.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "uvicorn", version = "0.39.0", source = { registry = "https://pypi.org/simple" }, extra = ["standard"], marker = "python_full_version < '3.10'" },
+    { name = "fastar" },
+    { name = "httpx" },
+    { name = "pydantic", extra = ["email"] },
+    { name = "rich-toolkit" },
+    { name = "rignore" },
+    { name = "sentry-sdk" },
+    { name = "typer", version = "0.23.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "uvicorn", version = "0.39.0", source = { registry = "https://pypi.org/simple" }, extra = ["standard"] },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/1b/59/3def056ec8350df78a0786b7ca40a167cbf28ac26552ced4e19e1f83e872/fastapi_cloud_cli-0.12.0.tar.gz", hash = "sha256:c897d1d5e27f5b4148ed2601076785155ec8fb385a6a62d3e8801880f929629f", size = 38508, upload-time = "2026-02-13T19:39:57.877Z" }
 wheels = [
@@ -1841,13 +1841,13 @@ name = "flask"
 version = "3.1.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "blinker", marker = "python_full_version < '3.10'" },
-    { name = "click", version = "8.1.8", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "importlib-metadata", marker = "python_full_version < '3.10'" },
-    { name = "itsdangerous", marker = "python_full_version < '3.10'" },
-    { name = "jinja2", marker = "python_full_version < '3.10'" },
-    { name = "markupsafe", marker = "python_full_version < '3.10'" },
-    { name = "werkzeug", marker = "python_full_version < '3.10'" },
+    { name = "blinker" },
+    { name = "click", version = "8.1.8", source = { registry = "https://pypi.org/simple" } },
+    { name = "importlib-metadata" },
+    { name = "itsdangerous" },
+    { name = "jinja2" },
+    { name = "markupsafe" },
+    { name = "werkzeug" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/26/00/35d85dcce6c57fdc871f3867d465d780f302a175ea360f62533f12b27e2b/flask-3.1.3.tar.gz", hash = "sha256:0ef0e52b8a9cd932855379197dd8f94047b359ca0a78695144304cb45f87c9eb", size = 759004, upload-time = "2026-02-19T05:00:57.678Z" }
 wheels = [
@@ -1944,12 +1944,12 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "jinja2", marker = "python_full_version < '3.10'" },
-    { name = "packaging", marker = "python_full_version < '3.10'" },
-    { name = "platformdirs", version = "4.4.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "semver", marker = "python_full_version < '3.10'" },
-    { name = "tomli", marker = "python_full_version < '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version < '3.10'" },
+    { name = "jinja2" },
+    { name = "packaging" },
+    { name = "platformdirs", version = "4.4.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "semver" },
+    { name = "tomli" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/6e/88/e38f434e41c520ea14feb58bee94dd14f785de5f72ab3d3a21a7fcc192ff/git_changelog-2.6.3.tar.gz", hash = "sha256:d9a5cd7bd8c7dd3eb903c9de93ea5c24b0099ba6e56937f1d9406f7d09034d96", size = 81476, upload-time = "2025-09-18T12:35:36.618Z" }
 wheels = [
@@ -1965,12 +1965,12 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "jinja2", marker = "python_full_version >= '3.10'" },
-    { name = "packaging", marker = "python_full_version >= '3.10'" },
-    { name = "platformdirs", version = "4.9.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "semver", marker = "python_full_version >= '3.10'" },
-    { name = "tomli", marker = "python_full_version == '3.10.*'" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.10'" },
+    { name = "jinja2" },
+    { name = "packaging" },
+    { name = "platformdirs", version = "4.9.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "semver" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a7/2b/858bae884992815710074d7fc903215e5cee4915ccae8eee4aeed2ca4785/git_changelog-2.7.1.tar.gz", hash = "sha256:b11aacdeca0c0a9502dfc9fe406d6d93683d1b1ebad622a246ba44940db5cdd6", size = 87807, upload-time = "2026-01-30T16:03:52.387Z" }
 wheels = [
@@ -1985,7 +1985,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "protobuf", marker = "python_full_version < '3.10'" },
+    { name = "protobuf" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b5/c8/f439cffde755cffa462bfbb156278fa6f9d09119719af9814b858fd4f81f/googleapis_common_protos-1.75.0.tar.gz", hash = "sha256:53a062ff3c32552fbd62c11fe23768b78e4ddf0494d5e5fd97d3f4689c75fbbd", size = 151035, upload-time = "2026-05-07T08:04:49.423Z" }
 wheels = [
@@ -2001,7 +2001,7 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "protobuf", marker = "python_full_version >= '3.10'" },
+    { name = "protobuf" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/62/b6/bc095b23a3e0d978e75c8c18cabe4c11f791837410670e4486f0d539bfba/googleapis_common_protos-1.76.0.tar.gz", hash = "sha256:71db0e44a1d4c2dd024ebad44ca67129cc1e2892e4861df466764749d5ef8642", size = 156250, upload-time = "2026-10-22T23:43:36.263Z" }
 wheels = [
@@ -2013,9 +2013,9 @@ name = "greenback"
 version = "1.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "greenlet", version = "3.5.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "outcome", marker = "python_full_version >= '3.10'" },
-    { name = "sniffio", marker = "python_full_version >= '3.10'" },
+    { name = "greenlet", version = "3.5.6", source = { registry = "https://pypi.org/simple" } },
+    { name = "outcome" },
+    { name = "sniffio" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/3b/d2/3b70d0f03a1e0f48d4f2348de435fa282e5530ae60812fef672cabc40a28/greenback-1.3.0.tar.gz", hash = "sha256:d1441f542ec9c6efb32a9250dd954a5b1cc1eb789294c19b1eb747f49cab818c", size = 8070613, upload-time = "2025-12-23T01:49:33.582Z" }
 wheels = [
@@ -2096,7 +2096,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.10'" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/2e/60/04becc7b90edeb6900618aa82bc841482342486399af7139d8d39be1a025/grpcio-1.80.1.tar.gz", hash = "sha256:3d2bb23039e55fbabf32ad264eb787fcb205f4ce6d5d93dfa217f4526273c027", size = 13159234, upload-time = "2026-11-05T08:33:34.687Z" }
 wheels = [
@@ -2141,7 +2141,7 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version >= '3.10'" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/3f/4f/4435c0aae54657258d9cfcba78598f3d9e5fe4c82ff18d78558567b90faf/grpcio-1.84.0.tar.gz", hash = "sha256:19aaf172fc2edbefccce3f6e92c5150975dbe56c45744e9e87cf72ebdf85bfbe", size = 13493876, upload-time = "2026-09-14T06:59:33.291Z" }
 wheels = [
@@ -2172,7 +2172,7 @@ name = "gunicorn"
 version = "23.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "packaging", marker = "python_full_version < '3.10'" },
+    { name = "packaging" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/34/72/9614c465dc206155d93eff0ca20d42e1e35afc533971379482de953521a4/gunicorn-23.0.0.tar.gz", hash = "sha256:f014447a0101dc57e294f6c18ca6b40227a4c90e9bdb586042628030cba004ec", size = 375031, upload-time = "2024-08-10T20:25:27.378Z" }
 wheels = [
@@ -2305,7 +2305,7 @@ name = "isoduration"
 version = "20.11.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "arrow", marker = "python_full_version >= '3.10'" },
+    { name = "arrow" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7c/1a/3c8edc664e06e6bd06cce40c6b22da5f1429aa4224d0c590f3be21c91ead/isoduration-20.11.0.tar.gz", hash = "sha256:ac2f9015137935279eac671f94f89eb00584f940f5dc49462a0c4ee692ba1bd9", size = 11649, upload-time = "2020-11-01T11:00:00.312Z" }
 wheels = [
@@ -2320,7 +2320,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "importlib-metadata", marker = "python_full_version < '3.10'" },
+    { name = "importlib-metadata" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/1e/82/fa43935523efdfcce6abbae9da7f372b627b27142c3419fcf13bf5b0c397/isort-6.1.0.tar.gz", hash = "sha256:9b8f96a14cfee0677e78e941ff62f03769a06d412aabb9e2a90487b3b7e8d481", size = 824325, upload-time = "2025-10-01T16:26:45.027Z" }
 wheels = [
@@ -2378,10 +2378,10 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "attrs", marker = "python_full_version < '3.10'" },
-    { name = "jsonschema-specifications", marker = "python_full_version < '3.10'" },
-    { name = "referencing", version = "0.36.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "rpds-py", version = "0.27.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "attrs" },
+    { name = "jsonschema-specifications" },
+    { name = "referencing", version = "0.36.2", source = { registry = "https://pypi.org/simple" } },
+    { name = "rpds-py", version = "0.27.1", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/74/69/f7185de793a29082a9f3c7728268ffb31cb5095131a9c139a74078e27336/jsonschema-4.25.1.tar.gz", hash = "sha256:e4a9655ce0da0c0b67a085847e00a3a51449e1157f4f75e9fb5aa545e122eb85", size = 357342, upload-time = "2025-08-18T17:03:50.038Z" }
 wheels = [
@@ -2397,10 +2397,10 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "attrs", marker = "python_full_version >= '3.10'" },
-    { name = "jsonschema-specifications", marker = "python_full_version >= '3.10'" },
-    { name = "referencing", version = "0.37.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "rpds-py", version = "0.30.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "attrs" },
+    { name = "jsonschema-specifications" },
+    { name = "referencing", version = "0.37.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "rpds-py", version = "0.30.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "rpds-py", version = "2026.9.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b3/fc/e067678238fa451312d4c62bf6e6cf5ec56375422aee02f9cb5f909b3047/jsonschema-4.26.0.tar.gz", hash = "sha256:0c26707e2efad8aa1bfc5b7ce170f3fccc2e4918ff85989ba9ffa9facb2be326", size = 366583, upload-time = "2026-01-07T13:41:07.246Z" }
@@ -2558,7 +2558,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "uc-micro-py", marker = "python_full_version < '3.10'" },
+    { name = "uc-micro-py" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/2a/ae/bb56c6828e4797ba5a4821eec7c43b8bf40f69cda4d4f5f8c8a2810ec96a/linkify-it-py-2.0.3.tar.gz", hash = "sha256:68cda27e162e9215c17d786649d1da0021a451bdc436ef9e0fa0ba5234b9b048", size = 27946, upload-time = "2024-02-04T14:48:04.179Z" }
 wheels = [
@@ -2595,7 +2595,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "markupsafe", marker = "python_full_version < '3.10'" },
+    { name = "markupsafe" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/00/62/791b31e69ae182791ec67f04850f2f062716bbd205483d63a215f3e062d3/mako-1.3.12.tar.gz", hash = "sha256:9f778e93289bd410bb35daadeb4fc66d95a746f0b75777b942088b7fd7af550a", size = 400219, upload-time = "2026-04-28T19:01:08.512Z" }
 wheels = [
@@ -2611,7 +2611,7 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "markupsafe", marker = "python_full_version >= '3.10'" },
+    { name = "markupsafe" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/5a/09/e07c4b5579a79f4b16f8d4f29f6c54514ac787c4ad506b8c4f28a0e6b0bf/mako-1.4.3.tar.gz", hash = "sha256:cd6537fe88d5fec315c55c2f8529bc4ce7a9a352ad7db3eeaa6a66e2dd4ec37a", size = 412799, upload-time = "2026-09-22T20:54:31.509Z" }
 wheels = [
@@ -2626,7 +2626,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "mdurl", marker = "python_full_version < '3.10'" },
+    { name = "mdurl" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/38/71/3b932df36c1a044d397a1f92d1cf91ee0a503d91e470cbd670aa66b07ed0/markdown-it-py-3.0.0.tar.gz", hash = "sha256:e3f60a94fa066dc52ec76661e37c851cb232d92f9886b15cb560aaada2df8feb", size = 74596, upload-time = "2023-06-03T06:41:14.443Z" }
 wheels = [
@@ -2642,7 +2642,7 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "mdurl", marker = "python_full_version >= '3.10'" },
+    { name = "mdurl" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/5b/f5/4ec618ed16cc4f8fb3b701563655a69816155e79e24a17b651541804721d/markdown_it_py-4.0.0.tar.gz", hash = "sha256:cb0a2b4aa34f932c007117b194e945bd74e0ec24133ceb5bac59009cda1cb9f3", size = 73070, upload-time = "2025-08-11T12:57:52.854Z" }
 wheels = [
@@ -2964,8 +2964,9 @@ wheels = [
 
 [[package]]
 name = "npc-lims"
-version = "0.1.203"
+version = "0.1.204"
 source = { editable = "." }
+default-groups = "all"
 dependencies = [
     { name = "aind-session" },
     { name = "codeocean" },
@@ -3092,8 +3093,8 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "importlib-metadata", marker = "python_full_version < '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version < '3.10'" },
+    { name = "importlib-metadata" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/fa/fc/b7564cbef36601aef0d6c9bc01f7badb64be8e862c2e1c3c5c3b43b53e4f/opentelemetry_api-1.41.1.tar.gz", hash = "sha256:0ad1814d73b875f84494387dae86ce0b12c68556331ce6ce8fe789197c949621", size = 71416, upload-time = "2026-04-24T13:15:38.262Z" }
 wheels = [
@@ -3109,7 +3110,7 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version >= '3.10'" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/2e/02/6e0ae9cc61bd3169d401077b507b3ebc344745171e1051ab430be012dcd9/opentelemetry_api-1.45.1.tar.gz", hash = "sha256:aa38ed19bcc084ba42782a73255b3582283eced7ad6dddbd6695189e69adfb75", size = 72804, upload-time = "2026-10-06T17:32:58.133Z" }
 wheels = [
@@ -3121,7 +3122,7 @@ name = "opentelemetry-exporter-http-transport"
 version = "0.66b1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/62/0c/e3ebdb4b507f66afcc905e6885a4946969bd75b45988492643356fbbdc63/opentelemetry_exporter_http_transport-0.66b1.tar.gz", hash = "sha256:443080203bf52586ce0b2ad901e8951c61833eab1aa539ae6f1f16fe9e8e7952", size = 11693, upload-time = "2026-10-06T17:32:59.65Z" }
 wheels = [
@@ -3130,7 +3131,7 @@ wheels = [
 
 [package.optional-dependencies]
 requests = [
-    { name = "requests", marker = "python_full_version >= '3.10'" },
+    { name = "requests" },
 ]
 
 [[package]]
@@ -3141,8 +3142,8 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "opentelemetry-exporter-otlp-proto-grpc", version = "1.41.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "opentelemetry-exporter-otlp-proto-http", version = "1.41.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "opentelemetry-exporter-otlp-proto-grpc", version = "1.41.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-exporter-otlp-proto-http", version = "1.41.1", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/42/84/d55baf8e1a222f40282956083e67de9fa92d5fa451108df4839505fa2a24/opentelemetry_exporter_otlp-1.41.1.tar.gz", hash = "sha256:299a2f0541ca175df186f5ac58fd5db177ba1e9b72b0826049062f750d55b47f", size = 6152, upload-time = "2026-04-24T13:15:40.006Z" }
 wheels = [
@@ -3158,8 +3159,8 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "opentelemetry-exporter-otlp-proto-grpc", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "opentelemetry-exporter-otlp-proto-http", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+    { name = "opentelemetry-exporter-otlp-proto-grpc", version = "1.45.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-exporter-otlp-proto-http", version = "1.45.1", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e3/6f/5a561048ea372894f22f58f70e8478e4cd97d9a4e2d6f014559584a29bc5/opentelemetry_exporter_otlp-1.45.1.tar.gz", hash = "sha256:d0ac35592e77663a9fabf2740b4818c57196b1b764e0c8449d0d7bb2c7b2bc67", size = 6094, upload-time = "2026-10-06T17:33:00.966Z" }
 wheels = [
@@ -3171,7 +3172,7 @@ name = "opentelemetry-exporter-otlp-common"
 version = "0.66b1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "opentelemetry-sdk", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+    { name = "opentelemetry-sdk", version = "1.45.1", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/cb/19/41de712173f43057e4532d42ece7d0c6d4210d353e5752433cb14987643f/opentelemetry_exporter_otlp_common-0.66b1.tar.gz", hash = "sha256:6b1403487a2185ac1feb45fd5546fdf8630ce71c36bcefaadf51e2130e9e23f9", size = 14325, upload-time = "2026-10-06T17:33:01.725Z" }
 wheels = [
@@ -3186,7 +3187,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "opentelemetry-proto", version = "1.41.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "opentelemetry-proto", version = "1.41.1", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ae/fa/f9e3bd3c4d692b3ce9a2880a167d1f79681a1bea11f00d5bf76adc03e6ea/opentelemetry_exporter_otlp_proto_common-1.41.1.tar.gz", hash = "sha256:0e253156ea9c36b0bd3d2440c5c9ba7dd1f3fb64ba7a08fc85fbac536b56e1fb", size = 20409, upload-time = "2026-04-24T13:15:40.924Z" }
 wheels = [
@@ -3202,7 +3203,7 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "opentelemetry-proto", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+    { name = "opentelemetry-proto", version = "1.45.1", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c1/8e/65e85e5137991a3c493b11682151d198638a5bc1dd4b4c5f67e013c57d7c/opentelemetry_exporter_otlp_proto_common-1.45.1.tar.gz", hash = "sha256:2e4adcc3a67bcf57804fc49514f0ef64974ca7590aa3491da389852b4a0628f6", size = 18873, upload-time = "2026-10-06T17:33:04.471Z" }
 wheels = [
@@ -3217,13 +3218,13 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "googleapis-common-protos", version = "1.75.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "grpcio", version = "1.80.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "opentelemetry-api", version = "1.41.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "opentelemetry-exporter-otlp-proto-common", version = "1.41.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "opentelemetry-proto", version = "1.41.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "opentelemetry-sdk", version = "1.41.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version < '3.10'" },
+    { name = "googleapis-common-protos", version = "1.75.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "grpcio", version = "1.80.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-api", version = "1.41.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-exporter-otlp-proto-common", version = "1.41.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-proto", version = "1.41.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-sdk", version = "1.41.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/1e/9b/e4503060b8695579dbaad187dc8cef4554188de68748c88060599b77489e/opentelemetry_exporter_otlp_proto_grpc-1.41.1.tar.gz", hash = "sha256:b05df8fa1333dc9a3fda36b676b96b5095ab6016d3f0c3296d430d629ba1443b", size = 25755, upload-time = "2026-04-24T13:15:41.93Z" }
 wheels = [
@@ -3239,14 +3240,14 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "googleapis-common-protos", version = "1.76.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "grpcio", version = "1.84.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "opentelemetry-exporter-otlp-common", marker = "python_full_version >= '3.10'" },
-    { name = "opentelemetry-exporter-otlp-proto-common", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "opentelemetry-proto", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "opentelemetry-sdk", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.10'" },
+    { name = "googleapis-common-protos", version = "1.76.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "grpcio", version = "1.84.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-exporter-otlp-common" },
+    { name = "opentelemetry-exporter-otlp-proto-common", version = "1.45.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-proto", version = "1.45.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-sdk", version = "1.45.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d6/00/a82af0be959dc58495740b169c6669a86e0811f6cd353a01eda34d255db3/opentelemetry_exporter_otlp_proto_grpc-1.45.1.tar.gz", hash = "sha256:3b3dcfbfdcb4e35149fcf309972282054b45228f5c10547d0095d6578510a9a0", size = 25997, upload-time = "2026-10-06T17:33:05.114Z" }
 wheels = [
@@ -3261,13 +3262,13 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "googleapis-common-protos", version = "1.75.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "opentelemetry-api", version = "1.41.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "opentelemetry-exporter-otlp-proto-common", version = "1.41.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "opentelemetry-proto", version = "1.41.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "opentelemetry-sdk", version = "1.41.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "requests", marker = "python_full_version < '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version < '3.10'" },
+    { name = "googleapis-common-protos", version = "1.75.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-api", version = "1.41.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-exporter-otlp-proto-common", version = "1.41.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-proto", version = "1.41.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-sdk", version = "1.41.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "requests" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/33/5b/9d3c7f70cca10136ba82a81e738dee626c8e7fc61c6887ea9a58bf34c606/opentelemetry_exporter_otlp_proto_http-1.41.1.tar.gz", hash = "sha256:4747a9604c8550ab38c6fd6180e2fcb80de3267060bef2c306bad3cb443302bc", size = 24139, upload-time = "2026-04-24T13:15:42.977Z" }
 wheels = [
@@ -3283,15 +3284,15 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "googleapis-common-protos", version = "1.76.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "opentelemetry-exporter-http-transport", extra = ["requests"], marker = "python_full_version >= '3.10'" },
-    { name = "opentelemetry-exporter-otlp-common", marker = "python_full_version >= '3.10'" },
-    { name = "opentelemetry-exporter-otlp-proto-common", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "opentelemetry-proto", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "opentelemetry-sdk", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "requests", marker = "python_full_version >= '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.10'" },
+    { name = "googleapis-common-protos", version = "1.76.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-exporter-http-transport", extra = ["requests"] },
+    { name = "opentelemetry-exporter-otlp-common" },
+    { name = "opentelemetry-exporter-otlp-proto-common", version = "1.45.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-proto", version = "1.45.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-sdk", version = "1.45.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "requests" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/1b/17/26487707ea4caa97b17e6e4b5fa72133a53512ffa2f5cf7a49ef284b29cb/opentelemetry_exporter_otlp_proto_http-1.45.1.tar.gz", hash = "sha256:45c218405ce3fd879596924b1874bf9a8f6880206d61065c5a912c8e5c297fb7", size = 28839, upload-time = "2026-10-06T17:33:05.713Z" }
 wheels = [
@@ -3306,7 +3307,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "protobuf", marker = "python_full_version < '3.10'" },
+    { name = "protobuf" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/99/e8/633c6d8a9c8840338b105907e55c32d3da1983abab5e52f899f72a82c3d1/opentelemetry_proto-1.41.1.tar.gz", hash = "sha256:4b9d2eb631237ea43b80e16c073af438554e32bc7e9e3f8ca4a9582f900020e5", size = 45670, upload-time = "2026-04-24T13:15:49.768Z" }
 wheels = [
@@ -3322,7 +3323,7 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "protobuf", marker = "python_full_version >= '3.10'" },
+    { name = "protobuf" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/4b/7f/15f014fb195da6c2dbb6c71399b8e76824878718e94de6454038488eed28/opentelemetry_proto-1.45.1.tar.gz", hash = "sha256:79e0fb95e4616691a469439238aa9224d75779b3e108e895d1aa125ab29ca77c", size = 46488, upload-time = "2026-10-06T17:33:11.49Z" }
 wheels = [
@@ -3337,9 +3338,9 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "opentelemetry-api", version = "1.41.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "opentelemetry-semantic-conventions", version = "0.62b1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version < '3.10'" },
+    { name = "opentelemetry-api", version = "1.41.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-semantic-conventions", version = "0.62b1", source = { registry = "https://pypi.org/simple" } },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/58/d0/54ee30dab82fb0acda23d144502771ff76ef8728459c83c3e89ef9fb1825/opentelemetry_sdk-1.41.1.tar.gz", hash = "sha256:724b615e1215b5aeacda0abb8a6a8922c9a1853068948bd0bd225a56d0c792e6", size = 230180, upload-time = "2026-04-24T13:15:50.991Z" }
 wheels = [
@@ -3355,9 +3356,9 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "opentelemetry-semantic-conventions", version = "0.66b1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.10'" },
+    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "opentelemetry-semantic-conventions", version = "0.66b1", source = { registry = "https://pypi.org/simple" } },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a1/79/7392e21a1c8f0c61d90b223e31c7e48cb9d452e91a6b820ad24cca5f23c4/opentelemetry_sdk-1.45.1.tar.gz", hash = "sha256:63d24a6ca645019a631e6a51999c73e93adcac1196ca640b8ae78a7cc4762bf3", size = 218324, upload-time = "2026-10-06T17:33:13.26Z" }
 wheels = [
@@ -3372,8 +3373,8 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "opentelemetry-api", version = "1.41.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version < '3.10'" },
+    { name = "opentelemetry-api", version = "1.41.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/9e/de/911ac9e309052aca1b20b2d5549d3db45d1011e1a610e552c6ccdd1b64f8/opentelemetry_semantic_conventions-0.62b1.tar.gz", hash = "sha256:c5cc6e04a7f8c7cdd30be2ed81499fa4e75bfbd52c9cb70d40af1f9cd3619802", size = 145750, upload-time = "2026-04-24T13:15:52.236Z" }
 wheels = [
@@ -3389,8 +3390,8 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.10'" },
+    { name = "opentelemetry-api", version = "1.45.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/46/e4/dbbfb2a010c4db2224a5114638acede6fe563d33cc20fb1752cebcbe6298/opentelemetry_semantic_conventions-0.66b1.tar.gz", hash = "sha256:497ca63bf383723411e8eaf60c8779e9877633c936bb641080adab59d0eb6ec8", size = 150250, upload-time = "2026-10-06T17:33:14.073Z" }
 wheels = [
@@ -3402,7 +3403,7 @@ name = "outcome"
 version = "1.3.0.post0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "attrs", marker = "python_full_version >= '3.10'" },
+    { name = "attrs" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/98/df/77698abfac98571e65ffeb0c1fba8ffd692ab8458d617a0eed7d9a8d38f2/outcome-1.3.0.post0.tar.gz", hash = "sha256:9dcf02e65f2971b80047b377468e72a268e15c0af3cf1238e6ff14f7f91143b8", size = 21060, upload-time = "2023-10-26T04:26:04.361Z" }
 wheels = [
@@ -3468,8 +3469,8 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "python-dateutil", marker = "python_full_version < '3.10'" },
-    { name = "tzdata", marker = "python_full_version < '3.10'" },
+    { name = "python-dateutil" },
+    { name = "tzdata" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/cb/72/9a51afa0a822b09e286c4cb827ed7b00bc818dac7bd11a5f161e493a217d/pendulum-3.2.0.tar.gz", hash = "sha256:e80feda2d10fa3ff8b1526715f7d33dcb7e08494b3088f2c8a3ac92d4a4331ce", size = 86912, upload-time = "2026-01-30T11:22:24.093Z" }
 wheels = [
@@ -3520,8 +3521,8 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "python-dateutil", marker = "python_full_version >= '3.10'" },
-    { name = "tzdata", marker = "python_full_version >= '3.10'" },
+    { name = "python-dateutil" },
+    { name = "tzdata" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d8/3f/345b5bc712ce806f3b5fbce6eea141f46713b2c1a7654eaead1b2593d5a1/pendulum-3.3.0.tar.gz", hash = "sha256:9aceb5b24e9f55381df08187397e88546b5ba82f698b741cbf1a05c5e2369116", size = 87458, upload-time = "2026-10-12T20:54:11.461Z" }
 wheels = [
@@ -3596,9 +3597,9 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "pastel", marker = "python_full_version < '3.10'" },
-    { name = "pyyaml", marker = "python_full_version < '3.10'" },
-    { name = "tomli", marker = "python_full_version < '3.10'" },
+    { name = "pastel" },
+    { name = "pyyaml" },
+    { name = "tomli" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a5/f2/273fe54a78dc5c6c8dd63db71f5a6ceb95e4648516b5aeaeff4bde804e44/poethepoet-0.37.0.tar.gz", hash = "sha256:73edf458707c674a079baa46802e21455bda3a7f82a408e58c31b9f4fe8e933d", size = 68570, upload-time = "2025-08-11T18:00:29.103Z" }
 wheels = [
@@ -3614,9 +3615,9 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "pastel", marker = "python_full_version >= '3.10'" },
-    { name = "pyyaml", marker = "python_full_version >= '3.10'" },
-    { name = "tomli", marker = "python_full_version == '3.10.*'" },
+    { name = "pastel" },
+    { name = "pyyaml" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a8/b9/fa92286560f70eaa40d473ea48376d20c6c21f63627d33c6bb1c5e385175/poethepoet-0.41.0.tar.gz", hash = "sha256:dcaad621dc061f6a90b17d091bebb9ca043d67bfe9bd6aa4185aea3ebf7ff3e6", size = 87780, upload-time = "2026-02-08T20:45:36.061Z" }
 wheels = [
@@ -3631,7 +3632,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "polars-runtime-32", version = "1.36.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "polars-runtime-32", version = "1.36.1", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/9f/dc/56f2a90c79a2cb13f9e956eab6385effe54216ae7a2068b3a6406bae4345/polars-1.36.1.tar.gz", hash = "sha256:12c7616a2305559144711ab73eaa18814f7aa898c522e7645014b68f1432d54c", size = 711993, upload-time = "2025-12-10T01:14:53.033Z" }
 wheels = [
@@ -3647,7 +3648,7 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "polars-runtime-32", version = "1.38.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+    { name = "polars-runtime-32", version = "1.38.1", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c6/5e/208a24471a433bcd0e9a6889ac49025fd4daad2815c8220c5bd2576e5f1b/polars-1.38.1.tar.gz", hash = "sha256:803a2be5344ef880ad625addfb8f641995cfd777413b08a10de0897345778239", size = 717667, upload-time = "2026-02-06T18:13:23.013Z" }
 wheels = [
@@ -3832,7 +3833,7 @@ wheels = [
 
 [package.optional-dependencies]
 email = [
-    { name = "email-validator", marker = "python_full_version < '3.10'" },
+    { name = "email-validator" },
 ]
 
 [[package]]
@@ -3934,9 +3935,9 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "pydantic", marker = "python_full_version < '3.10'" },
-    { name = "python-dotenv", marker = "python_full_version < '3.10'" },
-    { name = "typing-inspection", marker = "python_full_version < '3.10'" },
+    { name = "pydantic" },
+    { name = "python-dotenv" },
+    { name = "typing-inspection" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/20/c5/dbbc27b814c71676593d1c3f718e6cd7d4f00652cefa24b75f7aa3efb25e/pydantic_settings-2.11.0.tar.gz", hash = "sha256:d0e87a1c7d33593beb7194adb8470fc426e95ba02af83a0f23474a04c9a08180", size = 188394, upload-time = "2025-09-24T14:19:11.764Z" }
 wheels = [
@@ -3952,9 +3953,9 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "pydantic", marker = "python_full_version >= '3.10'" },
-    { name = "python-dotenv", marker = "python_full_version >= '3.10'" },
-    { name = "typing-inspection", marker = "python_full_version >= '3.10'" },
+    { name = "pydantic" },
+    { name = "python-dotenv" },
+    { name = "typing-inspection" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/52/6d/fffca34caecc4a3f97bda81b2098da5e8ab7efc9a66e819074a11955d87e/pydantic_settings-2.13.1.tar.gz", hash = "sha256:b4c11847b15237fb0171e1462bf540e294affb9b86db4d9aa5c01730bdbe4025", size = 223826, upload-time = "2026-02-19T13:45:08.055Z" }
 wheels = [
@@ -4115,13 +4116,13 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "colorama", marker = "python_full_version < '3.10' and sys_platform == 'win32'" },
-    { name = "exceptiongroup", marker = "python_full_version < '3.10'" },
-    { name = "iniconfig", version = "2.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "packaging", marker = "python_full_version < '3.10'" },
-    { name = "pluggy", marker = "python_full_version < '3.10'" },
-    { name = "pygments", marker = "python_full_version < '3.10'" },
-    { name = "tomli", marker = "python_full_version < '3.10'" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
+    { name = "exceptiongroup" },
+    { name = "iniconfig", version = "2.1.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "packaging" },
+    { name = "pluggy" },
+    { name = "pygments" },
+    { name = "tomli" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a3/5c/00a0e072241553e1a7496d638deababa67c5058571567b92a7eaa258397c/pytest-8.4.2.tar.gz", hash = "sha256:86c0d0b93306b961d58d62a4db4879f27fe25513d4b969df351abdddb3c30e01", size = 1519618, upload-time = "2025-09-04T14:34:22.711Z" }
 wheels = [
@@ -4137,13 +4138,13 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "colorama", marker = "python_full_version >= '3.10' and sys_platform == 'win32'" },
-    { name = "exceptiongroup", marker = "python_full_version == '3.10.*'" },
-    { name = "iniconfig", version = "2.3.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "packaging", marker = "python_full_version >= '3.10'" },
-    { name = "pluggy", marker = "python_full_version >= '3.10'" },
-    { name = "pygments", marker = "python_full_version >= '3.10'" },
-    { name = "tomli", marker = "python_full_version == '3.10.*'" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
+    { name = "exceptiongroup", marker = "python_full_version < '3.11'" },
+    { name = "iniconfig", version = "2.3.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "packaging" },
+    { name = "pluggy" },
+    { name = "pygments" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d1/db/7ef3487e0fb0049ddb5ce41d3a49c235bf9ad299b6a25d5780a89f19230f/pytest-9.0.2.tar.gz", hash = "sha256:75186651a92bd89611d1d9fc20f0b4345fd827c41ccd5c299a868a05d70edf11", size = 1568901, upload-time = "2025-12-06T21:30:51.014Z" }
 wheels = [
@@ -4232,7 +4233,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "text-unidecode", marker = "python_full_version < '3.10'" },
+    { name = "text-unidecode" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/87/c7/5e1547c44e31da50a460df93af11a535ace568ef89d7a811069ead340c4a/python-slugify-8.0.4.tar.gz", hash = "sha256:59202371d1d05b54a9e7720c5e038f928f45daaffe41dd10822f3907b937c856", size = 10921, upload-time = "2024-02-08T18:32:45.488Z" }
 wheels = [
@@ -4248,7 +4249,7 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "text-unidecode", marker = "python_full_version >= '3.10'" },
+    { name = "text-unidecode" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/bd/e8/26b1af09d728d604dc16427a39f53985b22a170dbd61addac3f48db73f03/python_slugify-9.1.3.tar.gz", hash = "sha256:90e997f2e0987239ce95e12f700086eb18e1d1d3ee22624fbbdbd095afca42b6", size = 66093, upload-time = "2026-10-07T01:06:20.101Z" }
 wheels = [
@@ -4334,7 +4335,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "async-timeout", marker = "python_full_version < '3.10'" },
+    { name = "async-timeout" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/57/8f/f125feec0b958e8d22c8f0b492b30b1991d9499a4315dfde466cf4289edc/redis-7.0.1.tar.gz", hash = "sha256:c949df947dca995dc68fdf5a7863950bf6df24f8d6022394585acc98e81624f1", size = 4755322, upload-time = "2025-10-27T14:34:00.33Z" }
 wheels = [
@@ -4350,7 +4351,7 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "async-timeout", marker = "python_full_version >= '3.10' and python_full_version < '3.11.3'" },
+    { name = "async-timeout", marker = "python_full_version < '3.11.3'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/9f/32/6fac13a11e73e1bc67a2ae821a72bfe4c2d8c4c48f0267e4a952be0f1bae/redis-7.2.0.tar.gz", hash = "sha256:4dd5bf4bd4ae80510267f14185a15cba2a38666b941aff68cccf0256b51c1f26", size = 4901247, upload-time = "2026-02-16T17:16:22.797Z" }
 wheels = [
@@ -4365,9 +4366,9 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "attrs", marker = "python_full_version < '3.10'" },
-    { name = "rpds-py", version = "0.27.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version < '3.10'" },
+    { name = "attrs" },
+    { name = "rpds-py", version = "0.27.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/2f/db/98b5c277be99dd18bfd91dd04e1b759cad18d1a338188c936e92f921c7e2/referencing-0.36.2.tar.gz", hash = "sha256:df2e89862cd09deabbdba16944cc3f10feb6b3e6f18e902f7cc25609a34775aa", size = 74744, upload-time = "2025-01-25T08:48:16.138Z" }
 wheels = [
@@ -4383,10 +4384,10 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "attrs", marker = "python_full_version >= '3.10'" },
-    { name = "rpds-py", version = "0.30.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "attrs" },
+    { name = "rpds-py", version = "0.30.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "rpds-py", version = "2026.9.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.10'" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/22/f5/df4e9027acead3ecc63e50fe1e36aca1523e1719559c499951bb4b53188f/referencing-0.37.0.tar.gz", hash = "sha256:44aefc3142c5b842538163acb373e24cce6632bd54bdb01b21ad5863489f50d8", size = 78036, upload-time = "2025-10-13T15:30:48.871Z" }
 wheels = [
@@ -4426,8 +4427,8 @@ name = "retryhttp"
 version = "1.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pydantic", marker = "python_full_version < '3.10'" },
-    { name = "tenacity", version = "9.1.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "pydantic" },
+    { name = "tenacity", version = "9.1.2", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/00/80/ac82d3d6c4b65fd752d9f5483d1ea3bbb0220ba9e51f26199c45f0e5039e/retryhttp-1.4.0.tar.gz", hash = "sha256:9bba1ef1b46b67f251ac80b0ee6a846d93dcbbe8c49b7959cd1142fc6c393c99", size = 25405, upload-time = "2025-10-23T20:43:36.782Z" }
 wheels = [
@@ -4773,9 +4774,9 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "aiobotocore", marker = "python_full_version < '3.10'" },
-    { name = "aiohttp", marker = "python_full_version < '3.10'" },
-    { name = "fsspec", version = "2025.10.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "aiobotocore" },
+    { name = "aiohttp" },
+    { name = "fsspec", version = "2025.10.0", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/bb/ee/7cf7de3b17ef6db10b027cc9f8a1108ceb6333e267943e666a35882b1474/s3fs-2025.10.0.tar.gz", hash = "sha256:e8be6cddc77aceea1681ece0f472c3a7f8ef71a0d2acddb1cc92bb6afa3e9e4f", size = 80383, upload-time = "2025-10-30T15:06:04.647Z" }
 wheels = [
@@ -4791,9 +4792,9 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "aiobotocore", marker = "python_full_version >= '3.10'" },
-    { name = "aiohttp", marker = "python_full_version >= '3.10'" },
-    { name = "fsspec", version = "2026.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+    { name = "aiobotocore" },
+    { name = "aiohttp" },
+    { name = "fsspec", version = "2026.1.0", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/97/f2/d6e725d4a037fe65fe341d3c16e7b6f3e69a198d6115c77b0c45dffaebe7/s3fs-2026.1.0.tar.gz", hash = "sha256:b7a352dfb9553a2263b7ea4575d90cd3c64eb76cfc083b99cb90b36b31e9d09d", size = 81224, upload-time = "2026-01-09T15:29:49.025Z" }
 wheels = [
@@ -4826,8 +4827,8 @@ name = "sentry-sdk"
 version = "2.75.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "certifi", marker = "python_full_version < '3.10'" },
-    { name = "urllib3", version = "1.26.20", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "certifi" },
+    { name = "urllib3", version = "1.26.20", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d2/95/121b20d75e738d249a0e26e6476a2acb178673e8228002748fc0cd85ce55/sentry_sdk-2.75.0.tar.gz", hash = "sha256:c38ac2d4b2435c11da821e173bb9d9088c98f41ae92f559ce0e424170a8e1a29", size = 1092308, upload-time = "2026-11-12T13:24:13.977Z" }
 wheels = [
@@ -4904,7 +4905,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "greenlet", version = "3.2.5", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.10' and platform_machine == 'AMD64') or (python_full_version < '3.10' and platform_machine == 'WIN32') or (python_full_version < '3.10' and platform_machine == 'aarch64') or (python_full_version < '3.10' and platform_machine == 'amd64') or (python_full_version < '3.10' and platform_machine == 'ppc64le') or (python_full_version < '3.10' and platform_machine == 'win32') or (python_full_version < '3.10' and platform_machine == 'x86_64')" },
+    { name = "greenlet", version = "3.2.5", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'AMD64' or platform_machine == 'WIN32' or platform_machine == 'aarch64' or platform_machine == 'amd64' or platform_machine == 'ppc64le' or platform_machine == 'win32' or platform_machine == 'x86_64'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ce/af/20290b55d469e873cba9d41c0206ab5461ff49d759989b3fe65010f9d265/sqlalchemy-1.4.54.tar.gz", hash = "sha256:4470fbed088c35dc20b78a39aaf4ae54fe81790c783b3264872a0224f437c31a", size = 8470350, upload-time = "2024-09-05T15:54:10.398Z" }
 wheels = [
@@ -4931,7 +4932,7 @@ wheels = [
 
 [package.optional-dependencies]
 asyncio = [
-    { name = "greenlet", version = "3.2.5", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "greenlet", version = "3.2.5", source = { registry = "https://pypi.org/simple" } },
 ]
 
 [[package]]
@@ -4942,8 +4943,8 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "greenlet", version = "3.5.6", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version == '3.10.*' and platform_machine == 'AMD64') or (python_full_version == '3.10.*' and platform_machine == 'WIN32') or (python_full_version == '3.10.*' and platform_machine == 'aarch64') or (python_full_version == '3.10.*' and platform_machine == 'amd64') or (python_full_version == '3.10.*' and platform_machine == 'ppc64le') or (python_full_version == '3.10.*' and platform_machine == 'win32') or (python_full_version == '3.10.*' and platform_machine == 'x86_64')" },
-    { name = "typing-extensions", marker = "python_full_version == '3.10.*'" },
+    { name = "greenlet", version = "3.5.6", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'AMD64' or platform_machine == 'WIN32' or platform_machine == 'aarch64' or platform_machine == 'amd64' or platform_machine == 'ppc64le' or platform_machine == 'win32' or platform_machine == 'x86_64'" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/74/9a/8d798711d1e56fa5f51152c228c2e0a8f03c95f3d59c969dd720ed492b83/sqlalchemy-2.0.58.tar.gz", hash = "sha256:2acdcec9836b7c1514a9ad426e7731669a1186d96481a2e82c50bf2aebb49061", size = 10031998, upload-time = "2026-11-16T20:40:44.535Z" }
 wheels = [
@@ -4973,7 +4974,7 @@ wheels = [
 
 [package.optional-dependencies]
 asyncio = [
-    { name = "greenlet", version = "3.5.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "greenlet", version = "3.5.6", source = { registry = "https://pypi.org/simple" } },
 ]
 
 [[package]]
@@ -4984,7 +4985,7 @@ resolution-markers = [
     "python_full_version >= '3.11'",
 ]
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version >= '3.11'" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/02/4b/81d972a46c9f1d978af1795e2abc988855c711453552cb45d75f6e4abbf5/sqlalchemy-2.1.3.tar.gz", hash = "sha256:ade5281df06038c6394f532590d592d3381ee5d11b9e0006a2570aef41145118", size = 10525778, upload-time = "2026-10-02T22:57:00.308Z" }
 wheels = [
@@ -5003,7 +5004,7 @@ wheels = [
 
 [package.optional-dependencies]
 asyncio = [
-    { name = "greenlet", version = "3.5.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "greenlet", version = "3.5.6", source = { registry = "https://pypi.org/simple" } },
 ]
 
 [[package]]
@@ -5011,7 +5012,7 @@ name = "sqlalchemy-jsonfield"
 version = "1.0.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "sqlalchemy", version = "1.4.54", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "sqlalchemy", version = "1.4.54", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/bc/15/9555c858379eaa76853722a4d63c6d9d4227c5889c0f9080d6b759c19100/sqlalchemy_jsonfield-1.0.3.tar.gz", hash = "sha256:162099ff6b6f475105afff90b15da114cbd87fd18df94e7d091df9f9d0e4f69f", size = 15495, upload-time = "2026-05-11T19:54:11.833Z" }
 wheels = [
@@ -5023,7 +5024,7 @@ name = "sqlalchemy-utils"
 version = "0.42.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "sqlalchemy", version = "1.4.54", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "sqlalchemy", version = "1.4.54", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0f/7d/eb9565b6a49426552a5bf5c57e7c239c506dc0e4e5315aec6d1e8241dc7c/sqlalchemy_utils-0.42.1.tar.gz", hash = "sha256:881f9cd9e5044dc8f827bccb0425ce2e55490ce44fc0bb848c55cc8ee44cc02e", size = 130789, upload-time = "2025-12-13T03:14:13.591Z" }
 wheels = [
@@ -5075,8 +5076,8 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "anyio", marker = "python_full_version < '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version < '3.10'" },
+    { name = "anyio" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/de/1a/608df0b10b53b0beb96a37854ee05864d182ddd4b1156a22f1ad3860425a/starlette-0.49.3.tar.gz", hash = "sha256:1c14546f299b5901a1ea0e34410575bc33bbd741377a10484a54445588d00284", size = 2655031, upload-time = "2025-11-01T15:12:26.13Z" }
 wheels = [
@@ -5092,8 +5093,8 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "anyio", marker = "python_full_version >= '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.10'" },
+    { name = "anyio" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7b/2b/3850dc6bf7ef71b088962eba31dafc6cffd2f96e577ebb0bb316df96da3e/starlette-1.7.0.tar.gz", hash = "sha256:c79f74ea63cff761804fbbfb182f1e0b440c2d07b164d24700c5a1bab5d6ff5d", size = 2736246, upload-time = "2026-09-23T07:30:26.35Z" }
 wheels = [
@@ -5108,7 +5109,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.10'" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ef/52/9ba0f43b686e7f3ddfeaa78ac3af750292662284b3661e91ad5494f21dbc/structlog-25.5.0.tar.gz", hash = "sha256:098522a3bebed9153d4570c6d0288abf80a031dfdb2048d59a49e9dc2190fc98", size = 1460830, upload-time = "2025-10-27T08:28:23.028Z" }
 wheels = [
@@ -5124,7 +5125,7 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version == '3.10.*'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/5e/89/b4a0bcfdf4f71a3dea31379f095929613d7e4528a0996bca6aa964cd0dca/structlog-26.1.0.tar.gz", hash = "sha256:f63a716cbd1b1291cf7661de7794b455acfa4c43c5bcf1630e6ad5ddc1adb3b7", size = 1459881, upload-time = "2026-06-06T07:33:39.348Z" }
 wheels = [
@@ -5139,7 +5140,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "attrs", marker = "python_full_version < '3.10'" },
+    { name = "attrs" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/08/e1/2d56ec21820cae24a6215dc1d6a224167b0e24368bf53166551064742e0d/svcs-25.1.0.tar.gz", hash = "sha256:64dd74d0c4e8fee79a9ac7550a9d824670b228df390ba1911614e29b59b3f2c2", size = 714086, upload-time = "2025-01-25T13:15:21.505Z" }
 wheels = [
@@ -5155,8 +5156,8 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "attrs", marker = "python_full_version >= '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.10'" },
+    { name = "attrs" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/9b/5e/89463bf7613fe723801b8f7000f37c4c36486adcda0d115ca417e513c7cc/svcs-26.2.0.tar.gz", hash = "sha256:129efb89586c2c52295ee00b00562af7d85d5535dad149534993e25fccbd76a6", size = 915193, upload-time = "2026-08-24T12:54:16.474Z" }
 wheels = [
@@ -5294,10 +5295,10 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "annotated-doc", marker = "python_full_version < '3.10'" },
-    { name = "click", version = "8.1.8", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "rich", marker = "python_full_version < '3.10'" },
-    { name = "shellingham", marker = "python_full_version < '3.10'" },
+    { name = "annotated-doc" },
+    { name = "click", version = "8.1.8", source = { registry = "https://pypi.org/simple" } },
+    { name = "rich" },
+    { name = "shellingham" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d3/ae/93d16574e66dfe4c2284ffdaca4b0320ade32858cb2cc586c8dd79f127c5/typer-0.23.2.tar.gz", hash = "sha256:a99706a08e54f1aef8bb6a8611503808188a4092808e86addff1828a208af0de", size = 120162, upload-time = "2026-02-16T18:52:40.354Z" }
 wheels = [
@@ -5313,10 +5314,10 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "annotated-doc", marker = "python_full_version >= '3.10'" },
-    { name = "colorama", marker = "python_full_version >= '3.10' and sys_platform == 'win32'" },
-    { name = "rich", marker = "python_full_version >= '3.10'" },
-    { name = "shellingham", marker = "python_full_version >= '3.10'" },
+    { name = "annotated-doc" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
+    { name = "rich" },
+    { name = "shellingham" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/03/51/d33db42cc72ffd8c30777547b42d01f0cbf9d95a770457698d0174b3ed71/typer-0.27.3.tar.gz", hash = "sha256:d0396f770a560ab1b0a8504e13b5f254b728cedb05c61cf0359e944e50ce8901", size = 205303, upload-time = "2026-10-06T17:24:16.61Z" }
 wheels = [
@@ -5340,7 +5341,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "types-urllib3", marker = "python_full_version < '3.10'" },
+    { name = "types-urllib3" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/f9/b8/c1e8d39996b4929b918aba10dba5de07a8b3f4c8487bb61bb79882544e69/types-requests-2.31.0.6.tar.gz", hash = "sha256:cd74ce3b53c461f1228a9b783929ac73a666658f223e28ed29753771477b3bd0", size = 15535, upload-time = "2023-09-27T06:19:38.443Z" }
 wheels = [
@@ -5356,7 +5357,7 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "urllib3", version = "2.0.7", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
+    { name = "urllib3", version = "2.0.7", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0f/f3/a0663907082280664d745929205a89d41dffb29e89a50f753af7d57d0a96/types_requests-2.32.4.20260107.tar.gz", hash = "sha256:018a11ac158f801bfa84857ddec1650750e393df8a004a8a9ae2a9bec6fcb24f", size = 23165, upload-time = "2026-01-07T03:20:54.091Z" }
 wheels = [
@@ -5480,9 +5481,9 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "click", version = "8.1.8", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "h11", marker = "python_full_version < '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version < '3.10'" },
+    { name = "click", version = "8.1.8", source = { registry = "https://pypi.org/simple" } },
+    { name = "h11" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ae/4f/f9fdac7cf6dd79790eb165639b5c452ceeabc7bbabbba4569155470a287d/uvicorn-0.39.0.tar.gz", hash = "sha256:610512b19baa93423d2892d7823741f6d27717b642c8964000d7194dded19302", size = 82001, upload-time = "2025-12-21T13:05:17.973Z" }
 wheels = [
@@ -5491,13 +5492,13 @@ wheels = [
 
 [package.optional-dependencies]
 standard = [
-    { name = "colorama", marker = "python_full_version < '3.10' and sys_platform == 'win32'" },
-    { name = "httptools", marker = "python_full_version < '3.10'" },
-    { name = "python-dotenv", marker = "python_full_version < '3.10'" },
-    { name = "pyyaml", marker = "python_full_version < '3.10'" },
-    { name = "uvloop", marker = "python_full_version < '3.10' and platform_python_implementation != 'PyPy' and sys_platform != 'cygwin' and sys_platform != 'win32'" },
-    { name = "watchfiles", version = "1.1.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "websockets", version = "15.0.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
+    { name = "httptools" },
+    { name = "python-dotenv" },
+    { name = "pyyaml" },
+    { name = "uvloop", marker = "platform_python_implementation != 'PyPy' and sys_platform != 'cygwin' and sys_platform != 'win32'" },
+    { name = "watchfiles", version = "1.1.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "websockets", version = "15.0.1", source = { registry = "https://pypi.org/simple" } },
 ]
 
 [[package]]
@@ -5509,9 +5510,9 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "click", version = "8.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "h11", marker = "python_full_version >= '3.10'" },
-    { name = "typing-extensions", marker = "python_full_version == '3.10.*'" },
+    { name = "click", version = "8.3.1", source = { registry = "https://pypi.org/simple" } },
+    { name = "h11" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/da/34/30e9280707135d2cfc589dfff3cb796bd07a3aeb1a3e415ba09dd89d7bb4/uvicorn-0.54.0.tar.gz", hash = "sha256:a2e33cbfaa0306f8e6b0c13e0cb89d7d7a2da3e62b90c66e18c33d9807b28620", size = 112283, upload-time = "2026-09-25T06:52:37.601Z" }
 wheels = [
@@ -5520,12 +5521,12 @@ wheels = [
 
 [package.optional-dependencies]
 standard = [
-    { name = "httptools", marker = "python_full_version >= '3.10'" },
-    { name = "python-dotenv", marker = "python_full_version >= '3.10'" },
-    { name = "pyyaml", marker = "python_full_version >= '3.10'" },
-    { name = "uvloop", marker = "python_full_version >= '3.10' and platform_python_implementation != 'PyPy' and sys_platform != 'cygwin' and sys_platform != 'win32'" },
-    { name = "watchfiles", version = "1.3.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "websockets", version = "16.1.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "httptools" },
+    { name = "python-dotenv" },
+    { name = "pyyaml" },
+    { name = "uvloop", marker = "platform_python_implementation != 'PyPy' and sys_platform != 'cygwin' and sys_platform != 'win32'" },
+    { name = "watchfiles", version = "1.3.0", source = { registry = "https://pypi.org/simple" } },
+    { name = "websockets", version = "16.1.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "websockets", version = "17.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
 ]
 
@@ -5563,7 +5564,7 @@ resolution-markers = [
     "python_full_version < '3.10'",
 ]
 dependencies = [
-    { name = "anyio", marker = "python_full_version < '3.10'" },
+    { name = "anyio" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c2/c9/8869df9b2a2d6c59d79220a4db37679e74f807c559ffe5265e08b227a210/watchfiles-1.1.1.tar.gz", hash = "sha256:a173cb5c16c4f40ab19cecf48a534c409f7ea983ab8fed0741304a1c0a31b3f2", size = 94440, upload-time = "2025-10-14T15:06:21.08Z" }
 wheels = [
@@ -5627,7 +5628,7 @@ resolution-markers = [
     "python_full_version == '3.10.*'",
 ]
 dependencies = [
-    { name = "anyio", marker = "python_full_version >= '3.10'" },
+    { name = "anyio" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b3/68/e6aa0b77d217b31f8f486ec0cdfe5e00e6e38dc0be657e7d85819b9faf0a/watchfiles-1.3.0.tar.gz", hash = "sha256:99aee4a07847c06820765fd7b1b49ceac4f3f711ccb7d104655a33231de1c207", size = 108119, upload-time = "2026-09-21T09:08:55.664Z" }
 wheels = [
@@ -5823,7 +5824,7 @@ name = "werkzeug"
 version = "3.1.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "markupsafe", marker = "python_full_version < '3.10'" },
+    { name = "markupsafe" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a4/34/4dd12fc8bb7d61c91467ec3efe415ffa7d5456f799954b40c5bbaeae470e/werkzeug-3.1.9.tar.gz", hash = "sha256:55ca7c70a75689be937aa27f8ff4b018f06ff4838fc73045560bf0f5a1291060", size = 940188, upload-time = "2026-09-27T18:33:41.637Z" }
 wheels = [

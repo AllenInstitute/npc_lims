@@ -158,7 +158,6 @@ def _(StringIO, pd, repo_root, status_relpath, subprocess):
 
         return pd.DataFrame(records), column_order
 
-
     all_metrics, columns = load_status_history(repo_root, status_relpath)
     columns = [
         column
@@ -205,6 +204,7 @@ def _(columns, mo):
 @app.cell
 def _(all_metrics, alt, column_selector, metrics, mo):
     selected_columns = column_selector.value
+
     def make_line_chart(chart_metrics, title, selection_name):
         legend_selection = alt.selection_point(
             name=selection_name,
@@ -282,7 +282,14 @@ def _(latest_commit, latest_sha, metrics, mo, snapshot_count):
     latest_metrics = metrics[metrics["commit_sha"].eq(latest_sha)].copy()
     latest_metrics["% complete"] = latest_metrics["percent_complete"].round(1)
     latest_summary = latest_metrics[
-        ["column", "% complete", "true_count", "false_count", "applicable_count", "excluded_count"]
+        [
+            "column",
+            "% complete",
+            "true_count",
+            "false_count",
+            "applicable_count",
+            "excluded_count",
+        ]
     ].sort_values("column")
     latest_summary = latest_summary.rename(
         columns={

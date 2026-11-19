@@ -8,9 +8,42 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.201...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.202...HEAD)</small>
+
+### Added
+
+- Add IBL manifest builder and staging/rebuild scripts ([b35cea9](https://github.com/AllenInstitute/npc_lims/commit/b35cea96c982fa9e3645b526f410808f3b90588b) by Ben Hardcastle).
+- Add ibl scripts ([c333386](https://github.com/AllenInstitute/npc_lims/commit/c3333862d21e33c61f4e544846cc145f99e79c8d) by Ben Hardcastle).
+- Add ibl tracking artifacts ([88f296e](https://github.com/AllenInstitute/npc_lims/commit/88f296ed9778be3666eb23479ae8ffd0eabf3e25) by Ben Hardcastle).
+- Add video processing script for session raw data assets ([69c556a](https://github.com/AllenInstitute/npc_lims/commit/69c556addd9892b95edd194168f3e86e729f141b) by Ben Hardcastle).
+- Add IBL dagster ([760e379](https://github.com/AllenInstitute/npc_lims/commit/760e3798ebd92061df5ba1b59b50b71493c87ef7) by Ben Hardcastle).
+- Add session completeness dashboard ([c9063d7](https://github.com/AllenInstitute/npc_lims/commit/c9063d7013a6044d2c9666091f3f0e8a95d23216) by bjhardcastle).
+- Add dagster folder ([2f21a83](https://github.com/AllenInstitute/npc_lims/commit/2f21a83ae92e93e62366a20b95a55cff7c79908d) by Ben Hardcastle).
+- Add session status availability flags ([baf0d1e](https://github.com/AllenInstitute/npc_lims/commit/baf0d1e8319591890116bfd86c408e49fc5f3c6c) by Ben Hardcastle).
+- Add video processing selection options ([e24c89a](https://github.com/AllenInstitute/npc_lims/commit/e24c89a9272542b85cbee159eecb9fe7bf464ad4) by Ben Hardcastle).
+
+### Fixed
+
+- Fix pytest ignore-glob so scripts aren't collected ([cc0eaad](https://github.com/AllenInstitute/npc_lims/commit/cc0eaadea9ab7527310b86904d802244f54d64b0) by bjhardcastle).
+- Fix Polars cloud output path ([98c854e](https://github.com/AllenInstitute/npc_lims/commit/98c854e8e5071d0903e1413ef7802f4b577371b1) by copilot-swe-agent[bot]).
+- Fix is annotated ([7a2d2e6](https://github.com/AllenInstitute/npc_lims/commit/7a2d2e6e05dfca1ee2c9003899343cc9c7f83c73) by Ben Hardcastle).
+- Fix imaging status to use subject assets ([7590461](https://github.com/AllenInstitute/npc_lims/commit/75904618b760cf9441e521168a3bfa4ad5677884) by bjhardcastle).
+- Fix video processing dependencies ([6487904](https://github.com/AllenInstitute/npc_lims/commit/6487904d18a4aab7d6bd3ebb9365c595ef85cbbe) by Ben Hardcastle).
+- Fix ephys trigger input asset parameter ([808dce0](https://github.com/AllenInstitute/npc_lims/commit/808dce03d1b0519fd6ec11384bea00602a733520) by Ben Hardcastle).
+- Fix asset model ([2ad2438](https://github.com/AllenInstitute/npc_lims/commit/2ad24384be0beea165c770967ece95a85f388a26) by Ben Hardcastle).
+- Fix surface-channel status fallback [skip actions] ([7ca7558](https://github.com/AllenInstitute/npc_lims/commit/7ca75584897efdd4f926006426241612e9c7a931) by Ben Hardcastle).
+
+### Removed
+
+- Remove dagster dependency and dagster code from orchestration/ibl.py ([2fc7e8e](https://github.com/AllenInstitute/npc_lims/commit/2fc7e8ed307e5fa44a49a8638a1e1c8203cc43d8) by bjhardcastle).
+- Remove cache version from Sankey title ([19c0a5e](https://github.com/AllenInstitute/npc_lims/commit/19c0a5ee333cab4adbc177700c27716ebcb5f790) by Ben Hardcastle).
+- Remove duplicate unuploaded video link ([fe2f0f7](https://github.com/AllenInstitute/npc_lims/commit/fe2f0f71b8b68643c66be5b9488483b53cdc926b) by Ben Hardcastle).
 
 <!-- insertion marker -->
+## [v0.1.202](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.202) - 2026-09-26
+
+<small>[Compare with v0.1.201](https://github.com/AllenInstitute/npc_lims/compare/v0.1.201...v0.1.202)</small>
+
 ## [v0.1.201](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.201) - 2026-09-24
 
 <small>[Compare with v0.1.200](https://github.com/AllenInstitute/npc_lims/compare/v0.1.200...v0.1.201)</small>

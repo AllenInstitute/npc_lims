@@ -113,21 +113,42 @@ def get_status(
             if surface_channels_asset_id
             else None
         ),
-        "is_annotated": (is_annotated := (_is_annotated(s, aind_session_id) if is_sorted and is_imaged else None)),
+        "is_annotated": (
+            is_annotated := (
+                _is_annotated(s, aind_session_id) if is_sorted and is_imaged else None
+            )
+        ),
         "is_video": is_video,
-        "is_dlc_eye": (is_dlc_eye := (_has_asset(session_assets, "dlc_eye") if is_video else None)),
-        "is_facemap": (is_facemap := (_has_asset(session_assets, "facemap") if is_video else None)),
+        "is_dlc_eye": (
+            is_dlc_eye := (_has_asset(session_assets, "dlc_eye") if is_video else None)
+        ),
+        "is_facemap": (
+            is_facemap := (_has_asset(session_assets, "facemap") if is_video else None)
+        ),
         "is_gamma_encoding": is_gamma_encoding,
         "is_LPFaceParts": (
-            is_LPFaceParts := (_has_asset(session_assets, "LPFaceParts")
-            if is_video and is_gamma_encoding
-            else False
-            if is_video
-            else None)
+            is_LPFaceParts := (
+                _has_asset(session_assets, "LPFaceParts")
+                if is_video and is_gamma_encoding
+                else False if is_video else None
+            )
         ),
         "is_session_json": s.is_session_json if is_uploaded else None,
         "is_rig_json": s.is_rig_json if is_uploaded else None,
-        "is_complete": (is_complete := (is_annotated and ((is_LPFaceParts and is_dlc_eye and is_facemap) if is_video else True)) if is_uploaded else None),
+        "is_complete": (
+            is_complete := (
+                (
+                    is_annotated
+                    and (
+                        (is_LPFaceParts and is_dlc_eye and is_facemap)
+                        if is_video
+                        else True
+                    )
+                )
+                if is_uploaded
+                else None
+            )
+        ),
         "is_parquet_cached": _is_cached_parquet(s.id) if is_complete else None,
         "is_nwb_cached": _is_cached_nwb(s.id, cache_version) if is_complete else None,
     }

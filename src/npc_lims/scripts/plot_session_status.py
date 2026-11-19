@@ -144,9 +144,7 @@ def session_paths(  # noqa: C901
                 missing_metadata.append("Rig missing")
             # If both files are missing, split the metadata branch between the
             # two independent failure modes without doubling its total width.
-            metadata_paths = [
-                (*metadata_path, missing) for missing in missing_metadata
-            ]
+            metadata_paths = [(*metadata_path, missing) for missing in missing_metadata]
         if metadata_paths:
             paths.extend(
                 [
@@ -196,15 +194,16 @@ def session_paths(  # noqa: C901
                 if not gamma_complete:
                     continue
             if _is_true(row.get(column)):
-                process_path.extend((process_name, "Video processing complete", "Caching"))
+                process_path.extend(
+                    (process_name, "Video processing complete", "Caching")
+                )
             elif _is_false(row.get(column)):
                 process_path.append(f"Missing {process_name}")
             else:
                 continue
             video_paths.append(tuple(process_path))
         paths.extend(
-            (path, PARALLEL_BRANCH_WEIGHT / len(video_paths))
-            for path in video_paths
+            (path, PARALLEL_BRANCH_WEIGHT / len(video_paths)) for path in video_paths
         )
 
     cache_paths: list[tuple[tuple[str, ...], float]] = []
@@ -218,9 +217,11 @@ def session_paths(  # noqa: C901
                 (
                     (
                         *path,
-                        "Parquet cached"
-                        if _is_true(row.get("is_parquet_cached"))
-                        else "Parquet not cached",
+                        (
+                            "Parquet cached"
+                            if _is_true(row.get("is_parquet_cached"))
+                            else "Parquet not cached"
+                        ),
                     ),
                     weight / 2,
                 )
@@ -230,9 +231,11 @@ def session_paths(  # noqa: C901
                 (
                     (
                         *path,
-                        "NWB cached"
-                        if _is_true(row.get("is_nwb_cached"))
-                        else "NWB not cached",
+                        (
+                            "NWB cached"
+                            if _is_true(row.get("is_nwb_cached"))
+                            else "NWB not cached"
+                        ),
                     ),
                     weight / 2,
                 )

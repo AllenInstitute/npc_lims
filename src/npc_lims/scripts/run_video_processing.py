@@ -93,11 +93,7 @@ def trigger_video_processing(
 
 
 def _get_process_label(process_types: Sequence[str] | None) -> str:
-    return (
-        "all video processing"
-        if process_types is None
-        else ", ".join(process_types)
-    )
+    return "all video processing" if process_types is None else ", ".join(process_types)
 
 
 def launch_video_session(
@@ -193,9 +189,7 @@ def process_video_sessions(
         ):
             _wait_for_next_launch(last_launch_at)
             raw_data_asset_id = raw_data_asset_ids[next_session_index]
-            computation = launch_video_session(
-                raw_data_asset_id, process_types
-            )
+            computation = launch_video_session(raw_data_asset_id, process_types)
             active_computations[computation.id] = (
                 computation,
                 raw_data_asset_id,

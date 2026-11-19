@@ -23,7 +23,9 @@ from codeocean.data_asset import DataAsset, DataAssetState
 
 import npc_lims.metadata.codeocean_utils as codeocean_utils
 
-ANNOTATIONS_ROOT = upath.UPath("s3://aind-scratch-data/dynamic-routing/annotated_neuroglancer_jsons")
+ANNOTATIONS_ROOT = upath.UPath(
+    "s3://aind-scratch-data/dynamic-routing/annotated_neuroglancer_jsons"
+)
 IBL_CONVERSION_ROOT = upath.UPath("s3://aind-scratch-data/dynamic-routing/ibl_conv")
 MANIFEST_ROOT = IBL_CONVERSION_ROOT / "manifests"
 
@@ -39,8 +41,6 @@ MANIFEST_COLUMNS = (
     "probe_id",
     "annotation_format",
 )
-
-
 
 
 def normalize_etag(value: object) -> str | None:
@@ -75,7 +75,9 @@ def get_file_version(path: str | upath.UPath) -> str:
     """
     path = upath.UPath(path)
     info = path.stat()
-    etag = normalize_etag(info.get("ETag") or info.get("etag") if isinstance(info, Mapping) else None)
+    etag = normalize_etag(
+        info.get("ETag") or info.get("etag") if isinstance(info, Mapping) else None
+    )
     if etag:
         return f"etag:{etag}"
     return f"sha256:{hashlib.sha256(path.read_bytes()).hexdigest()}"
@@ -109,7 +111,11 @@ def get_manifest_metadata_path(subject_id: str | int) -> upath.UPath:
 
 def _mtime(path: upath.UPath) -> float:
     info = path.stat()
-    value = info.get("mtime") or info.get("LastModified") if isinstance(info, Mapping) else info.st_mtime
+    value = (
+        info.get("mtime") or info.get("LastModified")
+        if isinstance(info, Mapping)
+        else info.st_mtime
+    )
     if isinstance(value, datetime.datetime):
         return value.timestamp()
     return float(value or 0)
@@ -154,7 +160,9 @@ def parse_probe_and_date(annotation_name: str) -> tuple[str, str]:
         flags=re.IGNORECASE,
     )
     if match is None:
-        raise ValueError(f"Cannot map annotation layer {annotation_name!r}; expected e.g. E_0822")
+        raise ValueError(
+            f"Cannot map annotation layer {annotation_name!r}; expected e.g. E_0822"
+        )
     return (
         f"Probe{match.group('probe').upper()}",
         f"{match.group('month')}-{match.group('day')}",
@@ -167,7 +175,10 @@ def get_sorted_probes(asset: DataAsset) -> frozenset[str]:
     Partially-errored sorting runs (e.g. a CUDA error on one probe) are still
     usable for the remaining probes.
     """
-    curated = aind_session.utils.codeocean_utils.get_data_asset_source_dir(asset.id) / "curated"
+    curated = (
+        aind_session.utils.codeocean_utils.get_data_asset_source_dir(asset.id)
+        / "curated"
+    )
     return frozenset(
         match.group(0)
         for path in curated.iterdir()
@@ -248,7 +259,9 @@ def build_manifest(
             )
         except ValueError:
             continue
-    sorted_probes = {name: get_sorted_probes(asset) for name, asset in sorted_assets.items()}
+    sorted_probes = {
+        name: get_sorted_probes(asset) for name, asset in sorted_assets.items()
+    }
     point_counts = _annotation_point_counts(annotation_path)
 
     records: list[dict[str, Any]] = []
@@ -278,12 +291,18 @@ def build_manifest(
         session_name = matches[0]
         if session_name not in sorted_assets:
             if skip_missing_sessions:
-                skipped.append(f"{annotation_name!r}: no sorted asset for {session_name}")
+                skipped.append(
+                    f"{annotation_name!r}: no sorted asset for {session_name}"
+                )
                 continue
-            raise ValueError(f"No sorted data asset for {session_name} ({annotation_name!r})")
+            raise ValueError(
+                f"No sorted data asset for {session_name} ({annotation_name!r})"
+            )
         sorted_asset = sorted_assets[session_name]
         if probe_name not in sorted_probes[session_name]:
-            skipped.append(f"{annotation_name!r}: {probe_name} not in sorted output of {sorted_asset.name}")
+            skipped.append(
+                f"{annotation_name!r}: {probe_name} not in sorted output of {sorted_asset.name}"
+            )
             continue
         record = converter.ManifestRecord(
             mouseid=subject_id,
@@ -338,7 +357,9 @@ def find_processed_asset(
 ) -> DataAsset | None:
     """Find the ready converter output derived from one annotation asset."""
     candidates = []
-    for asset in codeocean_utils.get_subject_data_assets(subject_id, ttl_hash=round(time.time())):
+    for asset in codeocean_utils.get_subject_data_assets(
+        subject_id, ttl_hash=round(time.time())
+    ):
         provenance = asset.provenance
         if (
             asset.created >= created_after
@@ -376,7 +397,9 @@ def get_annotation_json_info(subject_id: str | int) -> dict[str, Any] | None:
     except FileNotFoundError:
         return None
     raw_info = getattr(info, "info", info)
-    etag = normalize_etag(raw_info.get("ETag")) if isinstance(raw_info, Mapping) else None
+    etag = (
+        normalize_etag(raw_info.get("ETag")) if isinstance(raw_info, Mapping) else None
+    )
     dates: set[str] = set()
     with contextlib.suppress(ValueError):  # malformed JSON: no usable layers
         for name, count in _annotation_point_counts(path).items():
@@ -459,12 +482,9 @@ def get_converted_session_ids(
 ) -> frozenset[str]:
     """Session folders (e.g. `ecephys_795555_2025-08-21_12-00-17`) in a
     conversion-capsule output asset."""
-    subject_dir = (
-        aind_session.utils.codeocean_utils.get_data_asset_source_dir(
-            converted_asset_id
-        )
-        / str(subject_id)
-    )
+    subject_dir = aind_session.utils.codeocean_utils.get_data_asset_source_dir(
+        converted_asset_id
+    ) / str(subject_id)
     try:
         return frozenset(
             path.name

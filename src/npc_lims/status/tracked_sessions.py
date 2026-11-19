@@ -119,18 +119,14 @@ class SessionInfo:
         if self.raw_data_paths is None:
             return False
         return any(
-            p
-            for p in self.raw_data_paths
-            if p.name in SESSION_METADATA_FILENAMES
+            p for p in self.raw_data_paths if p.name in SESSION_METADATA_FILENAMES
         )
 
     @functools.cached_property
     def is_rig_json(self) -> bool:
         if self.raw_data_paths is None:
             return False
-        return any(
-            p for p in self.raw_data_paths if p.name in RIG_METADATA_FILENAMES
-        )
+        return any(p for p in self.raw_data_paths if p.name in RIG_METADATA_FILENAMES)
 
     @functools.cached_property
     def is_video(self) -> bool:

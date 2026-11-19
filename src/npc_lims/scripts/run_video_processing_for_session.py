@@ -8,10 +8,24 @@ import codeocean.data_asset
 
 import npc_lims
 
-argparser = argparse.ArgumentParser(description="Run capsules for a given session raw data asset")
-argparser.add_argument("--raw_data_asset_id", type=str, required=True, help="ID of the raw data asset to process")
-argparser.add_argument("--dry_run", type=int, default=0, help="Set to 1 for dry-run mode (no capsule launch)")
-argparser.add_argument("--skip_existing", type=int, default=1, help="Set to 1 to skip existing data assets")
+argparser = argparse.ArgumentParser(
+    description="Run capsules for a given session raw data asset"
+)
+argparser.add_argument(
+    "--raw_data_asset_id",
+    type=str,
+    required=True,
+    help="ID of the raw data asset to process",
+)
+argparser.add_argument(
+    "--dry_run",
+    type=int,
+    default=0,
+    help="Set to 1 for dry-run mode (no capsule launch)",
+)
+argparser.add_argument(
+    "--skip_existing", type=int, default=1, help="Set to 1 to skip existing data assets"
+)
 argparser.add_argument(
     "--run_specific_capsule",
     type=str,
@@ -30,9 +44,13 @@ raw_data_asset_id = args.raw_data_asset_id
 DRY_RUN = args.dry_run
 if args.run_specific_capsule:
     if args.run_specific_capsule == "LPFaceParts" and not args.skip_gamma_encoding:
-        print("Running 'gamma_encoding' followed by {args.run_specific_capsule!r}: setting SKIP_EXISTING=False")
+        print(
+            "Running 'gamma_encoding' followed by {args.run_specific_capsule!r}: setting SKIP_EXISTING=False"
+        )
     else:
-        print(f"Running {args.run_specific_capsule!r} only: setting SKIP_EXISTING=False")
+        print(
+            f"Running {args.run_specific_capsule!r} only: setting SKIP_EXISTING=False"
+        )
     SKIP_EXISTING = False
 else:
     SKIP_EXISTING = args.skip_existing
@@ -53,17 +71,23 @@ print(session_id)
 
 def get_process_asset_id(process_name: str) -> str | None:
     try:
-        return npc_lims.get_session_capsule_pipeline_data_asset(session_id, process_name).id
+        return npc_lims.get_session_capsule_pipeline_data_asset(
+            session_id, process_name
+        ).id
     except FileNotFoundError:
         return None
 
 
-def run_and_capture_result(process_name: str, data_asset_ids: list[str]) -> codeocean.data_asset.DataAsset | None:
+def run_and_capture_result(
+    process_name: str, data_asset_ids: list[str]
+) -> codeocean.data_asset.DataAsset | None:
     capsule_id = CAPSULE_ID[process_name]
     run_capsule_request = codeocean.computation.RunParams(
         capsule_id=capsule_id,
         data_assets=[
-            codeocean.computation.DataAssetsRunParam(id=asset_id, mount=aind_session.get_codeocean_model(asset_id).name)
+            codeocean.computation.DataAssetsRunParam(
+                id=asset_id, mount=aind_session.get_codeocean_model(asset_id).name
+            )
             for asset_id in data_asset_ids
         ],
     )
@@ -71,17 +95,25 @@ def run_and_capture_result(process_name: str, data_asset_ids: list[str]) -> code
     with open(fname, "w") as f:
         f.write(run_capsule_request.to_json(indent=4))
     if DRY_RUN:
-        print(f"\n[DRY RUN] Would launch capsule {process_name} with assets {data_asset_ids}")
+        print(
+            f"\n[DRY RUN] Would launch capsule {process_name} with assets {data_asset_ids}"
+        )
         return None
     print(f"\nLaunching {process_name} with params in {fname}")
-    computation: codeocean.computation.Computation = client.computations.run_capsule(run_capsule_request)
-    computation: codeocean.computation.Computation = client.computations.wait_until_completed(
-        computation, polling_interval=60, timeout=None
+    computation: codeocean.computation.Computation = client.computations.run_capsule(
+        run_capsule_request
+    )
+    computation: codeocean.computation.Computation = (
+        client.computations.wait_until_completed(
+            computation, polling_interval=60, timeout=None
+        )
     )
     if npc_lims.is_computation_errored(computation):
         raise RuntimeError(f"Capsule {process_name} failed: {computation.id}")
     created_dt = (
-        datetime.datetime.fromtimestamp(computation.created).isoformat(sep="_", timespec="seconds").replace(":", "-")
+        datetime.datetime.fromtimestamp(computation.created)
+        .isoformat(sep="_", timespec="seconds")
+        .replace(":", "-")
     )
     data_asset_name = f"{session_id}_{process_name}_{created_dt}"
     subject_id = session_id.split("_")[1]
@@ -95,7 +127,9 @@ def run_and_capture_result(process_name: str, data_asset_ids: list[str]) -> code
         name=data_asset_name,
         mount=data_asset_name,
         tags=[subject_id, "derived", "results"],
-        source=codeocean.data_asset.Source(computation=codeocean.data_asset.ComputationSource(id=computation.id)),
+        source=codeocean.data_asset.Source(
+            computation=codeocean.data_asset.ComputationSource(id=computation.id)
+        ),
         custom_metadata=custom_metadata,
     )
     fname = f"/root/capsule/results/capture_{process_name}.json"
@@ -109,7 +143,9 @@ def run_and_capture_result(process_name: str, data_asset_ids: list[str]) -> code
     return data_asset
 
 
-def _post_gamma_encoding_callback(future: cf.Future[codeocean.data_asset.DataAsset | None]) -> None:
+def _post_gamma_encoding_callback(
+    future: cf.Future[codeocean.data_asset.DataAsset | None],
+) -> None:
     result = future.result()
     if result is None:
         print("\n[DRY RUN] Would launch LPFaceParts with gamma encoding result")
@@ -121,10 +157,17 @@ def _post_gamma_encoding_callback(future: cf.Future[codeocean.data_asset.DataAss
 def main() -> None:
 
     if SKIP_EXISTING:
-        existing_assets = {process_name: get_process_asset_id(process_name) for process_name in CAPSULE_ID.keys()}
-        print(f"{SKIP_EXISTING=}, assets already exist for {[k for k, v in existing_assets.items() if v]}")
+        existing_assets = {
+            process_name: get_process_asset_id(process_name)
+            for process_name in CAPSULE_ID.keys()
+        }
+        print(
+            f"{SKIP_EXISTING=}, assets already exist for {[k for k, v in existing_assets.items() if v]}"
+        )
     else:
-        print(f"{SKIP_EXISTING=}, will create new data assets, ignoring existing assets")
+        print(
+            f"{SKIP_EXISTING=}, will create new data assets, ignoring existing assets"
+        )
         existing_assets = {}
     with cf.ThreadPoolExecutor() as executor:
         future_to_process_name = {}
@@ -152,7 +195,9 @@ def main() -> None:
                 data_asset_id = gamma_asset_id
             else:
                 data_asset_id = raw_data_asset_id
-            future = executor.submit(run_and_capture_result, process_name, [data_asset_id])
+            future = executor.submit(
+                run_and_capture_result, process_name, [data_asset_id]
+            )
             if process_name == "GammaEncoding":
                 future.add_done_callback(_post_gamma_encoding_callback)
             future_to_process_name[future] = process_name
