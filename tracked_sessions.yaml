@@ -899,6 +899,9 @@ ephys:
             probe_letters_to_skip: ADF
             is_injection_perturbation: true
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_759435_20250512:
+        session_kwargs:
+            is_production: false
+            is_injection_perturbation: true
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_762526_20250320:
         ephys_day: 3
         session_kwargs:
