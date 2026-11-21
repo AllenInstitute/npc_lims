@@ -331,7 +331,7 @@ ephys:
             is_production: False
             probe_letters_to_skip: ABDEF # not inserted
         issues:
-          - https://github.com/AllenInstitute/npc_sessions/issues/100
+          - https://github.com/AllenInstitute/npc_sync/issues/6 # #100 solved by sync patch; 2 out-of-order vsync_stim rising edges at 2176.0 s remain (frame times unaffected)
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712815_20240520:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712815_20240521:
@@ -428,14 +428,10 @@ ephys:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_714753_20240703:
         day: 3
-        issues:
-            https://github.com/AllenInstitute/npc_sessions/issues/100
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_714753_20240705:
         day: 4
         session_kwargs:
             probe_letters_to_skip: B # not recorded
-        issues:
-            https://github.com/AllenInstitute/npc_sessions/issues/100
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712138_20240712:
         day: 1
         session_kwargs:
