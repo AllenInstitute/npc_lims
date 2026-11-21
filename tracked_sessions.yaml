@@ -79,8 +79,6 @@ ephys:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230816:
         day: 3
-        issues:
-          - https://github.com/AllenInstitute/npc_sessions/issues/121 # time shift in block 5
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_666986_20230817:
         day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_662892_20230821:
@@ -336,8 +334,6 @@ ephys:
           - https://github.com/AllenInstitute/npc_sessions/issues/100
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712815_20240520:
         day: 1
-        issues:
-          - https://github.com/AllenInstitute/npc_sessions/issues/100
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712815_20240521:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_712815_20240522:
