@@ -16,16 +16,21 @@ ephys:
         day: 1
         session_kwargs:
             probe_letters_to_skip: E # not recorded
+            is_production: False # opto during task trials (pilot)
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_636766_20230124:
         day: 2
         session_kwargs:
             probe_letters_to_skip: E # not recorded
+            is_production: False # opto during task trials (pilot)
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_636766_20230125:
         day: 3
+        session_kwargs:
+            is_production: False # opto during task trials (pilot)
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_636766_20230126:
         day: 4
         session_kwargs:
             probe_letters_to_skip: F # not recorded
+            is_production: False # opto during task trials (pilot)
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644864_20230130:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644864_20230131:
@@ -2336,8 +2341,11 @@ ephys:
             rig: NP3
         notes: no behavior, DynamicRouting1_670248_20230802_120703.hdf5 not written correctly by task script
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2023-08-03_09-39-59_670248:
-        issues:
-            - https://github.com/AllenInstitute/npc_sessions/issues/66
+        session_kwargs:
+          invalid_times:
+            - start_time: 4776.1
+              stop_time: -1
+              reason: ephys recording stopped before end of task (probes A-C at 4776 s, D-F at 4785 s; npc_sessions#66)
         notes: recording truncated ~5 mins before end - needs obs intervals
   
 #   OpenScopeVippo: # currently no way to filter on project, so this is excluded
