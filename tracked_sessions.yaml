@@ -816,10 +816,11 @@ ephys:
           concatenate_recordings: [recording1, recording2]   
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_761583_20241217:
         ephys_day: 2
-        issues:
-          - https://github.com/AllenInstitute/npc_lims/issues/5
         session_kwargs:
-          concatenate_recordings: [recording1, recording3]   
+            invalid_times:
+              - start_time: 5501.0
+                stop_time: -1
+                reason: ephys recording stopped during last block of task (recording1 only uploaded; probes D-F at 5501 s, A-C at 5505 s); trials after this are invalid
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_761583_20241216:
         ephys_day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_744279_20250113:
@@ -830,8 +831,11 @@ ephys:
             probe_letters_to_skip: D
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_744279_20250115:
         ephys_day: 3
-        issues:
-          - https://github.com/AllenInstitute/npc_lims/issues/5
+        session_kwargs:
+            invalid_times:
+              - start_time: 6163.9
+                stop_time: -1
+                reason: ephys recording stopped after end of task (recording1 only uploaded; probes D-F at 6164 s, A-C at 6168 s; record buffers full)
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_744279_20250116:
         ephys_day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_746439_20250127:
@@ -1339,10 +1343,11 @@ ephys:
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_835598_20260225:
         ephys_day: 3
-        issues:
-          - https://github.com/AllenInstitute/npc_lims/issues/5
         session_kwargs:
-          concatenate_recordings: [recording1, recording2, recording3]        
+            invalid_times:
+              - start_time: 6451.6
+                stop_time: -1
+                reason: ephys recording stopped after task (recording1 only uploaded; probes D-F at 6452 s, A-C at 6461 s; buffer capacity error; later recordings not uploaded)
   
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_835598_20260226:
