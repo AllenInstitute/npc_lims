@@ -1414,34 +1414,6 @@ ephys:
             surface_recording_probe_letters_to_skip: DEF
     
   
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_837230_20260417:
-        ephys_day: 1
-        session_kwargs:
-            probe_letters_to_skip: CE
-    
-  
-
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_837230_20260420:
-        ephys_day: 2
-        session_kwargs:
-            probe_letters_to_skip: C
-    
-  
-
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_837230_20260421:
-        ephys_day: 3
-        session_kwargs:
-            probe_letters_to_skip: C
-    
-  
-
-    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_837230_20260422:
-        ephys_day: 4
-        session_kwargs:
-            probe_letters_to_skip: C
-    
-  
-
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_837959_20260330:
         ephys_day: 1
         session_kwargs:
@@ -2214,6 +2186,26 @@ ephys:
         ephys_day: 1
         session_kwargs:
           probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_837230_20260417:
+        ephys_day: 1
+        session_kwargs:
+            probe_letters_to_skip: CE
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_837230_20260420:
+        ephys_day: 2
+        session_kwargs:
+            probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_837230_20260421:
+        ephys_day: 3
+        session_kwargs:
+            probe_letters_to_skip: C
+
+    - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_837230_20260422:
+        ephys_day: 4
+        session_kwargs:
+            probe_letters_to_skip: C
 behavior_with_sync: # hab sessions with sync + video, or sync + opto, etc.
   DynamicRouting:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_708019_20240322:
