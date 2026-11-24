@@ -2,12 +2,16 @@ from __future__ import annotations
 
 import contextlib
 import functools
+import logging
 import sqlite3
 import tempfile
 from typing import Any
 
 import npc_session
+import npc_shields.shields
 import upath
+
+logger = logging.getLogger(__name__)
 
 S3_PROBE_TARGET_DB_PATH = upath.UPath(
     "s3://aind-scratch-data/arjun.sridhar/probe_targeting/dr_master.db"
@@ -51,30 +55,32 @@ def get_probe_insertion_info(
     return probe_insertion_default
 
 
-@functools.cache
-def _get_shield_definition_text() -> str:
-    return upath.UPath(
-        "https://raw.githubusercontent.com/AllenInstitute/npc_shields/main/src/npc_shields/shields.py"
-    ).read_text()
+def _get_shield(implant: str) -> npc_shields.shields.Shield | None:
+    """Shield definition from npc_shields, by name, drawing ID or alias (e.g. 'TS5'),
+    or None if not defined.
+
+    >>> _get_shield('2002').drawing_id
+    '0283-200-002'
+    >>> _get_shield('TS5').name
+    '3001'
+    >>> _get_shield('unknown') is None
+    True
+    """
+    try:
+        return npc_shields.shields.get_shield(implant)
+    except ValueError:
+        return None
 
 
 def _get_shield_drawing_id(
     shield_id: str,
-) -> str:
+) -> str | None:
     """
-    See
-    https://github.com/AllenInstitute/npc_shields/blob/main/src/npc_shields/shields.py
-
     >>> _get_shield_drawing_id('2002')
     '0283-200-002'
     """
-    txt = _get_shield_definition_text()
-    definition = f'name="{shield_id}",'
-    if definition not in txt:
-        raise ValueError(
-            f"Shield {shield_id} not found in shield definitions - needs adding to `npc_shields`"
-        )
-    return str(txt.split(definition)[1].split('drawing_id="')[1].split('",')[0])
+    shield = _get_shield(shield_id)
+    return None if shield is None else str(shield.drawing_id)
 
 
 @functools.cache
@@ -85,6 +91,14 @@ def get_probe_insertion_metadata(
     >>> probe_insertion = get_probe_insertion_metadata('676909_2023-12-12')
     >>> probe_insertion['probes']['A']
     'F1'
+
+    Implant and hole names in the targeting database are converted to the names used
+    in `npc_shields` (the database's own names are kept under 'targeting_db'):
+    >>> probe_insertion = get_probe_insertion_metadata('620263_2022-07-27')
+    >>> probe_insertion['shield']
+    {'name': '3001', 'drawing_id': '0283-300-01'}
+    >>> probe_insertion['probes']['A'], probe_insertion['targeting_db']['probes']['A']
+    ('4', 'E')
     """
     session = npc_session.SessionRecord(session)
     target_db_connection = get_probe_target_db()
@@ -119,8 +133,28 @@ def get_probe_insertion_metadata(
             probe = npc_session.ProbeRecord(k)
             insertions["probes"][probe] = from_db[k]
             continue
-    insertions["shield"]["name"] = from_db["implant"]
-    insertions["shield"]["drawing_id"] = _get_shield_drawing_id(from_db["implant"])
+    insertions["targeting_db"] = {
+        "implant": from_db["implant"],
+        "probes": dict(insertions["probes"]),
+    }
+    shield = _get_shield(from_db["implant"])
+    if shield is None:
+        logger.warning(
+            f"Implant {from_db['implant']!r} for {session.id} is not defined in npc_shields: using names from targeting database"
+        )
+        insertions["shield"]["name"] = from_db["implant"]
+    else:
+        insertions["shield"]["name"] = shield.name
+        insertions["shield"]["drawing_id"] = str(shield.drawing_id)
+        for probe, hole in insertions["probes"].items():
+            if hole is None:
+                continue
+            try:
+                insertions["probes"][probe] = shield.get_hole_label(str(hole))
+            except KeyError:
+                logger.warning(
+                    f"Hole {hole!r} (probe {probe}, {session.id}) is not in npc_shields definition of {shield.name!r}: keeping name from targeting database"
+                )
     insertions["session"] = session.id
     insertions["experiment_day"] = from_db["day"]
     return insertions
