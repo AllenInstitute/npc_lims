@@ -1321,9 +1321,10 @@ ephys:
         session_kwargs:
             probe_letters_to_skip: A
             is_context_naive: True
-            concatenate_recordings: [recording1, recording2]
-        issues:
-          - https://github.com/AllenInstitute/npc_lims/issues/5
+            invalid_times:
+              - start_time: 6138.3
+                stop_time: -1
+                reason: ephys recording stopped after task (recording1 only uploaded; probes D-F at 6138 s, B-C at 6147 s)
   
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_835598_20260223:
