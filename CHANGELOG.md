@@ -8,7 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.202...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.204...HEAD)</small>
+
+### Removed
+
+- Remove solved #100 from 714753_20240703/05 (patched vsyncs == stim frames, residual <0.07 ms); 708020_20240517 #100 solved, track remaining npc_sync#6 vsync rising-edge defect ([27e5ac3](https://github.com/AllenInstitute/npc_lims/commit/27e5ac31dfed6e37444ac0a0c2bdd585ea0399cc) by bjhardcastle).
+- Remove solved timing issues: 666986_20230816 #121 (npc_ephys 0.1.53 drop fix, barcode residuals <0.2 ms), 712815_20240520 #100 (replayed buffer patched, vsyncs == frames, residual 0.005 ms) ([3c3688d](https://github.com/AllenInstitute/npc_lims/commit/3c3688d9947ec2dcfd58fb07ac699ae05adeeee4) by bjhardcastle).
+
+<!-- insertion marker -->
+## [v0.1.204](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.204) - 2026-11-19
+
+<small>[Compare with v0.1.202](https://github.com/AllenInstitute/npc_lims/compare/v0.1.202...v0.1.204)</small>
 
 ### Added
 
@@ -39,7 +49,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Remove cache version from Sankey title ([19c0a5e](https://github.com/AllenInstitute/npc_lims/commit/19c0a5ee333cab4adbc177700c27716ebcb5f790) by Ben Hardcastle).
 - Remove duplicate unuploaded video link ([fe2f0f7](https://github.com/AllenInstitute/npc_lims/commit/fe2f0f71b8b68643c66be5b9488483b53cdc926b) by Ben Hardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.202](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.202) - 2026-09-26
 
 <small>[Compare with v0.1.201](https://github.com/AllenInstitute/npc_lims/compare/v0.1.201...v0.1.202)</small>
