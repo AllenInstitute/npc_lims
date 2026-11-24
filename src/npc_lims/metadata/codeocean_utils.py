@@ -480,10 +480,19 @@ def get_codoecean_session_id(
         )
     session_assets = session_times_to_assets[session_times[session.idx]]
     session_id = npc_session.extract_aind_session_id(session_assets[0].name)
-    assert all(
-        npc_session.extract_aind_session_id(asset.name) == session_id
-        for asset in session_assets
-    )
+    session_ids = {
+        npc_session.extract_aind_session_id(asset.name) for asset in session_assets
+    }
+    if len(session_ids) > 1:
+        # e.g. `ecephys_708019_2024-03-22_15-33-01` and a later behavior-only upload
+        # `behavior_708019_2024-03-22_15-33-01` of the same session: prefer the
+        # ecephys id, which derived assets (sorting, dlc etc.) are named after
+        ecephys_ids = sorted(id_ for id_ in session_ids if id_.startswith("ecephys_"))
+        if ecephys_ids:
+            session_id = ecephys_ids[0]
+        logger.warning(
+            f"Multiple Code Ocean session IDs found for {session} at the same time: {sorted(session_ids)} - using {session_id!r}"
+        )
     return session_id
 
 
