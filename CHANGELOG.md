@@ -8,14 +8,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 <!-- insertion marker -->
 ## Unreleased
 
-<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.204...HEAD)</small>
+<small>[Compare with latest](https://github.com/AllenInstitute/npc_lims/compare/v0.1.205...HEAD)</small>
+
+<!-- insertion marker -->
+## [v0.1.205](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.205) - 2026-11-24
+
+<small>[Compare with v0.1.204](https://github.com/AllenInstitute/npc_lims/compare/v0.1.204...v0.1.205)</small>
 
 ### Removed
 
 - Remove solved #100 from 714753_20240703/05 (patched vsyncs == stim frames, residual <0.07 ms); 708020_20240517 #100 solved, track remaining npc_sync#6 vsync rising-edge defect ([27e5ac3](https://github.com/AllenInstitute/npc_lims/commit/27e5ac31dfed6e37444ac0a0c2bdd585ea0399cc) by bjhardcastle).
 - Remove solved timing issues: 666986_20230816 #121 (npc_ephys 0.1.53 drop fix, barcode residuals <0.2 ms), 712815_20240520 #100 (replayed buffer patched, vsyncs == frames, residual 0.005 ms) ([3c3688d](https://github.com/AllenInstitute/npc_lims/commit/3c3688d9947ec2dcfd58fb07ac699ae05adeeee4) by bjhardcastle).
 
-<!-- insertion marker -->
 ## [v0.1.204](https://github.com/AllenInstitute/npc_lims/releases/tag/v0.1.204) - 2026-11-19
 
 <small>[Compare with v0.1.202](https://github.com/AllenInstitute/npc_lims/compare/v0.1.202...v0.1.204)</small>
