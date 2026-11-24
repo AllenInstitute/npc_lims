@@ -2964,7 +2964,7 @@ wheels = [
 
 [[package]]
 name = "npc-lims"
-version = "0.1.207"
+version = "0.1.208"
 source = { editable = "." }
 default-groups = "all"
 dependencies = [
