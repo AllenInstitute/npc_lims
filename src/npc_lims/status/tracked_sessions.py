@@ -348,7 +348,7 @@ class SessionInfo:
         with contextlib.suppress(FileNotFoundError, ValueError):
             return bool(s3.get_tissuecyte_annotation_files_from_s3(self))
         with contextlib.suppress(FileNotFoundError, ValueError, IndexError, KeyError):
-            session = aind_session.get_sessions(*self.id.split("_")[:2])[0]
+            session = codeocean_utils.get_aind_sessions_on_date(self.id)[0]
             return bool(aind_session.ecephys.get_latest_ibl_annotations(session.id))
         return False
 

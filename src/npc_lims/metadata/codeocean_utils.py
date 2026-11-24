@@ -218,6 +218,44 @@ def get_latest_data_asset(
     return sorted(data_assets, key=lambda asset: asset.created)[-1]
 
 
+def get_aind_sessions_on_date(
+    session_id: str | npc_session.SessionRecord,
+) -> tuple[aind_session.Session, ...]:
+    """All AIND sessions for the subject on the session's date, sorted by
+    acquisition time, with at most one session per acquisition time.
+
+    If multiple AIND sessions share the same acquisition time (e.g.
+    `ecephys_708019_2024-03-22_15-33-01` and a later behavior-only upload
+    `behavior_708019_2024-03-22_15-33-01`), they are collapsed into a single
+    entry, preferring the ecephys platform (consistent with
+    `get_codoecean_session_id`), and a warning is logged.
+
+    Examples:
+        >>> [s.id for s in get_aind_sessions_on_date('708019_2024-03-22')]
+        ['ecephys_708019_2024-03-22_15-33-01']
+    """
+    session = npc_session.SessionRecord(session_id)
+    aind_sessions = aind_session.get_sessions(
+        subject_id=session.subject, date=session.date
+    )
+    dt_to_sessions: dict[Any, list[aind_session.Session]] = {}
+    for s in aind_sessions:  # already sorted by dt
+        dt_to_sessions.setdefault(s.dt, []).append(s)
+    deduplicated: list[aind_session.Session] = []
+    for sessions_at_dt in dt_to_sessions.values():
+        if len(sessions_at_dt) == 1:
+            deduplicated.append(sessions_at_dt[0])
+            continue
+        sessions_at_dt = sorted(sessions_at_dt, key=lambda s: s.id)
+        ecephys_sessions = [s for s in sessions_at_dt if s.platform == "ecephys"]
+        selected = (ecephys_sessions or sessions_at_dt)[0]
+        logger.warning(
+            f"Multiple AIND sessions found for {session} at the same time: {[s.id for s in sessions_at_dt]} - using {selected.id!r}"
+        )
+        deduplicated.append(selected)
+    return tuple(deduplicated)
+
+
 @functools.cache
 def get_aind_session(
     session_id: str | npc_session.SessionRecord,
@@ -225,11 +263,11 @@ def get_aind_session(
     """
     Examples:
         >>> assert get_aind_session('ecephys_703333_2024-04-09_1') != get_aind_session('ecephys_703333_2024-04-09')
+        >>> get_aind_session('708019_2024-03-22').id
+        'ecephys_708019_2024-03-22_15-33-01'
     """
     session = npc_session.SessionRecord(session_id)
-    aind_sessions = aind_session.get_sessions(
-        subject_id=session.subject, date=session.date
-    )
+    aind_sessions = get_aind_sessions_on_date(session)
     if not aind_sessions:
         raise ValueError(
             f"No AIND session found for {session} - likely missing raw data upload"
