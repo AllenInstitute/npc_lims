@@ -761,6 +761,8 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_742903_20241024:
         ephys_day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_742903_20241025:
+        issues:
+          - https://github.com/AllenInstitute/npc_sessions/issues/205 # never sorted successfully
         ephys_day: 5
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_741148_20241018:
         ephys_day: 4
