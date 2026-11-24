@@ -2053,6 +2053,8 @@ ephys:
 
 
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/DRpilot_836629_20260428:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 1
         session_kwargs:
             probe_letters_to_skip: C
@@ -2060,6 +2062,8 @@ ephys:
 
 
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/DRpilot_836629_20260429:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 2
         session_kwargs:
             probe_letters_to_skip: D
@@ -2067,6 +2071,8 @@ ephys:
 
 
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/DRpilot_836629_20260501:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 4
         session_kwargs:
             probe_letters_to_skip: D
@@ -2074,6 +2080,8 @@ ephys:
 
 
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/DRpilot_844567_20260408:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 1
         session_kwargs:
             probe_letters_to_skip: C
@@ -2084,125 +2092,174 @@ ephys:
         ephys_day: 1
         issues:
           - https://github.com/AllenInstitute/npc_lims/issues/5
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         session_kwargs:
           probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_836629_20260430:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 3
         session_kwargs:
           probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_852252_20260626:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 3
         session_kwargs:
           probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_852252_20260625:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 2
         session_kwargs:
           probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_852252_20260624:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 1
         session_kwargs:
           probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_852255_20260622:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 4
         session_kwargs:
           probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_852255_20260618:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 3
         session_kwargs:
           probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_852255_20260617:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 2
         session_kwargs:
           probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_852255_20260616:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 1
         session_kwargs:
           probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_857681_20260818:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 4
         session_kwargs:
           probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_857681_20260817:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 3
         session_kwargs:
           probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_857681_20260814:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 2
         session_kwargs:
           probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_857681_20260813:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 1
         session_kwargs:
           probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_859583_20260520:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 4
         session_kwargs:
           probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_859583_20260519:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 3
         session_kwargs:
           probe_letters_to_skip: D
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_859583_20260515:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 2
         session_kwargs:
           probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_859583_20260514:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 1
         session_kwargs:
           probe_letters_to_skip: D
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_872697_20260903:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 4
         session_kwargs:
           probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_872697_20260902:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 3
         session_kwargs:
           probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_872697_20260901:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 2
         session_kwargs:
           probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_872697_20260831:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 1
         session_kwargs:
           probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_837230_20260417:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 1
         session_kwargs:
             probe_letters_to_skip: CE
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_837230_20260420:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 2
         session_kwargs:
             probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_837230_20260421:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 3
         session_kwargs:
             probe_letters_to_skip: C
 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_837230_20260422:
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/30 # Templeton 2026: exclude from DR processing
         ephys_day: 4
         session_kwargs:
             probe_letters_to_skip: C
