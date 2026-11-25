@@ -58,9 +58,6 @@ ephys:
         day: 1
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644867_20230221:
         day: 2
-        issues:
-          - https://github.com/AllenInstitute/npc_sessions/issues/28 # short diode flip, fixable
-          - https://github.com/AllenInstitute/npc_sessions/issues/117 
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644867_20230222:
         day: 3
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_644867_20230223:
@@ -120,8 +117,6 @@ ephys:
         day: 2
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230927:
         day: 3
-        issues:
-          - https://github.com/AllenInstitute/npc_sessions/issues/55
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_667252_20230928:
         day: 4
         session_kwargs:
@@ -230,7 +225,6 @@ ephys:
         day: 2
         issues:
             - https://github.com/AllenInstitute/npc_sessions/issues/83 # seizure
-            - https://github.com/AllenInstitute/npc_sessions/issues//117
             - https://github.com/AllenInstitute/npc_lims/issues/5
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_702136_20240304:
         day: 1
@@ -1969,7 +1963,6 @@ ephys:
             is_video: false
             probe_letters_to_skip: FE # not recorded
         issues:
-          - https://github.com/AllenInstitute/npc_sessions/issues/27
           - https://github.com/AllenInstitute/npc_lims/issues/5
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2022-09-20_14-10-18_628801:
         session_kwargs:
@@ -2029,7 +2022,6 @@ ephys:
           concatenate_recordings: [recording1, recording2]
         issues:
             - https://github.com/AllenInstitute/npc_lims/issues/5
-            - https://github.com/AllenInstitute/npc_sessions/issues/117 
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2023-07-26_09-55-57_670180
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2023-07-27_09-36-37_670180
     - //allen/programs/mindscope/workgroups/templeton/TTOC/pilot recordings/2023-08-01_09-28-08_670248
