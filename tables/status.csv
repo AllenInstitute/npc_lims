@@ -33,10 +33,10 @@ date,session_id,raw_asset_id,surface_channels_asset_id,is_uploaded,is_prod,is_im
 2026-05-29,ecephys_856845_2026-05-29_13-06-55,69fcd692-b42b-43e7-a4ca-cbf044eebaa2,2d9d4e89-f55c-40bf-ad40-a9d422789ea5,true,true,true,true,true,false,true,true,true,true,true,true,true,false,,
 2026-05-28,ecephys_856845_2026-05-28_??-??-??,"",,false,true,,,,,,,,,,,,,,
 2026-05-27,ecephys_856845_2026-05-27_13-08-26,81ab42f1-5a61-4b5b-84c0-73097700e652,4b6844f9-0a2c-4027-80b9-deaf58efed0c,true,true,true,true,true,false,true,true,true,true,true,true,true,false,,
-2026-04-27,ecephys_854390_2026-04-27_10-32-52,ea1c16c1-42f8-48d4-941c-1cd4ab4ca0d2,587d1f80-ec82-416f-8058-a023d0e410f3,true,true,true,true,true,false,true,true,true,true,true,true,true,false,,
-2026-04-24,ecephys_854390_2026-04-24_10-19-35,df5de2ab-c6c3-4143-ac47-f8886fa6515d,bfe0c07f-16f0-4214-a7e2-0d559c9592b9,true,true,true,true,true,false,true,true,true,true,true,true,true,false,,
-2026-04-23,ecephys_854390_2026-04-23_10-33-36,a9a22920-43f3-456a-b7db-ac27cbfde897,e457c616-0bb7-4446-a742-99ffed6c119c,true,true,true,true,true,false,true,true,true,true,true,true,true,false,,
-2026-04-22,ecephys_854390_2026-04-22_10-18-59,5c3ced5c-4e7c-40e0-9d35-076f006b1efc,9c2011bf-5b08-4cc0-8c41-7fafe57c0a96,true,true,true,true,true,false,true,true,true,true,true,true,true,false,,
+2026-04-27,ecephys_854390_2026-04-27_10-32-52,ea1c16c1-42f8-48d4-941c-1cd4ab4ca0d2,587d1f80-ec82-416f-8058-a023d0e410f3,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,false
+2026-04-24,ecephys_854390_2026-04-24_10-19-35,df5de2ab-c6c3-4143-ac47-f8886fa6515d,bfe0c07f-16f0-4214-a7e2-0d559c9592b9,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true
+2026-04-23,ecephys_854390_2026-04-23_10-33-36,a9a22920-43f3-456a-b7db-ac27cbfde897,e457c616-0bb7-4446-a742-99ffed6c119c,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,false
+2026-04-22,ecephys_854390_2026-04-22_10-18-59,5c3ced5c-4e7c-40e0-9d35-076f006b1efc,9c2011bf-5b08-4cc0-8c41-7fafe57c0a96,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true
 2026-06-22,ecephys_852255_2026-06-22_14-07-12,4c23e543-42c4-43ad-81b2-8d557d74108e,,true,true,true,true,,false,true,true,true,true,true,true,true,false,,
 2026-06-18,ecephys_852255_2026-06-18_14-04-51,458ddc05-a2b6-4bf1-8e74-d173cebf7d92,,true,true,true,true,,false,true,true,true,true,true,true,true,false,,
 2026-06-17,ecephys_852255_2026-06-17_13-19-16,7e68b1ec-1767-4d9b-b61d-920c5aa32adc,,true,true,true,true,,false,true,true,true,true,true,true,true,false,,
