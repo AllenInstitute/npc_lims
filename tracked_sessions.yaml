@@ -1407,7 +1407,7 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_850215_20260323:
         ephys_day: 4
         session_kwargs:
-            is_task: False # task was stage 1 only (vis-only training, no aud/context blocks) - confirmed in experiment notes
+            is_task: False # task was stage 1 only (vis-only, no aud/context blocks): 'ran mouse on stage 1 by accident' (Ephys Experiment Tracking: by_session_prod)
             is_production: False # see is_task
             is_context_naive: True
             is_deep_insertion: True
