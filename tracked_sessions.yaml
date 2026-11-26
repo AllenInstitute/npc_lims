@@ -688,10 +688,16 @@ ephys:
         day: 4
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_664566_20231121:
         day: 2
+        notes: "aborted: 35 s of sync, no stim files, no sorting/annotations"
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/31 # no usable data
         session_kwargs:
             is_production: false
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_664566_20231120:
         day: 1
+        notes: "task file is a 15 s test ~2 h before sync started; no sorting/annotations"
+        issues:
+          - https://github.com/AllenInstitute/npc_lims/issues/31 # no usable data
         session_kwargs:
             is_production: false
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_733891_20240920:
