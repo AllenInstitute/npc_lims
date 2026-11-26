@@ -1407,6 +1407,7 @@ ephys:
     - //allen/programs/mindscope/workgroups/dynamicrouting/PilotEphys/Task 2 pilot/DRpilot_850215_20260323:
         ephys_day: 4
         session_kwargs:
+            is_task: False # task was stage 1 only (vis-only training, no aud/context blocks) - confirmed in experiment notes
             is_context_naive: True
             is_deep_insertion: True
             surface_recording_probe_letters_to_skip: DEF
